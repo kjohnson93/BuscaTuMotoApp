@@ -47,8 +47,25 @@ class SearchActivity: AppCompatActivity(), SearchFragment.ReadyListener {
      */
     private var nestedScrollView: CustomScrollView? = null
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+//    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+//        super.onCreate(savedInstanceState, persistentState)
+//
+//        setContentView(R.layout.activity_test)
+//
+//        searchBarLayout = findViewById(R.id.searchAppBar)
+//        collapsingToolbar = findViewById(R.id.collapsingToolbar)
+//        coordLayout = findViewById(R.id.searchCoordLayout)
+//        nestedScrollView = findViewById(R.id.nestedscrollview)
+//
+//        nestedScrollView!!.isEnableScrolling = false
+//        this.openFragment()
+//
+//        disableHeaderScroll()
+//    }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_search)
 
