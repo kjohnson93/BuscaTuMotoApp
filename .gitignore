@@ -1,0 +1,46 @@
+# OS X files 
+.DS_Store
+
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+app/build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+test.properties
+
+# Eclipse stuff
+.classpath
+.project
+.settings
+
+
+
+# Butterknife generated files
+*$$ViewInjector.java
+
+# Windows
+
+*.iml
+.idea\
+.gradle\
+.out\
+.build\
+
+# Gradle stuff
+.gradle/
+build/
+.idea/
+out/
+*.iml
