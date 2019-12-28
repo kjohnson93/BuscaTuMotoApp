@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_collapseMode="parallax"
-                android:src="@drawable/moto_banner"
+                android:src="@drawable/moto_banner_2"
                 android:scaleType="centerCrop"/>
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
