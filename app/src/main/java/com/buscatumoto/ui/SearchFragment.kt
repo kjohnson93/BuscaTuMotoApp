@@ -1,12 +1,19 @@
 package com.buscatumoto.ui
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.FrameLayout
+import android.widget.ImageButton
+import android.widget.ImageView
 import com.buscatumoto.R
+
 
 class SearchFragment: Fragment() {
 
@@ -18,6 +25,12 @@ class SearchFragment: Fragment() {
 
     var activityReadyListener: ReadyListener? = null
 
+    var bannerLogo: ImageView? = null
+    var arrowDownImgBtn: ImageButton? = null
+    var frameLayoutTest: FrameLayout? = null
+    var animator: Animator? = null
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +40,11 @@ class SearchFragment: Fragment() {
         val fragmentView: View = inflater.inflate(R.layout.fragment_search, container, false)
 
         getActivity()?.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        frameLayoutTest = fragmentView.findViewById(R.id.frameLayout)
+        arrowDownImgBtn = fragmentView.findViewById(R.id.arrowDownImgBtn)
+
+        bannerLogo = fragmentView.findViewById(R.id.imageView3)
 
 
         return fragmentView
