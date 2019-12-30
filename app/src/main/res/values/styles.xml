@@ -21,5 +21,11 @@
         <item name="android:background">@drawable/default_button_selector</item>
     </style>
 
+    <style name="FormFilterTextView">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:background">@drawable/border_llayout</item>
+    </style>
+
 
 </resources>
