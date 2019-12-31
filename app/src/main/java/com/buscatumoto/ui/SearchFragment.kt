@@ -1,22 +1,15 @@
 package com.buscatumoto.ui
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.widget.NestedScrollView
-import android.support.v7.app.AlertDialog
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
-import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
-import kotlinx.android.synthetic.main.activity_search.*
 
 
 class SearchFragment: Fragment() {
@@ -47,19 +40,6 @@ class SearchFragment: Fragment() {
         getActivity()?.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         arrowDownImgBtn = fragmentView.findViewById(R.id.arrowDownImgBtn)
-
-//
-//        context?.let {
-//            var builder = AlertDialog.Builder(it)
-//            builder.setTitle("Form")
-//
-//            var dialogView = inflater.i
-//¡
-//        }
-
-
-
-
 
 
         var isShown = false

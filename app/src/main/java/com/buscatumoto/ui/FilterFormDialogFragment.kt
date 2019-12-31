@@ -28,7 +28,7 @@ class FilterFormDialogFragment: DialogFragment() {
     ): View? {
         var fragmentView = inflater.inflate(R.layout.fragment_filtro_form, container, false)
 
-        spinner = fragmentView.findViewById(R.id.spinner3)
+        spinner = fragmentView.findViewById(R.id.brandSpinner)
 // Create an ArrayAdapter using the string array and a default spinner layout
 
 

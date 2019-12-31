@@ -52,6 +52,8 @@
                 android:hint="Buscar marca, modelo, etc"
                 android:inputType="textNoSuggestions|textVisiblePassword"
                 android:maxLines="1"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
                 android:textSize="16sp" />
         </android.support.design.widget.TextInputLayout>
 
