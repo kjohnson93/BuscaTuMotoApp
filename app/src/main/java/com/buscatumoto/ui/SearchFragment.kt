@@ -86,12 +86,12 @@ class SearchFragment : Fragment(), View.OnClickListener {
 
         Log.d(Constants.MOTOTAG, "is FM Null $isFMnull")
         fragmentManager?.executePendingTransactions()
-        val fragmentTransactionAdd = fragmentManager?.beginTransaction()
-        fragmentTransactionAdd?.addToBackStack(null)
+//        val fragmentTransactionAdd = fragmentManager?.beginTransaction()
         val prev = fragmentManager?.findFragmentByTag("dialog")
         // If there is no fragment yet with this tag then show it. Otherwise donothing
+        //This is to prevent crash if user is clicking too fast
         if (prev == null) {
-            dialogFiltoFragment.show(fragmentTransactionAdd, "dialog")
+            dialogFiltoFragment.show(fragmentManager, "dialog")
         }
     }
 
