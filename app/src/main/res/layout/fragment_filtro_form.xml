@@ -59,6 +59,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/modelTvw"
         app:layout_constraintEnd_toEndOf="@+id/brandSpinner"
         app:layout_constraintHorizontal_bias="1.0"
@@ -71,6 +72,7 @@
         android:id="@+id/bikeTypeSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/bikeTypeTvw"
         app:layout_constraintEnd_toEndOf="@+id/modelSpinner"
         app:layout_constraintStart_toStartOf="@+id/modelSpinner"
@@ -81,6 +83,7 @@
         android:id="@+id/priceMinSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/priceMinTvw"
         app:layout_constraintEnd_toEndOf="@+id/bikeTypeSpinner"
         app:layout_constraintHorizontal_bias="1.0"
@@ -93,6 +96,7 @@
         android:id="@+id/priceMaxSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/priceMaxTvw"
         app:layout_constraintEnd_toEndOf="@+id/priceMinSpinner"
         app:layout_constraintHorizontal_bias="1.0"
@@ -105,6 +109,7 @@
         android:id="@+id/powerMinSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/powerMinTvw"
         app:layout_constraintEnd_toEndOf="@+id/priceMaxSpinner"
         app:layout_constraintHorizontal_bias="1.0"
@@ -118,6 +123,7 @@
         android:id="@+id/powerMaxSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/powerMaxTvw"
         app:layout_constraintStart_toStartOf="@+id/powerMinSpinner"
         app:layout_constraintTop_toTopOf="@+id/powerMaxTvw"
@@ -128,6 +134,7 @@
         android:id="@+id/cilMinSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/cilMinTvw"
         app:layout_constraintEnd_toEndOf="@+id/powerMaxSpinner"
         app:layout_constraintStart_toEndOf="@+id/cilMinTvw"
@@ -140,6 +147,7 @@
         android:id="@+id/cilMaxSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/cilMaxTvw"
         app:layout_constraintEnd_toEndOf="@+id/cilMinSpinner"
         app:layout_constraintStart_toEndOf="@+id/cilMaxTvw"
@@ -152,6 +160,7 @@
         android:id="@+id/weightMinSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/weightMinTvw"
         app:layout_constraintEnd_toEndOf="@+id/cilMaxSpinner"
         app:layout_constraintHorizontal_bias="1.0"
@@ -164,6 +173,7 @@
         android:id="@+id/weightMaxSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/weightMaxTvw"
         app:layout_constraintEnd_toEndOf="@+id/weightMinSpinner"
         app:layout_constraintHorizontal_bias="0.956"
@@ -176,6 +186,7 @@
         android:id="@+id/yearSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/yearTvw"
         app:layout_constraintEnd_toEndOf="@+id/weightMaxSpinner"
         app:layout_constraintHorizontal_bias="1.0"
@@ -188,6 +199,7 @@
         android:id="@+id/licenseSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/licenseTvw"
         app:layout_constraintEnd_toEndOf="@+id/yearSpinner"
         app:layout_constraintHorizontal_bias="1.0"
@@ -360,7 +372,7 @@
         app:layout_constraintVertical_bias="0.78">
 
         <ImageButton
-            android:id="@+id/resumenCancelarIBtn"
+            android:id="@+id/filtrar_close_ibtn"
             android:layout_width="@dimen/weight_constraint_size"
             android:layout_height="40dp"
             android:layout_marginEnd="5dp"
@@ -371,7 +383,7 @@
             android:src="@drawable/cross_icon_128_light" />
 
         <ImageButton
-            android:id="@+id/refreshIBtn"
+            android:id="@+id/filtrar_refresh_ibtn"
             android:layout_width="@dimen/weight_constraint_size"
             android:layout_height="40dp"
             android:layout_marginEnd="5dp"
@@ -383,7 +395,7 @@
 
 
         <ImageButton
-            android:id="@+id/resumenAceptarIBtn"
+            android:id="@+id/filtrar_accept_ibtn"
             android:layout_width="@dimen/weight_constraint_size"
             android:layout_height="40dp"
             android:layout_marginStart="5dp"

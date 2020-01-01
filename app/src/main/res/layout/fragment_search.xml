@@ -75,7 +75,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/filtrarBtn"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginTop="60dp"
@@ -94,11 +94,9 @@
         android:maxLines="1"
         android:text="Filtrar Búsqueda"
         android:textSize="11sp"
-        app:layout_constraintBottom_toTopOf="@+id/loginButton"
-        app:layout_constraintEnd_toEndOf="@+id/loginButton"
+        app:layout_constraintBottom_toTopOf="@+id/filtrarBtn"
         app:layout_constraintHeight_percent="0.02"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/loginButton"
+        app:layout_constraintStart_toStartOf="@+id/filtrarBtn"
         app:layout_constraintWidth_percent="0.3" />
 
     <ImageButton
@@ -107,11 +105,11 @@
         android:layout_height="70dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/loginButton"
+        app:layout_constraintBottom_toBottomOf="@+id/filtrarBtn"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
         app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toEndOf="@+id/loginButton"
-        app:layout_constraintTop_toTopOf="@+id/loginButton"
+        app:layout_constraintStart_toEndOf="@+id/filtrarBtn"
+        app:layout_constraintTop_toTopOf="@+id/filtrarBtn"
         app:layout_constraintWidth_percent="0.1"
         app:srcCompat="@drawable/down_arrow_icon_128_dark" />
 
