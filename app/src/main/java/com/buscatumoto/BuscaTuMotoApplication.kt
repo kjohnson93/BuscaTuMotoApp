@@ -1,8 +1,11 @@
 package com.buscatumoto
 
 import android.app.Application
+import com.buscatumoto.gateway.api.BuscaTuMotoGateway
 
 class BuscaTuMotoApplication: Application() {
+
+    var buscaTuMotoGateway: BuscaTuMotoGateway? = null
 
     //Static members
     companion object {
@@ -18,6 +21,7 @@ class BuscaTuMotoApplication: Application() {
     override fun onCreate() {
         super.onCreate()
 
+        buscaTuMotoGateway = BuscaTuMotoGateway()
         sInstance = this
     }
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import android.widget.Spinner
+import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.Constants
 import com.buscatumoto.R
 
@@ -61,6 +62,9 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
             priceMinSpinner, priceMaxSpinner, powerMinSpinner, powerMaxSpinner,
             cilMinSpinner, cilMaxSpinner, weightMinSpinner, weightMaxSpinner,
             yearSpinner, licenseSpinner, refreshIButton)
+
+        val buscaTuMotoGateway = BuscaTuMotoApplication.getInstance().buscaTuMotoGateway
+        buscaTuMotoGateway?.getBrands()
 
         return fragmentView
     }
