@@ -6,6 +6,42 @@
     android:layout_height="wrap_content"
     app:layout_constraintWidth_percent="0.75">
 
+    <FrameLayout
+        android:id="@+id/textView16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="3dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:text="Filtrar Búsqueda"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
+
+        <ImageButton
+            android:id="@+id/filtrar_close_ibtn"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:layout_margin="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="0"
+            android:scaleType="fitCenter"
+            android:src="@drawable/cancel" />
+
+    </FrameLayout>
+
+
+
+
     <TextView
         android:id="@+id/weightMinTvw"
         style="@style/FormFilterTextView"
@@ -335,18 +371,6 @@
         app:layout_constraintStart_toStartOf="@+id/cilMinTvw"
         app:layout_constraintTop_toBottomOf="@+id/cilMinTvw" />
 
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="Filtrar Búsqueda"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <View
         android:id="@+id/red_divider"
         android:layout_width="match_parent"
@@ -370,17 +394,6 @@
         app:layout_constraintStart_toStartOf="@+id/licenseTvw"
         app:layout_constraintTop_toBottomOf="@id/red_divider"
         app:layout_constraintVertical_bias="0.78">
-
-        <ImageButton
-            android:id="@+id/filtrar_close_ibtn"
-            android:layout_width="@dimen/weight_constraint_size"
-            android:layout_height="40dp"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:scaleType="fitCenter"
-            android:src="@drawable/cross_icon_128_light" />
 
         <ImageButton
             android:id="@+id/filtrar_refresh_ibtn"
