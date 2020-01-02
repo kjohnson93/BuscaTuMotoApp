@@ -6,38 +6,42 @@
     android:layout_height="wrap_content"
     app:layout_constraintWidth_percent="0.75">
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/textView16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="3dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="85"
             android:text="Filtrar Búsqueda"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textSize="25sp" />
+            android:textSize="26sp" />
 
         <ImageButton
             android:id="@+id/filtrar_close_ibtn"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:layout_gravity="right"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
             android:layout_margin="3dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="0dp"
-            android:layout_weight="1"
+            android:layout_weight="15"
             android:background="@android:color/transparent"
-            android:padding="0"
             android:scaleType="fitCenter"
             android:src="@drawable/cancel" />
 
-    </FrameLayout>
+    </LinearLayout>
 
 
 
