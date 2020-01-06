@@ -41,41 +41,21 @@ class FilterFormImpl(val activity: Activity?,    var brandSpinner: Spinner? = nu
     }
 
     private fun refreshAllViews() {
-        ArrayAdapter.createFromResource(
-            activity,
-            R.array.planets_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            brandSpinner?.adapter = adapter
-            brandSpinner?.setSelection(0)
-            modelSpinner?.adapter = adapter
-            modelSpinner?.setSelection(0)
-            bikeTypeSpinner?.adapter = adapter
-            bikeTypeSpinner?.setSelection(0)
-            priceMinSpinner?.adapter = adapter
-            priceMinSpinner?.setSelection(0)
-            priceMaxSpinner?.adapter = adapter
-            priceMaxSpinner?.setSelection(0)
-            powerMinSpinner?.adapter = adapter
-            powerMinSpinner?.setSelection(0)
-            powerMaxSpinner?.adapter = adapter
-            powerMaxSpinner?.setSelection(0)
-            cilMinSpinner?.adapter = adapter
-            cilMinSpinner?.setSelection(0)
-            cilMaxSpinner?.adapter = adapter
-            cilMaxSpinner?.setSelection(0)
-            weightMinSpinner?.adapter = adapter
-            weightMinSpinner?.setSelection(0)
-            weightMaxSpinner?.adapter = adapter
-            weightMaxSpinner?.setSelection(0)
-            yearSpinner?.adapter = adapter
-            yearSpinner?.setSelection(0)
-            licenseSpinner?.adapter = adapter
-            licenseSpinner?.setSelection(0)
-        }    }
+
+        brandSpinner?.setSelection(0)
+        modelSpinner?.setSelection(0)
+        bikeTypeSpinner?.setSelection(0)
+        priceMinSpinner?.setSelection(0)
+        priceMaxSpinner?.setSelection(0)
+        powerMinSpinner?.setSelection(0)
+        powerMaxSpinner?.setSelection(0)
+        cilMinSpinner?.setSelection(0)
+        cilMaxSpinner?.setSelection(0)
+        weightMinSpinner?.setSelection(0)
+        weightMaxSpinner?.setSelection(0)
+        yearSpinner?.setSelection(0)
+        licenseSpinner?.setSelection(0)
+    }
 
 }
 

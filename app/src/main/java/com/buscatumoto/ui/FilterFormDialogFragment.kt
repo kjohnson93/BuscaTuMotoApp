@@ -95,64 +95,91 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
     }
 
     private fun fillSpinnerViews(response: FieldsResponse) {
+
+
+        //brand
+        val brandList = response.brandList as MutableList<String>
+        brandList.add(0, "-Marca-")
         val brandSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item,
-            response.brandList
-        )
+            brandList)
         brandSpinner?.adapter = brandSpinnerAdapter
         brandSpinner?.setSelection(0)
 
         //bike type
-        val bikeTypeSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, response.bikeTypesList)
+        val bikeTypeList = response.bikeTypesList as MutableList<String>
+        bikeTypeList.removeAt(0)
+        bikeTypeList.add(0, "-Tipo de moto-")
+        val bikeTypeSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, bikeTypeList)
         bikeTypeSpinner?.adapter = bikeTypeSpinnerAdapter
         bikeTypeSpinner?.setSelection(0)
 
         //price min
-            val priceMinSpinnerAdapter = ArrayAdapter<Int>(context, android.R.layout.simple_spinner_item, response.priceMinList)
+        val priceMinList: MutableList<String> = response.priceMinList as MutableList<String>
+        priceMinList.add(0, "-Precio desde-")
+        val priceMinSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, priceMinList)
         priceMinSpinner?.adapter = priceMinSpinnerAdapter
         priceMinSpinner?.setSelection(0)
 
         //price max
-        val priceMaxSpinnerAdapter = ArrayAdapter<Int>(context, android.R.layout.simple_spinner_item, response.priceMaxList)
+        val priceMaxList: MutableList<String> = response.priceMaxList as MutableList<String>
+        priceMaxList.add(0, "-Precio hasta-")
+        val priceMaxSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, priceMaxList)
         priceMaxSpinner?.adapter = priceMaxSpinnerAdapter
         priceMaxSpinner?.setSelection(0)
 
         //power min
-        val powerMinSpinnerAdapter = ArrayAdapter<Float>(context, android.R.layout.simple_spinner_item, response.powerMinList)
+        val powerMinList: MutableList<String> = response.powerMinList as MutableList<String>
+        powerMinList.add(0, "-Potencia desde-")
+        val powerMinSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, powerMinList)
         powerMinSpinner?.adapter = powerMinSpinnerAdapter
         powerMinSpinner?.setSelection(0)
 
         //power max
-        val powerMaxSpinnerAdapter = ArrayAdapter<Float>(context, android.R.layout.simple_spinner_item, response.powerMaxList)
+        val powerMaxList: MutableList<String> = response.powerMaxList as MutableList<String>
+        powerMaxList.add(0, "-Potencia hasta-")
+        val powerMaxSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, powerMaxList)
         powerMaxSpinner?.adapter = powerMaxSpinnerAdapter
         powerMaxSpinner?.setSelection(0)
 
         //cil min
-        val cilMinSpinnerAdapter = ArrayAdapter<Float>(context, android.R.layout.simple_spinner_item, response.cilMinList)
+        val cilMinList: MutableList<String> = response.cilMinList as MutableList<String>
+        cilMinList.add(0, "-Cilindrada desde-")
+        val cilMinSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, cilMinList)
         cilMinSpinner?.adapter = cilMinSpinnerAdapter
         cilMinSpinner?.setSelection(0)
 
         //cil max
-        val cilMaxSpinnerAdapter = ArrayAdapter<Float>(context, android.R.layout.simple_spinner_item, response.cilMaxList)
+        val cilMaxList: MutableList<String> = response.cilMaxList as MutableList<String>
+        cilMaxList.add(0, "-Cilindrada hasta-")
+        val cilMaxSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, cilMaxList)
         cilMaxSpinner?.adapter = cilMaxSpinnerAdapter
         cilMaxSpinner?.setSelection(0)
 
         //weight min
-        val weightMinSpinnerAdapter = ArrayAdapter<Float>(context, android.R.layout.simple_spinner_item, response.weightMinList)
+        val weightMinList: MutableList<String> = response.weightMinList as MutableList<String>
+        weightMinList.add(0, "-Peso desde-")
+        val weightMinSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, weightMinList)
         weightMinSpinner?.adapter = weightMinSpinnerAdapter
         weightMinSpinner?.setSelection(0)
 
         //weight max
-        val weightMaxSpinnerAdapter = ArrayAdapter<Float>(context, android.R.layout.simple_spinner_item, response.weightMaxList)
+        val weightMaxList: MutableList<String> = response.weightMaxList as MutableList<String>
+        weightMaxList.add(0, "-Peso hasta-")
+        val weightMaxSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, weightMaxList)
         weightMaxSpinner?.adapter = weightMaxSpinnerAdapter
         weightMaxSpinner?.setSelection(0)
 
         //year
-        val yearSpinnerAdapter = ArrayAdapter<Int>(context, android.R.layout.simple_spinner_item, response.yearList)
+        val yearList: MutableList<String> = response.yearList as MutableList<String>
+        yearList.add(0, "-Año-")
+        val yearSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, yearList)
         yearSpinner?.adapter = yearSpinnerAdapter
         yearSpinner?.setSelection(0)
 
         //license
-        val licenseSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, response.licenses)
+        val licenseTypeList = response.licenses as MutableList<String>
+        licenseTypeList.add(0, "-Permiso-")
+        val licenseSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, licenseTypeList)
         licenseSpinner?.adapter = licenseSpinnerAdapter
         licenseSpinner?.setSelection(0)
 
