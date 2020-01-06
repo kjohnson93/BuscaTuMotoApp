@@ -66,6 +66,8 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
         val buscaTuMotoGateway = BuscaTuMotoApplication.getInstance().buscaTuMotoGateway
         buscaTuMotoGateway?.getBrands()
 
+        buscaTuMotoGateway?.getFields()
+
         return fragmentView
     }
 
