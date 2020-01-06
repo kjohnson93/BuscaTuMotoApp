@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.Spinner
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.Constants
@@ -46,6 +47,8 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
 
     var filterFormMediator: FilterFormMediator? = null
 
+    var filterFormPgBar: ProgressBar? = null
+
     //Fragment is not destroyed. Only View inside Fragment does. fragment.view will be a different object after fragment goes to background etc.
     //Also, every single View that is implemented a View State Saving/Restoring internally (every view as a default)
     //automatically will be saved and  will restore the state. From the view inflated to every component. Causes it to display just perfectly the same as previous.
@@ -66,10 +69,13 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
             yearSpinner, licenseSpinner, refreshIButton)
 
         val buscaTuMotoGateway = BuscaTuMotoApplication.getInstance().buscaTuMotoGateway
-        buscaTuMotoGateway?.getBrands()
 
+        filterFormPgBar?.visibility = View.VISIBLE
+
+        filterFormPgBar?.visibility = View.VISIBLE
         buscaTuMotoGateway?.getFields(object: APIGatewayResponse.SuccessListener<FieldsResponse?> {
             override fun onResponse(response: FieldsResponse?) {
+                filterFormPgBar?.visibility = View.GONE
                 response?.let {
                     if (response.respuesta == APIConstants.RESPONSE_OK) {
                         fillSpinnerViews(response)
@@ -80,6 +86,7 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
         }, object : APIGatewayResponse.ErrorListener {
             override fun onError(errorResponse: String?) {
                 Log.e(Constants.MOTOTAG, "get fields error: $errorResponse")
+                filterFormPgBar?.visibility = View.GONE
             }
 
         })
@@ -180,6 +187,8 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
         closeIButton = fragmentView.findViewById(R.id.filtrar_close_ibtn)
         refreshIButton = fragmentView.findViewById(R.id.filtrar_refresh_ibtn)
         acceptIButton = fragmentView.findViewById(R.id.filtrar_accept_ibtn)
+
+        filterFormPgBar = fragmentView.findViewById(R.id.filter_dialog_progressBar)
 
         closeIButton?.setOnClickListener(this)
         refreshIButton?.setOnClickListener(this)
