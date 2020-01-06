@@ -13,6 +13,9 @@ import android.widget.Spinner
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.Constants
 import com.buscatumoto.R
+import com.buscatumoto.gateway.api.APIConstants
+import com.buscatumoto.gateway.api.APIGatewayResponse
+import com.buscatumoto.gateway.model.response.FieldsResponse
 
 
 class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
@@ -56,7 +59,6 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
         var fragmentView = inflater.inflate(R.layout.fragment_filtro_form, container, false)
 
         bindViews(fragmentView)
-        fillViews()
 
         filterFormMediator = FilterFormImpl(activity, brandSpinner, modelSpinner, bikeTypeSpinner,
             priceMinSpinner, priceMaxSpinner, powerMinSpinner, powerMaxSpinner,
@@ -66,9 +68,88 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
         val buscaTuMotoGateway = BuscaTuMotoApplication.getInstance().buscaTuMotoGateway
         buscaTuMotoGateway?.getBrands()
 
-        buscaTuMotoGateway?.getFields()
+        buscaTuMotoGateway?.getFields(object: APIGatewayResponse.SuccessListener<FieldsResponse?> {
+            override fun onResponse(response: FieldsResponse?) {
+                response?.let {
+                    if (response.respuesta == APIConstants.RESPONSE_OK) {
+                        fillSpinnerViews(response)
+                    }
+                }
+            }
+
+        }, object : APIGatewayResponse.ErrorListener {
+            override fun onError(errorResponse: String?) {
+                Log.e(Constants.MOTOTAG, "get fields error: $errorResponse")
+            }
+
+        })
 
         return fragmentView
+    }
+
+    private fun fillSpinnerViews(response: FieldsResponse) {
+        val brandSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item,
+            response.brandList
+        )
+        brandSpinner?.adapter = brandSpinnerAdapter
+        brandSpinner?.setSelection(0)
+
+        //bike type
+        val bikeTypeSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, response.bikeTypesList)
+        bikeTypeSpinner?.adapter = bikeTypeSpinnerAdapter
+        bikeTypeSpinner?.setSelection(0)
+
+        //price min
+            val priceMinSpinnerAdapter = ArrayAdapter<Int>(context, android.R.layout.simple_spinner_item, response.priceMinList)
+        priceMinSpinner?.adapter = priceMinSpinnerAdapter
+        priceMinSpinner?.setSelection(0)
+
+        //price max
+        val priceMaxSpinnerAdapter = ArrayAdapter<Int>(context, android.R.layout.simple_spinner_item, response.priceMaxList)
+        priceMaxSpinner?.adapter = priceMaxSpinnerAdapter
+        priceMaxSpinner?.setSelection(0)
+
+        //power min
+        val powerMinSpinnerAdapter = ArrayAdapter<Float>(context, android.R.layout.simple_spinner_item, response.powerMinList)
+        powerMinSpinner?.adapter = powerMinSpinnerAdapter
+        powerMinSpinner?.setSelection(0)
+
+        //power max
+        val powerMaxSpinnerAdapter = ArrayAdapter<Float>(context, android.R.layout.simple_spinner_item, response.powerMaxList)
+        powerMaxSpinner?.adapter = powerMaxSpinnerAdapter
+        powerMaxSpinner?.setSelection(0)
+
+        //cil min
+        val cilMinSpinnerAdapter = ArrayAdapter<Float>(context, android.R.layout.simple_spinner_item, response.cilMinList)
+        cilMinSpinner?.adapter = cilMinSpinnerAdapter
+        cilMinSpinner?.setSelection(0)
+
+        //cil max
+        val cilMaxSpinnerAdapter = ArrayAdapter<Float>(context, android.R.layout.simple_spinner_item, response.cilMaxList)
+        cilMaxSpinner?.adapter = cilMaxSpinnerAdapter
+        cilMaxSpinner?.setSelection(0)
+
+        //weight min
+        val weightMinSpinnerAdapter = ArrayAdapter<Float>(context, android.R.layout.simple_spinner_item, response.weightMinList)
+        weightMinSpinner?.adapter = weightMinSpinnerAdapter
+        weightMinSpinner?.setSelection(0)
+
+        //weight max
+        val weightMaxSpinnerAdapter = ArrayAdapter<Float>(context, android.R.layout.simple_spinner_item, response.weightMaxList)
+        weightMaxSpinner?.adapter = weightMaxSpinnerAdapter
+        weightMaxSpinner?.setSelection(0)
+
+        //year
+        val yearSpinnerAdapter = ArrayAdapter<Int>(context, android.R.layout.simple_spinner_item, response.yearList)
+        yearSpinner?.adapter = yearSpinnerAdapter
+        yearSpinner?.setSelection(0)
+
+        //license
+        val licenseSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, response.licenses)
+        licenseSpinner?.adapter = licenseSpinnerAdapter
+        licenseSpinner?.setSelection(0)
+
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -79,92 +160,6 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
         Log.d(Constants.MOTOTAG, "onStart called")
-    }
-
-    private fun fillViews() {
-
-        //#test data
-        val brands: ArrayList<String> = ArrayList()
-
-        brands.add("-")
-        brands.add("Aprilia")
-        brands.add("Arc")
-        brands.add("Benelli")
-        brands.add("Beta")
-        brands.add("BMW")
-        brands.add("Brixton")
-        brands.add("Bultaco")
-        brands.add("CFMoto")
-        brands.add("Daelim")
-        brands.add("Ducati")
-        brands.add("EBR")
-        brands.add("Energica")
-        //#test data
-
-        //brand
-        val brandSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, brands)
-        brandSpinner?.adapter = brandSpinnerAdapter
-        brandSpinner?.setSelection(0)
-
-        //model. Model values are based on brand selected. If no brand is selected, default value will be "-"
-        val modelSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, emptyArray())
-        modelSpinner?.adapter = modelSpinnerAdapter
-        modelSpinner?.setSelection(0)
-
-        //bike type
-        val bikeTypeSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, emptyArray())
-        bikeTypeSpinner?.adapter = bikeTypeSpinnerAdapter
-        bikeTypeSpinner?.setSelection(0)
-
-        //price min
-        val priceMinSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, emptyArray())
-        priceMinSpinner?.adapter = priceMinSpinnerAdapter
-        priceMinSpinner?.setSelection(0)
-
-        //price max
-        val priceMaxSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, emptyArray())
-        priceMaxSpinner?.adapter = priceMaxSpinnerAdapter
-        priceMaxSpinner?.setSelection(0)
-
-        //power min
-        val powerMinSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, emptyArray())
-        powerMinSpinner?.adapter = powerMinSpinnerAdapter
-        powerMinSpinner?.setSelection(0)
-
-        //power max
-        val powerMaxSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, emptyArray())
-        powerMaxSpinner?.adapter = powerMaxSpinnerAdapter
-        powerMaxSpinner?.setSelection(0)
-
-        //cil min
-        val cilMinSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, emptyArray())
-        cilMinSpinner?.adapter = cilMinSpinnerAdapter
-        cilMinSpinner?.setSelection(0)
-
-        //cil max
-        val cilMaxSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, emptyArray())
-        cilMaxSpinner?.adapter = cilMaxSpinnerAdapter
-        cilMaxSpinner?.setSelection(0)
-
-        //weight min
-        val weightMinSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, emptyArray())
-        weightMinSpinner?.adapter = weightMinSpinnerAdapter
-        weightMinSpinner?.setSelection(0)
-
-        //weight max
-        val weightMaxSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, emptyArray())
-        weightMaxSpinner?.adapter = weightMaxSpinnerAdapter
-        weightMaxSpinner?.setSelection(0)
-
-        //year
-        val yearSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, emptyArray())
-        yearSpinner?.adapter = yearSpinnerAdapter
-        yearSpinner?.setSelection(0)
-
-        //license
-        val licenseSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, emptyArray())
-        licenseSpinner?.adapter = licenseSpinnerAdapter
-        licenseSpinner?.setSelection(0)
     }
 
     private fun bindViews(fragmentView: View) {
