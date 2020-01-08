@@ -1,7 +1,6 @@
-package com.buscatumoto.ui
+package com.buscatumoto.ui.fragments
 
 import android.os.Bundle
-import android.os.SystemClock
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,9 +10,9 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.Toast
-import com.buscatumoto.Constants
+import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
+import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
 
 
 class SearchFragment : Fragment(), View.OnClickListener {

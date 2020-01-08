@@ -1,8 +1,7 @@
-package com.buscatumoto.ui
+package com.buscatumoto.ui.activities
 
 import android.os.Bundle
 import android.os.Handler
-import android.os.PersistableBundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.CoordinatorLayout
@@ -11,8 +10,11 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.buscatumoto.R
+import com.buscatumoto.utils.ui.CustomScrollView
+import com.buscatumoto.ui.fragments.SearchFragment
 
-class SearchActivity: AppCompatActivity(), SearchFragment.ReadyListener {
+class SearchActivity: AppCompatActivity(),
+    SearchFragment.ReadyListener {
 
     override fun onReady() {
         val secondsDelayed = 6

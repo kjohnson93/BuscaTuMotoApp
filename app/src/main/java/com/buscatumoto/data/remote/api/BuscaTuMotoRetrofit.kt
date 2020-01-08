@@ -1,7 +1,7 @@
-package com.buscatumoto.gateway.api
+package com.buscatumoto.data.remote.api
 
 import android.util.Log
-import com.buscatumoto.Constants
+import com.buscatumoto.utils.global.Constants
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -26,7 +26,7 @@ class BuscaTuMotoRetrofit {
     }
 
     private var retrofit: Retrofit? = null
-    private var buscaTuMotoAPI: BuscaTuMotoAPI? = null
+    private var buscaTuMotoService: BuscaTuMotoService? = null
 
     init {
         val environment = Environment.DEVELOP
@@ -52,10 +52,10 @@ class BuscaTuMotoRetrofit {
             .client(okHttpClient)
             .build()
 
-        buscaTuMotoAPI = retrofit!!.create(BuscaTuMotoAPI::class.java)
+        buscaTuMotoService = retrofit!!.create(BuscaTuMotoService::class.java)
     }
 
-    fun getBuscaTuMotoApi(): BuscaTuMotoAPI? {
-        return buscaTuMotoAPI
+    fun getBuscaTuMotoApi(): BuscaTuMotoService? {
+        return buscaTuMotoService
     }
 }

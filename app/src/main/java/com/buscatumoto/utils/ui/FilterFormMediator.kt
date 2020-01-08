@@ -1,12 +1,12 @@
-package com.buscatumoto.ui
+package com.buscatumoto.utils.ui
 
 import android.app.Activity
 import android.util.Log
 import android.view.View
 import android.widget.*
 import com.buscatumoto.BuscaTuMotoApplication
-import com.buscatumoto.Constants
-import com.buscatumoto.gateway.api.APIGatewayResponse
+import com.buscatumoto.utils.global.Constants
+import com.buscatumoto.data.remote.api.APIGatewayResponse
 
 interface FilterFormMediator {
     fun notify(senderId: Int?, event: Int)

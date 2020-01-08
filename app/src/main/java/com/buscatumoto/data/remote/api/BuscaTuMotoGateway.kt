@@ -1,8 +1,8 @@
-package com.buscatumoto.gateway.api
+package com.buscatumoto.data.remote.api
 
 import android.util.Log
-import com.buscatumoto.Constants
-import com.buscatumoto.gateway.model.response.FieldsResponse
+import com.buscatumoto.utils.global.Constants
+import com.buscatumoto.data.remote.model.response.FieldsResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

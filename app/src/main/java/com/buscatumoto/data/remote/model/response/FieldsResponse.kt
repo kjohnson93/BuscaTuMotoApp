@@ -1,7 +1,5 @@
-package com.buscatumoto.gateway.model.response
+package com.buscatumoto.data.remote.model.response
 
-import android.os.Parcel
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class FieldsResponse(

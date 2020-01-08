@@ -1,10 +1,11 @@
-package com.buscatumoto.ui
+package com.buscatumoto.ui.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 
 import android.os.Handler
 import com.buscatumoto.R
+import com.buscatumoto.utils.ui.BasicNavigator
 
 
 /**

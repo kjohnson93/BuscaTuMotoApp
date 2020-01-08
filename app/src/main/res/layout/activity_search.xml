@@ -32,7 +32,7 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-    <com.buscatumoto.ui.CustomScrollView
+    <com.buscatumoto.utils.ui.CustomScrollView
         android:fitsSystemWindows="true"
         android:layout_gravity="fill_vertical"
         android:fillViewport="true"
@@ -46,5 +46,5 @@
             android:orientation="vertical"
             android:id="@+id/fragmentLL"
             android:layout_width="match_parent" android:layout_height="wrap_content"></LinearLayout>
-    </com.buscatumoto.ui.CustomScrollView>
+    </com.buscatumoto.utils.ui.CustomScrollView>
 </android.support.design.widget.CoordinatorLayout>

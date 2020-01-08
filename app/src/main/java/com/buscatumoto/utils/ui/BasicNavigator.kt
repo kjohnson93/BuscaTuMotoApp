@@ -1,4 +1,4 @@
-package com.buscatumoto.ui
+package com.buscatumoto.utils.ui
 
 import android.app.Activity
 import android.content.Context

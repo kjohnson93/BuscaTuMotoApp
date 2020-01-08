@@ -1,4 +1,4 @@
-package com.buscatumoto
+package com.buscatumoto.utils.global
 
 class Constants {
 

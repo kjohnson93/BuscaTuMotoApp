@@ -1,13 +1,11 @@
-package com.buscatumoto.gateway.api
+package com.buscatumoto.data.remote.api
 
-import com.buscatumoto.gateway.model.forms.GetBrandsForm
-import com.buscatumoto.gateway.model.response.FieldsResponse
+import com.buscatumoto.data.remote.model.response.FieldsResponse
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Path
 
-interface BuscaTuMotoAPI {
+interface BuscaTuMotoService {
 
     @GET(APIConstants.GET_BRANDS_URL)
     fun getBrands(): Call<ArrayList<String>>

@@ -1,7 +1,7 @@
 package com.buscatumoto
 
 import android.app.Application
-import com.buscatumoto.gateway.api.BuscaTuMotoGateway
+import com.buscatumoto.data.remote.api.BuscaTuMotoGateway
 
 class BuscaTuMotoApplication: Application() {
 

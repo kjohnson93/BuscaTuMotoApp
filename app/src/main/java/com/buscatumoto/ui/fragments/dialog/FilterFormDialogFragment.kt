@@ -1,4 +1,4 @@
-package com.buscatumoto.ui
+package com.buscatumoto.ui.fragments.dialog
 
 import android.app.Dialog
 import android.os.Bundle
@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.buscatumoto.BuscaTuMotoApplication
-import com.buscatumoto.Constants
+import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
-import com.buscatumoto.gateway.api.APIConstants
-import com.buscatumoto.gateway.api.APIGatewayResponse
-import com.buscatumoto.gateway.model.response.FieldsResponse
+import com.buscatumoto.data.remote.api.APIConstants
+import com.buscatumoto.data.remote.api.APIGatewayResponse
+import com.buscatumoto.data.remote.model.response.FieldsResponse
+import com.buscatumoto.utils.ui.FilterFormImpl
+import com.buscatumoto.utils.ui.FilterFormMediator
 
 
 class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
@@ -60,10 +62,12 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
 
         bindViews(fragmentView)
 
-        filterFormMediator = FilterFormImpl(activity, filterFormPgBar, brandSpinner, modelSpinner, bikeTypeSpinner,
+        filterFormMediator = FilterFormImpl(
+            activity, filterFormPgBar, brandSpinner, modelSpinner, bikeTypeSpinner,
             priceMinSpinner, priceMaxSpinner, powerMinSpinner, powerMaxSpinner,
             cilMinSpinner, cilMaxSpinner, weightMinSpinner, weightMaxSpinner,
-            yearSpinner, licenseSpinner, refreshIButton)
+            yearSpinner, licenseSpinner, refreshIButton
+        )
 
         attachItemClickListener()
 
