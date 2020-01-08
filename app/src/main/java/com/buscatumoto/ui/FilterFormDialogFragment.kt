@@ -7,10 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageButton
-import android.widget.ProgressBar
-import android.widget.Spinner
+import android.widget.*
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.Constants
 import com.buscatumoto.R
@@ -63,10 +60,12 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
 
         bindViews(fragmentView)
 
-        filterFormMediator = FilterFormImpl(activity, brandSpinner, modelSpinner, bikeTypeSpinner,
+        filterFormMediator = FilterFormImpl(activity, filterFormPgBar, brandSpinner, modelSpinner, bikeTypeSpinner,
             priceMinSpinner, priceMaxSpinner, powerMinSpinner, powerMaxSpinner,
             cilMinSpinner, cilMaxSpinner, weightMinSpinner, weightMaxSpinner,
             yearSpinner, licenseSpinner, refreshIButton)
+
+        attachItemClickListener()
 
         val buscaTuMotoGateway = BuscaTuMotoApplication.getInstance().buscaTuMotoGateway
 
@@ -239,6 +238,11 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
         closeIButton?.setOnClickListener(this)
         refreshIButton?.setOnClickListener(this)
         acceptIButton?.setOnClickListener(this)
+
+    }
+
+    private fun attachItemClickListener() {
+        brandSpinner?.onItemSelectedListener = filterFormMediator as AdapterView.OnItemSelectedListener
     }
 
 

@@ -1,19 +1,19 @@
 package com.buscatumoto.ui
 
 import android.app.Activity
+import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.Spinner
-import com.buscatumoto.R
+import android.widget.*
+import com.buscatumoto.BuscaTuMotoApplication
+import com.buscatumoto.Constants
+import com.buscatumoto.gateway.api.APIGatewayResponse
 
 interface FilterFormMediator {
     fun notify(senderId: Int?, event: Int)
 }
 
 
-class FilterFormImpl(val activity: Activity?,    var brandSpinner: Spinner? = null,
+class FilterFormImpl(val activity: Activity?, val progressBar: ProgressBar? = null,  var brandSpinner: Spinner? = null,
                          var modelSpinner: Spinner? = null,
                          var bikeTypeSpinner: Spinner? = null,
                          var priceMinSpinner: Spinner? = null,
@@ -26,7 +26,7 @@ class FilterFormImpl(val activity: Activity?,    var brandSpinner: Spinner? = nu
                          var weightMaxSpinner: Spinner? = null,
                          var yearSpinner: Spinner? = null,
                          var licenseSpinner: Spinner? = null,
-                         var refreshBtn: ImageButton? = null): FilterFormMediator {
+                         var refreshBtn: ImageButton? = null): FilterFormMediator, AdapterView.OnItemSelectedListener {
 
     override fun notify(senderId: Int?, event: Int) {
 
@@ -39,6 +39,8 @@ class FilterFormImpl(val activity: Activity?,    var brandSpinner: Spinner? = nu
             refreshAllViews()
         }
     }
+
+
 
     private fun refreshAllViews() {
 
@@ -56,6 +58,55 @@ class FilterFormImpl(val activity: Activity?,    var brandSpinner: Spinner? = nu
         yearSpinner?.setSelection(0)
         licenseSpinner?.setSelection(0)
     }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        Log.d(Constants.MOTOTAG, "Position clicked: $position")
+
+        when (parent?.id) {
+            brandSpinner?.id -> {
+                //API Request
+                progressBar?.visibility = View.VISIBLE
+
+                val buscaTuMotoGateway = BuscaTuMotoApplication.getInstance().buscaTuMotoGateway
+                val brand = parent?.getItemAtPosition(position).toString()
+
+                buscaTuMotoGateway?.getBikesByBrand(
+                    brand,
+                    object : APIGatewayResponse.SuccessListener<ArrayList<String>?> {
+                        override fun onResponse(response: ArrayList<String>??) {
+                            progressBar?.visibility = View.GONE
+                            response?.let {
+                                Log.d(Constants.MOTOTAG, "get bikes by brand response: $response")
+                                fillModelSpiner(response)
+                            }
+                        }
+
+                    },
+                    object : APIGatewayResponse.ErrorListener {
+                        override fun onError(errorResponse: String?) {
+                            Log.e(Constants.MOTOTAG, "get bikes by brand error: $errorResponse")
+                            progressBar?.visibility = View.GONE
+                        }
+
+                    })
+            }
+        }
+
+    }
+
+    private fun fillModelSpiner(response: ArrayList<String>) {
+        val modelTypeList: ArrayList<String> = ArrayList()
+        modelTypeList.addAll(response)
+        modelTypeList.add(0, "-Elegir Marca-")
+        val modelTypeSpinnerAdapter = ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, modelTypeList)
+        modelSpinner?.adapter = modelTypeSpinnerAdapter
+        modelSpinner?.setSelection(0)
+    }
+
 
 }
 

@@ -14,5 +14,7 @@ class APIConstants {
         const val GET_BRANDS_URL = "api/moto/field/brands"
 
         const val GET_FIELDS_URL = "api/moto/fields"
+
+        const val GET_BIKES_BY_BRAND = "api/moto/field/{brand}"
     }
 }
