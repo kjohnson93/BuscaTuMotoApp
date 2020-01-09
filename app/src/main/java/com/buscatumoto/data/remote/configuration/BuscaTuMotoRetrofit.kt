@@ -1,6 +1,7 @@
-package com.buscatumoto.data.remote.api
+package com.buscatumoto.data.remote.configuration
 
 import android.util.Log
+import com.buscatumoto.utils.data.Environment
 import com.buscatumoto.utils.global.Constants
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -17,7 +18,8 @@ class BuscaTuMotoRetrofit {
 
         fun getInstance(): BuscaTuMotoRetrofit? {
             if (sInstance == null) {
-                sInstance = BuscaTuMotoRetrofit()
+                sInstance =
+                    BuscaTuMotoRetrofit()
             }
 
             return sInstance
@@ -58,4 +60,17 @@ class BuscaTuMotoRetrofit {
     fun getBuscaTuMotoApi(): BuscaTuMotoService? {
         return buscaTuMotoService
     }
+}
+
+// Decorator/wrapper for handling network responses.
+sealed class APIGatewayResponse<T> {
+
+    interface SuccessListener<T> {
+        fun onResponse(response: T)
+    }
+
+    interface ErrorListener {
+        fun onError(errorResponse: String?)
+    }
+
 }

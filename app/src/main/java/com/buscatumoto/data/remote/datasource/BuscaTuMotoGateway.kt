@@ -1,8 +1,10 @@
-package com.buscatumoto.data.remote.api
+package com.buscatumoto.data.remote.datasource
 
 import android.util.Log
+import com.buscatumoto.data.remote.configuration.APIGatewayResponse
+import com.buscatumoto.data.remote.configuration.BuscaTuMotoRetrofit
 import com.buscatumoto.utils.global.Constants
-import com.buscatumoto.data.remote.model.response.FieldsResponse
+import com.buscatumoto.data.remote.dto.response.FieldsResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,7 +15,8 @@ class BuscaTuMotoGateway {
 
     fun getBrands() {
 
-        val buscaTuMotoAPI = BuscaTuMotoRetrofit.getInstance()?.getBuscaTuMotoApi()
+        val buscaTuMotoAPI = BuscaTuMotoRetrofit.getInstance()
+            ?.getBuscaTuMotoApi()
         val call: Call<ArrayList<String>> = buscaTuMotoAPI!!.getBrands()
 
         call.enqueue(object: Callback<ArrayList<String>> {
@@ -34,7 +37,8 @@ class BuscaTuMotoGateway {
     }
 
     fun getFields(responseListener: APIGatewayResponse.SuccessListener<FieldsResponse?>, errorListener: APIGatewayResponse.ErrorListener) {
-        val buscaTuMotoAPI = BuscaTuMotoRetrofit.getInstance()?.getBuscaTuMotoApi()
+        val buscaTuMotoAPI = BuscaTuMotoRetrofit.getInstance()
+            ?.getBuscaTuMotoApi()
         val call: Call<FieldsResponse> = buscaTuMotoAPI!!.getFields()
 
         call.enqueue(object: Callback<FieldsResponse> {
@@ -56,8 +60,9 @@ class BuscaTuMotoGateway {
 
     }
 
-    fun getBikesByBrand(brand: String,responseListener: APIGatewayResponse.SuccessListener<ArrayList<String>?>, errorListener: APIGatewayResponse.ErrorListener) {
-        val buscaTuMotoAPI = BuscaTuMotoRetrofit.getInstance()?.getBuscaTuMotoApi()
+    fun getBikesByBrand(brand: String, responseListener: APIGatewayResponse.SuccessListener<ArrayList<String>?>, errorListener: APIGatewayResponse.ErrorListener) {
+        val buscaTuMotoAPI = BuscaTuMotoRetrofit.getInstance()
+            ?.getBuscaTuMotoApi()
         val call: Call<ArrayList<String>> = buscaTuMotoAPI!!.getBikesByBrand(brand)
 
         call.enqueue(object: Callback<ArrayList<String>> {

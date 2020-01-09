@@ -11,9 +11,8 @@ import android.widget.*
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
-import com.buscatumoto.data.remote.api.APIConstants
-import com.buscatumoto.data.remote.api.APIGatewayResponse
-import com.buscatumoto.data.remote.model.response.FieldsResponse
+import com.buscatumoto.utils.data.APIConstants
+import com.buscatumoto.data.remote.dto.response.FieldsResponse
 import com.buscatumoto.utils.ui.FilterFormImpl
 import com.buscatumoto.utils.ui.FilterFormMediator
 

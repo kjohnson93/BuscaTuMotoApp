@@ -1,7 +1,7 @@
 package com.buscatumoto
 
 import android.app.Application
-import com.buscatumoto.data.remote.api.BuscaTuMotoGateway
+import com.buscatumoto.data.remote.datasource.BuscaTuMotoGateway
 
 class BuscaTuMotoApplication: Application() {
 
@@ -21,7 +21,8 @@ class BuscaTuMotoApplication: Application() {
     override fun onCreate() {
         super.onCreate()
 
-        buscaTuMotoGateway = BuscaTuMotoGateway()
+        buscaTuMotoGateway =
+            BuscaTuMotoGateway()
         sInstance = this
     }
 }

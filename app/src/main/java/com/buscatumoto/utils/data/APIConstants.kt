@@ -1,4 +1,4 @@
-package com.buscatumoto.data.remote.api
+package com.buscatumoto.utils.data
 
 class APIConstants {
 

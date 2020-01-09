@@ -1,6 +1,7 @@
-package com.buscatumoto.data.remote.api
+package com.buscatumoto.data.remote.configuration
 
-import com.buscatumoto.data.remote.model.response.FieldsResponse
+import com.buscatumoto.data.remote.dto.response.FieldsResponse
+import com.buscatumoto.utils.data.APIConstants
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
