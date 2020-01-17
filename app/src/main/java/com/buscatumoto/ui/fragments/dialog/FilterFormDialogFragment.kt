@@ -169,8 +169,11 @@ class FilterFormDialogFragment : DialogFragment(), View.OnClickListener {
 //                holder.itemView.imageFavorite.isChecked = it == 1 // 6
 //            }
 
-       // https://www.raywenderlich.com/2071847-reactive-programming-with-rxandroid-in-kotlin-an-introduction
+        //https://www.raywenderlich.com/2071847-reactive-programming-with-rxandroid-in-kotlin-an-introduction
         //https://proandroiddev.com/mvvm-with-kotlin-android-architecture-components-dagger-2-retrofit-and-rxandroid-1a4ebb38c699
+        //https://dagger.dev/users-guide.html
+        //https://riptutorial.com/es/dagger-2/example/32372/aprende-dagger2-con-un-simple-ejemplo-
+        //https://www.raywenderlich.com/3983802-working-with-rxjava-disposables-in-kotlin
 
 
          searchTextObservable
