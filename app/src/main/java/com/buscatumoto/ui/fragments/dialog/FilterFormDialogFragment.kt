@@ -20,6 +20,7 @@ import com.buscatumoto.utils.ui.FilterFormMediator
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
@@ -53,6 +54,9 @@ class FilterFormDialogFragment : DialogFragment(), View.OnClickListener {
     var filterFormMediator: FilterFormMediator? = null
 
     var filterFormPgBar: ProgressBar? = null
+
+    private lateinit var subscription: Disposable
+
 
     //Fragment is not destroyed. Only View inside Fragment does. fragment.view will be a different object after fragment goes to background etc.
     //Also, every single View that is implemented a View State Saving/Restoring internally (every view as a default)
@@ -135,6 +139,7 @@ class FilterFormDialogFragment : DialogFragment(), View.OnClickListener {
          */
         searchTextObservable.debounce(1000, TimeUnit.MILLISECONDS)
 
+
         /**
          * Merge operator
          * Takes items from two or more observables and puts them into a single observable:
@@ -151,7 +156,7 @@ class FilterFormDialogFragment : DialogFragment(), View.OnClickListener {
 //            holder.itemView.imageFavorite.setOnClickListener {
 //                emitter.onSuccess((it as CheckableImageView).isChecked) // 2
 //            }
-//        }.toFlowable().onBackpressureLatest() // 3
+//        }.toFlowable().onBackpressureLatest() //
 //            .observeOn(Schedulers.io())
 //            .map { isChecked ->
 //                cheese.favorite = if (!isChecked) 1 else 0
@@ -164,9 +169,11 @@ class FilterFormDialogFragment : DialogFragment(), View.OnClickListener {
 //                holder.itemView.imageFavorite.isChecked = it == 1 // 6
 //            }
 
+       // https://www.raywenderlich.com/2071847-reactive-programming-with-rxandroid-in-kotlin-an-introduction
+        //https://proandroiddev.com/mvvm-with-kotlin-android-architecture-components-dagger-2-retrofit-and-rxandroid-1a4ebb38c699
 
 
-        searchTextObservable
+         searchTextObservable
             .subscribeOn(AndroidSchedulers.mainThread()) //In Android, observables that emits events from UI should execute on the main thread.
             .observeOn(Schedulers.io()) //Specify that next operator should be called on the I/O thread.
             .map { query -> Toast.makeText(context, "MAP search text toast + ${query}", Toast.LENGTH_LONG).show()} //Simulating a Map operation (Aditional operation before passign to consumer)
@@ -174,6 +181,8 @@ class FilterFormDialogFragment : DialogFragment(), View.OnClickListener {
             .subscribe { //This way, if map operation is asynchronous, UI will not be blocked and UI should be responsive even when there is a task in progress.
                 query -> Toast.makeText(context, "Subscribedsearch text toast + ${query}", Toast.LENGTH_LONG).show()
             }
+
+
 
 
 
