@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import com.buscatumoto.BuscaTuMotoApplication
+import com.buscatumoto.data.remote.configuration.APIGatewayResponse
 import com.buscatumoto.utils.global.Constants
 
 interface FilterFormMediator {

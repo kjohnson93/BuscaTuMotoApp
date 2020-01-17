@@ -11,6 +11,7 @@ import android.widget.*
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
+import com.buscatumoto.data.remote.configuration.APIGatewayResponse
 import com.buscatumoto.utils.data.APIConstants
 import com.buscatumoto.data.remote.dto.response.FieldsResponse
 import com.buscatumoto.utils.ui.FilterFormImpl
@@ -236,7 +237,7 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
         refreshIButton = fragmentView.findViewById(R.id.filtrar_refresh_ibtn)
         acceptIButton = fragmentView.findViewById(R.id.filtrar_accept_ibtn)
 
-        filterFormPgBar = fragmentView.findViewById(R.id.filter_dialog_progressBar)
+//        filterFormPgBar = fragmentView.findViewById(R.id.filter_dialog_progressBar)
 
         closeIButton?.setOnClickListener(this)
         refreshIButton?.setOnClickListener(this)

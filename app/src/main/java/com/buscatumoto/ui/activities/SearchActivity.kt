@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.buscatumoto.R
+import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.utils.ui.CustomScrollView
 import com.buscatumoto.ui.fragments.SearchFragment
 
