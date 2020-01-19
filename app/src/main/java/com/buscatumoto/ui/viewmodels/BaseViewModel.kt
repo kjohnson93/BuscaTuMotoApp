@@ -19,7 +19,7 @@ abstract class BaseViewModel: ViewModel() {
      */
     private fun inject() {
         when(this) {
-            is SearchBikeViewModel -> {
+            is SearchBikeActivityViewModel -> {
                 injector.inject(this)
             }
         }

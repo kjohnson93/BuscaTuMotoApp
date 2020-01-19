@@ -1,7 +1,7 @@
 package com.buscatumoto.injection.component
 
 import com.buscatumoto.injection.module.NetworkModule
-import com.buscatumoto.ui.viewmodels.SearchBikeViewModel
+import com.buscatumoto.ui.viewmodels.SearchBikeActivityViewModel
 import dagger.Component
 import javax.inject.Singleton
 
@@ -11,9 +11,9 @@ interface ViewModelComponent {
 
     /**
      * Injects required dependencies into the specified SearchBikeViewModel.
-     * @param searchBikeViewModel SearchBikeViewModel in which to inject the dependencies
+     * @param searchBikeActivityViewModel SearchBikeViewModel in which to inject the dependencies
      */
-    fun inject(searchBikeViewModel: SearchBikeViewModel)
+    fun inject(searchBikeActivityViewModel: SearchBikeActivityViewModel)
 
 
 }
