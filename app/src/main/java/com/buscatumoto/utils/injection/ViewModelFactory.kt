@@ -12,7 +12,7 @@ import kotlin.reflect.KClass
 @Singleton
 class ViewModelFactory
     @Inject constructor(
-        private val mProviderMap: Map<Class<out ViewModel>, Provider<ViewModel>>
+        private val mProviderMap: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
     )
     : ViewModelProvider.Factory {
 

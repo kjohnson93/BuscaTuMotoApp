@@ -1,5 +1,8 @@
 package com.buscatumoto.ui.activities
 
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.AppBarLayout
@@ -9,28 +12,19 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
+import com.buscatumoto.injection.component.DaggerViewModelComponent
+import com.buscatumoto.injection.component.ViewModelComponent
 import com.buscatumoto.injection.module.NetworkModule
+import com.buscatumoto.injection.module.ViewModelModule
 import com.buscatumoto.utils.ui.CustomScrollView
 import com.buscatumoto.ui.fragments.SearchFragment
+import com.buscatumoto.ui.viewmodels.SearchBikeActivityViewModel
+import javax.inject.Inject
 
 class SearchActivity: AppCompatActivity(),
     SearchFragment.ReadyListener {
-
-    override fun onReady() {
-        val secondsDelayed = 6
-        Handler().postDelayed(Runnable {
-            searchBarLayout!!.setExpanded(false, true)
-        }, (secondsDelayed * 1000).toLong())
-    }
-
-    /**
-     * To be reviewed: Method to show error response from server. Handled by container. Could be handled by subview as well.
-     */
-    override fun showError(error: String?) {
-        var toast: Toast = Toast.makeText(applicationContext, error, Toast.LENGTH_LONG)
-        toast.show()
-    }
 
     /**
      * Main view
@@ -66,11 +60,23 @@ class SearchActivity: AppCompatActivity(),
 //        disableHeaderScroll()
 //    }
 
+        private val injector: ViewModelComponent = DaggerViewModelComponent
+        .builder().networkModule(NetworkModule).build()
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    lateinit var searchBikeActivityViewModel: ViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        injector.inject(this)
+
         setContentView(R.layout.activity_search)
+        searchBikeActivityViewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchBikeActivityViewModel::class.java)
+
 
         searchBarLayout = findViewById(R.id.searchAppBar)
         collapsingToolbar = findViewById(R.id.collapsingToolbar)
@@ -79,6 +85,9 @@ class SearchActivity: AppCompatActivity(),
 
         nestedScrollView!!.isEnableScrolling = false
         this.openFragment()
+
+//        (application as BuscaTuMotoApplication).component.inject(this)
+
 
         disableHeaderScroll()
     }
@@ -128,6 +137,21 @@ class SearchActivity: AppCompatActivity(),
     }
 
 
+
+    override fun onReady() {
+        val secondsDelayed = 6
+        Handler().postDelayed(Runnable {
+            searchBarLayout!!.setExpanded(false, true)
+        }, (secondsDelayed * 1000).toLong())
+    }
+
+    /**
+     * To be reviewed: Method to show error response from server. Handled by container. Could be handled by subview as well.
+     */
+    override fun showError(error: String?) {
+        var toast: Toast = Toast.makeText(applicationContext, error, Toast.LENGTH_LONG)
+        toast.show()
+    }
 
 
 

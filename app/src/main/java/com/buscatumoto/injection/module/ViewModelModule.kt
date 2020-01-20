@@ -1,9 +1,11 @@
 package com.buscatumoto.injection.module
 
 import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
 import com.buscatumoto.ui.viewmodels.SearchBikeActivityViewModel
 import com.buscatumoto.ui.viewmodels.SearchBikeFragmentViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
+import dagger.Binds
 import dagger.MapKey
 import dagger.Module
 import dagger.Provides
@@ -14,7 +16,7 @@ import javax.inject.Provider
 import kotlin.reflect.KClass
 
 @Module
-object ViewModelModule {
+abstract class ViewModelModule {
 
 
     //Creates VieewModelKey annotation
@@ -23,26 +25,31 @@ object ViewModelModule {
     @MapKey
     internal annotation class ViewModelKey(val value: KClass<out ViewModel>)
 
-//
-//    @Binds
-//    internal abstract fun bindViewModelFactory(factory: GithubViewModelFactory): ViewModelProvider.Factory
 
-    @Provides
-    fun viewModelFactory(providerMap: Map<Class<out ViewModel>, Provider<ViewModel>>): ViewModelFactory {
-        return ViewModelFactory(providerMap)
-    }
+    @Binds
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
-    @Provides
+    @Binds
     @IntoMap
     @ViewModelKey(SearchBikeActivityViewModel::class)
-    fun provideSearchActivityViewModel(): ViewModel {
-        return SearchBikeActivityViewModel()
-    }
+    abstract fun bindsSearchBikeActivityViewModel(searchBikeActivityViewModel: SearchBikeActivityViewModel): ViewModel
 
-    @Provides
-    @IntoMap
-    @ViewModelKey(SearchBikeFragmentViewModel::class)
-    fun provideSearchBikeFragmentViewModel(): ViewModel {
-        return SearchBikeFragmentViewModel()
-    }
+//    @Provides
+//    fun viewModelFactory(providerMap: Map<Class<out ViewModel>, Provider<ViewModel>>): ViewModelFactory {
+//        return ViewModelFactory(providerMap)
+//    }
+
+//    @Provides
+//    @IntoMap
+//    @ViewModelKey(SearchBikeActivityViewModel::class)
+//    fun provideSearchActivityViewModel(): ViewModel {
+//        return SearchBikeActivityViewModel()
+//    }
+//
+//    @Provides
+//    @IntoMap
+//    @ViewModelKey(SearchBikeFragmentViewModel::class)
+//    fun provideSearchBikeFragmentViewModel(): ViewModel {
+//        return SearchBikeFragmentViewModel()
+//    }
 }
