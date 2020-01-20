@@ -42,23 +42,13 @@ class SearchActivity : AppCompatActivity(),
      */
     private var nestedScrollView: CustomScrollView? = null
 
-    private val injector: ViewModelComponent = DaggerViewModelComponent
-        .builder().networkModule(NetworkModule).build()
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    lateinit var searchBikeActivityViewModel: ViewModel
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        injector.inject(this)
 
         setContentView(R.layout.activity_search)
-        searchBikeActivityViewModel = ViewModelProviders.of(this, viewModelFactory)
-            .get(FrontPageViewModel::class.java)
+
 
 
         searchBarLayout = findViewById(R.id.searchAppBar)

@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.buscatumoto.ui.viewmodels.SearchFormViewModel" />
+    </data>
+    
+<FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
+
 
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
@@ -442,9 +452,10 @@
         android:layout_gravity="center"
         android:progressDrawable="@drawable/circular_progress_bar"
         android:background="@drawable/circle_shape"
-        android:visibility="gone"
         android:max="100"
         android:progress="65" />
 
 
 </FrameLayout>
+
+</layout>

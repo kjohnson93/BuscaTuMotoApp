@@ -1,5 +1,6 @@
 package com.buscatumoto.ui.fragments
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -12,7 +13,14 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
+import com.buscatumoto.injection.component.DaggerViewModelComponent
+import com.buscatumoto.injection.component.ViewModelComponent
+import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
+import com.buscatumoto.ui.viewmodels.FrontPageViewModel
+import com.buscatumoto.ui.viewmodels.SearchFormViewModel
+import com.buscatumoto.utils.injection.ViewModelFactory
+import javax.inject.Inject
 
 
 class SearchFragment : Fragment(), View.OnClickListener {
@@ -33,6 +41,15 @@ class SearchFragment : Fragment(), View.OnClickListener {
 
     var mLastClickTime: Long = 0
 
+    private val injector: ViewModelComponent = DaggerViewModelComponent.builder().networkModule(
+        NetworkModule
+    ).build()
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    lateinit var frontPageViewModel: FrontPageViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +57,9 @@ class SearchFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val fragmentView: View = inflater.inflate(R.layout.fragment_search, container, false)
+
+        injector.inject(this)
+        frontPageViewModel = ViewModelProviders.of(this, viewModelFactory).get(FrontPageViewModel::class.java)
 
         getActivity()?.getWindow()
             ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);

@@ -1,6 +1,7 @@
 package com.buscatumoto.ui.fragments.dialog
 
 import android.app.Dialog
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.util.Log
@@ -14,8 +15,14 @@ import com.buscatumoto.R
 import com.buscatumoto.data.remote.configuration.APIGatewayResponse
 import com.buscatumoto.utils.data.APIConstants
 import com.buscatumoto.data.remote.dto.response.FieldsResponse
+import com.buscatumoto.injection.component.DaggerViewModelComponent
+import com.buscatumoto.injection.component.ViewModelComponent
+import com.buscatumoto.injection.module.NetworkModule
+import com.buscatumoto.ui.viewmodels.SearchFormViewModel
+import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.FilterFormImpl
 import com.buscatumoto.utils.ui.FilterFormMediator
+import javax.inject.Inject
 
 
 class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
@@ -48,6 +55,15 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
 
     var filterFormPgBar: ProgressBar? = null
 
+    private val injector: ViewModelComponent = DaggerViewModelComponent.builder().networkModule(
+        NetworkModule
+    ).build()
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    lateinit var searchFormViewModel: SearchFormViewModel
+
     //Fragment is not destroyed. Only View inside Fragment does. fragment.view will be a different object after fragment goes to background etc.
     //Also, every single View that is implemented a View State Saving/Restoring internally (every view as a default)
     //automatically will be saved and  will restore the state. From the view inflated to every component. Causes it to display just perfectly the same as previous.
@@ -58,6 +74,10 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         Log.d(Constants.MOTOTAG, "onCreateView called")
+        injector.inject(this)
+        searchFormViewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchFormViewModel::class.java)
+//        searchFormViewModel.loadFields()
+
         var fragmentView = inflater.inflate(R.layout.fragment_filtro_form, container, false)
 
         bindViews(fragmentView)
@@ -76,23 +96,6 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
         filterFormPgBar?.visibility = View.VISIBLE
 
         filterFormPgBar?.visibility = View.VISIBLE
-        buscaTuMotoGateway?.getFields(object: APIGatewayResponse.SuccessListener<FieldsResponse?> {
-            override fun onResponse(response: FieldsResponse?) {
-                filterFormPgBar?.visibility = View.GONE
-                response?.let {
-                    if (response.respuesta == APIConstants.RESPONSE_OK) {
-                        fillSpinnerViews(response)
-                    }
-                }
-            }
-
-        }, object : APIGatewayResponse.ErrorListener {
-            override fun onError(errorResponse: String?) {
-                Log.e(Constants.MOTOTAG, "get fields error: $errorResponse")
-                filterFormPgBar?.visibility = View.GONE
-            }
-
-        })
 
         return fragmentView
     }
