@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 /**
@@ -25,6 +26,9 @@ object NetworkModule {
     @Reusable
     @JvmStatic
     internal fun providesRetrofit(): Retrofit {
-        return Retrofit.Builder().baseUrl(BuscaTuMotoApplication.getInstance().getEnvironmentBaseUrl()).addConverterFactory(MoshiConverterFactory.create()).build()
+        return Retrofit.Builder().baseUrl(BuscaTuMotoApplication.getInstance()
+            .getEnvironmentBaseUrl())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create()).build()
     }
 }
