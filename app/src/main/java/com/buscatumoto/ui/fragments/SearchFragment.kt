@@ -14,7 +14,9 @@ import android.widget.ImageView
 import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
 import com.buscatumoto.injection.component.DaggerViewComponent
+import com.buscatumoto.injection.component.DaggerViewModelComponent
 import com.buscatumoto.injection.component.ViewComponent
+import com.buscatumoto.injection.component.ViewModelComponent
 import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
@@ -40,7 +42,7 @@ class SearchFragment : Fragment(), View.OnClickListener {
 
     var mLastClickTime: Long = 0
 
-    private val injector: ViewComponent = DaggerViewComponent.builder().networkModule(
+    private val injector: ViewModelComponent = DaggerViewModelComponent.builder().networkModule(
         NetworkModule
     ).build()
 
@@ -58,6 +60,8 @@ class SearchFragment : Fragment(), View.OnClickListener {
         val fragmentView: View = inflater.inflate(R.layout.fragment_search, container, false)
 
         injector.inject(this)
+
+
         frontPageViewModel = ViewModelProviders.of(this, viewModelFactory).get(FrontPageViewModel::class.java)
 
         getActivity()?.getWindow()

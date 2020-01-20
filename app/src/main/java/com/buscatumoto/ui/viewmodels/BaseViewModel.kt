@@ -1,11 +1,15 @@
 package com.buscatumoto.ui.viewmodels
 
 import android.arch.lifecycle.ViewModel
+import com.buscatumoto.injection.component.DaggerViewModelComponent
+import com.buscatumoto.injection.component.ViewModelComponent
+import com.buscatumoto.injection.module.NetworkModule
 
 abstract class BaseViewModel: ViewModel() {
 
-//    private val injector: ViewModelComponent = DaggerViewModelComponent
-//        .builder().networkModule(NetworkModule).build()
+    private val injector: ViewModelComponent = DaggerViewModelComponent.builder().networkModule(
+        NetworkModule
+    ).build()
 
     init {
         inject()
@@ -15,10 +19,14 @@ abstract class BaseViewModel: ViewModel() {
      * Injects the required dependencies.
      */
     private fun inject() {
-//        when(this) {
-//            is SearchBikeActivityViewModel -> {
-//                injector.inject(this)
-//            }
-//        }
+
+        when (this) {
+            is FrontPageViewModel -> {
+                injector.inject(this)
+            }
+            is SearchFormViewModel -> {
+                injector.inject(this)
+            }
+        }
     }
 }

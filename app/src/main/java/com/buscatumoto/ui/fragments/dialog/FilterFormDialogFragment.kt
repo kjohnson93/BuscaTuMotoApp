@@ -14,7 +14,9 @@ import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
 import com.buscatumoto.data.remote.dto.response.FieldsResponse
 import com.buscatumoto.injection.component.DaggerViewComponent
+import com.buscatumoto.injection.component.DaggerViewModelComponent
 import com.buscatumoto.injection.component.ViewComponent
+import com.buscatumoto.injection.component.ViewModelComponent
 import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.ui.viewmodels.SearchFormViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
@@ -53,7 +55,7 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
 
     var filterFormPgBar: ProgressBar? = null
 
-    private val injector: ViewComponent = DaggerViewComponent.builder().networkModule(
+    private val injector: ViewModelComponent = DaggerViewModelComponent.builder().networkModule(
         NetworkModule
     ).build()
 

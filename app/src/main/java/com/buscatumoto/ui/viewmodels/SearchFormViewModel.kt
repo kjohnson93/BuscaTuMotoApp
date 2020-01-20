@@ -5,14 +5,16 @@ import android.arch.lifecycle.ViewModel
 import android.view.View
 import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
 import com.buscatumoto.injection.component.DaggerViewComponent
+import com.buscatumoto.injection.component.DaggerViewModelComponent
 import com.buscatumoto.injection.component.ViewComponent
+import com.buscatumoto.injection.component.ViewModelComponent
 import com.buscatumoto.injection.module.NetworkModule
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class SearchFormViewModel @Inject constructor(): ViewModel() {
+class SearchFormViewModel @Inject constructor(): BaseViewModel() {
 
     @Inject
     lateinit var buscaTuMotoService: BuscaTuMotoService
@@ -21,17 +23,13 @@ class SearchFormViewModel @Inject constructor(): ViewModel() {
 
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
 
-    private val injector: ViewComponent = DaggerViewComponent.builder().networkModule(
-        NetworkModule
-    ).build()
+
 
     init {
-        injector.inject(this)
         loadFields()
     }
 
     fun loadFields() {
-
         subscription = buscaTuMotoService.getFields().
             subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

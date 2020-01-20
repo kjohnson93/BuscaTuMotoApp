@@ -15,16 +15,6 @@ import javax.inject.Singleton
 @Component(modules = [NetworkModule::class, ViewModelModule::class])
 interface ViewComponent {
 
-    /**
-     * Injects required dependencies into the specified SearchBikeViewModel.
-     * @param searchBikeActivityViewModel SearchBikeViewModel in which to inject the dependencies
-     */
-//    fun inject(searchBikeActivityViewModel: SearchBikeActivityViewModel)
-    fun inject(searchFragment: SearchFragment)
-
-    fun inject(filterFormDialogFragment: FilterFormDialogFragment)
-
-    fun inject(seachFormViewModel: SearchFormViewModel)
 
 
 }
