@@ -1,8 +1,5 @@
 package com.buscatumoto.ui.activities
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.AppBarLayout
@@ -13,13 +10,8 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.buscatumoto.R
-import com.buscatumoto.injection.component.DaggerViewModelComponent
-import com.buscatumoto.injection.component.ViewModelComponent
-import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.utils.ui.CustomScrollView
 import com.buscatumoto.ui.fragments.SearchFragment
-import com.buscatumoto.ui.viewmodels.FrontPageViewModel
-import javax.inject.Inject
 
 class SearchActivity : AppCompatActivity(),
     SearchFragment.ReadyListener {

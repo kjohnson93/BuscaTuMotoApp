@@ -4,8 +4,8 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.view.View
 import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
-import com.buscatumoto.injection.component.DaggerViewModelComponent
-import com.buscatumoto.injection.component.ViewModelComponent
+import com.buscatumoto.injection.component.DaggerViewComponent
+import com.buscatumoto.injection.component.ViewComponent
 import com.buscatumoto.injection.module.NetworkModule
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -21,7 +21,7 @@ class SearchFormViewModel @Inject constructor(): ViewModel() {
 
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
 
-    private val injector: ViewModelComponent = DaggerViewModelComponent.builder().networkModule(
+    private val injector: ViewComponent = DaggerViewComponent.builder().networkModule(
         NetworkModule
     ).build()
 
