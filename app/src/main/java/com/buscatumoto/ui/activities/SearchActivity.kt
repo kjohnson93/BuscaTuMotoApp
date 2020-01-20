@@ -12,18 +12,16 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
 import com.buscatumoto.injection.component.DaggerViewModelComponent
 import com.buscatumoto.injection.component.ViewModelComponent
 import com.buscatumoto.injection.module.NetworkModule
-import com.buscatumoto.injection.module.ViewModelModule
 import com.buscatumoto.utils.ui.CustomScrollView
 import com.buscatumoto.ui.fragments.SearchFragment
-import com.buscatumoto.ui.viewmodels.SearchBikeActivityViewModel
+import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import javax.inject.Inject
 
-class SearchActivity: AppCompatActivity(),
+class SearchActivity : AppCompatActivity(),
     SearchFragment.ReadyListener {
 
     /**
@@ -44,23 +42,7 @@ class SearchActivity: AppCompatActivity(),
      */
     private var nestedScrollView: CustomScrollView? = null
 
-//    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-//        super.onCreate(savedInstanceState, persistentState)
-//
-//        setContentView(R.layout.activity_test)
-//
-//        searchBarLayout = findViewById(R.id.searchAppBar)
-//        collapsingToolbar = findViewById(R.id.collapsingToolbar)
-//        coordLayout = findViewById(R.id.searchCoordLayout)
-//        nestedScrollView = findViewById(R.id.nestedscrollview)
-//
-//        nestedScrollView!!.isEnableScrolling = false
-//        this.openFragment()
-//
-//        disableHeaderScroll()
-//    }
-
-        private val injector: ViewModelComponent = DaggerViewModelComponent
+    private val injector: ViewModelComponent = DaggerViewModelComponent
         .builder().networkModule(NetworkModule).build()
 
     @Inject
@@ -75,7 +57,8 @@ class SearchActivity: AppCompatActivity(),
         injector.inject(this)
 
         setContentView(R.layout.activity_search)
-        searchBikeActivityViewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchBikeActivityViewModel::class.java)
+        searchBikeActivityViewModel = ViewModelProviders.of(this, viewModelFactory)
+            .get(FrontPageViewModel::class.java)
 
 
         searchBarLayout = findViewById(R.id.searchAppBar)
@@ -84,12 +67,12 @@ class SearchActivity: AppCompatActivity(),
         nestedScrollView = findViewById(R.id.nestedscrollview)
 
         nestedScrollView!!.isEnableScrolling = false
+        disableHeaderScroll()
+
         this.openFragment()
 
-//        (application as BuscaTuMotoApplication).component.inject(this)
 
 
-        disableHeaderScroll()
     }
 
     /**
@@ -137,7 +120,6 @@ class SearchActivity: AppCompatActivity(),
     }
 
 
-
     override fun onReady() {
         val secondsDelayed = 6
         Handler().postDelayed(Runnable {
@@ -152,7 +134,6 @@ class SearchActivity: AppCompatActivity(),
         var toast: Toast = Toast.makeText(applicationContext, error, Toast.LENGTH_LONG)
         toast.show()
     }
-
 
 
 }
