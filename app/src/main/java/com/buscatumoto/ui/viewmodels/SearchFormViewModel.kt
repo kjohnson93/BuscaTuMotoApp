@@ -1,15 +1,16 @@
 package com.buscatumoto.ui.viewmodels
 
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.view.View
-import android.widget.Toast
-import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
 import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
-
+import com.buscatumoto.data.remote.dto.response.FieldsResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.annotations.CheckReturnValue
+import io.reactivex.annotations.SchedulerSupport
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
+import io.reactivex.internal.functions.Functions
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -27,20 +28,53 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
         loadFields()
     }
 
-
+    val brands : MutableLiveData<List<String>> = MutableLiveData()
 
     init {
         loadFields()
     }
 
     fun loadFields() {
+        //Anonymous class
+//        subscription = buscaTuMotoService.getFields().
+//            subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .doOnSubscribe { onLoadFieldsStart()}
+//            .doOnTerminate { onLoadFieldsFinish() }
+//            .subscribe( object : Consumer<FieldsResponse> {
+//                override fun accept(t: FieldsResponse?) {
+//                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                }
+//
+//            }, object : Consumer<Throwable> {
+//                override fun accept(t: Throwable?) {
+//                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                }
+//
+//            })
+
         subscription = buscaTuMotoService.getFields().
             subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onLoadFieldsStart()}
             .doOnTerminate { onLoadFieldsFinish() }
-            .subscribe({onLoadFieldsSuccess()}, {onLoadFieldsError()})
+            .subscribe({ fieldResponse: FieldsResponse? ->  onLoadFieldsSuccess(fieldResponse)}
+            , { onLoadFieldsError() })
     }
+
+//    @CheckReturnValue
+//    @SchedulerSupport(SchedulerSupport.NONE)
+//    fun subscribe(
+//        onNext: Consumer<in T?>?,
+//        onError: Consumer<in Throwable?>?
+//    ): Disposable {
+//        return subscribe(
+//            onNext,
+//            onError,
+//            Functions.EMPTY_ACTION,
+//            Functions.emptyConsumer<Disposable>()
+//        )
+//    }
 
     private fun onLoadFieldsStart() {
         loadingVisibility.value = View.VISIBLE
@@ -50,8 +84,8 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
         loadingVisibility.value = View.GONE
     }
 
-    private fun onLoadFieldsSuccess() {
-
+    private fun onLoadFieldsSuccess(fieldsResponse: FieldsResponse?) {
+        brands.value = fieldsResponse?.brandList
     }
 
     private fun onLoadFieldsError() {

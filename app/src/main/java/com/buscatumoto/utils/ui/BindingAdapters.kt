@@ -1,10 +1,13 @@
 package com.buscatumoto.utils.ui
 
+import android.R
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.databinding.BindingAdapter
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 
 //@BindingAdapter("mutableVisibility")
 //fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>?) {
@@ -67,5 +70,29 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
 //    The first lambda is passed inside the parantheses, whereas the second isn't.
 
 
-
 }
+
+
+    @BindingAdapter("mutableSpinner")
+    fun setSpinner(view: Spinner, spinnerDataObservable: MutableLiveData<List<String>>) {
+
+        val parentActivity: AppCompatActivity? = view.getParentActivity()
+
+        if (parentActivity != null) {
+                spinnerDataObservable.observe(parentActivity, Observer {
+                    spinnerDataObservable : List<String>? ->
+                    val brandTypeSpinnerAdapter = ArrayAdapter<String>(parentActivity, R.layout.simple_spinner_item, spinnerDataObservable)
+                    view?.adapter = brandTypeSpinnerAdapter
+                    view?.setSelection(0)
+
+                })
+        }
+
+        //        val bikeTypeList: ArrayList<String> = ArrayList()
+//        bikeTypeList.addAll(response.bikeTypesList)
+//        bikeTypeList.removeAt(0)
+//        bikeTypeList.add(0, "-Tipo de moto-")
+//        val bikeTypeSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, bikeTypeList)
+//        bikeTypeSpinner?.adapter = bikeTypeSpinnerAdapter
+//        bikeTypeSpinner?.setSelection(0)
+    }
