@@ -38,7 +38,7 @@ android {
     }
 
     dataBinding {
-        enabled true
+        enabled = true
     }
 }
 
@@ -72,6 +72,8 @@ dependencies {
 
     // Data binding
 //    kapt "com.android.databinding:compiler:3.5.3" // notice that the compiler version must be the same than our gradle version
+//    implementation 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.1.1'
+
 
     //dagger 2
     implementation 'com.google.dagger:dagger:2.25.4'

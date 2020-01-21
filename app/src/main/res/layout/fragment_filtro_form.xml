@@ -447,6 +447,7 @@
         android:id="@+id/filter_dialog_progressBar"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        app:mutableVisibility="@{viewModel.loadingVisibility}"
         android:indeterminate="false"
         android:indeterminateBehavior="cycle"
         android:layout_gravity="center"
