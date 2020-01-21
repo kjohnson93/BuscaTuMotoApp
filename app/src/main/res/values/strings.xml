@@ -11,4 +11,7 @@
         <item>Uranus</item>
         <item>Neptune</item>
     </string-array>
+
+    <string name="retry">Retry</string>
+    <string name="load_fields_error">An error occurred while loading the data</string>
 </resources>

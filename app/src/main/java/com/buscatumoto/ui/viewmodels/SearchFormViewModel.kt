@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel
 import android.view.View
 import android.widget.Toast
 import com.buscatumoto.BuscaTuMotoApplication
+import com.buscatumoto.R
 import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
 
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,6 +21,11 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
     private lateinit var subscription: Disposable
 
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+
+    val errorMessage: MutableLiveData<Int> = MutableLiveData()
+    val errorClickListener = View.OnClickListener {
+        loadFields()
+    }
 
 
 
@@ -49,10 +55,7 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
     }
 
     private fun onLoadFieldsError() {
-        val context = BuscaTuMotoApplication.getInstance().applicationContext
-
-        Toast.makeText(context, "Get Fields API error", Toast.LENGTH_LONG).show()
-
+        errorMessage.value = R.string.load_fields_error
     }
 
     override fun onCleared() {

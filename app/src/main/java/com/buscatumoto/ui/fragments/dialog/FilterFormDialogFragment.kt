@@ -1,9 +1,12 @@
 package com.buscatumoto.ui.fragments.dialog
 
 import android.app.Dialog
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.annotation.StringRes
+import android.support.design.widget.Snackbar
 import android.support.v4.app.DialogFragment
 import android.util.Log
 import android.view.LayoutInflater
@@ -43,15 +46,15 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
 
     var filterFormPgBar: ProgressBar? = null
 
+    private var errorSnackbar: Snackbar? = null
+
     private val injector: ViewModelComponent = DaggerViewModelComponent.builder().networkModule(
         NetworkModule
     ).build()
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-
     lateinit var searchFormViewModel: SearchFormViewModel
-
     private lateinit var binding: FragmentFiltroFormBinding
 
     //Fragment is not destroyed. Only View inside Fragment does. fragment.view will be a different object after fragment goes to background etc.
@@ -66,8 +69,16 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
         Log.d(Constants.MOTOTAG, "onCreateView called")
         injector.inject(this)
         searchFormViewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchFormViewModel::class.java)
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_filtro_form, container, false)
 
+        searchFormViewModel.errorMessage.observe(this, Observer { observableValue: Int? ->
+            if (observableValue != null) {
+                showError(observableValue)
+            } else {
+                hideError()
+            }
+        })
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_filtro_form, container, false)
         binding.viewModel = searchFormViewModel
 
         return binding.root
@@ -206,5 +217,15 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
                 //API request and then navigate.
             }
         }
+    }
+
+    private fun showError(@StringRes errorMessage: Int) {
+        errorSnackbar = Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_INDEFINITE)
+        errorSnackbar?.setAction(R.string.retry, searchFormViewModel.errorClickListener)
+        errorSnackbar?.show()
+    }
+
+    private fun hideError() {
+        errorSnackbar?.dismiss()
     }
 }
