@@ -27,6 +27,18 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
     }
 
     val brands : MutableLiveData<List<String>> = MutableLiveData()
+    val models: MutableLiveData<List<String>> = MutableLiveData()
+    val bikeTypes: MutableLiveData<List<String>> = MutableLiveData()
+    val priceMinList: MutableLiveData<List<String>> = MutableLiveData()
+    val priceMaxList: MutableLiveData<List<String>> = MutableLiveData()
+    val powerMinList: MutableLiveData<List<String>> = MutableLiveData()
+    val powerMaxList: MutableLiveData<List<String>> = MutableLiveData()
+    val cilMinList: MutableLiveData<List<String>> = MutableLiveData()
+    val cilMaxList: MutableLiveData<List<String>> = MutableLiveData()
+    val weightMinList: MutableLiveData<List<String>> = MutableLiveData()
+    val weightMaxList: MutableLiveData<List<String>> = MutableLiveData()
+    val yearList: MutableLiveData<List<String>> = MutableLiveData()
+    val licenses: MutableLiveData<List<String>> = MutableLiveData()
 
     init {
         loadFields()
@@ -84,7 +96,18 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
     }
 
     private fun onLoadFieldsSuccess(fieldsResponse: FieldsResponse?) {
-        brands.value = fieldsResponse?.brandList
+        brands.value = (fieldsResponse?.brandList as ArrayList<String>).apply { this.add(0, "-Marca-") }
+        bikeTypes.value = (fieldsResponse?.bikeTypesList as ArrayList<String>).apply { this.add(0, "-Tipo de moto-") }
+        priceMinList.value = (fieldsResponse?.priceMinList as ArrayList<String>).apply { this.add(0, "-Precio desde-") }
+        priceMaxList.value = (fieldsResponse?.priceMaxList as ArrayList<String>).apply { this.add(0, "-Precio hasta-") }
+        powerMinList.value = (fieldsResponse?.powerMinList as ArrayList<String>).apply { this.add(0, "-Potencia desde-") }
+        powerMaxList.value = (fieldsResponse?.powerMaxList as ArrayList<String>).apply { this.add(0, "-Potencia hasta-") }
+        cilMinList.value = (fieldsResponse?.cilMinList as ArrayList<String>).apply { this.add(0, "-Cilindrada desde-") }
+        cilMaxList.value = (fieldsResponse?.cilMaxList as ArrayList<String>).apply { this.add(0, "-Cilindrada hasta-") }
+        weightMinList.value = (fieldsResponse?.weightMinList as ArrayList<String>).apply { this.add(0, "-Peso desde-") }
+        weightMaxList.value = (fieldsResponse?.weightMaxList as ArrayList<String>).apply { this.add(0, "-Peso hasta-") }
+        yearList.value = (fieldsResponse?.yearList as ArrayList<String>).apply { this.add(0, "-Año-") }
+        licenses.value = (fieldsResponse?.licenses as ArrayList<String>).apply { this.add(0, "-Permiso-") }
     }
 
     private fun onLoadFieldsError(throwableError: Throwable?) {
