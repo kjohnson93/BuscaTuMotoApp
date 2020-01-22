@@ -1,16 +1,14 @@
 package com.buscatumoto.ui.viewmodels
 
 import android.arch.lifecycle.MutableLiveData
+import android.util.Log
 import android.view.View
 import com.buscatumoto.R
 import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
 import com.buscatumoto.data.remote.dto.response.FieldsResponse
+import com.buscatumoto.utils.global.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.annotations.CheckReturnValue
-import io.reactivex.annotations.SchedulerSupport
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
-import io.reactivex.internal.functions.Functions
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -59,7 +57,7 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
             .doOnSubscribe { onLoadFieldsStart()}
             .doOnTerminate { onLoadFieldsFinish() }
             .subscribe({ fieldResponse: FieldsResponse? ->  onLoadFieldsSuccess(fieldResponse)}
-            , { onLoadFieldsError() })
+            , { throwableError: Throwable? ->  onLoadFieldsError(throwableError) })
     }
 
 //    @CheckReturnValue
@@ -76,6 +74,7 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
 //        )
 //    }
 
+
     private fun onLoadFieldsStart() {
         loadingVisibility.value = View.VISIBLE
     }
@@ -88,7 +87,8 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
         brands.value = fieldsResponse?.brandList
     }
 
-    private fun onLoadFieldsError() {
+    private fun onLoadFieldsError(throwableError: Throwable?) {
+        Log.e(Constants.MOTOTAG, "error is ${throwableError?.message}")
         errorMessage.value = R.string.load_fields_error
     }
 
