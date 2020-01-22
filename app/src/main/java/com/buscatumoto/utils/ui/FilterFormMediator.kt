@@ -65,36 +65,36 @@ class FilterFormImpl(val activity: Activity?, val progressBar: ProgressBar? = nu
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         Log.d(Constants.MOTOTAG, "Position clicked: $position")
-
-        when (parent?.id) {
-            brandSpinner?.id -> {
-                //API Request
-                progressBar?.visibility = View.VISIBLE
-
-                val buscaTuMotoGateway = BuscaTuMotoApplication.getInstance().buscaTuMotoGateway
-                val brand = parent?.getItemAtPosition(position).toString()
-
-                buscaTuMotoGateway?.getBikesByBrand(
-                    brand,
-                    object : APIGatewayResponse.SuccessListener<ArrayList<String>?> {
-                        override fun onResponse(response: ArrayList<String>??) {
-                            progressBar?.visibility = View.GONE
-                            response?.let {
-                                Log.d(Constants.MOTOTAG, "get bikes by brand response: $response")
-                                fillModelSpiner(response)
-                            }
-                        }
-
-                    },
-                    object : APIGatewayResponse.ErrorListener {
-                        override fun onError(errorResponse: String?) {
-                            Log.e(Constants.MOTOTAG, "get bikes by brand error: $errorResponse")
-                            progressBar?.visibility = View.GONE
-                        }
-
-                    })
-            }
-        }
+//
+//        when (parent?.id) {
+//            brandSpinner?.id -> {
+//                //API Request
+//                progressBar?.visibility = View.VISIBLE
+//
+//                val buscaTuMotoGateway = BuscaTuMotoApplication.getInstance().buscaTuMotoGateway
+//                val brand = parent?.getItemAtPosition(position).toString()
+//
+//                buscaTuMotoGateway?.getBikesByBrand(
+//                    brand,
+//                    object : APIGatewayResponse.SuccessListener<ArrayList<String>?> {
+//                        override fun onResponse(response: ArrayList<String>??) {
+//                            progressBar?.visibility = View.GONE
+//                            response?.let {
+//                                Log.d(Constants.MOTOTAG, "get bikes by brand response: $response")
+//                                fillModelSpiner(response)
+//                            }
+//                        }
+//
+//                    },
+//                    object : APIGatewayResponse.ErrorListener {
+//                        override fun onError(errorResponse: String?) {
+//                            Log.e(Constants.MOTOTAG, "get bikes by brand error: $errorResponse")
+//                            progressBar?.visibility = View.GONE
+//                        }
+//
+//                    })
+//            }
+//        }
 
     }
 

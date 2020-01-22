@@ -60,28 +60,28 @@ class BuscaTuMotoGateway {
 //
 //    }
 
-    fun getBikesByBrand(brand: String, responseListener: APIGatewayResponse.SuccessListener<ArrayList<String>?>, errorListener: APIGatewayResponse.ErrorListener) {
-        val buscaTuMotoAPI = BuscaTuMotoRetrofit.getInstance()
-            ?.getBuscaTuMotoApi()
-        val call: Call<ArrayList<String>> = buscaTuMotoAPI!!.getBikesByBrand(brand)
-
-        call.enqueue(object: Callback<ArrayList<String>> {
-            override fun onFailure(call: Call<ArrayList<String>>, t: Throwable) {
-                Log.d(Constants.MOTOTAG, "get bikes by brand onFailure: ${t.message}")
-                errorListener.onError(t.message)
-            }
-
-            override fun onResponse(
-                call: Call<ArrayList<String>>,
-                response: Response<ArrayList<String>>
-            ) {
-                Log.d(Constants.MOTOTAG, "get bikes by brand response ${response.body()}")
-                responseListener.onResponse(response.body())
-            }
-
-
-        })
-
-    }
+//    fun getBikesByBrand(brand: String, responseListener: APIGatewayResponse.SuccessListener<ArrayList<String>?>, errorListener: APIGatewayResponse.ErrorListener) {
+//        val buscaTuMotoAPI = BuscaTuMotoRetrofit.getInstance()
+//            ?.getBuscaTuMotoApi()
+//        val call: Call<ArrayList<String>> = buscaTuMotoAPI!!.getBikesByBrand(brand)
+//
+//        call.enqueue(object: Callback<ArrayList<String>> {
+//            override fun onFailure(call: Call<ArrayList<String>>, t: Throwable) {
+//                Log.d(Constants.MOTOTAG, "get bikes by brand onFailure: ${t.message}")
+//                errorListener.onError(t.message)
+//            }
+//
+//            override fun onResponse(
+//                call: Call<ArrayList<String>>,
+//                response: Response<ArrayList<String>>
+//            ) {
+//                Log.d(Constants.MOTOTAG, "get bikes by brand response ${response.body()}")
+//                responseListener.onResponse(response.body())
+//            }
+//
+//
+//        })
+//
+//    }
 
 }

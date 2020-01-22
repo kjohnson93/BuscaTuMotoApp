@@ -26,7 +26,7 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
         loadFields()
     }
 
-    val brands : MutableLiveData<List<String>> = MutableLiveData()
+    val brands: MutableLiveData<List<String>> = MutableLiveData()
     val models: MutableLiveData<List<String>> = MutableLiveData()
     val bikeTypes: MutableLiveData<List<String>> = MutableLiveData()
     val priceMinList: MutableLiveData<List<String>> = MutableLiveData()
@@ -63,13 +63,12 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
 //
 //            })
 
-        subscription = buscaTuMotoService.getFields().
-            subscribeOn(Schedulers.io())
+        subscription = buscaTuMotoService.getFields().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { onLoadFieldsStart()}
+            .doOnSubscribe { onLoadFieldsStart() }
             .doOnTerminate { onLoadFieldsFinish() }
-            .subscribe({ fieldResponse: FieldsResponse? ->  onLoadFieldsSuccess(fieldResponse)}
-            , { throwableError: Throwable? ->  onLoadFieldsError(throwableError) })
+            .subscribe({ fieldResponse: FieldsResponse? -> onLoadFieldsSuccess(fieldResponse) }
+                , { throwableError: Throwable? -> onLoadFieldsError(throwableError) })
     }
 
 //    @CheckReturnValue
@@ -96,22 +95,88 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
     }
 
     private fun onLoadFieldsSuccess(fieldsResponse: FieldsResponse?) {
-        brands.value = (fieldsResponse?.brandList as ArrayList<String>).apply { this.add(0, "-Marca-") }
+        brands.value =
+            (fieldsResponse?.brandList as ArrayList<String>).apply { this.add(0, "-Marca-") }
         models.value = ArrayList<String>().apply { this.add(0, "-Elegir marca-") }
-        bikeTypes.value = (fieldsResponse?.bikeTypesList as ArrayList<String>).apply { this.add(0, "-Tipo de moto-") }
-        priceMinList.value = (fieldsResponse?.priceMinList as ArrayList<String>).apply { this.add(0, "-Precio desde-") }
-        priceMaxList.value = (fieldsResponse?.priceMaxList as ArrayList<String>).apply { this.add(0, "-Precio hasta-") }
-        powerMinList.value = (fieldsResponse?.powerMinList as ArrayList<String>).apply { this.add(0, "-Potencia desde-") }
-        powerMaxList.value = (fieldsResponse?.powerMaxList as ArrayList<String>).apply { this.add(0, "-Potencia hasta-") }
-        cilMinList.value = (fieldsResponse?.cilMinList as ArrayList<String>).apply { this.add(0, "-Cilindrada desde-") }
-        cilMaxList.value = (fieldsResponse?.cilMaxList as ArrayList<String>).apply { this.add(0, "-Cilindrada hasta-") }
-        weightMinList.value = (fieldsResponse?.weightMinList as ArrayList<String>).apply { this.add(0, "-Peso desde-") }
-        weightMaxList.value = (fieldsResponse?.weightMaxList as ArrayList<String>).apply { this.add(0, "-Peso hasta-") }
-        yearList.value = (fieldsResponse?.yearList as ArrayList<String>).apply { this.add(0, "-Año-") }
-        licenses.value = (fieldsResponse?.licenses as ArrayList<String>).apply { this.add(0, "-Permiso-") }
+        bikeTypes.value = (fieldsResponse?.bikeTypesList as ArrayList<String>).apply {
+            this.add(
+                0,
+                "-Tipo de moto-"
+            )
+        }
+        priceMinList.value = (fieldsResponse?.priceMinList as ArrayList<String>).apply {
+            this.add(
+                0,
+                "-Precio desde-"
+            )
+        }
+        priceMaxList.value = (fieldsResponse?.priceMaxList as ArrayList<String>).apply {
+            this.add(
+                0,
+                "-Precio hasta-"
+            )
+        }
+        powerMinList.value = (fieldsResponse?.powerMinList as ArrayList<String>).apply {
+            this.add(
+                0,
+                "-Potencia desde-"
+            )
+        }
+        powerMaxList.value = (fieldsResponse?.powerMaxList as ArrayList<String>).apply {
+            this.add(
+                0,
+                "-Potencia hasta-"
+            )
+        }
+        cilMinList.value = (fieldsResponse?.cilMinList as ArrayList<String>).apply {
+            this.add(
+                0,
+                "-Cilindrada desde-"
+            )
+        }
+        cilMaxList.value = (fieldsResponse?.cilMaxList as ArrayList<String>).apply {
+            this.add(
+                0,
+                "-Cilindrada hasta-"
+            )
+        }
+        weightMinList.value = (fieldsResponse?.weightMinList as ArrayList<String>).apply {
+            this.add(
+                0,
+                "-Peso desde-"
+            )
+        }
+        weightMaxList.value = (fieldsResponse?.weightMaxList as ArrayList<String>).apply {
+            this.add(
+                0,
+                "-Peso hasta-"
+            )
+        }
+        yearList.value =
+            (fieldsResponse?.yearList as ArrayList<String>).apply { this.add(0, "-Año-") }
+        licenses.value =
+            (fieldsResponse?.licenses as ArrayList<String>).apply { this.add(0, "-Permiso-") }
     }
 
     private fun onLoadFieldsError(throwableError: Throwable?) {
+        Log.e(Constants.MOTOTAG, "error is ${throwableError?.message}")
+        errorMessage.value = R.string.load_fields_error
+    }
+
+    fun loadModelsByBrand(brand: String) {
+        subscription = buscaTuMotoService.getBikesByBrand(brand)
+            .subscribeOn(Schedulers.io())
+            .doOnSubscribe { onLoadFieldsStart() }
+            .doOnTerminate { onLoadFieldsFinish() }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe( { respose -> onLoadModelsSuccess(respose) }, { throwableError -> onLoadModelsError(throwableError)})
+    }
+
+    private fun onLoadModelsSuccess(respose: ArrayList<String>) {
+        models.value = respose
+    }
+
+    private fun onLoadModelsError(throwableError: Throwable) {
         Log.e(Constants.MOTOTAG, "error is ${throwableError?.message}")
         errorMessage.value = R.string.load_fields_error
     }

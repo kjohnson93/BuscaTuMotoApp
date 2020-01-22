@@ -1,9 +1,11 @@
 package com.buscatumoto.ui.fragments.dialog
 
 import android.app.Dialog
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
+import android.databinding.Observable
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
@@ -30,7 +32,7 @@ import com.buscatumoto.utils.ui.FilterFormMediator
 import javax.inject.Inject
 
 
-class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
+class FilterFormDialogFragment: DialogFragment(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     companion object {
         fun newInstance(): FilterFormDialogFragment {
@@ -45,6 +47,10 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
     var filterFormMediator: FilterFormMediator? = null
 
     var filterFormPgBar: ProgressBar? = null
+
+
+    //mutable clicklistener
+    lateinit var brandSpinnerSelection: MutableLiveData<String>
 
     private var errorSnackbar: Snackbar? = null
 
@@ -80,6 +86,9 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_filtro_form, container, false)
         binding.viewModel = searchFormViewModel
+
+        binding.filtrarCloseIbtn.setOnClickListener(this)
+        binding.brandSpinner.onItemSelectedListener = this
 
         return binding.root
     }
@@ -227,5 +236,23 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
 
     private fun hideError() {
         errorSnackbar?.dismiss()
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        Log.d(Constants.MOTOTAG, "Position clicked: $position")
+
+        when(parent?.id) {
+            binding.brandSpinner.id -> {
+                val brand = parent?.getItemAtPosition(position).toString()
+
+                if (brand.equals("-Marca-")) {
+                    return
+                }
+                binding.viewModel?.loadModelsByBrand(brand)
+            }
+        }
     }
 }
