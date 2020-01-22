@@ -97,6 +97,7 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
 
     private fun onLoadFieldsSuccess(fieldsResponse: FieldsResponse?) {
         brands.value = (fieldsResponse?.brandList as ArrayList<String>).apply { this.add(0, "-Marca-") }
+        models.value = ArrayList<String>().apply { this.add(0, "-Elegir marca-") }
         bikeTypes.value = (fieldsResponse?.bikeTypesList as ArrayList<String>).apply { this.add(0, "-Tipo de moto-") }
         priceMinList.value = (fieldsResponse?.priceMinList as ArrayList<String>).apply { this.add(0, "-Precio desde-") }
         priceMaxList.value = (fieldsResponse?.priceMaxList as ArrayList<String>).apply { this.add(0, "-Precio hasta-") }

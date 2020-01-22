@@ -207,7 +207,7 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.filtrar_close_ibtn -> {
+            binding.filtrarCloseIbtn.id -> {
                 dismiss()
             }
             R.id.filtrar_refresh_ibtn -> {
