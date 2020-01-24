@@ -1,6 +1,7 @@
 package com.buscatumoto.data.remote.configuration
 
 import com.buscatumoto.data.remote.dto.response.FieldsResponse
+import com.buscatumoto.data.remote.dto.response.MotoResponseItemModel
 import com.buscatumoto.utils.data.APIConstants
 import io.reactivex.Observable
 import retrofit2.Call
@@ -16,7 +17,7 @@ interface BuscaTuMotoService {
     fun getFields(): Observable<FieldsResponse>
 
     @GET(APIConstants.GET_BIKES_BY_BRAND)
-    fun getBikesByBrand(@Path("brand") brand: String): Observable<ArrayList<String>>
+    fun getBikesByBrand(@Path("brand") brand: String): Observable<List<MotoResponseItemModel>>
 
 
 }

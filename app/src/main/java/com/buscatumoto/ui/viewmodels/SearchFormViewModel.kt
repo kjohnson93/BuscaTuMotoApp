@@ -6,6 +6,7 @@ import android.view.View
 import com.buscatumoto.R
 import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
 import com.buscatumoto.data.remote.dto.response.FieldsResponse
+import com.buscatumoto.data.remote.dto.response.MotoResponseItemModel
 import com.buscatumoto.utils.global.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -166,14 +167,21 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
     fun loadModelsByBrand(brand: String) {
         subscription = buscaTuMotoService.getBikesByBrand(brand)
             .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onLoadFieldsStart() }
             .doOnTerminate { onLoadFieldsFinish() }
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe( { respose -> onLoadModelsSuccess(respose) }, { throwableError -> onLoadModelsError(throwableError)})
     }
 
-    private fun onLoadModelsSuccess(respose: ArrayList<String>) {
-        models.value = respose
+    private fun onLoadModelsSuccess(respose: List<MotoResponseItemModel>) {
+
+        var brandModels = ArrayList<String>()
+
+        respose.forEachIndexed { index, motoResponseItemModel ->
+            brandModels.add(motoResponseItemModel.model)
+        }
+
+        models.value = brandModels
     }
 
     private fun onLoadModelsError(throwableError: Throwable) {
