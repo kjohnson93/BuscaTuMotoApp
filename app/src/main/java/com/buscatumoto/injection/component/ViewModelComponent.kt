@@ -1,0 +1,30 @@
+package com.buscatumoto.injection.component
+
+import com.buscatumoto.injection.module.NetworkModule
+import com.buscatumoto.injection.module.ViewModelModule
+import com.buscatumoto.ui.fragments.SearchFragment
+import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
+import com.buscatumoto.ui.viewmodels.FrontPageViewModel
+import com.buscatumoto.ui.viewmodels.SearchFormViewModel
+import dagger.Component
+import javax.inject.Singleton
+
+@Singleton
+@Component(modules = [NetworkModule::class, ViewModelModule::class])
+interface ViewModelComponent {
+
+    /**
+     * Views
+     */
+    fun inject(searchFragment: SearchFragment)
+    fun inject(filterFormDialogFragment: FilterFormDialogFragment)
+
+
+    /**
+     * ViewModels
+     */
+    fun inject(frontPageViewModel: FrontPageViewModel)
+    fun inject(seachFormViewModel: SearchFormViewModel)
+
+
+}

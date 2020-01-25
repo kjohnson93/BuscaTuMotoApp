@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.buscatumoto.ui.viewmodels.SearchFormViewModel" />
+    </data>
+    
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintWidth_percent="0.75">
+
+    <LinearLayout
+        android:id="@+id/textView16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="85"
+            android:text="Filtrar Búsqueda"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="26sp" />
+
+        <ImageButton
+            android:id="@+id/filtrar_close_ibtn"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="15"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/cancel" />
+
+    </LinearLayout>
+
+
+
+
+    <TextView
+        android:id="@+id/weightMinTvw"
+        style="@style/FormFilterTextView"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Peso mínimo"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintStart_toStartOf="@+id/cilMaxTvw"
+        app:layout_constraintTop_toBottomOf="@+id/cilMaxTvw" />
+
+    <TextView
+        android:id="@+id/weightMaxTvw"
+        style="@style/FormFilterTextView"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Peso máximo"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintStart_toStartOf="@+id/weightMinTvw"
+        app:layout_constraintTop_toBottomOf="@+id/weightMinTvw" />
+
+    <TextView
+        android:id="@+id/yearTvw"
+        style="@style/FormFilterTextView"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Año"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintStart_toStartOf="@+id/weightMaxTvw"
+        app:layout_constraintTop_toBottomOf="@+id/weightMaxTvw" />
+
+    <TextView
+        android:id="@+id/licenseTvw"
+        style="@style/FormFilterTextView"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Permiso"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintStart_toStartOf="@+id/yearTvw"
+        app:layout_constraintTop_toBottomOf="@+id/yearTvw" />
+
+    <Spinner
+        android:id="@+id/brandSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:textAlignment="center"
+        app:mutableSpinner = "@{viewModel.brands}"
+        app:layout_constraintBottom_toBottomOf="@+id/brandTvw"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/brandTvw"
+        app:layout_constraintTop_toTopOf="@+id/brandTvw"
+        app:layout_constraintVertical_bias="0.73"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <Spinner
+        android:id="@+id/modelSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textAlignment="center"
+        app:mutableSpinner = "@{viewModel.models}"
+        app:layout_constraintBottom_toBottomOf="@+id/modelTvw"
+        app:layout_constraintEnd_toEndOf="@+id/brandSpinner"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/brandSpinner"
+        app:layout_constraintTop_toTopOf="@+id/modelTvw"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <Spinner
+        android:id="@+id/bikeTypeSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:mutableSpinner="@{viewModel.bikeTypes}"
+        app:layout_constraintBottom_toBottomOf="@+id/bikeTypeTvw"
+        app:layout_constraintEnd_toEndOf="@+id/modelSpinner"
+        app:layout_constraintStart_toStartOf="@+id/modelSpinner"
+        app:layout_constraintTop_toTopOf="@+id/bikeTypeTvw"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <Spinner
+        android:id="@+id/priceMinSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:mutableSpinner="@{viewModel.priceMinList}"
+        app:layout_constraintBottom_toBottomOf="@+id/priceMinTvw"
+        app:layout_constraintEnd_toEndOf="@+id/bikeTypeSpinner"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/bikeTypeSpinner"
+        app:layout_constraintTop_toTopOf="@+id/priceMinTvw"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <Spinner
+        android:id="@+id/priceMaxSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:mutableSpinner="@{viewModel.priceMaxList}"
+        app:layout_constraintBottom_toBottomOf="@+id/priceMaxTvw"
+        app:layout_constraintEnd_toEndOf="@+id/priceMinSpinner"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/priceMinSpinner"
+        app:layout_constraintTop_toTopOf="@+id/priceMaxTvw"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <Spinner
+        android:id="@+id/powerMinSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:mutableSpinner="@{viewModel.powerMinList}"
+        app:layout_constraintBottom_toBottomOf="@+id/powerMinTvw"
+        app:layout_constraintEnd_toEndOf="@+id/priceMaxSpinner"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/priceMaxSpinner"
+        app:layout_constraintTop_toTopOf="@+id/powerMinTvw"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="0.6" />
+
+
+    <Spinner
+        android:id="@+id/powerMaxSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:mutableSpinner="@{viewModel.powerMaxList}"
+        app:layout_constraintBottom_toBottomOf="@+id/powerMaxTvw"
+        app:layout_constraintStart_toStartOf="@+id/powerMinSpinner"
+        app:layout_constraintTop_toTopOf="@+id/powerMaxTvw"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <Spinner
+        android:id="@+id/cilMinSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:mutableSpinner="@{viewModel.cilMinList}"
+        app:layout_constraintBottom_toBottomOf="@+id/cilMinTvw"
+        app:layout_constraintEnd_toEndOf="@+id/powerMaxSpinner"
+        app:layout_constraintStart_toEndOf="@+id/cilMinTvw"
+        app:layout_constraintStart_toStartOf="@+id/powerMaxSpinner"
+        app:layout_constraintTop_toTopOf="@+id/cilMinTvw"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <Spinner
+        android:id="@+id/cilMaxSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:mutableSpinner="@{viewModel.cilMaxList}"
+        app:layout_constraintBottom_toBottomOf="@+id/cilMaxTvw"
+        app:layout_constraintEnd_toEndOf="@+id/cilMinSpinner"
+        app:layout_constraintStart_toEndOf="@+id/cilMaxTvw"
+        app:layout_constraintStart_toStartOf="@+id/cilMinSpinner"
+        app:layout_constraintTop_toTopOf="@+id/cilMaxTvw"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <Spinner
+        android:id="@+id/weightMinSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:mutableSpinner="@{viewModel.weightMinList}"
+        app:layout_constraintBottom_toBottomOf="@+id/weightMinTvw"
+        app:layout_constraintEnd_toEndOf="@+id/cilMaxSpinner"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/cilMaxSpinner"
+        app:layout_constraintTop_toTopOf="@+id/weightMinTvw"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <Spinner
+        android:id="@+id/weightMaxSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:mutableSpinner="@{viewModel.weightMaxList}"
+        app:layout_constraintBottom_toBottomOf="@+id/weightMaxTvw"
+        app:layout_constraintEnd_toEndOf="@+id/weightMinSpinner"
+        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintStart_toStartOf="@+id/weightMinSpinner"
+        app:layout_constraintTop_toTopOf="@+id/weightMaxTvw"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <Spinner
+        android:id="@+id/yearSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:mutableSpinner="@{viewModel.yearList}"
+        app:layout_constraintBottom_toBottomOf="@+id/yearTvw"
+        app:layout_constraintEnd_toEndOf="@+id/weightMaxSpinner"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/weightMaxSpinner"
+        app:layout_constraintTop_toTopOf="@+id/yearTvw"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <Spinner
+        android:id="@+id/licenseSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:mutableSpinner="@{viewModel.licenses}"
+        app:layout_constraintBottom_toBottomOf="@+id/licenseTvw"
+        app:layout_constraintEnd_toEndOf="@+id/yearSpinner"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/yearSpinner"
+        app:layout_constraintTop_toTopOf="@+id/licenseTvw"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <TextView
+        android:id="@+id/brandTvw"
+        style="@style/FormFilterTextView"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/border_llayout"
+        android:text="Marca"
+
+        android:textAlignment="center"
+
+
+        android:textColor="#FFFFFF"
+        app:layout_constraintHorizontal_weight="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/modelTvw"
+        style="@style/FormFilterTextView"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Modelo"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintStart_toStartOf="@+id/brandTvw"
+        app:layout_constraintTop_toBottomOf="@+id/brandTvw" />
+
+    <TextView
+        android:id="@+id/priceMinTvw"
+        style="@style/FormFilterTextView"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Precio mínimo"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintStart_toStartOf="@+id/bikeTypeTvw"
+        app:layout_constraintTop_toBottomOf="@+id/bikeTypeTvw" />
+
+    <TextView
+        android:id="@+id/bikeTypeTvw"
+        style="@style/FormFilterTextView"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Tipo"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_weight="0.4"
+        app:layout_constraintStart_toStartOf="@+id/modelTvw"
+        app:layout_constraintTop_toBottomOf="@+id/modelTvw" />
+
+    <TextView
+        android:id="@+id/priceMaxTvw"
+        style="@style/FormFilterTextView"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Precio máximo"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintStart_toStartOf="@+id/priceMinTvw"
+        app:layout_constraintTop_toBottomOf="@+id/priceMinTvw" />
+
+    <TextView
+        android:id="@+id/powerMinTvw"
+        style="@style/FormFilterTextView"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Potencia mínima"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintStart_toStartOf="@+id/priceMaxTvw"
+        app:layout_constraintTop_toBottomOf="@+id/priceMaxTvw" />
+
+    <TextView
+        android:id="@+id/powerMaxTvw"
+        style="@style/FormFilterTextView"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Potencia máxima"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintStart_toStartOf="@+id/powerMinTvw"
+        app:layout_constraintTop_toBottomOf="@+id/powerMinTvw" />
+
+    <TextView
+        android:id="@+id/cilMinTvw"
+        style="@style/FormFilterTextView"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Cilindrada mínima"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintStart_toStartOf="@+id/powerMaxTvw"
+        app:layout_constraintTop_toBottomOf="@+id/powerMaxTvw" />
+
+    <TextView
+        android:id="@+id/cilMaxTvw"
+        style="@style/FormFilterTextView"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Cilindrada máxima"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintStart_toStartOf="@+id/cilMinTvw"
+        app:layout_constraintTop_toBottomOf="@+id/cilMinTvw" />
+
+    <View
+        android:id="@+id/red_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="1dp"
+        android:background="#e4e4e4"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/licenseTvw" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/licenseTvw"
+        app:layout_constraintTop_toBottomOf="@id/red_divider"
+        app:layout_constraintVertical_bias="0.78">
+
+        <ImageButton
+            android:id="@+id/filtrar_refresh_ibtn"
+            android:layout_width="@dimen/weight_constraint_size"
+            android:layout_height="40dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/refresh_icon_128_light" />
+
+
+        <ImageButton
+            android:id="@+id/filtrar_accept_ibtn"
+            android:layout_width="@dimen/weight_constraint_size"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/check_ok_icon_128" />
+
+
+    </LinearLayout>
+
+
+
+</android.support.constraint.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/filter_dialog_progressBar"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:mutableVisibility="@{viewModel.loadingVisibility}"
+        android:indeterminate="false"
+        android:indeterminateBehavior="cycle"
+        android:layout_gravity="center"
+        android:progressDrawable="@drawable/circular_progress_bar"
+        android:background="@drawable/circle_shape"
+        android:max="100"
+        android:progress="65" />
+
+
+</FrameLayout>
+
+</layout>
