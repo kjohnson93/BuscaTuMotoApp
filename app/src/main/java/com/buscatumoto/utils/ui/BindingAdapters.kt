@@ -83,8 +83,6 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
                     spinnerDataObservable : List<String>? ->
                     val brandTypeSpinnerAdapter = ArrayAdapter<String>(parentActivity, R.layout.simple_spinner_item, spinnerDataObservable)
                     view?.adapter = brandTypeSpinnerAdapter
-                    view?.setSelection(0)
-
                 })
         }
 

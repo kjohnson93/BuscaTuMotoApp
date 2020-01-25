@@ -27,8 +27,7 @@ import com.buscatumoto.injection.component.ViewModelComponent
 import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.ui.viewmodels.SearchFormViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
-import com.buscatumoto.utils.ui.FilterFormImpl
-import com.buscatumoto.utils.ui.FilterFormMediator
+
 import javax.inject.Inject
 
 
@@ -43,8 +42,6 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener, AdapterV
     var closeIButton: ImageButton? = null
     var refreshIButton: ImageButton? = null
     var acceptIButton: ImageButton? = null
-
-    var filterFormMediator: FilterFormMediator? = null
 
     var filterFormPgBar: ProgressBar? = null
 
@@ -220,7 +217,7 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener, AdapterV
                 dismiss()
             }
             R.id.filtrar_refresh_ibtn -> {
-                filterFormMediator?.notify(refreshIButton?.id, 0)
+
             }
             R.id.filtrar_accept_ibtn -> {
                 //API request and then navigate.

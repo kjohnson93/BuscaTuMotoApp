@@ -97,57 +97,70 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
 
     private fun onLoadFieldsSuccess(fieldsResponse: FieldsResponse?) {
         brands.value =
-            (fieldsResponse?.brandList as ArrayList<String>).apply { this.add(0, "-Marca-") }
-        models.value = ArrayList<String>().apply { this.add(0, "-Elegir marca-") }
+            (fieldsResponse?.brandList as ArrayList<String>).apply {
+                this.remove("")
+                this.add(0, "-Marca-") }
+        models.value = ArrayList<String>().apply {
+            this.remove("")
+            this.add(0, "-Elegir Marca-") }
         bikeTypes.value = (fieldsResponse?.bikeTypesList as ArrayList<String>).apply {
+            this.remove("")
             this.add(
                 0,
                 "-Tipo de moto-"
             )
         }
         priceMinList.value = (fieldsResponse?.priceMinList as ArrayList<String>).apply {
+            this.remove("")
             this.add(
                 0,
                 "-Precio desde-"
             )
         }
         priceMaxList.value = (fieldsResponse?.priceMaxList as ArrayList<String>).apply {
+            this.remove("")
             this.add(
                 0,
                 "-Precio hasta-"
             )
         }
         powerMinList.value = (fieldsResponse?.powerMinList as ArrayList<String>).apply {
+            this.remove("")
             this.add(
                 0,
                 "-Potencia desde-"
             )
         }
         powerMaxList.value = (fieldsResponse?.powerMaxList as ArrayList<String>).apply {
+            this.remove("")
             this.add(
                 0,
                 "-Potencia hasta-"
             )
         }
         cilMinList.value = (fieldsResponse?.cilMinList as ArrayList<String>).apply {
+            this.remove("")
             this.add(
                 0,
                 "-Cilindrada desde-"
             )
         }
         cilMaxList.value = (fieldsResponse?.cilMaxList as ArrayList<String>).apply {
+            this.remove("")
             this.add(
                 0,
                 "-Cilindrada hasta-"
             )
         }
         weightMinList.value = (fieldsResponse?.weightMinList as ArrayList<String>).apply {
+            this.remove("")
             this.add(
                 0,
                 "-Peso desde-"
             )
         }
         weightMaxList.value = (fieldsResponse?.weightMaxList as ArrayList<String>).apply {
+            this.remove("")
             this.add(
                 0,
                 "-Peso hasta-"
@@ -180,6 +193,8 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
         respose.forEachIndexed { index, motoResponseItemModel ->
             brandModels.add(motoResponseItemModel.model)
         }
+
+        brandModels.add(0, "-Elegir Marca-")
 
         models.value = brandModels
     }
