@@ -1,11 +1,9 @@
 package com.buscatumoto.ui.fragments.dialog
 
-import android.app.Dialog
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
-import android.databinding.Observable
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
@@ -15,14 +13,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
-import com.buscatumoto.data.remote.dto.response.FieldsResponse
 import com.buscatumoto.databinding.FragmentFiltroFormBinding
-import com.buscatumoto.injection.component.DaggerViewComponent
 import com.buscatumoto.injection.component.DaggerViewModelComponent
-import com.buscatumoto.injection.component.ViewComponent
 import com.buscatumoto.injection.component.ViewModelComponent
 import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.ui.viewmodels.SearchFormViewModel
@@ -85,6 +79,8 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener, AdapterV
         binding.viewModel = searchFormViewModel
 
         binding.filtrarCloseIbtn.setOnClickListener(this)
+        binding.filtrarRefreshIbtn.setOnClickListener(this)
+        binding.filtrarAcceptIbtn.setOnClickListener(this)
         binding.brandSpinner.onItemSelectedListener = this
 
         return binding.root
@@ -217,7 +213,7 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener, AdapterV
                 dismiss()
             }
             R.id.filtrar_refresh_ibtn -> {
-
+                searchFormViewModel.refreshData()
             }
             R.id.filtrar_accept_ibtn -> {
                 //API request and then navigate.

@@ -209,4 +209,8 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
         subscription.dispose()
     }
 
+    fun refreshData() {
+        this.loadFields()
+    }
+
 }
