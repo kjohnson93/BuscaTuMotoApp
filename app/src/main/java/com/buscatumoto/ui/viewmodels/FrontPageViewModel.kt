@@ -43,7 +43,10 @@ class FrontPageViewModel @Inject constructor(): BaseViewModel() {
             index ++
         }
 
-        searchBrandsAdapter.updateBrandHighLights(drawableArrayList as List<Drawable>)
+//      private val list: List<ItemInfo> = listOf(itemList.last()) + itemList + listOf(itemList.first())
+        val modifiedList: List<Drawable?> = listOf(drawableArrayList.last()) + drawableArrayList + listOf(drawableArrayList.first())
+
+        searchBrandsAdapter.updateBrandHighLights(modifiedList as List<Drawable>)
     }
 
 

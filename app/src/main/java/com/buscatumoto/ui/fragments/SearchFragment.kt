@@ -82,7 +82,7 @@ class SearchFragment : Fragment(), View.OnClickListener {
         arrowDownImgBtn?.setOnClickListener(this)
         filtrarBtn?.setOnClickListener(this)
 
-        binding.fragmentSearchBrandsRv.autoScroll(10, 7000)
+        binding.fragmentSearchBrandsRv.autoScroll(10, 2500)
 
 
         return binding.root
