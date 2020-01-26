@@ -20,12 +20,18 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
 
     private lateinit var subscription: Disposable
 
-    val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    private val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
 
-    val errorMessage: MutableLiveData<Int> = MutableLiveData()
-    val errorClickListener = View.OnClickListener {
+    private val errorMessage: MutableLiveData<Int> = MutableLiveData()
+
+    fun getLoadingVisibility() = loadingVisibility
+    fun getErrorMessage(): MutableLiveData<Int> = errorMessage
+
+    private val errorClickListener = View.OnClickListener {
         loadFields()
     }
+
+    fun getErrorClickListener() : View.OnClickListener = errorClickListener
 
     val brands: MutableLiveData<List<String>> = MutableLiveData()
     val models: MutableLiveData<List<String>> = MutableLiveData()
@@ -46,24 +52,6 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
     }
 
     fun loadFields() {
-        //Anonymous class
-//        subscription = buscaTuMotoService.getFields().
-//            subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .doOnSubscribe { onLoadFieldsStart()}
-//            .doOnTerminate { onLoadFieldsFinish() }
-//            .subscribe( object : Consumer<FieldsResponse> {
-//                override fun accept(t: FieldsResponse?) {
-//                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//                }
-//
-//            }, object : Consumer<Throwable> {
-//                override fun accept(t: Throwable?) {
-//                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//                }
-//
-//            })
-
         subscription = buscaTuMotoService.getFields().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onLoadFieldsStart() }
@@ -71,21 +59,6 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
             .subscribe({ fieldResponse: FieldsResponse? -> onLoadFieldsSuccess(fieldResponse) }
                 , { throwableError: Throwable? -> onLoadFieldsError(throwableError) })
     }
-
-//    @CheckReturnValue
-//    @SchedulerSupport(SchedulerSupport.NONE)
-//    fun subscribe(
-//        onNext: Consumer<in T?>?,
-//        onError: Consumer<in Throwable?>?
-//    ): Disposable {
-//        return subscribe(
-//            onNext,
-//            onError,
-//            Functions.EMPTY_ACTION,
-//            Functions.emptyConsumer<Disposable>()
-//        )
-//    }
-
 
     private fun onLoadFieldsStart() {
         loadingVisibility.value = View.VISIBLE

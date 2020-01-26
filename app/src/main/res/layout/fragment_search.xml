@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data >
+        <variable
+            name="viewModel"
+            type="com.buscatumoto.ui.viewmodels.FrontPageViewModel" />
+    </data>
+
 <android.support.constraint.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -34,7 +43,6 @@
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
         app:layout_constraintWidth_percent="0.8">
-
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/codpacienteLayout"
@@ -113,5 +121,18 @@
         app:layout_constraintWidth_percent="0.1"
         app:srcCompat="@drawable/down_arrow_icon_128_dark" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_search_brands_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        app:mutableAdapter="@{viewModel.searchBrandsAdapter}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filtrarBtn" />
 
 </android.support.constraint.ConstraintLayout>
+
+</layout>

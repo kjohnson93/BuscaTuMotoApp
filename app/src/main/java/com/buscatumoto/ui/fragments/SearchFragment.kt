@@ -1,8 +1,10 @@
 package com.buscatumoto.ui.fragments
 
 import android.arch.lifecycle.ViewModelProviders
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +13,11 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
+import com.buscatumoto.databinding.BrandHighlightItemRowBinding
+import com.buscatumoto.databinding.FragmentSearchBinding
 import com.buscatumoto.injection.component.DaggerViewComponent
 import com.buscatumoto.injection.component.DaggerViewModelComponent
 import com.buscatumoto.injection.component.ViewComponent
@@ -50,6 +55,7 @@ class SearchFragment : Fragment(), View.OnClickListener {
     lateinit var viewModelFactory: ViewModelFactory
 
     lateinit var frontPageViewModel: FrontPageViewModel
+    private lateinit var binding: FragmentSearchBinding
 
 
     override fun onCreateView(
@@ -57,31 +63,28 @@ class SearchFragment : Fragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val fragmentView: View = inflater.inflate(R.layout.fragment_search, container, false)
+        binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_search, container, false )
 
         injector.inject(this)
 
+        binding.fragmentSearchBrandsRv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
 
         frontPageViewModel = ViewModelProviders.of(this, viewModelFactory).get(FrontPageViewModel::class.java)
+        binding.viewModel = frontPageViewModel
+
+
 
         getActivity()?.getWindow()
             ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        arrowDownImgBtn = fragmentView.findViewById(R.id.arrowDownImgBtn)
-        filtrarBtn = fragmentView.findViewById(R.id.filtrarBtn)
 
 
         arrowDownImgBtn?.setOnClickListener(this)
         filtrarBtn?.setOnClickListener(this)
 
 
-        bannerLogo = fragmentView.findViewById(R.id.imageView3)
-
-
-
-
-
-        return fragmentView
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -119,11 +122,11 @@ class SearchFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.filtrarBtn -> {
+            binding.filtrarBtn.id -> {
                 openFilterDialogFragment()
 
             }
-            R.id.arrowDownImgBtn -> {
+            binding.arrowDownImgBtn.id -> {
                 openFilterDialogFragment()
             }
         }

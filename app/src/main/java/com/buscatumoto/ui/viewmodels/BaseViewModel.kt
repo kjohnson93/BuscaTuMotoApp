@@ -27,6 +27,9 @@ abstract class BaseViewModel: ViewModel() {
             is SearchFormViewModel -> {
                 injector.inject(this)
             }
+            is FrontPageBrandViewModel -> {
+                injector.inject(this)
+            }
         }
     }
 }

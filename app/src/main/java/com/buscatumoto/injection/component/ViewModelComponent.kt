@@ -4,6 +4,7 @@ import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.injection.module.ViewModelModule
 import com.buscatumoto.ui.fragments.SearchFragment
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
+import com.buscatumoto.ui.viewmodels.FrontPageBrandViewModel
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import com.buscatumoto.ui.viewmodels.SearchFormViewModel
 import dagger.Component
@@ -25,6 +26,7 @@ interface ViewModelComponent {
      */
     fun inject(frontPageViewModel: FrontPageViewModel)
     fun inject(seachFormViewModel: SearchFormViewModel)
+    fun inject(frontPageBrandViewModel: FrontPageBrandViewModel)
 
 
 }

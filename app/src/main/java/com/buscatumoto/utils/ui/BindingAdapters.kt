@@ -4,47 +4,18 @@ import android.R
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.databinding.BindingAdapter
+import android.graphics.drawable.Drawable
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.Spinner
-
-//@BindingAdapter("mutableVisibility")
-//fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>?) {
-//    val parentActivity: AppCompatActivity? = view.getParentActivity()
-//
-//    if (parentActivity != null && visibility != null) {
-//        visibility.observe(parentActivity, Observer { value -> view.visibility =  value?: View.VISIBLE})
-//    }
-
 
 @BindingAdapter("mutableVisibility")
 fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
 
     val parentActivity: AppCompatActivity? = view.getParentActivity()
-
-
-    //Anomymous class method
-//    if (parentActivity != null && visibility != null) {
-//        visibility.observe(parentActivity, object: Observer<Int> {
-//            override fun onChanged(t: Int?) {
-//                t?.let {
-//                    view.visibility = t
-//                }
-//            }
-//
-//        })
-//    }
-
-    //Lambda method. Two ways. Auto convert to lambda or convert to lambda manually.
-    //Auto
-//    if (parentActivity != null && visibility != null) {
-//        visibility.observe(parentActivity, Observer<Int> { t ->
-//            t?.let {
-//                view.visibility = t
-//            }
-//        })
-//    }
 
     //Manualx
     if (parentActivity != null && visibility != null) {
@@ -85,12 +56,21 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
                     view?.adapter = brandTypeSpinnerAdapter
                 })
         }
-
-        //        val bikeTypeList: ArrayList<String> = ArrayList()
-//        bikeTypeList.addAll(response.bikeTypesList)
-//        bikeTypeList.removeAt(0)
-//        bikeTypeList.add(0, "-Tipo de moto-")
-//        val bikeTypeSpinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, bikeTypeList)
-//        bikeTypeSpinner?.adapter = bikeTypeSpinnerAdapter
-//        bikeTypeSpinner?.setSelection(0)
     }
+
+    @BindingAdapter("mutableDrawable")
+    fun setDrawable(view: ImageView, drawableObservable: MutableLiveData<Drawable>) {
+
+        val parentActivity: AppCompatActivity? = view.getParentActivity()
+
+        if (parentActivity != null) {
+                drawableObservable.observe(parentActivity, Observer { drawableObservable: Drawable? -> view.setImageDrawable(drawableObservable) })
+        }
+
+    }
+
+    @BindingAdapter("mutableAdapter")
+    fun setRecyclerAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
+        view.adapter = adapter
+    }
+

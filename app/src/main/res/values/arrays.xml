@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="brand_logos_array">
+        <item>@drawable/aprilia150x150</item>
+        <item>@drawable/benelli150x150</item>
+        <item>@drawable/bmw150x150</item>
+        <item>@drawable/bultaco150x150</item>
+        <item>@drawable/daelim150x150</item>
+    </array>
+
+</resources>
