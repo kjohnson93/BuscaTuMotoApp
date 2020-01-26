@@ -121,12 +121,12 @@
         app:layout_constraintWidth_percent="0.1"
         app:srcCompat="@drawable/down_arrow_icon_128_dark" />
 
-    <android.support.v7.widget.RecyclerView
+    <com.buscatumoto.ui.fragments.InfiniteRotationView
         android:id="@+id/fragment_search_brands_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
-        app:mutableAdapter="@{viewModel.searchBrandsAdapter}"
+        app:mutableInfiniteViewAdapter="@{viewModel.searchBrandsAdapter}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.4"

@@ -11,6 +11,8 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
+import com.buscatumoto.ui.adapters.SearchBrandsRecyclerAdapter
+import com.buscatumoto.ui.fragments.InfiniteRotationView
 
 @BindingAdapter("mutableVisibility")
 fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
@@ -69,8 +71,8 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
 
     }
 
-    @BindingAdapter("mutableAdapter")
-    fun setRecyclerAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
-        view.adapter = adapter
+    @BindingAdapter("mutableInfiniteViewAdapter")
+    fun setRecyclerAdapter(view: InfiniteRotationView, adapter: SearchBrandsRecyclerAdapter) {
+        view.setAdapter(adapter)
     }
 

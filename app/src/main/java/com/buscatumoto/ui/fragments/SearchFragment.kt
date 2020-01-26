@@ -67,8 +67,7 @@ class SearchFragment : Fragment(), View.OnClickListener {
 
         injector.inject(this)
 
-        binding.fragmentSearchBrandsRv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
+//        binding.fragmentSearchBrandsRv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         frontPageViewModel = ViewModelProviders.of(this, viewModelFactory).get(FrontPageViewModel::class.java)
         binding.viewModel = frontPageViewModel
@@ -83,8 +82,15 @@ class SearchFragment : Fragment(), View.OnClickListener {
         arrowDownImgBtn?.setOnClickListener(this)
         filtrarBtn?.setOnClickListener(this)
 
+        binding.fragmentSearchBrandsRv.autoScroll(10, 7000)
+
 
         return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.fragmentSearchBrandsRv.stopAutoScroll()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
