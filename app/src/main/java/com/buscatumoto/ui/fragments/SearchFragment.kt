@@ -1,5 +1,6 @@
 package com.buscatumoto.ui.fragments
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -74,6 +75,9 @@ class SearchFragment : Fragment(), View.OnClickListener {
         frontPageViewModel = ViewModelProviders.of(this, viewModelFactory).get(FrontPageViewModel::class.java)
         binding.viewModel = frontPageViewModel
 
+        frontPageViewModel.getbrandSelected().observe(this,
+            Observer { brand -> navigateWithBrand(brand) })
+
         getActivity()?.getWindow()
             ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
@@ -84,6 +88,10 @@ class SearchFragment : Fragment(), View.OnClickListener {
         binding.fragmentSearchBrandsRv.autoScroll(brandListSize, Constants.AUTO_SCROLL_TIME_ELLAPSE_MILLIS)
 
         return binding.root
+    }
+
+    private fun navigateWithBrand(brand: String?) {
+        Log.d(Constants.MOTOTAG, "Navigate with brand: $brand")
     }
 
     override fun onDestroy() {

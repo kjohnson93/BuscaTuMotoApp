@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <array name="brand_names_array">
+        <item>Aprilia</item>
+        <item>Benelli</item>
+        <item>BMW</item>
+        <item>Bultaco</item>
+        <item>Daelim</item>
+        <item>Aprilia</item>
+        <item>Benelli</item>
+        <item>BMW</item>
+        <item>Bultaco</item>
+        <item>Daelim</item>
+    </array>
+
     <array name="brand_logos_array">
         <item>@drawable/aprilia150x150</item>
         <item>@drawable/benelli150x150</item>

@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.Spinner
 import com.buscatumoto.ui.adapters.SearchBrandsRecyclerAdapter
 import com.buscatumoto.ui.fragments.InfiniteRotationView
+import com.buscatumoto.ui.models.BrandRecyclerUiModel
 
 @BindingAdapter("mutableVisibility")
 fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
@@ -76,3 +77,14 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
         view.setAdapter(adapter)
     }
 
+    @BindingAdapter("mutableBrandDrawable")
+    fun setBrandDrawable(view: ImageView, brandObservable: MutableLiveData<BrandRecyclerUiModel>) {
+
+        val parentActivity: AppCompatActivity? = view.getParentActivity()
+
+        if (parentActivity != null) {
+            brandObservable.observe(
+                parentActivity,
+                Observer { drawableObservable: BrandRecyclerUiModel? -> view.setImageDrawable(brandObservable.value?.drawable) })
+        }
+    }

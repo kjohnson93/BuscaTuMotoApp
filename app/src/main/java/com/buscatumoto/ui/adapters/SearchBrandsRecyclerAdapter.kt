@@ -10,11 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.buscatumoto.R
 import com.buscatumoto.databinding.BrandHighlightItemRowBinding
+import com.buscatumoto.ui.models.BrandRecyclerUiModel
 import com.buscatumoto.ui.viewmodels.FrontPageBrandViewModel
 
-class SearchBrandsRecyclerAdapter(): RecyclerView.Adapter<SearchBrandsRecyclerAdapter.BrandViewHolder>() {
+class SearchBrandsRecyclerAdapter(val itemClickListener: BrandItemClickListener): RecyclerView.Adapter<SearchBrandsRecyclerAdapter.BrandViewHolder>() {
 
-    private var brandHighLightList: List<Drawable> = emptyList()
+    private var brandHighLightList: List<BrandRecyclerUiModel> = emptyList()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrandViewHolder {
@@ -32,7 +33,7 @@ class SearchBrandsRecyclerAdapter(): RecyclerView.Adapter<SearchBrandsRecyclerAd
         viewHolder.bind(brandHighLightList[position])
     }
 
-    fun updateBrandHighLights(brandsList: List<Drawable>) {
+    fun updateBrandHighLights(brandsList: List<BrandRecyclerUiModel>) {
         this.brandHighLightList = brandsList
         this.notifyDataSetChanged()
     }
@@ -41,10 +42,16 @@ class SearchBrandsRecyclerAdapter(): RecyclerView.Adapter<SearchBrandsRecyclerAd
 
         private val viewModel = FrontPageBrandViewModel()
 
-        fun bind(drawable: Drawable) {
-            viewModel.bind(drawable)
+        fun bind(brandRecyclerUiModel: BrandRecyclerUiModel) {
+            viewModel.bind(brandRecyclerUiModel)
             binding.viewModel = viewModel
+
+            binding.root.setOnClickListener { itemClickListener.onItemClick(brandRecyclerUiModel.brand) }
         }
+    }
+
+    interface BrandItemClickListener {
+        fun onItemClick(brand: String)
     }
 
 

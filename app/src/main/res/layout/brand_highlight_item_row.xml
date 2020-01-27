@@ -19,7 +19,7 @@
             android:layout_marginTop="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:mutableDrawable="@{viewModel.drawableObservable}"
+            app:mutableBrandDrawable="@{viewModel.brandObservable}"
             app:srcCompat="@drawable/cross_icon_128_dark" />
     </android.support.constraint.ConstraintLayout>
 
