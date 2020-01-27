@@ -74,18 +74,14 @@ class SearchFragment : Fragment(), View.OnClickListener {
         frontPageViewModel = ViewModelProviders.of(this, viewModelFactory).get(FrontPageViewModel::class.java)
         binding.viewModel = frontPageViewModel
 
-
-
         getActivity()?.getWindow()
             ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-
 
         arrowDownImgBtn?.setOnClickListener(this)
         filtrarBtn?.setOnClickListener(this)
 
-        binding.fragmentSearchBrandsRv.autoScroll(10, 2500)
-
+        val brandListSize = frontPageViewModel.searchBrandsAdapter.itemCount
+        binding.fragmentSearchBrandsRv.autoScroll(brandListSize, Constants.AUTO_SCROLL_TIME_ELLAPSE_MILLIS)
 
         return binding.root
     }
