@@ -64,6 +64,8 @@ class SearchFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_search, container, false )
+        binding.arrowDownImgBtn.setOnClickListener(this)
+        binding.filtrarBtn.setOnClickListener(this)
 
         injector.inject(this)
 
