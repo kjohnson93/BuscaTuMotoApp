@@ -89,6 +89,7 @@ class FilterFormDialogFragment: DialogFragment(), View.OnClickListener, AdapterV
                 dismiss()
             }
             R.id.filtrar_refresh_ibtn -> {
+                //OK: View only can notify view model. View doest no pass any view related classes to view model.
                 searchFormViewModel.refreshData()
             }
             R.id.filtrar_accept_ibtn -> {

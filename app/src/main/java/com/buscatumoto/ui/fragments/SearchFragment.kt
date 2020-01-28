@@ -19,14 +19,14 @@ import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
 import com.buscatumoto.databinding.BrandHighlightItemRowBinding
 import com.buscatumoto.databinding.FragmentSearchBinding
-import com.buscatumoto.injection.component.DaggerViewComponent
 import com.buscatumoto.injection.component.DaggerViewModelComponent
-import com.buscatumoto.injection.component.ViewComponent
 import com.buscatumoto.injection.component.ViewModelComponent
 import com.buscatumoto.injection.module.NetworkModule
+import com.buscatumoto.ui.activities.CatalogueActivity
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
+import com.buscatumoto.utils.ui.BasicNavigator
 import javax.inject.Inject
 
 
@@ -54,6 +54,8 @@ class SearchFragment : Fragment(), View.OnClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+    @Inject
+    lateinit var basicNavigator: BasicNavigator
 
     lateinit var frontPageViewModel: FrontPageViewModel
     private lateinit var binding: FragmentSearchBinding
@@ -69,8 +71,6 @@ class SearchFragment : Fragment(), View.OnClickListener {
         binding.filtrarBtn.setOnClickListener(this)
 
         injector.inject(this)
-
-//        binding.fragmentSearchBrandsRv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         frontPageViewModel = ViewModelProviders.of(this, viewModelFactory).get(FrontPageViewModel::class.java)
         binding.viewModel = frontPageViewModel
@@ -92,6 +92,7 @@ class SearchFragment : Fragment(), View.OnClickListener {
 
     private fun navigateWithBrand(brand: String?) {
         Log.d(Constants.MOTOTAG, "Navigate with brand: $brand")
+        basicNavigator.navigateToIntent(requireActivity(), CatalogueActivity::class.java, null)
     }
 
     override fun onDestroy() {

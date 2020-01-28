@@ -8,12 +8,13 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.util.Log
 import com.buscatumoto.BuscaTuMotoApplication
+import javax.inject.Inject
 
 
 /**
  * Class that manages basic navigation on MyVent App.
  */
-class BasicNavigator {
+class BasicNavigator @Inject constructor() {
 
     val appContext: Context = BuscaTuMotoApplication.getInstance().applicationContext
 

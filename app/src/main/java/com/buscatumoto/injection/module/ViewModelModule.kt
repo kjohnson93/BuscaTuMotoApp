@@ -2,6 +2,7 @@ package com.buscatumoto.injection.module
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import com.buscatumoto.ui.viewmodels.CatalogueViewModel
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import com.buscatumoto.ui.viewmodels.SearchFormViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
@@ -35,22 +36,9 @@ abstract class ViewModelModule {
     @ViewModelKey(SearchFormViewModel::class)
     abstract fun bindSearchFormViewModel(searchFormViewModel: SearchFormViewModel): ViewModel
 
-//    @Provides
-//    fun viewModelFactory(providerMap: Map<Class<out ViewModel>, Provider<ViewModel>>): ViewModelFactory {
-//        return ViewModelFactory(providerMap)
-//    }
+    @Binds
+    @IntoMap
+    @ViewModelKey(CatalogueViewModel::class)
+    abstract fun bindCatalogueViewModel(catalogueViewModel: CatalogueViewModel): ViewModel
 
-//    @Provides
-//    @IntoMap
-//    @ViewModelKey(SearchBikeActivityViewModel::class)
-//    fun provideSearchActivityViewModel(): ViewModel {
-//        return SearchBikeActivityViewModel()
-//    }
-//
-//    @Provides
-//    @IntoMap
-//    @ViewModelKey(SearchBikeFragmentViewModel::class)
-//    fun provideSearchBikeFragmentViewModel(): ViewModel {
-//        return SearchBikeFragmentViewModel()
-//    }
 }

@@ -30,6 +30,9 @@ abstract class BaseViewModel: ViewModel() {
             is FrontPageBrandViewModel -> {
                 injector.inject(this)
             }
+            is CatalogueViewModel -> {
+                injector.inject(this)
+            }
         }
     }
 }
