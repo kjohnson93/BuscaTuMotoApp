@@ -7,16 +7,14 @@ import com.buscatumoto.R
 import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
 import com.buscatumoto.data.remote.dto.response.FieldsResponse
 import com.buscatumoto.data.remote.dto.response.MotoResponseItemModel
+import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import com.buscatumoto.utils.global.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class SearchFormViewModel @Inject constructor(): BaseViewModel() {
-
-    @Inject
-    lateinit var buscaTuMotoService: BuscaTuMotoService
+class SearchFormViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRepository): BaseViewModel() {
 
     private lateinit var subscription: Disposable
 
@@ -52,12 +50,7 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
     }
 
     fun loadFields() {
-        subscription = buscaTuMotoService.getFields().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { onLoadFieldsStart() }
-            .doOnTerminate { onLoadFieldsFinish() }
-            .subscribe({ fieldResponse: FieldsResponse? -> onLoadFieldsSuccess(fieldResponse) }
-                , { throwableError: Throwable? -> onLoadFieldsError(throwableError) })
+        subscription = buscaTuMotoRepository.getFields()
     }
 
     private fun onLoadFieldsStart() {
@@ -151,12 +144,12 @@ class SearchFormViewModel @Inject constructor(): BaseViewModel() {
     }
 
     fun loadModelsByBrand(brand: String) {
-        subscription = buscaTuMotoService.getBikesByBrand(brand)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { onLoadFieldsStart() }
-            .doOnTerminate { onLoadFieldsFinish() }
-            .subscribe( { respose -> onLoadModelsSuccess(respose) }, { throwableError -> onLoadModelsError(throwableError)})
+//        subscription = buscaTuMotoService.getBikesByBrand(brand)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .doOnSubscribe { onLoadFieldsStart() }
+//            .doOnTerminate { onLoadFieldsFinish() }
+//            .subscribe( { respose -> onLoadModelsSuccess(respose) }, { throwableError -> onLoadModelsError(throwableError)})
     }
 
     private fun onLoadModelsSuccess(respose: List<MotoResponseItemModel>) {
