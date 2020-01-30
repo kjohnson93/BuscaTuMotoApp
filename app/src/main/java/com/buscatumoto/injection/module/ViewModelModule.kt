@@ -3,6 +3,8 @@ package com.buscatumoto.injection.module
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.buscatumoto.BuscaTuMotoApplication
+import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
+import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import com.buscatumoto.ui.viewmodels.SearchFormViewModel
@@ -44,21 +46,5 @@ abstract class ViewModelModule {
     abstract fun bindCatalogueViewModel(catalogueViewModel: CatalogueViewModel): ViewModel
 
 
-//    @Provides
-//    @Reusable
-//    @JvmStatic
-//    internal fun providesRetrofit(): Retrofit {
-//        return Retrofit.Builder().baseUrl(
-//            BuscaTuMotoApplication.getInstance()
-//                .getEnvironmentBaseUrl())
-//            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//            .addConverterFactory(MoshiConverterFactory.create()).build()
-//    }
-//    @Provides
-//    @Reusable
-//    @JvmStatic
-//    internal fun providesSearchViewModel: SearchFormViewModel {
-//        return SearchFormViewModel()
-//}
 
 }

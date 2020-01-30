@@ -15,7 +15,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BuscaTuMotoRepository constructor(private val buscaTuMotoDataSource: BuscaTuMotoDataSource, private val searchDao: SearchDao) {
+class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSource: BuscaTuMotoDataSource, val searchDao: SearchDao) {
 
 //    fun getFields(): LiveData {
 //                    buscaTuMotoService.getFields().subscribeOn(Schedulers.io())

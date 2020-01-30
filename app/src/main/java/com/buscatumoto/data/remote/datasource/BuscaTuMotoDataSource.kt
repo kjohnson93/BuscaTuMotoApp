@@ -6,10 +6,8 @@ import com.buscatumoto.injection.component.ViewModelComponent
 import com.buscatumoto.injection.module.NetworkModule
 import javax.inject.Inject
 
-class BuscaTuMotoDataSource @Inject constructor() {
+class BuscaTuMotoDataSource @Inject constructor(private val buscaTuMotoService: BuscaTuMotoService) {
 
-    @Inject
-    lateinit var buscaTuMotoService: BuscaTuMotoService
 
     private val injector: ViewModelComponent = DaggerViewModelComponent.builder().networkModule(
         NetworkModule

@@ -14,7 +14,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class SearchFormViewModel @Inject constructor(): BaseViewModel() {
+class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoRepository): BaseViewModel() {
 
 //    private lateinit var subscription: Disposable
 

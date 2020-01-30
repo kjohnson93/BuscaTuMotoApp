@@ -2,7 +2,9 @@ package com.buscatumoto.injection.module
 
 import android.app.Application
 import com.buscatumoto.BuscaTuMotoApplication
+import com.buscatumoto.data.local.AppDatabase
 import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
+import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -34,11 +36,17 @@ object NetworkModule {
             .addConverterFactory(MoshiConverterFactory.create()).build()
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideDb(app: Application) = AppDatabase.getInstance(app)
-//
-//    @Provides
-//    @Singleton
-//    fun providesSearchDao(db: AppDatabase) = db.searchDao()
+    @Provides
+    fun providesBuscaTuMotoDataSource(buscaTuMotoService: BuscaTuMotoService): BuscaTuMotoDataSource = BuscaTuMotoDataSource(buscaTuMotoService)
+
+    @Singleton
+    @Provides
+    fun provideDb(app: Application) = AppDatabase.getInstance(app)
+
+    @Provides
+    @Singleton
+    fun providesSearchDao(db: AppDatabase) = db.searchDao()
+
+
+
 }
