@@ -1,5 +1,6 @@
 package com.buscatumoto.injection.component
 
+import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.injection.module.ViewModelModule
@@ -35,7 +36,7 @@ interface ViewModelComponent {
     /**
      * Repositories
      */
-    fun inject(buscaTuMotoRepository: BuscaTuMotoRepository)
+    fun inject(buscaTuMotoDataSource: BuscaTuMotoDataSource)
 
 
 }
