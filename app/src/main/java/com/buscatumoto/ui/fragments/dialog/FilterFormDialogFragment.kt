@@ -1,13 +1,13 @@
 package com.buscatumoto.ui.fragments.dialog
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
-import android.support.v4.app.DialogFragment
+import androidx.annotation.StringRes
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.DialogFragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +25,7 @@ import com.buscatumoto.utils.injection.ViewModelFactory
 import javax.inject.Inject
 
 
-class FilterFormDialogFragment: DialogFragment(), View.OnClickListener, AdapterView.OnItemSelectedListener {
+class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     companion object {
         fun newInstance(): FilterFormDialogFragment {

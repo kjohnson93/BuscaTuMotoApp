@@ -1,6 +1,6 @@
 package com.buscatumoto.ui.viewmodels
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.buscatumoto.injection.component.DaggerViewModelComponent
 import com.buscatumoto.injection.component.ViewModelComponent
 import com.buscatumoto.injection.module.NetworkModule

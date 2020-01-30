@@ -1,6 +1,6 @@
 package com.buscatumoto.data.remote.repositories
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import com.buscatumoto.data.local.SearchDao
 import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
@@ -15,7 +15,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSource: BuscaTuMotoDataSource, private val searchDao: SearchDao) {
+class BuscaTuMotoRepository constructor(private val buscaTuMotoDataSource: BuscaTuMotoDataSource, private val searchDao: SearchDao) {
 
 //    fun getFields(): LiveData {
 //                    buscaTuMotoService.getFields().subscribeOn(Schedulers.io())

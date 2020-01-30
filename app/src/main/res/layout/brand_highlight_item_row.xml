@@ -7,7 +7,7 @@
             type="com.buscatumoto.ui.viewmodels.FrontPageBrandViewModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -21,6 +21,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:mutableBrandDrawable="@{viewModel.brandObservable}"
             app:srcCompat="@drawable/cross_icon_128_dark" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

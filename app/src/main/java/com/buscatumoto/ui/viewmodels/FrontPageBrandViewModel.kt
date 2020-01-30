@@ -1,6 +1,6 @@
 package com.buscatumoto.ui.viewmodels
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import android.graphics.drawable.Drawable
 import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
 import com.buscatumoto.ui.models.BrandRecyclerUiModel

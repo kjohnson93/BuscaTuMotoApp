@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import android.util.Log
 import com.buscatumoto.BuscaTuMotoApplication
 import javax.inject.Inject
@@ -34,7 +34,7 @@ class BasicNavigator @Inject constructor() {
     /**
      * This method navigates toa fragment in a addtobackstack way. If backstack is popped we return to origin fragment.
      */
-    fun navigateAddFragment(fragmentManager: FragmentManager? ,navigateToFragment: Fragment, extras: Bundle? ,tag: String, containerView: Int) {
+    fun navigateAddFragment(fragmentManager: androidx.fragment.app.FragmentManager?, navigateToFragment: androidx.fragment.app.Fragment, extras: Bundle?, tag: String, containerView: Int) {
         val manager = fragmentManager
 
         Log.d("TAG", "Basic Navigator manager: $manager")

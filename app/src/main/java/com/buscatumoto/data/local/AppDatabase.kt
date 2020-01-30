@@ -1,7 +1,7 @@
 package com.buscatumoto.data.local
 
 import android.content.Context
-import android.databinding.adapters.Converters
+import androidx.databinding.adapters.Converters
 import com.buscatumoto.utils.SeedDatabaseWorker
 
 

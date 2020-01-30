@@ -2,10 +2,10 @@ package com.buscatumoto.ui.fragments
 
 
 import android.content.Context
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.PagerSnapHelper
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.HORIZONTAL
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
 import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
@@ -23,23 +23,27 @@ import java.util.concurrent.TimeUnit
 class InfiniteRotationView(context: Context, attributeSet: AttributeSet)
     : RelativeLayout(context, attributeSet) {
 
-    internal lateinit var recyclerView: RecyclerView
+    internal lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
 
-    private val layoutManager: LinearLayoutManager
+    private val layoutManager: androidx.recyclerview.widget.LinearLayoutManager
     private lateinit var onScrollListener: OnScrollListener
 
     private var dispose: Disposable? = null
 
     init {
         val infiniteRotationView = View.inflate(context, R.layout.view_infinite_rotation, this)
-        layoutManager = LinearLayoutManager(context, HORIZONTAL, false)
+        layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
+            context,
+            HORIZONTAL,
+            false
+        )
         recyclerView = infiniteRotationView.findViewById(R.id.recyclerView_horizontalList)
     }
 
     fun setAdapter(adapter: SearchBrandsRecyclerAdapter) {
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
-        val snapHelper = PagerSnapHelper()
+        val snapHelper = androidx.recyclerview.widget.PagerSnapHelper()
         snapHelper.attachToRecyclerView(recyclerView)
 
         adapter.itemCount
@@ -50,7 +54,7 @@ class InfiniteRotationView(context: Context, attributeSet: AttributeSet)
                     layoutManager,
                     {
                         // When dragging, we assume user swiped. So we will stop auto rotation
-                        if (it == RecyclerView.SCROLL_STATE_DRAGGING) {
+                        if (it == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING) {
                             dispose?.dispose()
                         }
                     }
@@ -78,9 +82,9 @@ class InfiniteRotationView(context: Context, attributeSet: AttributeSet)
 
     class OnScrollListener(
         val itemCount: Int,
-        val layoutManager: LinearLayoutManager,
-        val stateChanged: (Int) -> Unit) : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        val layoutManager: androidx.recyclerview.widget.LinearLayoutManager,
+        val stateChanged: (Int) -> Unit) : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
             val firstItemVisible = layoutManager.findFirstVisibleItemPosition()
 
@@ -93,7 +97,7 @@ class InfiniteRotationView(context: Context, attributeSet: AttributeSet)
             }
         }
 
-        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+        override fun onScrollStateChanged(recyclerView: androidx.recyclerview.widget.RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
             stateChanged(newState)
         }

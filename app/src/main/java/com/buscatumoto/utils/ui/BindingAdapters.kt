@@ -1,12 +1,12 @@
 package com.buscatumoto.utils.ui
 
 import android.R
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
-import android.databinding.BindingAdapter
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.databinding.BindingAdapter
 import android.graphics.drawable.Drawable
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageView

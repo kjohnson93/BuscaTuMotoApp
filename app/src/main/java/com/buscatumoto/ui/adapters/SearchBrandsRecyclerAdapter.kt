@@ -1,9 +1,9 @@
 package com.buscatumoto.ui.adapters
 
 import android.content.Context
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.graphics.drawable.Drawable
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +13,7 @@ import com.buscatumoto.databinding.BrandHighlightItemRowBinding
 import com.buscatumoto.ui.models.BrandRecyclerUiModel
 import com.buscatumoto.ui.viewmodels.FrontPageBrandViewModel
 
-class SearchBrandsRecyclerAdapter(val itemClickListener: BrandItemClickListener): RecyclerView.Adapter<SearchBrandsRecyclerAdapter.BrandViewHolder>() {
+class SearchBrandsRecyclerAdapter(val itemClickListener: BrandItemClickListener): androidx.recyclerview.widget.RecyclerView.Adapter<SearchBrandsRecyclerAdapter.BrandViewHolder>() {
 
     private var brandHighLightList: List<BrandRecyclerUiModel> = emptyList()
 
@@ -38,7 +38,7 @@ class SearchBrandsRecyclerAdapter(val itemClickListener: BrandItemClickListener)
         this.notifyDataSetChanged()
     }
 
-    inner class BrandViewHolder(val binding: BrandHighlightItemRowBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class BrandViewHolder(val binding: BrandHighlightItemRowBinding): androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
 
         private val viewModel = FrontPageBrandViewModel()
 

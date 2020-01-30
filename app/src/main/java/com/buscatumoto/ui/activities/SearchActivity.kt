@@ -2,16 +2,16 @@ package com.buscatumoto.ui.activities
 
 import android.os.Bundle
 import android.os.Handler
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.CollapsingToolbarLayout
-import android.support.design.widget.CoordinatorLayout
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.CollapsingToolbarLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import com.buscatumoto.R
-import com.buscatumoto.utils.ui.CustomScrollView
 import com.buscatumoto.ui.fragments.SearchFragment
+import com.buscatumoto.utils.ui.CustomScrollView
 
 class SearchActivity : AppCompatActivity(),
     SearchFragment.ReadyListener {
@@ -19,7 +19,7 @@ class SearchActivity : AppCompatActivity(),
     /**
      * Main view
      */
-    private var coordLayout: CoordinatorLayout? = null
+    private var coordLayout: androidx.coordinatorlayout.widget.CoordinatorLayout? = null
 
     /**
      * App barlayout, purpose:  add  an scrollable header.
@@ -61,7 +61,7 @@ class SearchActivity : AppCompatActivity(),
      * Disables user scroll movements on app bar layout header.
      */
     fun disableHeaderScroll() {
-        val params = searchBarLayout!!.layoutParams as CoordinatorLayout.LayoutParams
+        val params = searchBarLayout!!.layoutParams as androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
         if (params.behavior == null)
             params.behavior = AppBarLayout.Behavior()
         val behaviour = params.behavior as AppBarLayout.Behavior
@@ -81,8 +81,8 @@ class SearchActivity : AppCompatActivity(),
 
         fragment.setActivityDelegate(this)
 
-        var fragmentManager: FragmentManager = this.supportFragmentManager
-        var transaction: FragmentTransaction = fragmentManager.beginTransaction()
+        var fragmentManager: androidx.fragment.app.FragmentManager = this.supportFragmentManager
+        var transaction: androidx.fragment.app.FragmentTransaction = fragmentManager.beginTransaction()
         transaction.setCustomAnimations(
             R.anim.slide_in_bottom,
             R.anim.slide_out_bottom,

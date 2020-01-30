@@ -1,6 +1,6 @@
 package com.buscatumoto.ui.viewmodels
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import android.util.Log
 import android.view.View
 import com.buscatumoto.R
@@ -14,7 +14,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class SearchFormViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRepository): BaseViewModel() {
+class SearchFormViewModel @Inject constructor(): BaseViewModel() {
 
 //    private lateinit var subscription: Disposable
 

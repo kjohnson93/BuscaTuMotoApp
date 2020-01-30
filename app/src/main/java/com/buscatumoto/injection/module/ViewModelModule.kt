@@ -1,7 +1,7 @@
 package com.buscatumoto.injection.module
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel

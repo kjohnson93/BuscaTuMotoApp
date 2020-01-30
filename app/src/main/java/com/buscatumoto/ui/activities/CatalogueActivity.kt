@@ -1,9 +1,9 @@
 package com.buscatumoto.ui.activities
 
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.buscatumoto.R
 import com.buscatumoto.databinding.ActivityCatalogueBinding
 import com.buscatumoto.injection.component.DaggerViewModelComponent

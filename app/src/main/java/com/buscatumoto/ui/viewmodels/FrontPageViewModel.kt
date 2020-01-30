@@ -1,6 +1,6 @@
 package com.buscatumoto.ui.viewmodels
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import android.content.res.TypedArray
 import android.graphics.drawable.Drawable
 import android.view.View
