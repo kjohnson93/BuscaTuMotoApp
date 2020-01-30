@@ -1,14 +1,21 @@
 package com.buscatumoto
 
+import android.app.Activity
 import android.app.Application
-import android.os.Build
+import androidx.databinding.library.BuildConfig
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoGateway
+import com.buscatumoto.injection.AppInjector
 import com.buscatumoto.utils.data.Environment
 import com.buscatumoto.utils.global.Constants
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import javax.inject.Inject
 
-class BuscaTuMotoApplication: Application() {
+class BuscaTuMotoApplication: Application(), HasAndroidInjector {
 
-    var buscaTuMotoGateway: BuscaTuMotoGateway? = null
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     //Static members
     companion object {
@@ -24,9 +31,9 @@ class BuscaTuMotoApplication: Application() {
     override fun onCreate() {
         super.onCreate()
 
-        buscaTuMotoGateway =
-            BuscaTuMotoGateway()
         sInstance = this
+
+        AppInjector.init(this)
     }
 
     fun getEnvironmentBaseUrl(): String {
@@ -42,5 +49,9 @@ class BuscaTuMotoApplication: Application() {
             }
         }
         return enviroment
+    }
+
+    override fun androidInjector(): AndroidInjector<Any> {
+        return dispatchingAndroidInjector
     }
 }

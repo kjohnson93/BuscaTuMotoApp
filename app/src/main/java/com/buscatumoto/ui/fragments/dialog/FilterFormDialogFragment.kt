@@ -16,6 +16,7 @@ import android.widget.*
 import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentFiltroFormBinding
+import com.buscatumoto.injection.Injectable
 import com.buscatumoto.injection.component.DaggerViewModelComponent
 import com.buscatumoto.injection.component.ViewModelComponent
 import com.buscatumoto.injection.module.NetworkModule
@@ -25,7 +26,7 @@ import com.buscatumoto.utils.injection.ViewModelFactory
 import javax.inject.Inject
 
 
-class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnClickListener, AdapterView.OnItemSelectedListener {
+class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnClickListener, AdapterView.OnItemSelectedListener, Injectable {
 
     companion object {
         fun newInstance(): FilterFormDialogFragment {
@@ -51,7 +52,6 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
         savedInstanceState: Bundle?
     ): View? {
         Log.d(Constants.MOTOTAG, "onCreateView called")
-        injector.inject(this)
         searchFormViewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchFormViewModel::class.java)
 
         searchFormViewModel.getErrorMessage().observe(this, Observer { observableValue: Int? ->
@@ -99,9 +99,9 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
     }
 
     private fun showError(@StringRes errorMessage: Int) {
-        errorSnackbar = Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_INDEFINITE)
-        errorSnackbar?.setAction(R.string.retry, searchFormViewModel.getErrorClickListener())
-        errorSnackbar?.show()
+//        errorSnackbar = Snackbar.make(binding., errorMessage, Snackbar.LENGTH_INDEFINITE)
+//        errorSnackbar?.setAction(R.string.retry, searchFormViewModel.getErrorClickListener())
+//        errorSnackbar?.show()
     }
 
     private fun hideError() {

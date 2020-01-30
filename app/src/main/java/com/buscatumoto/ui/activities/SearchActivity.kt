@@ -9,12 +9,20 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.buscatumoto.R
 import com.buscatumoto.ui.fragments.SearchFragment
 import com.buscatumoto.utils.ui.CustomScrollView
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import javax.inject.Inject
 
 class SearchActivity : AppCompatActivity(),
-    SearchFragment.ReadyListener {
+    SearchFragment.ReadyListener, HasAndroidInjector {
+
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     /**
      * Main view
@@ -115,6 +123,10 @@ class SearchActivity : AppCompatActivity(),
     override fun showError(error: String?) {
         var toast: Toast = Toast.makeText(applicationContext, error, Toast.LENGTH_LONG)
         toast.show()
+    }
+
+    override fun androidInjector(): AndroidInjector<Any> {
+        return dispatchingAndroidInjector
     }
 
 

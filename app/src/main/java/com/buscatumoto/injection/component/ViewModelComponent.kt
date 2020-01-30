@@ -22,7 +22,6 @@ interface ViewModelComponent {
      * Views
      */
     fun inject(searchFragment: SearchFragment)
-    fun inject(filterFormDialogFragment: FilterFormDialogFragment)
     fun inject(catalogueActivity: CatalogueActivity)
 
 
