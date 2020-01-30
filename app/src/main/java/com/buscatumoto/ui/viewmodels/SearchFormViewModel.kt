@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class SearchFormViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRepository): BaseViewModel() {
 
-    private lateinit var subscription: Disposable
+//    private lateinit var subscription: Disposable
 
     private val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
 
@@ -50,7 +50,7 @@ class SearchFormViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTu
     }
 
     fun loadFields() {
-        subscription = buscaTuMotoRepository.getFields()
+//        subscription = buscaTuMotoRepository.getFields()
     }
 
     private fun onLoadFieldsStart() {
@@ -172,7 +172,7 @@ class SearchFormViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTu
 
     override fun onCleared() {
         super.onCleared()
-        subscription.dispose()
+//        subscription.dispose()
     }
 
     fun refreshData() {

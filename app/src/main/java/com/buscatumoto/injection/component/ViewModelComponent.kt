@@ -1,5 +1,6 @@
 package com.buscatumoto.injection.component
 
+import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.injection.module.ViewModelModule
 import com.buscatumoto.ui.activities.CatalogueActivity
@@ -29,8 +30,12 @@ interface ViewModelComponent {
      */
     fun inject(frontPageViewModel: FrontPageViewModel)
     fun inject(frontPageBrandViewModel: FrontPageBrandViewModel)
-    fun inject(seachFormViewModel: SearchFormViewModel)
     fun inject(catalogueViewModel: CatalogueViewModel)
+
+    /**
+     * Repositories
+     */
+    fun inject(buscaTuMotoRepository: BuscaTuMotoRepository)
 
 
 }
