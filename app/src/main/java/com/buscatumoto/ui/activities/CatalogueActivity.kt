@@ -10,11 +10,17 @@ import com.buscatumoto.injection.Injectable
 import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
 
 import kotlinx.android.synthetic.main.activity_catalogue.*
 import javax.inject.Inject
 
-class CatalogueActivity : AppCompatActivity() {
+class CatalogueActivity : AppCompatActivity(), HasAndroidInjector {
+
+    @Inject
+    lateinit var dispatchingAndroidInjector : DispatchingAndroidInjector<Any>
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -34,5 +40,7 @@ class CatalogueActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
     }
+
+    override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 
 }
