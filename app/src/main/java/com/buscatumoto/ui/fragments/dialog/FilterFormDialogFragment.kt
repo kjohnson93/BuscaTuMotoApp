@@ -1,13 +1,11 @@
 package com.buscatumoto.ui.fragments.dialog
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import androidx.annotation.StringRes
 import com.google.android.material.snackbar.Snackbar
-import androidx.fragment.app.DialogFragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +15,6 @@ import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentFiltroFormBinding
 import com.buscatumoto.injection.Injectable
-import com.buscatumoto.injection.component.DaggerViewModelComponent
-import com.buscatumoto.injection.component.ViewModelComponent
 import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.ui.viewmodels.SearchFormViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
@@ -35,10 +31,6 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
     }
 
     private var errorSnackbar: Snackbar? = null
-
-    private val injector: ViewModelComponent = DaggerViewModelComponent.builder().networkModule(
-        NetworkModule
-    ).build()
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory

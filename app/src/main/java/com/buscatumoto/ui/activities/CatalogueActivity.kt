@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.buscatumoto.R
 import com.buscatumoto.databinding.ActivityCatalogueBinding
-import com.buscatumoto.injection.component.DaggerViewModelComponent
+import com.buscatumoto.injection.Injectable
 import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
@@ -21,10 +21,6 @@ class CatalogueActivity : AppCompatActivity() {
 
     lateinit var catalogueViewModel: CatalogueViewModel
 
-    private val injector = DaggerViewModelComponent.builder().networkModule(
-        NetworkModule
-    ).build()
-
     private lateinit var binding: ActivityCatalogueBinding
 
 
@@ -32,8 +28,6 @@ class CatalogueActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_catalogue)
-
-        injector.inject(this)
 
         catalogueViewModel = ViewModelProviders.of(this, viewModelFactory).get(CatalogueViewModel::class.java)
         binding.viewModel = catalogueViewModel

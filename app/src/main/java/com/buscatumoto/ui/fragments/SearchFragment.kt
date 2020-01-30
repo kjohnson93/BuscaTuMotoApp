@@ -4,8 +4,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,13 +12,10 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.LinearLayout
 import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
-import com.buscatumoto.databinding.BrandHighlightItemRowBinding
 import com.buscatumoto.databinding.FragmentSearchBinding
-import com.buscatumoto.injection.component.DaggerViewModelComponent
-import com.buscatumoto.injection.component.ViewModelComponent
+import com.buscatumoto.injection.Injectable
 import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.ui.activities.CatalogueActivity
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
@@ -30,7 +25,7 @@ import com.buscatumoto.utils.ui.BasicNavigator
 import javax.inject.Inject
 
 
-class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener {
+class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, Injectable {
 
     companion object {
         fun newInstance(): SearchFragment {
@@ -47,10 +42,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener {
     var dialogFiltoFragment: FilterFormDialogFragment = FilterFormDialogFragment.newInstance()
 
     var mLastClickTime: Long = 0
-
-    private val injector: ViewModelComponent = DaggerViewModelComponent.builder().networkModule(
-        NetworkModule
-    ).build()
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -69,8 +60,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_search, container, false )
         binding.arrowDownImgBtn.setOnClickListener(this)
         binding.filtrarBtn.setOnClickListener(this)
-
-        injector.inject(this)
 
         frontPageViewModel = ViewModelProviders.of(this, viewModelFactory).get(FrontPageViewModel::class.java)
         binding.viewModel = frontPageViewModel
