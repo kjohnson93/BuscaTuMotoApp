@@ -91,9 +91,9 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
     }
 
     private fun showError(@StringRes errorMessage: Int) {
-//        errorSnackbar = Snackbar.make(binding., errorMessage, Snackbar.LENGTH_INDEFINITE)
-//        errorSnackbar?.setAction(R.string.retry, searchFormViewModel.getErrorClickListener())
-//        errorSnackbar?.show()
+        errorSnackbar = Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_INDEFINITE)
+        errorSnackbar?.setAction(R.string.retry, searchFormViewModel.getErrorClickListener())
+        errorSnackbar?.show()
     }
 
     private fun hideError() {

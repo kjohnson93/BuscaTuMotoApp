@@ -3,15 +3,21 @@ package com.buscatumoto.ui.viewmodels
 import androidx.lifecycle.MutableLiveData
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import com.buscatumoto.R
-import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
+
 import com.buscatumoto.data.remote.dto.response.FieldsResponse
 import com.buscatumoto.data.remote.dto.response.MotoResponseItemModel
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import com.buscatumoto.utils.global.Constants
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import java.lang.Exception
+import java.util.concurrent.Executors
+
 import javax.inject.Inject
 
 class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoRepository): BaseViewModel() {
@@ -28,6 +34,8 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
     private val errorClickListener = View.OnClickListener {
         loadFields()
     }
+
+//    var fieldsResponse = MutableLiveData<FieldsResponse>()
 
     fun getErrorClickListener() : View.OnClickListener = errorClickListener
 
@@ -51,6 +59,25 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
 
     fun loadFields() {
 //        subscription = buscaTuMotoRepository.getFields()
+//        searchRepository.getFields().observe(this, Observer { responseObservable: FieldsResponse ->
+//            onLoadFieldsSuccess(responseObservable)
+//        })
+//        searchRepository.getFields().
+
+//        viewModelScope.launch {
+////            try {
+////                loadingVisibility.value = View.VISIBLE
+////                searchRepository.refreshTitle()
+////            } catch (error: Exception) {
+////                errorMessage.value = R.string.load_fields_error
+////            } finally {
+////                loadingVisibility.value = View.GONE
+////            }
+////        }
+
+//        searchRepository.
+        searchRepository.observeFields()
+
     }
 
     private fun onLoadFieldsStart() {

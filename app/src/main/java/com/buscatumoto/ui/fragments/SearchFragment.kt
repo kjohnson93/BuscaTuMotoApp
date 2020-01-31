@@ -118,7 +118,9 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         // If there is no fragment yet with this tag then show it. Otherwise donothing
         //This is to prevent crash if user is clicking too fast
         if (prev == null) {
-            dialogFiltoFragment.show(fragmentManager, "dialog")
+            fragmentManager?.let {
+                dialogFiltoFragment.show(it, "dialog")
+            }
         }
     }
 

@@ -47,6 +47,10 @@ object NetworkModule {
     @Singleton
     fun providesSearchDao(db: AppDatabase) = db.searchDao()
 
+    @Provides
+    @Singleton
+    fun provideFieldsDao(db: AppDatabase) = db.fieldsDao()
+
 
 
 }

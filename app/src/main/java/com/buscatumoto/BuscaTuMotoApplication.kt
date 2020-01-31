@@ -1,9 +1,7 @@
 package com.buscatumoto
 
-import android.app.Activity
 import android.app.Application
 import androidx.databinding.library.BuildConfig
-import com.buscatumoto.data.remote.datasource.BuscaTuMotoGateway
 import com.buscatumoto.injection.AppInjector
 import com.buscatumoto.utils.data.Environment
 import com.buscatumoto.utils.global.Constants
