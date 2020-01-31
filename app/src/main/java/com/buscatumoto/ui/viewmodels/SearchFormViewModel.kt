@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.buscatumoto.R
+import com.buscatumoto.data.Result
+import com.buscatumoto.data.local.entity.Fields
 
 import com.buscatumoto.data.remote.dto.response.FieldsResponse
 import com.buscatumoto.data.remote.dto.response.MotoResponseItemModel
@@ -27,6 +29,8 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
     private val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
 
     private val errorMessage: MutableLiveData<Int> = MutableLiveData()
+
+    private val fields by lazy { searchRepository.observeFields() }
 
     fun getLoadingVisibility() = loadingVisibility
     fun getErrorMessage(): MutableLiveData<Int> = errorMessage
@@ -53,6 +57,8 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
     val yearList: MutableLiveData<List<String>> = MutableLiveData()
     val licenses: MutableLiveData<List<String>> = MutableLiveData()
 
+    private lateinit var observableToDispose : LiveData<Fields>
+
     init {
         loadFields()
     }
@@ -76,7 +82,12 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
 ////        }
 
 //        searchRepository.
+        // with disposable from Rx we can set bind values directly on this classe
+        // but with livedata bind values have to be set on view because view is a lifecycle owner
+        //If we want to control binding view from here, also make able to distinguish status result and then update mutables.
         searchRepository.observeFields()
+            .observeForever { Observer<Result<Fields>> { result: Result<Fields> -> processResult(result) }}
+
 
     }
 
@@ -88,7 +99,22 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
         loadingVisibility.value = View.GONE
     }
 
-    private fun onLoadFieldsSuccess(fieldsResponse: FieldsResponse?) {
+    private fun processResult(result: Result<Fields>) {
+
+        when (result.status) {
+            Result.Status.SUCCESS -> {
+                loadingVisibility.value = View.GONE
+            }
+            Result.Status.LOADING -> {
+                loadingVisibility.value = View.VISIBLE
+            }
+            Result.Status.ERROR -> {
+                loadingVisibility.value = View.GONE
+            }
+        }
+    }
+
+    private fun onLoadFieldsSuccess(fieldsResponse: Fields?) {
         brands.value =
             (fieldsResponse?.brandList as ArrayList<String>).apply {
                 this.remove("")
@@ -200,6 +226,7 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
     override fun onCleared() {
         super.onCleared()
 //        subscription.dispose()
+        observableToDispose.removeObserver { Log.d(Constants.MOTOTAG, "Observable disposed onCleared from SearchFromViewModel!") }
     }
 
     fun refreshData() {

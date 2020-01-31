@@ -34,6 +34,8 @@ object NetworkModule {
             .getEnvironmentBaseUrl())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create()).build()
+//            .addConverterFactory(GsonConverterFactory.create()).build() To review!
+
     }
 
     @Provides

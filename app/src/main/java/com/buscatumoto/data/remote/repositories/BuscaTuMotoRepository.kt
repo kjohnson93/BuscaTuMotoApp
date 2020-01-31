@@ -49,8 +49,6 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
         delay(500)
     }
 
-    suspend fun getFields() = buscaTuMotoDataSource.getFields()
-
     fun observeFields() = resultLiveData(databaseQuery = { fieldsDao.getFields()},
                                         networkCall = { buscaTuMotoDataSource.getFields()},
                                         saveCallResult = {fieldsDao.insert(it)}
