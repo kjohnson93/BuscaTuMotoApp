@@ -10,6 +10,7 @@ import dagger.Provides
 import dagger.Reusable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
@@ -32,9 +33,9 @@ object NetworkModule {
     internal fun providesRetrofit(): Retrofit {
         return Retrofit.Builder().baseUrl(BuscaTuMotoApplication.getInstance()
             .getEnvironmentBaseUrl())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(MoshiConverterFactory.create()).build()
-//            .addConverterFactory(GsonConverterFactory.create()).build() To review!
+//            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create()).build()
+//            .addConverterFactory(MoshiConverterFactory.create()).build() To review!
 
     }
 

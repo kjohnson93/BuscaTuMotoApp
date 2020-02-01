@@ -13,39 +13,32 @@ data class Fields(
     @field:SerializedName("id")
     val id:String,
     @field:SerializedName("respuesta")
-    val respuesta: String,
-    @field:SerializedName("brandList")
-    val brandList: List<String>,
-    @field:SerializedName("bikeTypeList")
-    val bikeTypesList: List<String>,
-    @field:SerializedName("yearList")
-    val yearList: List<Int>,
-    @field:SerializedName("priceMinList")
-    val priceMinList: List<Int>,
-    @field:SerializedName("priceMaxList")
-    val priceMaxList: List<Int>,
-    @field:SerializedName("powerMinList")
-    val powerMinList: List<Float>,
-    @field:SerializedName("powerMaxList")
-    val powerMaxList: List<Float>,
-    @field:SerializedName("cilMinList")
-    val cilMinList: List<Float>,
-    @field:SerializedName("cilMaxList")
-    val cilMaxList: List<Float>,
-    @field:SerializedName("weightMinList")
-    val weightMinList: List<Float>,
-    @field:SerializedName("weightMaxList")
-    val weightMaxList: List<Float>,
-    @field:SerializedName("licenses")
-    val licenses: List<String>
+    val respuesta: String
+//    @field:SerializedName("brandList")
+//    val brandList: List<String>,
+//    @field:SerializedName("bikeTypeList")
+//    val bikeTypesList: List<String>,
+//    @field:SerializedName("yearList")
+//    val yearList: List<Int>,
+//    @field:SerializedName("priceMinList")
+//    val priceMinList: List<Int>,
+//    @field:SerializedName("priceMaxList")
+//    val priceMaxList: List<Int>,
+//    @field:SerializedName("powerMinList")
+//    val powerMinList: List<Float>,
+//    @field:SerializedName("powerMaxList")
+//    val powerMaxList: List<Float>,
+//    @field:SerializedName("cilMinList")
+//    val cilMinList: List<Float>,
+//    @field:SerializedName("cilMaxList")
+//    val cilMaxList: List<Float>,
+//    @field:SerializedName("weightMinList")
+//    val weightMinList: List<Float>,
+//    @field:SerializedName("weightMaxList")
+//    val weightMaxList: List<Float>,
+//    @field:SerializedName("licenses")
+//    val licenses: List<String>
 ) {
 
-    override fun toString(): String {
-        return "Fields(respuesta='$respuesta', brandList=$brandList, bikeTypesList=$bikeTypesList," +
-                " yearList=$yearList, priceMinList=$priceMinList, priceMaxList=$priceMaxList, " +
-                "powerMinList=$powerMinList, powerMaxList=$powerMaxList, cilMinList=$cilMinList," +
-                " cilMaxList=$cilMaxList, weightMinList=$weightMinList, weightMaxList=$weightMaxList," +
-                " licenses=$licenses)"
-    }
 }
 

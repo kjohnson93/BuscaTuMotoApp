@@ -114,82 +114,82 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
         }
     }
 
-    private fun onLoadFieldsSuccess(fieldsResponse: Fields?) {
-        brands.value =
-            (fieldsResponse?.brandList as ArrayList<String>).apply {
-                this.remove("")
-                this.add(0, "-Marca-") }
-        models.value = ArrayList<String>().apply {
-            this.remove("")
-            this.add(0, "-Elegir Marca-") }
-        bikeTypes.value = (fieldsResponse?.bikeTypesList as ArrayList<String>).apply {
-            this.remove("")
-            this.add(
-                0,
-                "-Tipo de moto-"
-            )
-        }
-        priceMinList.value = (fieldsResponse?.priceMinList as ArrayList<String>).apply {
-            this.remove("")
-            this.add(
-                0,
-                "-Precio desde-"
-            )
-        }
-        priceMaxList.value = (fieldsResponse?.priceMaxList as ArrayList<String>).apply {
-            this.remove("")
-            this.add(
-                0,
-                "-Precio hasta-"
-            )
-        }
-        powerMinList.value = (fieldsResponse?.powerMinList as ArrayList<String>).apply {
-            this.remove("")
-            this.add(
-                0,
-                "-Potencia desde-"
-            )
-        }
-        powerMaxList.value = (fieldsResponse?.powerMaxList as ArrayList<String>).apply {
-            this.remove("")
-            this.add(
-                0,
-                "-Potencia hasta-"
-            )
-        }
-        cilMinList.value = (fieldsResponse?.cilMinList as ArrayList<String>).apply {
-            this.remove("")
-            this.add(
-                0,
-                "-Cilindrada desde-"
-            )
-        }
-        cilMaxList.value = (fieldsResponse?.cilMaxList as ArrayList<String>).apply {
-            this.remove("")
-            this.add(
-                0,
-                "-Cilindrada hasta-"
-            )
-        }
-        weightMinList.value = (fieldsResponse?.weightMinList as ArrayList<String>).apply {
-            this.remove("")
-            this.add(
-                0,
-                "-Peso desde-"
-            )
-        }
-        weightMaxList.value = (fieldsResponse?.weightMaxList as ArrayList<String>).apply {
-            this.remove("")
-            this.add(
-                0,
-                "-Peso hasta-"
-            )
-        }
-        yearList.value =
-            (fieldsResponse?.yearList as ArrayList<String>).apply { this.add(0, "-Año-") }
-        licenses.value =
-            (fieldsResponse?.licenses as ArrayList<String>).apply { this.add(0, "-Permiso-") }
-    }
+//    private fun onLoadFieldsSuccess(fieldsResponse: Fields?) {
+//        brands.value =
+//            (fieldsResponse?.brandList as ArrayList<String>).apply {
+//                this.remove("")
+//                this.add(0, "-Marca-") }
+//        models.value = ArrayList<String>().apply {
+//            this.remove("")
+//            this.add(0, "-Elegir Marca-") }
+//        bikeTypes.value = (fieldsResponse?.bikeTypesList as ArrayList<String>).apply {
+//            this.remove("")
+//            this.add(
+//                0,
+//                "-Tipo de moto-"
+//            )
+//        }
+//        priceMinList.value = (fieldsResponse?.priceMinList as ArrayList<String>).apply {
+//            this.remove("")
+//            this.add(
+//                0,
+//                "-Precio desde-"
+//            )
+//        }
+//        priceMaxList.value = (fieldsResponse?.priceMaxList as ArrayList<String>).apply {
+//            this.remove("")
+//            this.add(
+//                0,
+//                "-Precio hasta-"
+//            )
+//        }
+//        powerMinList.value = (fieldsResponse?.powerMinList as ArrayList<String>).apply {
+//            this.remove("")
+//            this.add(
+//                0,
+//                "-Potencia desde-"
+//            )
+//        }
+//        powerMaxList.value = (fieldsResponse?.powerMaxList as ArrayList<String>).apply {
+//            this.remove("")
+//            this.add(
+//                0,
+//                "-Potencia hasta-"
+//            )
+//        }
+//        cilMinList.value = (fieldsResponse?.cilMinList as ArrayList<String>).apply {
+//            this.remove("")
+//            this.add(
+//                0,
+//                "-Cilindrada desde-"
+//            )
+//        }
+//        cilMaxList.value = (fieldsResponse?.cilMaxList as ArrayList<String>).apply {
+//            this.remove("")
+//            this.add(
+//                0,
+//                "-Cilindrada hasta-"
+//            )
+//        }
+//        weightMinList.value = (fieldsResponse?.weightMinList as ArrayList<String>).apply {
+//            this.remove("")
+//            this.add(
+//                0,
+//                "-Peso desde-"
+//            )
+//        }
+//        weightMaxList.value = (fieldsResponse?.weightMaxList as ArrayList<String>).apply {
+//            this.remove("")
+//            this.add(
+//                0,
+//                "-Peso hasta-"
+//            )
+//        }
+//        yearList.value =
+//            (fieldsResponse?.yearList as ArrayList<String>).apply { this.add(0, "-Año-") }
+//        licenses.value =
+//            (fieldsResponse?.licenses as ArrayList<String>).apply { this.add(0, "-Permiso-") }
+//    }
 
     private fun onLoadFieldsError(throwableError: Throwable?) {
         Log.e(Constants.MOTOTAG, "error is ${throwableError?.message}")
@@ -226,7 +226,7 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
     override fun onCleared() {
         super.onCleared()
 //        subscription.dispose()
-        observableToDispose.removeObserver { Log.d(Constants.MOTOTAG, "Observable disposed onCleared from SearchFromViewModel!") }
+//        observableToDispose.removeObserver { Log.d(Constants.MOTOTAG, "Observable disposed onCleared from SearchFromViewModel!") }
     }
 
     fun refreshData() {

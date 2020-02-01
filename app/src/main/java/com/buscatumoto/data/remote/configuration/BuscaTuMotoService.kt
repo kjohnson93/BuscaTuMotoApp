@@ -12,14 +12,16 @@ import retrofit2.http.Path
 
 interface BuscaTuMotoService {
 
-    @GET(APIConstants.GET_BRANDS_URL)
-    fun getBrands(): Call<ArrayList<String>>
+//    @GET(APIConstants.GET_BRANDS_URL)
+//    fun getBrands(): Call<ArrayList<String>>
 
     @GET(APIConstants.GET_FIELDS_URL)
     fun getFields(): Response<Fields>
+//
+//    @GET(APIConstants.GET_BIKES_BY_BRAND)
+//    fun getBikesByBrand(@Path("brand") brand: String): Observable<List<MotoResponseItemModel>>
 
-    @GET(APIConstants.GET_BIKES_BY_BRAND)
-    fun getBikesByBrand(@Path("brand") brand: String): Observable<List<MotoResponseItemModel>>
+
 
 
 }
