@@ -2,6 +2,7 @@ package com.buscatumoto.data.remote.repositories
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.distinctUntilChanged
 import com.buscatumoto.data.local.SearchDao
 import com.buscatumoto.data.local.dao.FieldsDao
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
@@ -52,7 +53,7 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
     fun observeFields() = resultLiveData(databaseQuery = { fieldsDao.getFields()},
                                         networkCall = { buscaTuMotoDataSource.getFields()},
                                         saveCallResult = {fieldsDao.insert(it)}
-                                )
+                                ).distinctUntilChanged()
 
 
 

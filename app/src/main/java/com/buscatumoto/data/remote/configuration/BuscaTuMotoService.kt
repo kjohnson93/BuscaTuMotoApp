@@ -16,7 +16,7 @@ interface BuscaTuMotoService {
 //    fun getBrands(): Call<ArrayList<String>>
 
     @GET(APIConstants.GET_FIELDS_URL)
-    fun getFields(): Response<Fields>
+    suspend fun getFields(): Response<Fields>
 //
 //    @GET(APIConstants.GET_BIKES_BY_BRAND)
 //    fun getBikesByBrand(@Path("brand") brand: String): Observable<List<MotoResponseItemModel>>

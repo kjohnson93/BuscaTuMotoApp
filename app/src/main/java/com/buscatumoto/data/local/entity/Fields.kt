@@ -9,9 +9,9 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "fields")
 data class Fields(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @field:SerializedName("id")
-    val id:String,
+    val id: Int,
     @field:SerializedName("respuesta")
     val respuesta: String
 //    @field:SerializedName("brandList")

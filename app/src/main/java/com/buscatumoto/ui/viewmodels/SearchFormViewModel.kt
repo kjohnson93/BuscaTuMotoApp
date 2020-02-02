@@ -30,7 +30,7 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
 
     private val errorMessage: MutableLiveData<Int> = MutableLiveData()
 
-    private val fields by lazy { searchRepository.observeFields() }
+//    private val fields by lazy { searchRepository.observeFields() }
 
     fun getLoadingVisibility() = loadingVisibility
     fun getErrorMessage(): MutableLiveData<Int> = errorMessage
@@ -73,7 +73,7 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
 //        viewModelScope.launch {
 ////            try {
 ////                loadingVisibility.value = View.VISIBLE
-////                searchRepository.refreshTitle()
+////                searchRepository.refreshTitle()'
 ////            } catch (error: Exception) {
 ////                errorMessage.value = R.string.load_fields_error
 ////            } finally {
