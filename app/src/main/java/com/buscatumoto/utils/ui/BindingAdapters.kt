@@ -47,19 +47,19 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
 }
 
 
-//    @BindingAdapter("mutableSpinner")
-//    fun setSpinner(view: Spinner, spinnerDataObservable: MutableLiveData<List<String>>) {
-//
-//        val parentActivity: AppCompatActivity? = view.getParentActivity()
-//
-//        if (parentActivity != null) {
-//                spinnerDataObservable.observe(parentActivity, Observer {
-//                    spinnerDataObservable : List<String>? ->
-//                    val brandTypeSpinnerAdapter = ArrayAdapter<String>(parentActivity, R.layout.simple_spinner_item, spinnerDataObservable)
-//                    view?.adapter = brandTypeSpinnerAdapter
-//                })
-//        }
-//    }
+    @BindingAdapter("mutableSpinner")
+    fun setSpinner(view: Spinner, spinnerDataObservable: MutableLiveData<List<String>>) {
+
+        val parentActivity: AppCompatActivity? = view.getParentActivity()
+
+        if (parentActivity != null) {
+                spinnerDataObservable.observe(parentActivity, Observer {
+                    spinnerDataObservable : List<String>? ->
+                    val brandTypeSpinnerAdapter = ArrayAdapter<String>(parentActivity, R.layout.simple_spinner_item, spinnerDataObservable)
+                    view?.adapter = brandTypeSpinnerAdapter
+                })
+        }
+    }
 
     @BindingAdapter("spinnerData", "firstRow")
     fun setSpinner(view: Spinner, list: List<String>, firstRow: String) {

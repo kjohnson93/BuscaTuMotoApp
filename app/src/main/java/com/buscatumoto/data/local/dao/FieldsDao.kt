@@ -17,6 +17,9 @@ interface FieldsDao {
     suspend fun insert(fields: Fields)
 
     @Query("SELECT * FROM fields")
-    fun getFields(): LiveData<Fields>
+    fun getFieldsLiveData(): LiveData<Fields>
+
+    @Query("SELECT * FROM fields")
+    fun getFields(): List<Fields>
 
 }

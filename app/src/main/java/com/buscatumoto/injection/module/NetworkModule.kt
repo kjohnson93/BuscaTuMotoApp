@@ -5,6 +5,7 @@ import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.data.local.AppDatabase
 import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
+import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -53,6 +54,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideFieldsDao(db: AppDatabase) = db.fieldsDao()
+
+//    @Provides
+//    fun provideGetFieldsUseCase(searchRepository: Searc)
 
 
 

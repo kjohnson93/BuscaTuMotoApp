@@ -65,36 +65,36 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
         binding.filtrarAcceptIbtn.setOnClickListener(this)
         binding.brandSpinner.onItemSelectedListener = this
 
-        subscribeUi(binding)
+//        subscribeUi(binding)
 
 
 
         return binding.root
     }
 
-    private fun subscribeUi(binding: FragmentFiltroFormBinding) {
-        searchFormViewModel.fields.observe(viewLifecycleOwner, Observer { result ->
-            when (result.status) {
-                com.buscatumoto.data.Result.Status.SUCCESS -> {
-                    Log.d(Constants.MOTOTAG, "result search vm ${result.data}")
-                    binding.filterDialogProgressBar.hide()
-                    result.data?.let {
-                        bindView(binding, it)
-                    }
-                }
-                com.buscatumoto.data.Result.Status.LOADING -> {
-                    Log.d(Constants.MOTOTAG, "loading")
-                    binding.filterDialogProgressBar.show()
-                }
-                com.buscatumoto.data.Result.Status.ERROR -> {
-                Log.d(Constants.MOTOTAG, "error search vm")
-                    binding.filterDialogProgressBar.hide()
-//                    binding.progressBar.hide()
-//                    Snackbar.make(binding.coordinatorLayout, result.message!!, Snackbar.LENGTH_LONG).show()
-                }
-            }
-        })
-    }
+//    private fun subscribeUi(binding: FragmentFiltroFormBinding) {
+//        searchFormViewModel.fields.observe(viewLifecycleOwner, Observer { result ->
+//            when (result.status) {
+//                com.buscatumoto.data.Result.Status.SUCCESS -> {
+//                    Log.d(Constants.MOTOTAG, "result search vm ${result.data}")
+//                    binding.filterDialogProgressBar.hide()
+//                    result.data?.let {
+//                        bindView(binding, it)
+//                    }
+//                }
+//                com.buscatumoto.data.Result.Status.LOADING -> {
+//                    Log.d(Constants.MOTOTAG, "loading")
+//                    binding.filterDialogProgressBar.show()
+//                }
+//                com.buscatumoto.data.Result.Status.ERROR -> {
+//                Log.d(Constants.MOTOTAG, "error search vm")
+//                    binding.filterDialogProgressBar.hide()
+////                    binding.progressBar.hide()
+////                    Snackbar.make(binding.coordinatorLayout, result.message!!, Snackbar.LENGTH_LONG).show()
+//                }
+//            }
+//        })
+//    }
 
     private fun bindView(binding: FragmentFiltroFormBinding, fields: Fields) {
         fields.apply {

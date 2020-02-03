@@ -13,16 +13,19 @@ import com.buscatumoto.data.local.entity.Fields
 import com.buscatumoto.data.remote.dto.response.FieldsResponse
 import com.buscatumoto.data.remote.dto.response.MotoResponseItemModel
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
+import com.buscatumoto.domain.GetFieldsUseCase
 import com.buscatumoto.utils.global.Constants
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.Exception
 import java.util.concurrent.Executors
 
 import javax.inject.Inject
 
-class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoRepository): BaseViewModel() {
+class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoRepository, val getFieldsUseCase: GetFieldsUseCase): BaseViewModel() {
 
 //    private lateinit var subscription: Disposable
 
@@ -30,7 +33,7 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
 
     private val errorMessage: MutableLiveData<Int> = MutableLiveData()
 
-    val fields by lazy { searchRepository.observeFields() }
+    val fields by lazy { }
 
     fun getLoadingVisibility() = loadingVisibility
     fun getErrorMessage(): MutableLiveData<Int> = errorMessage
@@ -43,7 +46,6 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
 
     fun getErrorClickListener() : View.OnClickListener = errorClickListener
 
-    val brands: MutableLiveData<List<String>> = MutableLiveData()
     val models: MutableLiveData<List<String>> = MutableLiveData()
     val bikeTypes: MutableLiveData<List<String>> = MutableLiveData()
     val priceMinList: MutableLiveData<List<String>> = MutableLiveData()
@@ -57,38 +59,28 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
     val yearList: MutableLiveData<List<String>> = MutableLiveData()
     val licenses: MutableLiveData<List<String>> = MutableLiveData()
 
-    private lateinit var observableToDispose : LiveData<Fields>
+    val brandsMutableLiveData: MutableLiveData<List<String>> = MutableLiveData()
+    val brandsLiveData: LiveData<List<String>>
+        get() = brandsMutableLiveData
+
+
 
     init {
-//        loadFields()
+        loadFields()
     }
 
     fun loadFields() {
-//        subscription = buscaTuMotoRepository.getFields()
-//        searchRepository.getFields().observe(this, Observer { responseObservable: FieldsResponse ->
-//            onLoadFieldsSuccess(responseObservable)
-//        })
-//        searchRepository.getFields().
 
-//        viewModelScope.launch {
-////            try {
-////                loadingVisibility.value = View.VISIBLE
-////                searchRepository.refreshTitle()'
-////            } catch (error: Exception) {
-////                errorMessage.value = R.string.load_fields_error
-////            } finally {
-////                loadingVisibility.value = View.GONE
-////            }
-////        }
+        viewModelScope.launch(Dispatchers.IO) {
+            //first call dao,
+            val fieldsResult = getFieldsUseCase.execute()
 
-//        searchRepository.
-        // with disposable from Rx we can set bind values directly on this classe
-        // but with livedata bind values have to be set on view because view is a lifecycle owner
-        //If we want to control binding view from here, also make able to distinguish status result and then update mutables.
-        searchRepository.observeFields()
-            .observeForever { Observer<Result<Fields>> { result: Result<Fields> -> processResult(result) }}
+            withContext(Dispatchers.Main) {
+                onLoadFieldsFinish()
+                brandsMutableLiveData.value = fieldsResult.data?.brandList
+            }
 
-
+        }
     }
 
     private fun onLoadFieldsStart() {

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
+import com.buscatumoto.domain.GetFieldsUseCase
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import com.buscatumoto.ui.viewmodels.SearchFormViewModel

@@ -2,9 +2,12 @@ package com.buscatumoto.data.remote.repositories
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.distinctUntilChanged
+import com.buscatumoto.data.Result
 import com.buscatumoto.data.local.SearchDao
 import com.buscatumoto.data.local.dao.FieldsDao
+import com.buscatumoto.data.local.entity.Fields
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
 import com.buscatumoto.data.remote.dto.response.FieldsResponse
 import com.buscatumoto.data.resultLiveData
@@ -22,39 +25,38 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
         Log.d(Constants.MOTOTAG, "Injection")
     }
 
-//    fun getFields(): LiveData<FieldsResponse> = buscaTuMotoDataSource.getFields()
+    suspend fun getFields(): Result<Fields>? {
 
-//    fun getFields(): LiveData {
-//                    buscaTuMotoService.getFields().subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .doOnSubscribe { onLoadFieldsStart() }
-//            .doOnTerminate { onLoadFieldsFinish() }
-//            .subscribe({ fieldResponse: FieldsResponse? -> onLoadFieldsSuccess(fieldResponse) }
-//                , { throwableError: Throwable? -> onLoadFieldsError(throwableError) })
-//    }
+        var result: Result<Fields>?
+        val mutableFields = MutableLiveData<Fields>()
 
-    //1. Only data source
-    // if we follow the same implementation that executing services from viewmodel (as this was before)-> NO RECOMMENDED ->
-    // -> AVOID OBSERVING/LIVEDATA BETWEEN VIEW MODEL AND OTHER SOURCES IT'S OK WITH UI))-> USE COUROTINES OR RXJAVA INSTEADA
-    //Because this way we must observe data from datasources, or we can simplify to the point view model passes directly the livedata from the datasource
-    //https://codelabs.developers.google.com/codelabs/kotlin-coroutines/#6 Example to it without coroutines
-    //2. Data Source + DAO
-    //In this case, coroutines comes to help with the combine use of both data sources (services and Daos)
+        //first check cache dao
+        val fields = fieldsDao.getFields()
+//        if (allFields.value.)
+        if (fields.isNotEmpty()) {
+            return Result.success(fields[0])
+        }
 
-    //3. Data Source + DAO + Error Handling
+       val response = buscaTuMotoDataSource.getFields()
 
-    //With coroutines
-    //suspend function
+//        if (response.status == Result.Status.SUCCESS){
+//            response.data?.let {
+//                mutableFields.value = response.data
+//            }
+//        }
 
-    suspend fun refreshTitle() {
-        delay(500)
+
+        if (response.status == Result.Status.SUCCESS) {
+            result = response
+        }
+        else {
+            result = Result.error("Error", null)
+        }
+
+        //then persist on Dao
+
+        return result
     }
-
-    fun observeFields() = resultLiveData(databaseQuery = { fieldsDao.getFields()},
-                                        networkCall = { buscaTuMotoDataSource.getFields()},
-                                        saveCallResult = {fieldsDao.insert(it)}
-                                ).distinctUntilChanged()
-
 
 
 }

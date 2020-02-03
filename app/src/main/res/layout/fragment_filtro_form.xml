@@ -114,6 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:textAlignment="center"
+        app:mutableSpinner="@{viewModel.brandsMutableLiveData}"
         app:layout_constraintBottom_toBottomOf="@+id/brandTvw"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/brandTvw"
