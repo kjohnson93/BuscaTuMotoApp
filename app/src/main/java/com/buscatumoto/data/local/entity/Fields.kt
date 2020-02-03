@@ -13,9 +13,9 @@ data class Fields(
     @field:SerializedName("id")
     val id: Int,
     @field:SerializedName("respuesta")
-    val respuesta: String
-//    @field:SerializedName("brandList")
-//    val brandList: List<String>,
+    val respuesta: String,
+    @field:SerializedName("brandList")
+    val brandList: List<String>
 //    @field:SerializedName("bikeTypeList")
 //    val bikeTypesList: List<String>,
 //    @field:SerializedName("yearList")

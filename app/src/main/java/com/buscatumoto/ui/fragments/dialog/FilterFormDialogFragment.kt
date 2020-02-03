@@ -13,10 +13,14 @@ import android.view.ViewGroup
 import android.widget.*
 import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
+import com.buscatumoto.data.local.entity.Fields
 import com.buscatumoto.databinding.FragmentFiltroFormBinding
 import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.viewmodels.SearchFormViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
+import com.buscatumoto.utils.ui.hide
+import com.buscatumoto.utils.ui.setSpinner
+import com.buscatumoto.utils.ui.show
 
 import javax.inject.Inject
 
@@ -72,20 +76,30 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
         searchFormViewModel.fields.observe(viewLifecycleOwner, Observer { result ->
             when (result.status) {
                 com.buscatumoto.data.Result.Status.SUCCESS -> {
-//                    binding.progressBar.hide()
-//                    result.data?.let { bindView(binding, it) }
-                    Log.d(Constants.MOTOTAG, "result ${result.data}")
+                    Log.d(Constants.MOTOTAG, "result search vm ${result.data}")
+                    binding.filterDialogProgressBar.hide()
+                    result.data?.let {
+                        bindView(binding, it)
+                    }
                 }
                 com.buscatumoto.data.Result.Status.LOADING -> {
-                    Log.d(Constants.MOTOTAG, "dsada")
+                    Log.d(Constants.MOTOTAG, "loading")
+                    binding.filterDialogProgressBar.show()
                 }
                 com.buscatumoto.data.Result.Status.ERROR -> {
-                Log.d(Constants.MOTOTAG, "dsada")
+                Log.d(Constants.MOTOTAG, "error search vm")
+                    binding.filterDialogProgressBar.hide()
 //                    binding.progressBar.hide()
 //                    Snackbar.make(binding.coordinatorLayout, result.message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         })
+    }
+
+    private fun bindView(binding: FragmentFiltroFormBinding, fields: Fields) {
+        fields.apply {
+            setSpinner(binding.brandSpinner, fields.brandList, "-Marca-")
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
