@@ -61,7 +61,31 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
         binding.filtrarAcceptIbtn.setOnClickListener(this)
         binding.brandSpinner.onItemSelectedListener = this
 
+        subscribeUi(binding)
+
+
+
         return binding.root
+    }
+
+    private fun subscribeUi(binding: FragmentFiltroFormBinding) {
+        searchFormViewModel.fields.observe(viewLifecycleOwner, Observer { result ->
+            when (result.status) {
+                com.buscatumoto.data.Result.Status.SUCCESS -> {
+//                    binding.progressBar.hide()
+//                    result.data?.let { bindView(binding, it) }
+                    Log.d(Constants.MOTOTAG, "result ${result.data}")
+                }
+                com.buscatumoto.data.Result.Status.LOADING -> {
+                    Log.d(Constants.MOTOTAG, "dsada")
+                }
+                com.buscatumoto.data.Result.Status.ERROR -> {
+                Log.d(Constants.MOTOTAG, "dsada")
+//                    binding.progressBar.hide()
+//                    Snackbar.make(binding.coordinatorLayout, result.message!!, Snackbar.LENGTH_LONG).show()
+                }
+            }
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
