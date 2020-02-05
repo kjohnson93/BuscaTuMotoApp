@@ -57,13 +57,21 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
             }
         })
 
+        searchFormViewModel.lifecycleOwner = this
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_filtro_form, container, false)
         binding.viewModel = searchFormViewModel
+
+        //If a LiveData is in one of the binding expressions and no LifecycleOwner is set,
+        // the LiveData will not be observed and updates to it will not be propagated to the UI.
+        binding.lifecycleOwner = this
 
         binding.filtrarCloseIbtn.setOnClickListener(this)
         binding.filtrarRefreshIbtn.setOnClickListener(this)
         binding.filtrarAcceptIbtn.setOnClickListener(this)
         binding.brandSpinner.onItemSelectedListener = this
+
+
 
 //        subscribeUi(binding)
 

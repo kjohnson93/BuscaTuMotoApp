@@ -14,12 +14,10 @@ import com.buscatumoto.data.remote.dto.response.FieldsResponse
 import com.buscatumoto.data.remote.dto.response.MotoResponseItemModel
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import com.buscatumoto.domain.GetFieldsUseCase
+import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
 import com.buscatumoto.utils.global.Constants
 import io.reactivex.disposables.Disposable
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.lang.Exception
 import java.util.concurrent.Executors
 
@@ -29,11 +27,14 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
 
 //    private lateinit var subscription: Disposable
 
+    lateinit var lifecycleOwner: FilterFormDialogFragment
     private val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
 
     private val errorMessage: MutableLiveData<Int> = MutableLiveData()
 
     val fields by lazy { }
+
+
 
     fun getLoadingVisibility() = loadingVisibility
     fun getErrorMessage(): MutableLiveData<Int> = errorMessage
@@ -72,14 +73,27 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
     fun loadFields() {
 
         viewModelScope.launch(Dispatchers.IO) {
-            //first call dao,
-            val fieldsResult = getFieldsUseCase.execute()
 
+            //Get livedata on background
+            val fieldLiveData =  getFieldsUseCase.executeLiveData()
+
+            //Observe on MainThread to update UI
             withContext(Dispatchers.Main) {
-                onLoadFieldsFinish()
-                brandsMutableLiveData.value = fieldsResult.data?.brandList
-            }
+                fieldLiveData.observe(lifecycleOwner, Observer { result ->
+                    when (result.status) {
+                        Result.Status.SUCCESS -> {
+                            onLoadFieldsFinish()
+                            brandsMutableLiveData.value = result.data?.brandList
+                        }
+                        Result.Status.LOADING -> {
 
+                        }
+                        Result.Status.ERROR ->{
+
+                        }
+                    }
+                })
+            }
         }
     }
 

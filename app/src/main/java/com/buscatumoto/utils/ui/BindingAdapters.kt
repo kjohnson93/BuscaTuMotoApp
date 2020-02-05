@@ -53,11 +53,13 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
         val parentActivity: AppCompatActivity? = view.getParentActivity()
 
         if (parentActivity != null) {
+            spinnerDataObservable.value?.let {
                 spinnerDataObservable.observe(parentActivity, Observer {
-                    spinnerDataObservable : List<String>? ->
+                        spinnerDataObservable : List<String>? ->
                     val brandTypeSpinnerAdapter = ArrayAdapter<String>(parentActivity, R.layout.simple_spinner_item, spinnerDataObservable)
                     view?.adapter = brandTypeSpinnerAdapter
                 })
+            }
         }
     }
 
