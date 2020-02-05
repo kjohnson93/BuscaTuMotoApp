@@ -104,12 +104,6 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
 //        })
 //    }
 
-    private fun bindView(binding: FragmentFiltroFormBinding, fields: Fields) {
-        fields.apply {
-            setSpinner(binding.brandSpinner, fields.brandList, "-Marca-")
-        }
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.d(Constants.MOTOTAG, "onActivityCreated called")

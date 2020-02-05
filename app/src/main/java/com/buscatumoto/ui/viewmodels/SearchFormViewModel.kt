@@ -10,16 +10,12 @@ import com.buscatumoto.R
 import com.buscatumoto.data.Result
 import com.buscatumoto.data.local.entity.Fields
 
-import com.buscatumoto.data.remote.dto.response.FieldsResponse
 import com.buscatumoto.data.remote.dto.response.MotoResponseItemModel
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import com.buscatumoto.domain.GetFieldsUseCase
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
 import com.buscatumoto.utils.global.Constants
-import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.*
-import java.lang.Exception
-import java.util.concurrent.Executors
 
 import javax.inject.Inject
 
@@ -61,8 +57,6 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
     val licenses: MutableLiveData<List<String>> = MutableLiveData()
 
     val brandsMutableLiveData: MutableLiveData<List<String>> = MutableLiveData()
-    val brandsLiveData: LiveData<List<String>>
-        get() = brandsMutableLiveData
 
 
 
@@ -83,7 +77,9 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
                     when (result.status) {
                         Result.Status.SUCCESS -> {
                             onLoadFieldsFinish()
-                            brandsMutableLiveData.value = result.data?.brandList
+                            val fieldsLocalModified = getFieldsUseCase.setupFieldsData(result.data)
+                            brandsMutableLiveData.value = fieldsLocalModified.brandList
+                            bikeTypes.value = fieldsLocalModified.bikeTypesList
                         }
                         Result.Status.LOADING -> {
 

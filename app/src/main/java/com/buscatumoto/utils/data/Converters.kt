@@ -16,7 +16,7 @@ class Converters {
     @TypeConverter fun datestampToCalendar(value: Long): Calendar =
         Calendar.getInstance().apply { timeInMillis = value }
 
-    @TypeConverter fun stringList(list: List<String>): String {
+    @TypeConverter fun stringList(list: List<String?>?): String {
         val gson = Gson()
         val json = gson.toJson(list)
         return json

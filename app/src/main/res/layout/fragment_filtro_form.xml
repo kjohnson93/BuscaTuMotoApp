@@ -141,6 +141,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
+        app:mutableSpinner="@{viewModel.bikeTypes}"
         app:layout_constraintBottom_toBottomOf="@+id/bikeTypeTvw"
         app:layout_constraintEnd_toEndOf="@+id/modelSpinner"
         app:layout_constraintStart_toStartOf="@+id/modelSpinner"
