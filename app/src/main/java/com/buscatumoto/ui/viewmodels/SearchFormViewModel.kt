@@ -4,12 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.buscatumoto.R
 import com.buscatumoto.data.Result
-import com.buscatumoto.data.local.entity.Fields
+import com.buscatumoto.data.local.entity.FieldsEntity
 
 import com.buscatumoto.data.remote.dto.response.MotoResponseItemModel
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
@@ -81,6 +80,16 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
                             val fieldsLocalModified = getFieldsUseCase.setupFieldsData(result.data)
                             brandsMutableLiveData.value = fieldsLocalModified.brandList
                             bikeTypes.value = fieldsLocalModified.bikeTypesList
+                            priceMinList.value = fieldsLocalModified.priceMinList
+                            priceMaxList.value = fieldsLocalModified.priceMaxList
+                            powerMinList.value = fieldsLocalModified.powerMinList
+                            powerMaxList.value = fieldsLocalModified.powerMaxList
+                            cilMinList.value = fieldsLocalModified.cilMinList
+                            cilMaxList.value = fieldsLocalModified.cilMaxList
+                            weightMinList.value = fieldsLocalModified.weightMinList
+                            weightMaxList.value = fieldsLocalModified.weightMaxList
+                            yearList.value = fieldsLocalModified.yearList
+                            licenses.value = fieldsLocalModified.licenses
                         }
                         Result.Status.LOADING -> {
 
@@ -102,7 +111,7 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
         loadingVisibility.value = View.GONE
     }
 
-    private fun processResult(result: Result<Fields>) {
+    private fun processResult(result: Result<FieldsEntity>) {
 
         when (result.status) {
             Result.Status.SUCCESS -> {

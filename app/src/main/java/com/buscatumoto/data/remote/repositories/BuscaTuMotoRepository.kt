@@ -3,16 +3,10 @@ package com.buscatumoto.data.remote.repositories
 import android.util.Log
 import androidx.lifecycle.*
 import com.buscatumoto.data.Result
-import com.buscatumoto.data.local.SearchDao
 import com.buscatumoto.data.local.dao.FieldsDao
-import com.buscatumoto.data.local.entity.Fields
+import com.buscatumoto.data.local.entity.FieldsEntity
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
-import com.buscatumoto.data.remote.dto.response.FieldsResponse
-import com.buscatumoto.data.resultLiveData
 import com.buscatumoto.utils.global.Constants
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -24,7 +18,7 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
         Log.d(Constants.MOTOTAG, "Injection")
     }
 
-    suspend fun getFieldsEmit() = liveData<Result<Fields>> {
+    suspend fun getFieldsEmit() = liveData<Result<FieldsEntity>> {
         val disposable =emitSource(fieldsDao.getFieldsLiveData().map {
             Result.loading(it)
         })

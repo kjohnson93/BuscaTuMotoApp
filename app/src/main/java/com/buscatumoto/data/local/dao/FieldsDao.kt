@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.buscatumoto.data.local.entity.Fields
+import com.buscatumoto.data.local.entity.FieldsEntity
 
 /**
  * This interface represents a fields document
@@ -14,12 +14,12 @@ import com.buscatumoto.data.local.entity.Fields
 interface FieldsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(fields: Fields)
+    suspend fun insert(fieldsEntity: FieldsEntity)
 
     @Query("SELECT * FROM fields")
-    fun getFieldsLiveData(): LiveData<Fields>
+    fun getFieldsLiveData(): LiveData<FieldsEntity>
 
     @Query("SELECT * FROM fields")
-    fun getFields(): List<Fields>
+    fun getFields(): List<FieldsEntity>
 
 }

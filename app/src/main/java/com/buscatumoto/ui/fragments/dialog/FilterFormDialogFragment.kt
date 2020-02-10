@@ -13,14 +13,10 @@ import android.view.ViewGroup
 import android.widget.*
 import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
-import com.buscatumoto.data.local.entity.Fields
 import com.buscatumoto.databinding.FragmentFiltroFormBinding
 import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.viewmodels.SearchFormViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
-import com.buscatumoto.utils.ui.hide
-import com.buscatumoto.utils.ui.setSpinner
-import com.buscatumoto.utils.ui.show
 
 import javax.inject.Inject
 

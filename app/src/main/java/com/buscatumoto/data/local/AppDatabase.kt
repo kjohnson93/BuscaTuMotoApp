@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.buscatumoto.data.local.dao.FieldsDao
-import com.buscatumoto.data.local.entity.Fields
+import com.buscatumoto.data.local.entity.FieldsEntity
 import com.buscatumoto.utils.SeedDatabaseWorker
 import com.buscatumoto.utils.data.Converters
 
@@ -17,7 +17,7 @@ import com.buscatumoto.utils.data.Converters
 /**
  * The Room database for this app
  */
-@Database(entities = [Search::class, Fields::class],
+@Database(entities = [Search::class, FieldsEntity::class],
     version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
