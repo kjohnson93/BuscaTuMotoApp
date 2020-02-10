@@ -1,7 +1,6 @@
 package com.buscatumoto
 
 import android.app.Application
-import androidx.databinding.library.BuildConfig
 import com.buscatumoto.injection.AppInjector
 import com.buscatumoto.utils.data.Environment
 import com.buscatumoto.utils.global.Constants
@@ -38,11 +37,11 @@ class BuscaTuMotoApplication: Application(), HasAndroidInjector {
 
         var enviroment = Environment.DEVELOP.path
 
-        when (BuildConfig.BUILD_TYPE) {
-            Constants.DEBUG -> {
+        when (BuildConfig.BUILD_TYPE.toLowerCase()) {
+            Constants.DEBUG.toLowerCase() -> {
                 enviroment = Environment.DEVELOP.path
             }
-            Constants.RELEASE -> {
+            Constants.RELEASE.toLowerCase() -> {
                 enviroment = Environment.RELEASE.path
             }
         }

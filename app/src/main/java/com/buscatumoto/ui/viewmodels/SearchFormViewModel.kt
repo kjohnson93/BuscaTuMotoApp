@@ -3,6 +3,7 @@ package com.buscatumoto.ui.viewmodels
 import androidx.lifecycle.MutableLiveData
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
@@ -205,6 +206,20 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
 //            .doOnSubscribe { onLoadFieldsStart() }
 //            .doOnTerminate { onLoadFieldsFinish() }
 //            .subscribe( { respose -> onLoadModelsSuccess(respose) }, { throwableError -> onLoadModelsError(throwableError)})
+    }
+
+    fun onBrandSpinnerItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+        Log.d(Constants.MOTOTAG, "Position clicked: $position")
+
+//                val brand = parent?.getItemAtPosition(position).toString()
+
+        val brand = brandsMutableLiveData?.value?.get(position)
+
+                if (brand.equals("-Marca-")) {
+                    return
+                }
+
     }
 
     private fun onLoadModelsSuccess(respose: List<MotoResponseItemModel>) {
