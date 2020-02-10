@@ -8,28 +8,23 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.buscatumoto.R
 import com.buscatumoto.data.Result
-import com.buscatumoto.data.local.entity.FieldsEntity
 
-import com.buscatumoto.data.remote.dto.response.MotoResponseItemModel
+import com.buscatumoto.data.remote.dto.response.MotoEntity
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import com.buscatumoto.domain.GetFieldsUseCase
+import com.buscatumoto.domain.GetModelsUseCase
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
 import com.buscatumoto.utils.global.Constants
 import kotlinx.coroutines.*
 
 import javax.inject.Inject
 
-class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoRepository, val getFieldsUseCase: GetFieldsUseCase): BaseViewModel() {
-
-//    private lateinit var subscription: Disposable
+class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoRepository,
+                                              val getFieldsUseCase: GetFieldsUseCase, val getModelsUseCase: GetModelsUseCase): BaseViewModel() {
 
     lateinit var lifecycleOwner: FilterFormDialogFragment
     private val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
-
     private val errorMessage: MutableLiveData<Int> = MutableLiveData()
-
-    val fields by lazy { }
-
 
 
     fun getLoadingVisibility() = loadingVisibility
@@ -92,10 +87,11 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
                             licenses.value = fieldsLocalModified.licenses
                         }
                         Result.Status.LOADING -> {
-
+                            onLoadFieldsStart()
                         }
                         Result.Status.ERROR ->{
-
+                            onLoadFieldsFinish()
+                            onLoadFieldsError(result.message)
                         }
                     }
                 })
@@ -111,127 +107,51 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
         loadingVisibility.value = View.GONE
     }
 
-    private fun processResult(result: Result<FieldsEntity>) {
-
-        when (result.status) {
-            Result.Status.SUCCESS -> {
-                loadingVisibility.value = View.GONE
-            }
-            Result.Status.LOADING -> {
-                loadingVisibility.value = View.VISIBLE
-            }
-            Result.Status.ERROR -> {
-                loadingVisibility.value = View.GONE
-            }
-        }
-    }
-
-//    private fun onLoadFieldsSuccess(fieldsResponse: Fields?) {
-//        brands.value =
-//            (fieldsResponse?.brandList as ArrayList<String>).apply {
-//                this.remove("")
-//                this.add(0, "-Marca-") }
-//        models.value = ArrayList<String>().apply {
-//            this.remove("")
-//            this.add(0, "-Elegir Marca-") }
-//        bikeTypes.value = (fieldsResponse?.bikeTypesList as ArrayList<String>).apply {
-//            this.remove("")
-//            this.add(
-//                0,
-//                "-Tipo de moto-"
-//            )
-//        }
-//        priceMinList.value = (fieldsResponse?.priceMinList as ArrayList<String>).apply {
-//            this.remove("")
-//            this.add(
-//                0,
-//                "-Precio desde-"
-//            )
-//        }
-//        priceMaxList.value = (fieldsResponse?.priceMaxList as ArrayList<String>).apply {
-//            this.remove("")
-//            this.add(
-//                0,
-//                "-Precio hasta-"
-//            )
-//        }
-//        powerMinList.value = (fieldsResponse?.powerMinList as ArrayList<String>).apply {
-//            this.remove("")
-//            this.add(
-//                0,
-//                "-Potencia desde-"
-//            )
-//        }
-//        powerMaxList.value = (fieldsResponse?.powerMaxList as ArrayList<String>).apply {
-//            this.remove("")
-//            this.add(
-//                0,
-//                "-Potencia hasta-"
-//            )
-//        }
-//        cilMinList.value = (fieldsResponse?.cilMinList as ArrayList<String>).apply {
-//            this.remove("")
-//            this.add(
-//                0,
-//                "-Cilindrada desde-"
-//            )
-//        }
-//        cilMaxList.value = (fieldsResponse?.cilMaxList as ArrayList<String>).apply {
-//            this.remove("")
-//            this.add(
-//                0,
-//                "-Cilindrada hasta-"
-//            )
-//        }
-//        weightMinList.value = (fieldsResponse?.weightMinList as ArrayList<String>).apply {
-//            this.remove("")
-//            this.add(
-//                0,
-//                "-Peso desde-"
-//            )
-//        }
-//        weightMaxList.value = (fieldsResponse?.weightMaxList as ArrayList<String>).apply {
-//            this.remove("")
-//            this.add(
-//                0,
-//                "-Peso hasta-"
-//            )
-//        }
-//        yearList.value =
-//            (fieldsResponse?.yearList as ArrayList<String>).apply { this.add(0, "-Año-") }
-//        licenses.value =
-//            (fieldsResponse?.licenses as ArrayList<String>).apply { this.add(0, "-Permiso-") }
-//    }
-
-    private fun onLoadFieldsError(throwableError: Throwable?) {
-        Log.e(Constants.MOTOTAG, "error is ${throwableError?.message}")
+    private fun onLoadFieldsError(message: String?) {
+        Log.e(Constants.MOTOTAG, "error is $message")
         errorMessage.value = R.string.load_fields_error
     }
 
     fun loadModelsByBrand(brand: String) {
-//        subscription = buscaTuMotoService.getBikesByBrand(brand)
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .doOnSubscribe { onLoadFieldsStart() }
-//            .doOnTerminate { onLoadFieldsFinish() }
-//            .subscribe( { respose -> onLoadModelsSuccess(respose) }, { throwableError -> onLoadModelsError(throwableError)})
+        viewModelScope.launch(Dispatchers.IO) {
+            val motoModelsLiveData = getModelsUseCase.execute(brand)
+
+            withContext(Dispatchers.Main) {
+                motoModelsLiveData.observe(lifecycleOwner, Observer { result ->
+                    when (result.status) {
+                        Result.Status.SUCCESS -> {
+                            onLoadFieldsFinish()
+                            models.value = getModelsUseCase.setupModels(result.data)
+                        }
+                        Result.Status.LOADING -> {
+                            onLoadFieldsStart()
+                        }
+                        Result.Status.ERROR -> {
+                            onLoadFieldsFinish()
+                        }
+                    }
+                })
+            }
+        }
     }
 
     fun onBrandSpinnerItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
         Log.d(Constants.MOTOTAG, "Position clicked: $position")
 
-//                val brand = parent?.getItemAtPosition(position).toString()
-
-        val brand = brandsMutableLiveData?.value?.get(position)
+        val brand = brandsMutableLiveData.value?.get(position)
 
                 if (brand.equals("-Marca-")) {
                     return
+                } else {
+                    brand?.let {
+                        loadModelsByBrand(it)
+                    }
                 }
 
     }
 
-    private fun onLoadModelsSuccess(respose: List<MotoResponseItemModel>) {
+    private fun onLoadModelsSuccess(respose: List<MotoEntity>) {
 
         var brandModels = ArrayList<String>()
 
@@ -251,8 +171,6 @@ class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoR
 
     override fun onCleared() {
         super.onCleared()
-//        subscription.dispose()
-//        observableToDispose.removeObserver { Log.d(Constants.MOTOTAG, "Observable disposed onCleared from SearchFromViewModel!") }
     }
 
     fun refreshData() {

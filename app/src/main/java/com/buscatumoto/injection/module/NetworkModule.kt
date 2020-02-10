@@ -5,14 +5,11 @@ import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.data.local.AppDatabase
 import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
-import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 /**
@@ -55,9 +52,8 @@ object NetworkModule {
     @Singleton
     fun provideFieldsDao(db: AppDatabase) = db.fieldsDao()
 
-//    @Provides
-//    fun provideGetFieldsUseCase(searchRepository: Searc)
-
-
+    @Provides
+    @Singleton
+    fun provideMotoDao(db: AppDatabase) = db.motoDao()
 
 }

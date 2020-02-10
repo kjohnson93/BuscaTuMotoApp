@@ -3,9 +3,11 @@ package com.buscatumoto.domain
 import androidx.lifecycle.LiveData
 import com.buscatumoto.data.Result
 import com.buscatumoto.data.local.entity.FieldsEntity
+import com.buscatumoto.data.remote.dto.response.MotoEntity
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import com.buscatumoto.utils.mapper.FieldsEntityToUIMapper
 import com.buscatumoto.utils.mapper.ui.FieldsUI
+import com.buscatumoto.utils.mapper.ui.MotoUI
 import javax.inject.Inject
 
 class GetFieldsUseCase @Inject constructor(val searchRepository: BuscaTuMotoRepository) {
@@ -82,6 +84,13 @@ class GetFieldsUseCase @Inject constructor(val searchRepository: BuscaTuMotoRepo
             this?.add(0, "-Año-")
         }
 
+        fieldsUI.licenses.apply {
+            this?.remove("")
+            this?.add(0, "-Permiso-")
+        }
+
         return fieldsUI
     }
+
+
 }

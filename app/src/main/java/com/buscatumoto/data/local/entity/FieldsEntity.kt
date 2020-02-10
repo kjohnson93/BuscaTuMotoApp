@@ -2,8 +2,6 @@ package com.buscatumoto.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import com.buscatumoto.utils.data.Converters
 import com.google.gson.annotations.SerializedName
 
 

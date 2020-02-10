@@ -129,6 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:textAlignment="center"
+        app:mutableSpinner="@{viewModel.models}"
         app:layout_constraintBottom_toBottomOf="@+id/modelTvw"
         app:layout_constraintEnd_toEndOf="@+id/brandSpinner"
         app:layout_constraintHorizontal_bias="1.0"
