@@ -11,15 +11,8 @@ import javax.inject.Inject
 class GetFieldsUseCase @Inject constructor(private val searchRepository: BuscaTuMotoRepository) {
 
 
-    suspend fun executeLiveData(): LiveData<Result<FieldsEntity>> {
+    suspend fun execute(): LiveData<Result<FieldsEntity>> {
         return searchRepository.getFieldsEmit()
-    }
-
-    fun addFirstRowLabel(brandList: List<String>?): ArrayList<String> {
-        val result = brandList as ArrayList
-        result.add(0, "-Marca-")
-
-        return result
     }
 
     //This method modifies data coming from API because we need to make adjustments to list data.

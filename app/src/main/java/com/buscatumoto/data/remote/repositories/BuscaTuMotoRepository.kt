@@ -75,5 +75,11 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
         }
     }
 
+    suspend fun getMotos() = liveData<Result<List<MotoEntity>>>{
+        val disposable = emitSource(motoDao.getMotoLiveData().map {
+            Result.success(it)
+        })
+    }
+
 
 }

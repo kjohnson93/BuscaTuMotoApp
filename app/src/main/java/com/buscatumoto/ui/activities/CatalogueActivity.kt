@@ -37,6 +37,8 @@ class CatalogueActivity : AppCompatActivity(), HasAndroidInjector {
 
         catalogueViewModel = ViewModelProviders.of(this, viewModelFactory).get(CatalogueViewModel::class.java)
         binding.viewModel = catalogueViewModel
+        binding.lifecycleOwner = this
+        catalogueViewModel.lifecycleOwner = this
 
         setSupportActionBar(toolbar)
     }

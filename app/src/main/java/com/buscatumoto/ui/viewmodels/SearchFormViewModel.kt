@@ -10,7 +10,6 @@ import com.buscatumoto.R
 import com.buscatumoto.data.remote.api.Result
 
 import com.buscatumoto.data.local.entity.MotoEntity
-import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import com.buscatumoto.domain.features.search.GetFieldsUseCase
 import com.buscatumoto.domain.features.search.GetModelsUseCase
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
@@ -65,7 +64,7 @@ class SearchFormViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
 
             //Get livedata on background
-            val fieldLiveData =  getFieldsUseCase.executeLiveData()
+            val fieldLiveData =  getFieldsUseCase.execute()
 
             //Observe on MainThread to update UI
             withContext(Dispatchers.Main) {
