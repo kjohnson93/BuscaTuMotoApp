@@ -1,4 +1,4 @@
-package com.buscatumoto.utils.mapper.ui
+package com.buscatumoto.ui.models
 
 
 data class FieldsUI(

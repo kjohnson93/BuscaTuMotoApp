@@ -1,12 +1,10 @@
 package com.buscatumoto.ui.viewmodels
 
 import androidx.lifecycle.MutableLiveData
-import android.content.res.TypedArray
 import android.graphics.drawable.Drawable
-import android.view.View
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
-import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
+import com.buscatumoto.data.remote.api.BuscaTuMotoService
 import com.buscatumoto.ui.adapters.SearchBrandsRecyclerAdapter
 import com.buscatumoto.ui.models.BrandRecyclerUiModel
 import io.reactivex.disposables.Disposable

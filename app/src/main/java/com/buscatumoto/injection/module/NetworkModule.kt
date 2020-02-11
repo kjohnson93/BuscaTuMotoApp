@@ -3,7 +3,7 @@ package com.buscatumoto.injection.module
 import android.app.Application
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.data.local.AppDatabase
-import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
+import com.buscatumoto.data.remote.api.BuscaTuMotoService
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
 import dagger.Module
 import dagger.Provides

@@ -1,13 +1,11 @@
-package com.buscatumoto.domain
+package com.buscatumoto.domain.features.search
 
 import androidx.lifecycle.LiveData
-import com.buscatumoto.data.Result
+import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.local.entity.FieldsEntity
-import com.buscatumoto.data.remote.dto.response.MotoEntity
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
-import com.buscatumoto.utils.mapper.FieldsEntityToUIMapper
-import com.buscatumoto.utils.mapper.ui.FieldsUI
-import com.buscatumoto.utils.mapper.ui.MotoUI
+import com.buscatumoto.data.mapper.FieldsEntityToUIMapper
+import com.buscatumoto.ui.models.FieldsUI
 import javax.inject.Inject
 
 class GetFieldsUseCase @Inject constructor(val searchRepository: BuscaTuMotoRepository) {

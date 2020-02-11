@@ -10,16 +10,18 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.buscatumoto.data.local.dao.FieldsDao
 import com.buscatumoto.data.local.dao.MotoDao
+import com.buscatumoto.data.local.dao.SearchDao
 import com.buscatumoto.data.local.entity.FieldsEntity
-import com.buscatumoto.data.remote.dto.response.MotoEntity
-import com.buscatumoto.utils.SeedDatabaseWorker
+import com.buscatumoto.data.local.entity.SearchEntity
+import com.buscatumoto.data.local.entity.MotoEntity
+import com.buscatumoto.utils.data.SeedDatabaseWorker
 import com.buscatumoto.utils.data.Converters
 
 
 /**
  * The Room database for this app
  */
-@Database(entities = [Search::class, FieldsEntity::class, MotoEntity::class],
+@Database(entities = [SearchEntity::class, FieldsEntity::class, MotoEntity::class],
     version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

@@ -1,7 +1,7 @@
 package com.buscatumoto.data.remote.datasource
 
-import com.buscatumoto.data.remote.BaseDataSource
-import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
+import com.buscatumoto.data.remote.api.BaseDataSource
+import com.buscatumoto.data.remote.api.BuscaTuMotoService
 import javax.inject.Inject
 
 class BuscaTuMotoDataSource @Inject constructor(private val buscaTuMotoService: BuscaTuMotoService): BaseDataSource() {

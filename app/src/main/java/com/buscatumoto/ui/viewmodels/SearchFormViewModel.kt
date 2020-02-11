@@ -7,12 +7,12 @@ import android.widget.AdapterView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.buscatumoto.R
-import com.buscatumoto.data.Result
+import com.buscatumoto.data.remote.api.Result
 
-import com.buscatumoto.data.remote.dto.response.MotoEntity
+import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
-import com.buscatumoto.domain.GetFieldsUseCase
-import com.buscatumoto.domain.GetModelsUseCase
+import com.buscatumoto.domain.features.search.GetFieldsUseCase
+import com.buscatumoto.domain.features.search.GetModelsUseCase
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
 import com.buscatumoto.utils.global.Constants
 import kotlinx.coroutines.*
@@ -20,7 +20,8 @@ import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoRepository,
-                                              val getFieldsUseCase: GetFieldsUseCase, val getModelsUseCase: GetModelsUseCase): BaseViewModel() {
+                                              val getFieldsUseCase: GetFieldsUseCase, val getModelsUseCase: GetModelsUseCase
+): BaseViewModel() {
 
     lateinit var lifecycleOwner: FilterFormDialogFragment
     private val loadingVisibility: MutableLiveData<Int> = MutableLiveData()

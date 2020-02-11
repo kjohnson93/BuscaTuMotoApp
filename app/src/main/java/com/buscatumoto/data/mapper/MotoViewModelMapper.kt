@@ -1,7 +1,6 @@
-package com.buscatumoto.utils.mapper
+package com.buscatumoto.data.mapper
 
-import com.buscatumoto.data.remote.dto.response.MotoEntity
-import com.buscatumoto.utils.mapper.ui.MotoUI
+import com.buscatumoto.data.local.entity.MotoEntity
 
 object MotoEntityToUiMapper: BaseMapper<List<MotoEntity>, ArrayList<String>?> {
     override fun map(type: List<MotoEntity>?): ArrayList<String>? {

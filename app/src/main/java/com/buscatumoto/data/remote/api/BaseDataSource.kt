@@ -1,8 +1,7 @@
-package com.buscatumoto.data.remote
+package com.buscatumoto.data.remote.api
 
 import android.util.Log
 import retrofit2.Response
-import com.buscatumoto.data.Result
 import com.buscatumoto.utils.global.Constants
 
 /**

@@ -1,4 +1,4 @@
-package com.buscatumoto.utils.mapper
+package com.buscatumoto.data.mapper
 
 interface BaseMapper<in A, out B> {
 

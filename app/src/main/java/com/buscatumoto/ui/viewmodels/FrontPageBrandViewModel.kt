@@ -1,8 +1,7 @@
 package com.buscatumoto.ui.viewmodels
 
 import androidx.lifecycle.MutableLiveData
-import android.graphics.drawable.Drawable
-import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
+import com.buscatumoto.data.remote.api.BuscaTuMotoService
 import com.buscatumoto.ui.models.BrandRecyclerUiModel
 import javax.inject.Inject
 

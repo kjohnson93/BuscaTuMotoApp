@@ -1,4 +1,4 @@
-package com.buscatumoto.data.remote.dto.response
+package com.buscatumoto.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

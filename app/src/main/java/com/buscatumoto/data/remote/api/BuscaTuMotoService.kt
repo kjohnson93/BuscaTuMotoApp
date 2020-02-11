@@ -1,7 +1,7 @@
-package com.buscatumoto.data.remote.configuration
+package com.buscatumoto.data.remote.api
 
 import com.buscatumoto.data.local.entity.FieldsEntity
-import com.buscatumoto.data.remote.dto.response.MotoEntity
+import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.utils.data.APIConstants
 import retrofit2.Response
 import retrofit2.http.GET

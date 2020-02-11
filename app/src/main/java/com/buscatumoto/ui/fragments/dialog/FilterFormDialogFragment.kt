@@ -79,18 +79,18 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
 //    private fun subscribeUi(binding: FragmentFiltroFormBinding) {
 //        searchFormViewModel.fields.observe(viewLifecycleOwner, Observer { result ->
 //            when (result.status) {
-//                com.buscatumoto.data.Result.Status.SUCCESS -> {
+//                com.buscatumoto.data.remote.api.Result.Status.SUCCESS -> {
 //                    Log.d(Constants.MOTOTAG, "result search vm ${result.data}")
 //                    binding.filterDialogProgressBar.hide()
 //                    result.data?.let {
 //                        bindView(binding, it)
 //                    }
 //                }
-//                com.buscatumoto.data.Result.Status.LOADING -> {
+//                com.buscatumoto.data.remote.api.Result.Status.LOADING -> {
 //                    Log.d(Constants.MOTOTAG, "loading")
 //                    binding.filterDialogProgressBar.show()
 //                }
-//                com.buscatumoto.data.Result.Status.ERROR -> {
+//                com.buscatumoto.data.remote.api.Result.Status.ERROR -> {
 //                Log.d(Constants.MOTOTAG, "error search vm")
 //                    binding.filterDialogProgressBar.hide()
 ////                    binding.progressBar.hide()

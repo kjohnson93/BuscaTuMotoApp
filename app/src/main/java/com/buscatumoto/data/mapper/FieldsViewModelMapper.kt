@@ -1,7 +1,7 @@
-package com.buscatumoto.utils.mapper
+package com.buscatumoto.data.mapper
 
 import com.buscatumoto.data.local.entity.FieldsEntity
-import com.buscatumoto.utils.mapper.ui.FieldsUI
+import com.buscatumoto.ui.models.FieldsUI
 
 
 object FieldsEntityToUIMapper: BaseMapper<FieldsEntity, FieldsUI> {
@@ -11,7 +11,7 @@ object FieldsEntityToUIMapper: BaseMapper<FieldsEntity, FieldsUI> {
             id = type?.id,
             respuesta = type?.respuesta,
             brandList = type?.brandList as ArrayList<String>?,
-            bikeTypesList =  type?.bikeTypesList as ArrayList<String>?,
+            bikeTypesList = type?.bikeTypesList as ArrayList<String>?,
             priceMinList = type?.priceMinList?.map { it.toString() } as? ArrayList<String>?,
             priceMaxList = type?.priceMaxList?.map { it.toString() } as? ArrayList<String>?,
             powerMinList = type?.powerMinList?.map { it.toString() } as? ArrayList<String>?,

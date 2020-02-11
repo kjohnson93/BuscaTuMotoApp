@@ -1,6 +1,6 @@
 package com.buscatumoto.ui.viewmodels
 
-import com.buscatumoto.data.remote.configuration.BuscaTuMotoService
+import com.buscatumoto.data.remote.api.BuscaTuMotoService
 import javax.inject.Inject
 
 class CatalogueViewModel @Inject constructor(): BaseViewModel() {

@@ -2,12 +2,12 @@ package com.buscatumoto.data.remote.repositories
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.buscatumoto.data.Result
+import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.local.dao.FieldsDao
 import com.buscatumoto.data.local.dao.MotoDao
 import com.buscatumoto.data.local.entity.FieldsEntity
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
-import com.buscatumoto.data.remote.dto.response.MotoEntity
+import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.utils.global.Constants
 import java.io.IOException
 import javax.inject.Inject

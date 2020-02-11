@@ -1,4 +1,4 @@
-package com.buscatumoto.data
+package com.buscatumoto.data.remote.api
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
