@@ -7,7 +7,7 @@ import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import com.buscatumoto.data.mapper.MotoEntityToUiMapper
 import javax.inject.Inject
 
-class GetModelsUseCase @Inject constructor(val searchRepository: BuscaTuMotoRepository) {
+class GetModelsUseCase @Inject constructor(private val searchRepository: BuscaTuMotoRepository) {
 
     suspend fun execute(brand: String): LiveData<Result<List<MotoEntity>>> {
         return searchRepository.getModelsByBrand(brand)

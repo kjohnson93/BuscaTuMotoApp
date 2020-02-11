@@ -19,8 +19,8 @@ import kotlinx.coroutines.*
 
 import javax.inject.Inject
 
-class SearchFormViewModel @Inject constructor(val searchRepository: BuscaTuMotoRepository,
-                                              val getFieldsUseCase: GetFieldsUseCase, val getModelsUseCase: GetModelsUseCase
+class SearchFormViewModel @Inject constructor(
+    private val getFieldsUseCase: GetFieldsUseCase, private val getModelsUseCase: GetModelsUseCase
 ): BaseViewModel() {
 
     lateinit var lifecycleOwner: FilterFormDialogFragment

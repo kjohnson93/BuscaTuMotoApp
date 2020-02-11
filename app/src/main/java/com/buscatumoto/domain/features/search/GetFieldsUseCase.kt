@@ -8,7 +8,7 @@ import com.buscatumoto.data.mapper.FieldsEntityToUIMapper
 import com.buscatumoto.ui.models.FieldsUI
 import javax.inject.Inject
 
-class GetFieldsUseCase @Inject constructor(val searchRepository: BuscaTuMotoRepository) {
+class GetFieldsUseCase @Inject constructor(private val searchRepository: BuscaTuMotoRepository) {
 
 
     suspend fun executeLiveData(): LiveData<Result<FieldsEntity>> {
