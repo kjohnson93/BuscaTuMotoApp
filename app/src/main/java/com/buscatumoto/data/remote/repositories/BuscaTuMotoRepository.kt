@@ -9,6 +9,7 @@ import com.buscatumoto.data.local.entity.FieldsEntity
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.utils.global.Constants
+import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,10 +17,6 @@ import javax.inject.Singleton
 @Singleton
 class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSource: BuscaTuMotoDataSource,
                                                 private val fieldsDao: FieldsDao, private val motoDao: MotoDao) {
-
-    init {
-        Log.d(Constants.MOTOTAG, "Injection")
-    }
 
     suspend fun getFieldsEmit() = liveData<Result<FieldsEntity>> {
         val disposable = emitSource(fieldsDao.getFieldsLiveData().map {

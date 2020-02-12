@@ -21,7 +21,7 @@ import com.buscatumoto.utils.injection.ViewModelFactory
 import javax.inject.Inject
 
 
-class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnClickListener, AdapterView.OnItemSelectedListener, Injectable {
+class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnClickListener, Injectable {
 
     companion object {
         fun newInstance(): FilterFormDialogFragment {
@@ -42,7 +42,6 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d(Constants.MOTOTAG, "onCreateView called")
         searchFormViewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchFormViewModel::class.java)
 
         searchFormViewModel.getErrorMessage().observe(this, Observer { observableValue: Int? ->
@@ -65,49 +64,8 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
         binding.filtrarCloseIbtn.setOnClickListener(this)
         binding.filtrarRefreshIbtn.setOnClickListener(this)
         binding.filtrarAcceptIbtn.setOnClickListener(this)
-        binding.brandSpinner.onItemSelectedListener = this
-
-
-
-//        subscribeUi(binding)
-
-
 
         return binding.root
-    }
-
-//    private fun subscribeUi(binding: FragmentFiltroFormBinding) {
-//        searchFormViewModel.fields.observe(viewLifecycleOwner, Observer { result ->
-//            when (result.status) {
-//                com.buscatumoto.data.remote.api.Result.Status.SUCCESS -> {
-//                    Log.d(Constants.MOTOTAG, "result search vm ${result.data}")
-//                    binding.filterDialogProgressBar.hide()
-//                    result.data?.let {
-//                        bindView(binding, it)
-//                    }
-//                }
-//                com.buscatumoto.data.remote.api.Result.Status.LOADING -> {
-//                    Log.d(Constants.MOTOTAG, "loading")
-//                    binding.filterDialogProgressBar.show()
-//                }
-//                com.buscatumoto.data.remote.api.Result.Status.ERROR -> {
-//                Log.d(Constants.MOTOTAG, "error search vm")
-//                    binding.filterDialogProgressBar.hide()
-////                    binding.progressBar.hide()
-////                    Snackbar.make(binding.coordinatorLayout, result.message!!, Snackbar.LENGTH_LONG).show()
-//                }
-//            }
-//        })
-//    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        Log.d(Constants.MOTOTAG, "onActivityCreated called")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d(Constants.MOTOTAG, "onStart called")
     }
 
     override fun onClick(view: View?) {
@@ -133,23 +91,5 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
 
     private fun hideError() {
         errorSnackbar?.dismiss()
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        Log.d(Constants.MOTOTAG, "Position clicked: $position")
-
-        when(parent?.id) {
-            binding.brandSpinner.id -> {
-                val brand = parent?.getItemAtPosition(position).toString()
-
-                if (brand.equals("-Marca-")) {
-                    return
-                }
-                binding.viewModel?.loadModelsByBrand(brand)
-            }
-        }
     }
 }

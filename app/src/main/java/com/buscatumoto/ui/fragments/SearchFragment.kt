@@ -22,6 +22,7 @@ import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.BasicNavigator
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -80,7 +81,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
     }
 
     private fun navigateWithBrand(brand: String?) {
-        Log.d(Constants.MOTOTAG, "Navigate with brand: $brand")
+        Timber.d("Navigated with brand $brand")
         basicNavigator.navigateToIntent(requireActivity(), CatalogueActivity::class.java, null)
     }
 
@@ -111,7 +112,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         var isFMnull = true
         isFMnull = fragmentManager == null
 
-        Log.d(Constants.MOTOTAG, "is FM Null $isFMnull")
+        Timber.d("Is FM NULL $isFMnull")
         fragmentManager?.executePendingTransactions()
 //        val fragmentTransactionAdd = fragmentManager?.beginTransaction()
         val prev = fragmentManager?.findFragmentByTag("dialog")

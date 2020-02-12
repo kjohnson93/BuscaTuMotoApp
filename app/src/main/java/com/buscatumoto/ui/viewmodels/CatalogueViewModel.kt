@@ -17,6 +17,7 @@ import com.buscatumoto.utils.global.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: LoadCatalogueUseCase): BaseViewModel()  {
@@ -38,7 +39,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                 motos.observe(lifecycleOwner, Observer { result ->
                     when(result.status) {
                         Result.Status.SUCCESS -> {
-                            Log.d(Constants.MOTOTAG, "Data: ${result.data}")
+                            Timber.d("Data: ${result.data}")
                             motosLiveData.value = result.data
                         }
                         Result.Status.LOADING -> {

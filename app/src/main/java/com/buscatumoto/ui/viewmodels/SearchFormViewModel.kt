@@ -15,6 +15,7 @@ import com.buscatumoto.domain.features.search.GetModelsUseCase
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
 import com.buscatumoto.utils.global.Constants
 import kotlinx.coroutines.*
+import timber.log.Timber
 
 import javax.inject.Inject
 
@@ -137,7 +138,7 @@ class SearchFormViewModel @Inject constructor(
 
     fun onBrandSpinnerItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
-        Log.d(Constants.MOTOTAG, "Position clicked: $position")
+        Timber.d("Position clicked: $position")
 
         val brand = brandsMutableLiveData.value?.get(position)
 

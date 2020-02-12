@@ -1,12 +1,15 @@
 package com.buscatumoto
 
 import android.app.Application
+import android.os.Build
 import com.buscatumoto.injection.AppInjector
 import com.buscatumoto.utils.data.Environment
 import com.buscatumoto.utils.global.Constants
+import com.buscatumoto.utils.global.ReleaseTree
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import timber.log.Timber
 import javax.inject.Inject
 
 class BuscaTuMotoApplication: Application(), HasAndroidInjector {
@@ -29,6 +32,15 @@ class BuscaTuMotoApplication: Application(), HasAndroidInjector {
         super.onCreate()
 
         sInstance = this
+
+        when (BuildConfig.BUILD_TYPE.toLowerCase()) {
+            Constants.DEBUG.toLowerCase() -> {
+                Timber.plant(Timber.DebugTree())
+            }
+            Constants.RELEASE.toLowerCase() -> {
+                Timber.plant(ReleaseTree())
+            }
+        }
 
         AppInjector.init(this)
     }

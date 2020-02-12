@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import android.util.Log
 import com.buscatumoto.BuscaTuMotoApplication
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -37,7 +38,7 @@ class BasicNavigator @Inject constructor() {
     fun navigateAddFragment(fragmentManager: androidx.fragment.app.FragmentManager?, navigateToFragment: androidx.fragment.app.Fragment, extras: Bundle?, tag: String, containerView: Int) {
         val manager = fragmentManager
 
-        Log.d("TAG", "Basic Navigator manager: $manager")
+        Timber.d("Basic Navigator manager: $manager")
 
         manager?.let {
             val ft = manager.beginTransaction()
