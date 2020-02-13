@@ -19,6 +19,7 @@ import com.buscatumoto.injection.Injectable
 import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.ui.activities.CatalogueActivity
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
+import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.BasicNavigator
@@ -26,12 +27,14 @@ import timber.log.Timber
 import javax.inject.Inject
 
 
-class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, Injectable {
+class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, Injectable, ScreenNavigator {
 
     companion object {
         fun newInstance(): SearchFragment {
             return SearchFragment()
         }
+
+        const val NAVIGATE_TO_CATALOGUE = 1
     }
 
     var activityReadyListener: ReadyListener? = null
@@ -65,8 +68,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         frontPageViewModel = ViewModelProviders.of(this, viewModelFactory).get(FrontPageViewModel::class.java)
         binding.viewModel = frontPageViewModel
 
-        frontPageViewModel.getbrandSelected().observe(this,
-            Observer { brand -> navigateWithBrand(brand) })
 
         getActivity()?.getWindow()
             ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -135,5 +136,9 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
                 openFilterDialogFragment()
             }
         }
+    }
+
+    override fun navigateToNext(event: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

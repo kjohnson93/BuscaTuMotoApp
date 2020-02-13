@@ -28,7 +28,7 @@ class FrontPageBrandViewModel: BaseViewModel() {
      * Called from databinding
      */
     fun brandImageClick(brand: String) {
-        clickListener.onItemClick(brand)
+        clickListener.onBrandItemClick(brand)
     }
 
 

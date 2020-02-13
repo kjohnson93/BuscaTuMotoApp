@@ -47,7 +47,7 @@ class SearchBrandsRecyclerAdapter(val itemClickListener: BrandItemClickListener)
     }
 
     interface BrandItemClickListener {
-        fun onItemClick(brand: String)
+        fun onBrandItemClick(brand: String)
     }
 
 }
