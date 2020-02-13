@@ -7,7 +7,7 @@ import com.buscatumoto.R
 import com.buscatumoto.data.remote.api.BuscaTuMotoService
 import com.buscatumoto.ui.adapters.SearchBrandsRecyclerAdapter
 import com.buscatumoto.ui.models.BrandRecyclerUiModel
-import io.reactivex.disposables.Disposable
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -16,13 +16,12 @@ class FrontPageViewModel @Inject constructor(): BaseViewModel() {
     @Inject
     lateinit var buscaTuMotoService: BuscaTuMotoService
 
-    private lateinit var subscription: Disposable
-
     private var brandSelected = MutableLiveData<String>()
     fun getbrandSelected(): MutableLiveData<String> = brandSelected
 
     val searchBrandsAdapter = SearchBrandsRecyclerAdapter(object: SearchBrandsRecyclerAdapter.BrandItemClickListener {
         override fun onItemClick(brand: String) {
+            Timber.d("LOG: $brand")
             brandSelected.value = brand
         }
     })
