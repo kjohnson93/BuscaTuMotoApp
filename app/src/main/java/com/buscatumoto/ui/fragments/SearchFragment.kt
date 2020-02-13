@@ -66,7 +66,10 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         binding.filtrarBtn.setOnClickListener(this)
 
         frontPageViewModel = ViewModelProviders.of(this, viewModelFactory).get(FrontPageViewModel::class.java)
+        frontPageViewModel.lifeCycleOwner = this
+        frontPageViewModel.screenNavigator = this
         binding.viewModel = frontPageViewModel
+        binding.lifecycleOwner = this
 
 
         getActivity()?.getWindow()

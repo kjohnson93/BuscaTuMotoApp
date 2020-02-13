@@ -9,6 +9,7 @@ import com.buscatumoto.data.local.entity.FieldsEntity
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.utils.global.Constants
+import retrofit2.http.Query
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
@@ -76,6 +77,52 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
         val disposable = emitSource(motoDao.getMotoLiveData().map {
             Result.success(it)
         })
+    }
+
+    suspend fun filter(
+        brand: String? = "",
+        model: String,
+        bikeType: String? = "",
+        priceBottom: Int,
+        priceTop: Int,
+        powerBottom: Double,
+        powerTop: Double,
+        displacementBottom: Double,
+        displacementTop: Double,
+        weightBottom: Double,
+        weightTop: Double,
+        year: Int,
+        license: String
+    ) = liveData<Result<List<MotoEntity>>> {
+        val disposable = emitSource(motoDao.getMotoLiveData().map {
+            Result.loading(it)
+        })
+
+        disposable.dispose()
+
+
+        try {
+            val response = buscaTuMotoDataSource.filter(
+                brand, model, bikeType,
+                priceBottom, priceTop, powerBottom, powerTop, displacementBottom, displacementTop,
+                weightBottom, weightTop, year, license
+            )
+
+            response.data?.let {
+                motoDao.deleteMotos()
+                motoDao.insert(it)
+            }
+
+            emitSource(motoDao.getMotoLiveData().map {
+                Result.success(it)
+            })
+        } catch (exception: IOException) {
+            emitSource(motoDao.getMotoLiveData().map {
+                Result.error("Filter motos error", null)
+            })
+        }
+
+
     }
 
 

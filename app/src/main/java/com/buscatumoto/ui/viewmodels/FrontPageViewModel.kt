@@ -7,9 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
 import com.buscatumoto.data.remote.api.BuscaTuMotoService
+import com.buscatumoto.data.remote.api.Result
+import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import com.buscatumoto.ui.adapters.SearchBrandsRecyclerAdapter
 import com.buscatumoto.ui.fragments.SearchFragment
 import com.buscatumoto.ui.models.BrandRecyclerUiModel
+import com.buscatumoto.ui.navigation.ScreenNavigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -17,13 +20,11 @@ import timber.log.Timber
 import javax.inject.Inject
 
 
-class FrontPageViewModel @Inject constructor(): BaseViewModel(), SearchBrandsRecyclerAdapter.BrandItemClickListener {
+class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRepository): BaseViewModel(), SearchBrandsRecyclerAdapter.BrandItemClickListener {
 
-    @Inject
-    lateinit var buscaTuMotoService: BuscaTuMotoService
-    lateinit var lifeCycleOwner: LifecycleOwner
+    lateinit var lifeCycleOwner: SearchFragment
 
-    lateinit var screenNavigator: SearchFragment
+    lateinit var screenNavigator: ScreenNavigator
 
     private var brandSelected = MutableLiveData<String>()
 
@@ -59,11 +60,25 @@ class FrontPageViewModel @Inject constructor(): BaseViewModel(), SearchBrandsRec
         viewModelScope.launch(Dispatchers.IO) {
 
             //filter response
+            val liveData = buscaTuMotoRepository.filter(brand, "", "", -1, -1, -1.0, -1.0, -1.0, -1.0,
+                -1.0, -1.0, -1, "")
 
             withContext(Dispatchers.Main) {
                 //filter observer
-                brandSelected.observe(lifeCycleOwner,
+                liveData.observe(lifeCycleOwner,
                     Observer { result ->
+
+                        when (result.status) {
+                            Result.Status.SUCCESS -> {
+                                Timber.d("Filter Success")
+                            }
+                            Result.Status.LOADING -> {
+                                Timber.d("Filter Loading")
+                            }
+                            Result.Status.ERROR -> {
+                                Timber.d("Filter error")
+                            }
+                        }
                         //Maybe const val is enough
                         //View Models it's ok to know UI constants
                         screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE)
