@@ -139,6 +139,10 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
     }
 
     override fun navigateToNext(event: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        when (event) {
+            NAVIGATE_TO_CATALOGUE -> {
+
+            }
+        }
     }
 }

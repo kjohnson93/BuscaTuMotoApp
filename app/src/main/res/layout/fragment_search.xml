@@ -76,6 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="10"
+            android:onClick="@{() -> viewModel.onSearchRequested(codPacienteInput.getText().toString())}"
             android:paddingStart="5dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/search_icon_128" />

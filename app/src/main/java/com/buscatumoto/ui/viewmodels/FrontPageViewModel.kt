@@ -1,8 +1,6 @@
 package com.buscatumoto.ui.viewmodels
 
 import androidx.lifecycle.MutableLiveData
-import android.graphics.drawable.Drawable
-import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
@@ -28,7 +26,6 @@ class FrontPageViewModel @Inject constructor(): BaseViewModel(), SearchBrandsRec
     lateinit var screenNavigator: SearchFragment
 
     private var brandSelected = MutableLiveData<String>()
-    fun getbrandSelected(): MutableLiveData<String> = brandSelected
 
     val searchBrandsAdapter = SearchBrandsRecyclerAdapter(this)
 
@@ -42,14 +39,11 @@ class FrontPageViewModel @Inject constructor(): BaseViewModel(), SearchBrandsRec
         val drawabletypedArray = context.resources.obtainTypedArray(R.array.brand_logos_array)
         val brandNamesTypedArray = context.resources.obtainTypedArray(R.array.brand_names_array)
 
-        val drawableArrayList = ArrayList<Drawable?>()
-
         val  brandRecyclerUiModelList = ArrayList<BrandRecyclerUiModel?>()
 
         var index = 0
 
         while (index < drawabletypedArray.length()) {
-//            drawableArrayList.add(typedArray.getDrawable(index))
             val brandRecyclerUiModel = BrandRecyclerUiModel(brandNamesTypedArray.getString(index), drawabletypedArray.getDrawable(index))
             brandRecyclerUiModelList.add(brandRecyclerUiModel)
             index ++
@@ -60,7 +54,7 @@ class FrontPageViewModel @Inject constructor(): BaseViewModel(), SearchBrandsRec
         searchBrandsAdapter.updateBrandHighLights(modifiedList as List<BrandRecyclerUiModel>)
     }
 
-    fun onBrandFilterRequested(view: View?, id: Long) {
+    fun navigateByFilter(brand: String) {
 
         viewModelScope.launch(Dispatchers.IO) {
 
@@ -69,7 +63,7 @@ class FrontPageViewModel @Inject constructor(): BaseViewModel(), SearchBrandsRec
             withContext(Dispatchers.Main) {
                 //filter observer
                 brandSelected.observe(lifeCycleOwner,
-                    Observer { brand ->
+                    Observer { result ->
                         //Maybe const val is enough
                         //View Models it's ok to know UI constants
                         screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE)
@@ -83,7 +77,7 @@ class FrontPageViewModel @Inject constructor(): BaseViewModel(), SearchBrandsRec
         }
     }
 
-    fun onSearchRequest(view: View?, position: Int, id: Long) {
+    fun navigateBySerch(search: String) {
         viewModelScope.launch(Dispatchers.IO) {
 
             //search response
@@ -106,11 +100,16 @@ class FrontPageViewModel @Inject constructor(): BaseViewModel(), SearchBrandsRec
     }
 
     override fun onBrandItemClick(brand: String) {
-
-        //load brand endpoint if OK, call onBrandFilterRequested
         Timber.d("brand: $brand")
-
+        navigateByFilter(brand)
     }
+
+    fun onSearchRequested(search: String) {
+        Timber.d("Search requested: $search")
+        navigateBySerch(search)
+    }
+
+
 
 
 }
