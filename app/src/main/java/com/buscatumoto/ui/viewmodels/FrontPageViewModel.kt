@@ -60,8 +60,11 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
         viewModelScope.launch(Dispatchers.IO) {
 
             //filter response
-            val liveData = buscaTuMotoRepository.filter(brand, "", "", -1, -1, -1.0, -1.0, -1.0, -1.0,
-                -1.0, -1.0, -1, "")
+            val liveData = buscaTuMotoRepository.filter(brand,
+                null, null, null,
+                null, null, null,
+                null, null,
+                null, null, null, null)
 
             withContext(Dispatchers.Main) {
                 //filter observer
@@ -71,6 +74,7 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
                         when (result.status) {
                             Result.Status.SUCCESS -> {
                                 Timber.d("Filter Success")
+                                screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE)
                             }
                             Result.Status.LOADING -> {
                                 Timber.d("Filter Loading")
@@ -81,7 +85,6 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
                         }
                         //Maybe const val is enough
                         //View Models it's ok to know UI constants
-                        screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE)
                     })
 
 //        //search observer textview

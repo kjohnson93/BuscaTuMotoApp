@@ -28,6 +28,7 @@ class BasicNavigator @Inject constructor() {
     fun navigateToIntent(activityLauncher: Activity, classToStartIntent: Class<out Any>, extras: Bundle?): Unit{
         val intent : Intent?
         intent = Intent(appContext, classToStartIntent)
+        intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         activityLauncher.startActivity(intent)
     }
 

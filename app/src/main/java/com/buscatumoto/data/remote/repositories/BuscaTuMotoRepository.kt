@@ -80,19 +80,19 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
     }
 
     suspend fun filter(
-        brand: String? = "",
-        model: String,
-        bikeType: String? = "",
-        priceBottom: Int,
-        priceTop: Int,
-        powerBottom: Double,
-        powerTop: Double,
-        displacementBottom: Double,
-        displacementTop: Double,
-        weightBottom: Double,
-        weightTop: Double,
-        year: Int,
-        license: String
+        brand: String? = null,
+        model: String? = null,
+        bikeType: String? = null,
+        priceBottom: Int? = null,
+        priceTop: Int? = null,
+        powerBottom: Double? = null,
+        powerTop: Double? = null,
+        displacementBottom: Double? = null,
+        displacementTop: Double? = null,
+        weightBottom: Double? = null,
+        weightTop: Double? = null,
+        year: Int? = null,
+        license: String?= null
     ) = liveData<Result<List<MotoEntity>>> {
         val disposable = emitSource(motoDao.getMotoLiveData().map {
             Result.loading(it)

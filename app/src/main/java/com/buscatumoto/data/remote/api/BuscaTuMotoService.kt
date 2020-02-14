@@ -33,19 +33,19 @@ interface BuscaTuMotoService {
 //        @Query("licenses") license: String): Response<List<MotoEntity>>
 
     @GET(APIConstants.MOTO_FILTER_URL)
-    suspend fun filter(@Query("brand") brand: String? = "",
-                       @Query("model") model: String,
-                       @Query("tipo") bikeType: String? = "",
-                       @Query("precio_d") priceBottom: Int,
-                       @Query("precio_u") priceTop: Int,
-                       @Query("power_d") powerBottom: Double,
-                       @Query("power_u") powerTop: Double,
-                       @Query("cil_d") displacementBottom: Double,
-                       @Query("cil_u") displacementTop: Double,
-                       @Query("weight_d") weightBottom: Double,
-                       @Query("weight_u") weightTop: Double,
-                       @Query("year") year: Int,
-                       @Query("licenses") license: String): Response<List<MotoEntity>>
+    suspend fun filter(@Query("brand") brand: String? = null,
+                       @Query("model") model: String? = null,
+                       @Query("tipo") bikeType: String? = null,
+                       @Query("precio_d") priceBottom: Int? = null,
+                       @Query("precio_u") priceTop: Int? = null,
+                       @Query("power_d") powerBottom: Double? = null,
+                       @Query("power_u") powerTop: Double? = null,
+                       @Query("cil_d") displacementBottom: Double? = null,
+                       @Query("cil_u") displacementTop: Double? = null,
+                       @Query("weight_d") weightBottom: Double? = null,
+                       @Query("weight_u") weightTop: Double? = null,
+                       @Query("year") year: Int? = null,
+                       @Query("licenses") license: String? = null): Response<List<MotoEntity>>
 
     @GET(APIConstants.MOTO_SEARCH_URL)
     suspend fun search(@Path("search") search: String): Response<List<MotoEntity>>

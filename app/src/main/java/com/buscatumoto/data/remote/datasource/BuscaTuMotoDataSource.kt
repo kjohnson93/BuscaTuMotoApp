@@ -12,19 +12,19 @@ class BuscaTuMotoDataSource @Inject constructor(private val buscaTuMotoService: 
 
     suspend fun getMotos(brand: String) = getResult { buscaTuMotoService.getBikesByBrand(brand)}
 
-    suspend fun filter(brand: String? = "",
-                       model: String,
-                       bikeType: String? = "",
-                       priceBottom: Int,
-                       priceTop: Int,
-                       powerBottom: Double,
-                       powerTop: Double,
-                       displacementBottom: Double,
-                       displacementTop: Double,
-                       weightBottom: Double,
-                       weightTop: Double,
-                       year: Int,
-                       license: String
+    suspend fun filter(brand: String? = null,
+                       model: String? = null,
+                       bikeType: String? = null,
+                       priceBottom: Int? = null,
+                       priceTop: Int? = null,
+                       powerBottom: Double? = null,
+                       powerTop: Double? = null,
+                       displacementBottom: Double? = null,
+                       displacementTop: Double? = null,
+                       weightBottom: Double? = null,
+                       weightTop: Double? = null,
+                       year: Int? = null,
+                       license: String? = null
     ) = getResult { buscaTuMotoService.filter(brand, model, bikeType, priceBottom, priceTop, powerBottom, powerTop, displacementBottom, displacementTop, weightBottom, weightTop, year, license) }
 
 }
