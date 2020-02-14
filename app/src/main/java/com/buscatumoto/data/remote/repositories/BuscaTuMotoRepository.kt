@@ -98,15 +98,14 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
             Result.loading(it)
         })
 
-        disposable.dispose()
-
-
         try {
             val response = buscaTuMotoDataSource.filter(
                 brand, model, bikeType,
                 priceBottom, priceTop, powerBottom, powerTop, displacementBottom, displacementTop,
                 weightBottom, weightTop, year, license
             )
+
+            disposable.dispose()
 
             response.data?.let {
                 motoDao.deleteMotos()
