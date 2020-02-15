@@ -129,6 +129,7 @@ class SearchFormViewModel @Inject constructor(
                         }
                         Result.Status.ERROR -> {
                             onLoadFieldsFinish()
+                            onLoadFieldsError(result.message)
                         }
                     }
                 })

@@ -8,7 +8,7 @@ class BuscaTuMotoDataSource @Inject constructor(private val buscaTuMotoService: 
 
 
 
-    suspend fun getFields() = getResult { buscaTuMotoService.getFields() }
+    suspend fun getFields() =  getResult { buscaTuMotoService.getFields() }
 
     suspend fun getMotos(brand: String) = getResult { buscaTuMotoService.getBikesByBrand(brand)}
 

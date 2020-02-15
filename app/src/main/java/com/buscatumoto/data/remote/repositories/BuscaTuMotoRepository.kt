@@ -29,14 +29,23 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
 
             //Stop the previous emission to avoid dispatching the updated value as 'loading'
             disposable.dispose()
-            //update the database
-            response.data?.let {
-                fieldsDao.insert(it)
+
+            if (response.status == Result.Status.SUCCESS) {
+                //update the database
+                response.data?.let {
+                    fieldsDao.insert(it)
+                }
+                //Re-establish the emission with success type
+                emitSource(fieldsDao.getFieldsLiveData().map {
+                    Result.success(it)
+                })
+            } else if (response.status == Result.Status.ERROR) {
+                emitSource(fieldsDao.getFieldsLiveData().map {
+                    Result.error(response.message, null)
+                })
             }
-            //Re-establish the emission with success type
-            emitSource(fieldsDao.getFieldsLiveData().map {
-                Result.success(it)
-            })
+
+
 
 
         } catch (exception: IOException) {
@@ -57,10 +66,17 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
             //Stop the previous emission to avoid dispatching the updated value as 'loading'
             disposable.dispose()
 
-            response.data?.let {
-                motoDao.deleteMotos()
-                motoDao.insert(it)
+            if (response.status == Result.Status.SUCCESS) {
+                response.data?.let {
+                    motoDao.deleteMotos()
+                    motoDao.insert(it)
+                }
+            } else if (response.status == Result.Status.ERROR) {
+                emitSource(motoDao.getMotoLiveData().map {
+                    Result.error(response.message, data = null)
+                })
             }
+
 
             //Re-establish the emission with success type
             emitSource(motoDao.getMotoLiveData().map {
@@ -107,10 +123,18 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
 
             disposable.dispose()
 
-            response.data?.let {
-                motoDao.deleteMotos()
-                motoDao.insert(it)
+            if (response.status == Result.Status.SUCCESS) {
+                response.data?.let {
+                    motoDao.deleteMotos()
+                    motoDao.insert(it)
+                }
+            } else if (response.status == Result.Status.ERROR) {
+                emitSource(motoDao.getMotoLiveData().map {
+                    Result.error(response.message, null)
+                })
             }
+
+
 
             emitSource(motoDao.getMotoLiveData().map {
                 Result.success(it)
