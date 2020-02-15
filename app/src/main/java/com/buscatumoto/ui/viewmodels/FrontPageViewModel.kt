@@ -66,6 +66,7 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
                 null, null,
                 null, null, null, null)
 
+
             withContext(Dispatchers.Main) {
                 //filter observer
                 liveData.observe(lifeCycleOwner,
@@ -75,12 +76,14 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
                             Result.Status.SUCCESS -> {
                                 Timber.d("Filter Success")
                                 screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE)
+                                liveData.removeObservers(lifeCycleOwner)
                             }
                             Result.Status.LOADING -> {
                                 Timber.d("Filter Loading")
                             }
                             Result.Status.ERROR -> {
                                 Timber.d("Filter error")
+                                liveData.removeObservers(lifeCycleOwner)
                             }
                         }
                         //Maybe const val is enough
