@@ -18,4 +18,5 @@
     <string name="load_filter_error">An error occurred while loading the data Filter</string>
     <string name="load_models_error">An error occurred while loading the bike models</string>
     <string name="title_activity_catalogue">CatalogueActivity</string>
+    <string name="build_fields_form_error">Something went wrong building filter form</string>
 </resources>

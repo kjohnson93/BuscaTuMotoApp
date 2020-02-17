@@ -31,6 +31,8 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
         fun newInstance(): FilterFormDialogFragment {
             return FilterFormDialogFragment()
         }
+
+        const val NAVIGATE_TO_CATALOGUE = 1
     }
 
     private var errorSnackbar: Snackbar? = null
@@ -71,7 +73,6 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
 
         binding.filtrarCloseIbtn.setOnClickListener(this)
         binding.filtrarRefreshIbtn.setOnClickListener(this)
-        binding.filtrarAcceptIbtn.setOnClickListener(this)
 
         return binding.root
     }

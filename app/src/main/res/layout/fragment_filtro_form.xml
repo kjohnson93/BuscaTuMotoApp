@@ -445,10 +445,26 @@
             android:layout_height="40dp"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
+            android:onClick="@{() -> viewModel.filter(
+            brandSpinner.getSelectedItem().toString(),
+            modelSpinner.getSelectedItem().toString(),
+            yearSpinner.getSelectedItem().toString(),
+            bikeTypeSpinner.getSelectedItem().toString(),
+            priceMinSpinner.getSelectedItem().toString(),
+            priceMaxSpinner.getSelectedItem().toString(),
+            powerMinSpinner.getSelectedItem().toString(),
+            powerMaxSpinner.getSelectedItem().toString(),
+            cilMinSpinner.getSelectedItem().toString(),
+            cilMaxSpinner.getSelectedItem().toString(),
+            weightMinSpinner.getSelectedItem().toString(),
+            weightMaxSpinner.getSelectedItem().toString(),
+            yearSpinner.getSelectedItem().toString(),
+            licenseSpinner.getSelectedItem().toString())}"
             android:background="@android:color/transparent"
             android:gravity="center"
             android:scaleType="fitCenter"
             android:src="@drawable/check_ok_icon_128" />
+
 
 
     </LinearLayout>

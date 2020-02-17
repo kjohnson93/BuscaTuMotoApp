@@ -9,19 +9,23 @@ import com.buscatumoto.R
 import com.buscatumoto.data.local.entity.FieldsEntity
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
+import com.buscatumoto.domain.features.search.FilterUseCase
 
 import com.buscatumoto.domain.features.search.GetFieldsUseCase
 import com.buscatumoto.domain.features.search.GetModelsUseCase
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
+import com.buscatumoto.ui.models.MotoUI
 import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.utils.ui.RetryErrorModel
 import kotlinx.coroutines.*
 import timber.log.Timber
+import java.lang.Exception
 
 import javax.inject.Inject
 
 class SearchFormViewModel @Inject constructor(
-    private val getFieldsUseCase: GetFieldsUseCase, private val getModelsUseCase: GetModelsUseCase
+    private val getFieldsUseCase: GetFieldsUseCase, private val getModelsUseCase: GetModelsUseCase,
+    private val filterUseCase: FilterUseCase
 ): BaseViewModel() {
 
     lateinit var lifecycleOwner: FilterFormDialogFragment
@@ -86,7 +90,7 @@ class SearchFormViewModel @Inject constructor(
                             fieldLiveData.removeObservers(lifecycleOwner)
                         }
                         Result.Status.LOADING -> {
-                            onLoadFieldsStart()
+                            onLoadingNetworkRequest()
                         }
                         Result.Status.ERROR ->{
                             onLoadFieldsError(result.message)
@@ -115,7 +119,7 @@ class SearchFormViewModel @Inject constructor(
         licenses.value = fieldsLocalModified.licenses
     }
 
-    private fun onLoadFieldsStart() {
+    private fun onLoadingNetworkRequest() {
         loadingVisibility.value = View.VISIBLE
     }
 
@@ -136,6 +140,17 @@ class SearchFormViewModel @Inject constructor(
         errorModel.value = retryErrorModel
     }
 
+    private fun onFilterSuccess(data: List<MotoEntity>?){
+        screenNavigator.navigateToNext(FilterFormDialogFragment.NAVIGATE_TO_CATALOGUE)
+    }
+
+    private fun onFilterError(message: String?) {
+        retryErrorModel = RetryErrorModel(R.string.load_filter_error, RetryErrorModel.FILTER_ERROR)
+        errorModel.value = retryErrorModel
+    }
+
+
+
     fun loadModelsByBrand(brand: String) {
         lastBrandSelected = brand
 
@@ -150,7 +165,7 @@ class SearchFormViewModel @Inject constructor(
                             motoModelsLiveData.removeObservers(lifecycleOwner)
                         }
                         Result.Status.LOADING -> {
-                            onLoadFieldsStart()
+                            onLoadingNetworkRequest()
                         }
                         Result.Status.ERROR -> {
                             onLoadModelsError(result.message)
@@ -178,6 +193,74 @@ class SearchFormViewModel @Inject constructor(
 
     fun refreshData() {
         this.loadFields()
+    }
+
+    fun filter(brand: String? = null,
+               model: String? = null,
+               bikeType: String? = null,
+               priceBottom: String? = null,
+               priceTop: String? = null,
+               powerBottom: String? = null,
+               powerTop: String? = null,
+               displacementBottom: String? = null,
+               displacementTop: String? = null,
+               weightBottom: String? = null,
+               weightTop: String? = null,
+               year: String? = null,
+               license: String? = null) {
+
+        viewModelScope.launch(Dispatchers.IO) {
+
+            try{
+
+                val response = filterUseCase.execute(brand, model,
+                    bikeType,
+                    priceBottom,
+                    priceTop,
+                    powerBottom,
+                    powerTop,
+                    displacementBottom,
+                    displacementTop,
+                    weightBottom,
+                    weightTop,
+                    year,
+                    license)
+
+                withContext(Dispatchers.Main) {
+
+                    response.observe(lifecycleOwner, Observer {
+                            result ->
+                        when (result.status) {
+                            Result.Status.SUCCESS -> {
+                                onFilterSuccess(result.data)
+                            }
+                            Result.Status.LOADING -> {
+                                onLoadingNetworkRequest()
+                            }
+                            Result.Status.ERROR -> {
+                                onLoadFieldsError(result.message)
+                            }
+                        }
+                    })
+
+                }
+            } catch (exception: Exception) {
+                Timber.e("Something went wrong building filter form")
+                retryErrorModel = RetryErrorModel(R.string.build_fields_form_error, RetryErrorModel.FILTER_ERROR)
+                errorModel.value = retryErrorModel
+            }
+
+        }
+
+    }
+
+
+    fun testOnClick() {
+
+    }
+
+    fun testStringOnClick(brnad: String) {
+        Timber.d(brnad)
     }
 
 }
