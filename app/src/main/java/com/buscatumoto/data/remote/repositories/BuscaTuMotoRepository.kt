@@ -16,8 +16,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSource: BuscaTuMotoDataSource,
-                                                private val fieldsDao: FieldsDao, private val motoDao: MotoDao) {
+class BuscaTuMotoRepository @Inject constructor(
+    private val buscaTuMotoDataSource: BuscaTuMotoDataSource,
+    private val fieldsDao: FieldsDao, private val motoDao: MotoDao
+) {
 
     suspend fun getFieldsEmit() = liveData<Result<FieldsEntity>> {
         val disposable = emitSource(fieldsDao.getFieldsLiveData().map {
@@ -84,7 +86,7 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
         }
     }
 
-    suspend fun getMotos() = liveData<Result<List<MotoEntity>>>{
+    suspend fun getMotos() = liveData<Result<List<MotoEntity>>> {
         val disposable = emitSource(motoDao.getMotoLiveData().map {
             Result.success(it)
         })
@@ -103,7 +105,7 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
         weightBottom: Double? = null,
         weightTop: Double? = null,
         year: Int? = null,
-        license: String?= null
+        license: String? = null
     ) = liveData<Result<List<MotoEntity>>> {
         val disposable = emitSource(motoDao.getMotoLiveData().map {
             Result.loading(it)
@@ -137,8 +139,43 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
                 Result.error("Filter motos error", null)
             })
         }
+    }
+
+    suspend fun search(search: String) = liveData<Result<List<MotoEntity>>> {
+        //first local
+        val disposable = emitSource(motoDao.getMotoLiveData().map {
+            Result.loading(it)
+        })
+
+        //try network request and dispose local process
+        try {
+            val response = buscaTuMotoDataSource.search(search)
+
+            disposable.dispose()
+
+            if (response.status == Result.Status.SUCCESS) {
+                //save
+                response.data?.let {
+                    motoDao.deleteMotos()
+                    motoDao.insert(it)
+                }
+
+                emitSource(motoDao.getMotoLiveData().map {
+                    Result.success(it)
+                })
+            } else if (response.status == Result.Status.ERROR) {
+                emitSource(motoDao.getMotoLiveData().map {
+                    Result.error("An IO error has ocurred on search data fetch", null)
+                })
+            }
+        } catch (exception: IOException) {
+            emitSource(motoDao.getMotoLiveData().map {
+                Result.error("An IO error has ocurred on search data fetch", null)
+            })
+        }
 
 
+        //save and return
     }
 
 

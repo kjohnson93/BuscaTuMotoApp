@@ -26,8 +26,6 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
 
     lateinit var screenNavigator: ScreenNavigator
 
-    private var brandSelected = MutableLiveData<String>()
-
     private var errorModel = MutableLiveData<RetryErrorModel>()
     fun getError() = errorModel
 
@@ -37,6 +35,10 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
     private lateinit var retryErrorModel: RetryErrorModel
 
     val searchBrandsAdapter = SearchBrandsRecyclerAdapter(this)
+
+    val loadingVisibility = MutableLiveData<Int>().apply {
+        this.value = View.GONE
+    }
 
     private val retryErrorClickListener = View.OnClickListener {
 
@@ -98,14 +100,17 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
                         when (result.status) {
                             Result.Status.SUCCESS -> {
                                 Timber.d("Filter Success")
+                                loadingVisibility.value = View.GONE
                                 screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE)
                                 liveData.removeObservers(lifeCycleOwner)
                             }
                             Result.Status.LOADING -> {
                                 Timber.d("Filter Loading")
+                                loadingVisibility.value = View.VISIBLE
                             }
                             Result.Status.ERROR -> {
                                 Timber.d("Filter error")
+                                loadingVisibility.value = View.GONE
                                 retryErrorModel = RetryErrorModel(R.string.load_filter_error, RetryErrorModel.FILTER_ERROR)
                                 errorModel.value = retryErrorModel
                                 liveData.removeObservers(lifeCycleOwner)
@@ -122,15 +127,29 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
         viewModelScope.launch(Dispatchers.IO) {
 
             //search response
+            val liveData = buscaTuMotoRepository.search(search)
 
             withContext(Dispatchers.Main) {
-                //filter observer
-                brandSelected.observe(lifeCycleOwner,
-                    Observer { brand ->
-                        //Maybe const val is enough
-                        //View Models it's ok to know UI constants
-                        screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE)
-                    })
+                liveData.observe(lifeCycleOwner, Observer {
+                    result ->
+                    when (result.status) {
+                        Result.Status.SUCCESS -> {
+                            loadingVisibility.value = View.GONE
+
+                        }
+                        Result.Status.LOADING -> {
+                            Timber.d("Search V LOADING")
+
+                        }
+                        Result.Status.ERROR -> {
+                            Timber.d("Search VM Error")
+                            loadingVisibility.value = View.GONE
+                            retryErrorModel = RetryErrorModel(R.string.load_search_error, RetryErrorModel.SEARCH_ERROR)
+                            errorModel.value = retryErrorModel
+                            liveData.removeObservers(lifeCycleOwner)
+                        }
+                    }
+                })
             }
         }
     }
