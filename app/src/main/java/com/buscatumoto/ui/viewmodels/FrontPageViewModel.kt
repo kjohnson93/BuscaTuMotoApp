@@ -135,10 +135,11 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
                     when (result.status) {
                         Result.Status.SUCCESS -> {
                             loadingVisibility.value = View.GONE
-
+                            screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE)
                         }
                         Result.Status.LOADING -> {
                             Timber.d("Search V LOADING")
+                            loadingVisibility.value = View.VISIBLE
 
                         }
                         Result.Status.ERROR -> {
