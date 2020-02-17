@@ -1,18 +1,18 @@
 package com.buscatumoto.ui.viewmodels
 
+import android.view.View
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
-import com.buscatumoto.data.remote.api.BuscaTuMotoService
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import com.buscatumoto.ui.adapters.SearchBrandsRecyclerAdapter
 import com.buscatumoto.ui.fragments.SearchFragment
 import com.buscatumoto.ui.models.BrandRecyclerUiModel
 import com.buscatumoto.ui.navigation.ScreenNavigator
+import com.buscatumoto.utils.ui.RetryErrorModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -28,7 +28,30 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
 
     private var brandSelected = MutableLiveData<String>()
 
+    private var errorModel = MutableLiveData<RetryErrorModel>()
+    fun getError() = errorModel
+
+    private lateinit var lastBrandSelected: String
+    private lateinit var lastSearch: String
+
+    private lateinit var retryErrorModel: RetryErrorModel
+
     val searchBrandsAdapter = SearchBrandsRecyclerAdapter(this)
+
+    private val retryErrorClickListener = View.OnClickListener {
+
+        when (retryErrorModel.requestType) {
+            RetryErrorModel.FILTER_ERROR -> {
+                navigateByFilter(lastBrandSelected)
+            }
+            RetryErrorModel.SEARCH_ERROR -> {
+                navigateBySerch(lastSearch)
+            }
+        }
+    }
+
+    fun getErrorClickListener() : View.OnClickListener = retryErrorClickListener
+
 
     init {
         loadBrands()
@@ -83,17 +106,14 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
                             }
                             Result.Status.ERROR -> {
                                 Timber.d("Filter error")
+                                retryErrorModel = RetryErrorModel(R.string.load_filter_error, RetryErrorModel.FILTER_ERROR)
+                                errorModel.value = retryErrorModel
                                 liveData.removeObservers(lifeCycleOwner)
                             }
                         }
                         //Maybe const val is enough
                         //View Models it's ok to know UI constants
                     })
-
-//        //search observer textview
-//        this.getbrandSelected().observe(lifeCycleOwner,
-//            Observer { search ->
-//                screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE) })
             }
         }
     }
@@ -111,22 +131,19 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
                         //View Models it's ok to know UI constants
                         screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE)
                     })
-
-//        //search observer textview
-//        this.getbrandSelected().observe(lifeCycleOwner,
-//            Observer { search ->
-//                screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE) })
             }
         }
     }
 
     override fun onBrandItemClick(brand: String) {
         Timber.d("brand: $brand")
+        lastBrandSelected = brand
         navigateByFilter(brand)
     }
 
     fun onSearchRequested(search: String) {
         Timber.d("Search requested: $search")
+        lastSearch = search
         navigateBySerch(search)
     }
 

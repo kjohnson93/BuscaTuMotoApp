@@ -35,8 +35,6 @@ class SearchFormViewModel @Inject constructor(
         loadFields()
     }
 
-//    var fieldsResponse = MutableLiveData<FieldsResponse>()
-
     fun getErrorClickListener() : View.OnClickListener = errorClickListener
 
     val models: MutableLiveData<List<String>> = MutableLiveData()
@@ -86,6 +84,7 @@ class SearchFormViewModel @Inject constructor(
                             weightMaxList.value = fieldsLocalModified.weightMaxList
                             yearList.value = fieldsLocalModified.yearList
                             licenses.value = fieldsLocalModified.licenses
+                            fieldLiveData.removeObservers(lifecycleOwner)
                         }
                         Result.Status.LOADING -> {
                             onLoadFieldsStart()
@@ -93,6 +92,7 @@ class SearchFormViewModel @Inject constructor(
                         Result.Status.ERROR ->{
                             onLoadFieldsFinish()
                             onLoadFieldsError(result.message)
+                            fieldLiveData.removeObservers(lifecycleOwner)
                         }
                     }
                 })

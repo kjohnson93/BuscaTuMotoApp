@@ -12,6 +12,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.annotation.StringRes
 import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentSearchBinding
@@ -23,11 +24,13 @@ import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.BasicNavigator
+import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import javax.inject.Inject
 
 
-class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, Injectable, ScreenNavigator {
+class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, Injectable,
+    ScreenNavigator {
 
     companion object {
         fun newInstance(): SearchFragment {
@@ -45,7 +48,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 
     var dialogFiltoFragment: FilterFormDialogFragment = FilterFormDialogFragment.newInstance()
 
-    var mLastClickTime: Long = 0
+    private var errorSnackbar: Snackbar? = null
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -61,16 +64,25 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_search, container, false )
+        binding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_search, container, false)
         binding.arrowDownImgBtn.setOnClickListener(this)
         binding.filtrarBtn.setOnClickListener(this)
 
-        frontPageViewModel = ViewModelProviders.of(this, viewModelFactory).get(FrontPageViewModel::class.java)
+        frontPageViewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(FrontPageViewModel::class.java)
         frontPageViewModel.lifeCycleOwner = this
         frontPageViewModel.screenNavigator = this
         binding.viewModel = frontPageViewModel
         binding.lifecycleOwner = this
 
+        frontPageViewModel.getError().observe(this, Observer { result ->
+            if (result.errorMessage != null) {
+                showError(result.errorMessage)
+            } else {
+                hideError()
+            }
+        })
 
         getActivity()?.getWindow()
             ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -79,7 +91,10 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         filtrarBtn?.setOnClickListener(this)
 
         val brandListSize = frontPageViewModel.searchBrandsAdapter.itemCount
-        binding.fragmentSearchBrandsRv.autoScroll(brandListSize, Constants.AUTO_SCROLL_TIME_ELLAPSE_MILLIS)
+        binding.fragmentSearchBrandsRv.autoScroll(
+            brandListSize,
+            Constants.AUTO_SCROLL_TIME_ELLAPSE_MILLIS
+        )
 
         return binding.root
     }
@@ -144,8 +159,22 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
     override fun navigateToNext(event: Int) {
         when (event) {
             NAVIGATE_TO_CATALOGUE -> {
-                basicNavigator.navigateToIntent(requireActivity(), CatalogueActivity::class.java, null)
+                basicNavigator.navigateToIntent(
+                    requireActivity(),
+                    CatalogueActivity::class.java,
+                    null
+                )
             }
         }
+    }
+
+    private fun showError(@StringRes errorMessage: Int) {
+        errorSnackbar = Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_INDEFINITE)
+        errorSnackbar?.setAction(R.string.retry, frontPageViewModel.getErrorClickListener())
+        errorSnackbar?.show()
+    }
+
+    private fun hideError() {
+        errorSnackbar?.dismiss()
     }
 }

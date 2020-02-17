@@ -44,10 +44,6 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
                     Result.error(response.message, null)
                 })
             }
-
-
-
-
         } catch (exception: IOException) {
             emitSource(fieldsDao.getFieldsLiveData().map {
                 Result.error("Error on getting fields repository", null)
@@ -71,17 +67,16 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
                     motoDao.deleteMotos()
                     motoDao.insert(it)
                 }
+
+                //Re-establish the emission with success type
+                emitSource(motoDao.getMotoLiveData().map {
+                    Result.success(it)
+                })
             } else if (response.status == Result.Status.ERROR) {
                 emitSource(motoDao.getMotoLiveData().map {
                     Result.error(response.message, data = null)
                 })
             }
-
-
-            //Re-establish the emission with success type
-            emitSource(motoDao.getMotoLiveData().map {
-                Result.success(it)
-            })
         } catch (exception: IOException) {
             emitSource(motoDao.getMotoLiveData().map {
                 Result.error("Error on getting moto repository", null)
@@ -128,17 +123,15 @@ class BuscaTuMotoRepository @Inject constructor(private val buscaTuMotoDataSourc
                     motoDao.deleteMotos()
                     motoDao.insert(it)
                 }
+
+                emitSource(motoDao.getMotoLiveData().map {
+                    Result.success(it)
+                })
             } else if (response.status == Result.Status.ERROR) {
                 emitSource(motoDao.getMotoLiveData().map {
                     Result.error(response.message, null)
                 })
             }
-
-
-
-            emitSource(motoDao.getMotoLiveData().map {
-                Result.success(it)
-            })
         } catch (exception: IOException) {
             emitSource(motoDao.getMotoLiveData().map {
                 Result.error("Filter motos error", null)

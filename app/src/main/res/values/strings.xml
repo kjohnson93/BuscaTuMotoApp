@@ -14,5 +14,7 @@
 
     <string name="retry">Retry</string>
     <string name="load_fields_error">An error occurred while loading the data</string>
+    <string name="load_search_error">An error occurred while loading the data Search</string>
+    <string name="load_filter_error">An error occurred while loading the data Filter</string>
     <string name="title_activity_catalogue">CatalogueActivity</string>
 </resources>
