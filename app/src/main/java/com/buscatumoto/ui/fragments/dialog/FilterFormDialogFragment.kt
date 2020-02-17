@@ -15,13 +15,17 @@ import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentFiltroFormBinding
 import com.buscatumoto.injection.Injectable
+import com.buscatumoto.ui.activities.CatalogueActivity
+import com.buscatumoto.ui.fragments.SearchFragment
+import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.SearchFormViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
+import com.buscatumoto.utils.ui.BasicNavigator
 
 import javax.inject.Inject
 
 
-class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnClickListener, Injectable {
+class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnClickListener, Injectable, ScreenNavigator {
 
     companion object {
         fun newInstance(): FilterFormDialogFragment {
@@ -36,6 +40,9 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
     lateinit var searchFormViewModel: SearchFormViewModel
     private lateinit var binding: FragmentFiltroFormBinding
 
+    @Inject
+    lateinit var basicNavigator: BasicNavigator
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,9 +51,10 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
     ): View? {
         searchFormViewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchFormViewModel::class.java)
 
-        searchFormViewModel.getErrorMessage().observe(this, Observer { observableValue: Int? ->
-            if (observableValue != null) {
-                showError(observableValue)
+        searchFormViewModel.getError().observe(this, Observer {
+            result ->
+            if (result.errorMessage != null) {
+                showError(result.errorMessage)
             } else {
                 hideError()
             }
@@ -91,5 +99,17 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
 
     private fun hideError() {
         errorSnackbar?.dismiss()
+    }
+
+    override fun navigateToNext(event: Int) {
+        when (event) {
+            SearchFragment.NAVIGATE_TO_CATALOGUE -> {
+                basicNavigator.navigateToIntent(
+                    requireActivity(),
+                    CatalogueActivity::class.java,
+                    null
+                )
+            }
+        }
     }
 }

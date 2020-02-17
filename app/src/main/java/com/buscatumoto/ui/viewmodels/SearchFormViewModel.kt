@@ -1,19 +1,20 @@
 package com.buscatumoto.ui.viewmodels
 
 import androidx.lifecycle.MutableLiveData
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.buscatumoto.R
+import com.buscatumoto.data.local.entity.FieldsEntity
+import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
 
-import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.domain.features.search.GetFieldsUseCase
 import com.buscatumoto.domain.features.search.GetModelsUseCase
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
-import com.buscatumoto.utils.global.Constants
+import com.buscatumoto.ui.navigation.ScreenNavigator
+import com.buscatumoto.utils.ui.RetryErrorModel
 import kotlinx.coroutines.*
 import timber.log.Timber
 
@@ -25,14 +26,25 @@ class SearchFormViewModel @Inject constructor(
 
     lateinit var lifecycleOwner: FilterFormDialogFragment
     private val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
-    private val errorMessage: MutableLiveData<Int> = MutableLiveData()
+    private var errorModel = MutableLiveData<RetryErrorModel>()
+    fun getError() = errorModel
 
+    private lateinit var retryErrorModel: RetryErrorModel
+    private lateinit var lastBrandSelected: String
+
+    lateinit var screenNavigator: ScreenNavigator
 
     fun getLoadingVisibility() = loadingVisibility
-    fun getErrorMessage(): MutableLiveData<Int> = errorMessage
 
     private val errorClickListener = View.OnClickListener {
-        loadFields()
+        when (retryErrorModel.requestType) {
+            RetryErrorModel.FIELDS_ERROR -> {
+                loadFields()
+            }
+            RetryErrorModel.MODELS_ERROR -> {
+                loadModelsByBrand(lastBrandSelected)
+            }
+        }
     }
 
     fun getErrorClickListener() : View.OnClickListener = errorClickListener
@@ -70,27 +82,13 @@ class SearchFormViewModel @Inject constructor(
                 fieldLiveData.observe(lifecycleOwner, Observer { result ->
                     when (result.status) {
                         Result.Status.SUCCESS -> {
-                            onLoadFieldsFinish()
-                            val fieldsLocalModified = getFieldsUseCase.setupFieldsData(result.data)
-                            brandsMutableLiveData.value = fieldsLocalModified.brandList
-                            bikeTypes.value = fieldsLocalModified.bikeTypesList
-                            priceMinList.value = fieldsLocalModified.priceMinList
-                            priceMaxList.value = fieldsLocalModified.priceMaxList
-                            powerMinList.value = fieldsLocalModified.powerMinList
-                            powerMaxList.value = fieldsLocalModified.powerMaxList
-                            cilMinList.value = fieldsLocalModified.cilMinList
-                            cilMaxList.value = fieldsLocalModified.cilMaxList
-                            weightMinList.value = fieldsLocalModified.weightMinList
-                            weightMaxList.value = fieldsLocalModified.weightMaxList
-                            yearList.value = fieldsLocalModified.yearList
-                            licenses.value = fieldsLocalModified.licenses
+                            onLoadFieldsSuccess(result.data)
                             fieldLiveData.removeObservers(lifecycleOwner)
                         }
                         Result.Status.LOADING -> {
                             onLoadFieldsStart()
                         }
                         Result.Status.ERROR ->{
-                            onLoadFieldsFinish()
                             onLoadFieldsError(result.message)
                             fieldLiveData.removeObservers(lifecycleOwner)
                         }
@@ -100,20 +98,47 @@ class SearchFormViewModel @Inject constructor(
         }
     }
 
+    private fun onLoadFieldsSuccess(data: FieldsEntity?) {
+        loadingVisibility.value = View.GONE
+        val fieldsLocalModified = getFieldsUseCase.setupFieldsData(data)
+        brandsMutableLiveData.value = fieldsLocalModified.brandList
+        bikeTypes.value = fieldsLocalModified.bikeTypesList
+        priceMinList.value = fieldsLocalModified.priceMinList
+        priceMaxList.value = fieldsLocalModified.priceMaxList
+        powerMinList.value = fieldsLocalModified.powerMinList
+        powerMaxList.value = fieldsLocalModified.powerMaxList
+        cilMinList.value = fieldsLocalModified.cilMinList
+        cilMaxList.value = fieldsLocalModified.cilMaxList
+        weightMinList.value = fieldsLocalModified.weightMinList
+        weightMaxList.value = fieldsLocalModified.weightMaxList
+        yearList.value = fieldsLocalModified.yearList
+        licenses.value = fieldsLocalModified.licenses
+    }
+
     private fun onLoadFieldsStart() {
         loadingVisibility.value = View.VISIBLE
     }
 
-    private fun onLoadFieldsFinish() {
+    private fun onLoadFieldsError(message: String?) {
         loadingVisibility.value = View.GONE
+        retryErrorModel = RetryErrorModel(R.string.load_fields_error, RetryErrorModel.FIELDS_ERROR)
+        errorModel.value = retryErrorModel
     }
 
-    private fun onLoadFieldsError(message: String?) {
-        Log.e(Constants.MOTOTAG, "error is $message")
-        errorMessage.value = R.string.load_fields_error
+    private fun onLoadModelsSuccess(data: List<MotoEntity>?) {
+        loadingVisibility.value = View.GONE
+        models.value = getModelsUseCase.setupModels(data)
+    }
+
+    private fun onLoadModelsError(message: String?) {
+        loadingVisibility.value = View.GONE
+        retryErrorModel = RetryErrorModel(R.string.load_models_error, RetryErrorModel.MODELS_ERROR)
+        errorModel.value = retryErrorModel
     }
 
     fun loadModelsByBrand(brand: String) {
+        lastBrandSelected = brand
+
         viewModelScope.launch(Dispatchers.IO) {
             val motoModelsLiveData = getModelsUseCase.execute(brand)
 
@@ -121,15 +146,15 @@ class SearchFormViewModel @Inject constructor(
                 motoModelsLiveData.observe(lifecycleOwner, Observer { result ->
                     when (result.status) {
                         Result.Status.SUCCESS -> {
-                            onLoadFieldsFinish()
-                            models.value = getModelsUseCase.setupModels(result.data)
+                            onLoadModelsSuccess(result.data)
+                            motoModelsLiveData.removeObservers(lifecycleOwner)
                         }
                         Result.Status.LOADING -> {
                             onLoadFieldsStart()
                         }
                         Result.Status.ERROR -> {
-                            onLoadFieldsFinish()
-                            onLoadFieldsError(result.message)
+                            onLoadModelsError(result.message)
+                            motoModelsLiveData.removeObservers(lifecycleOwner)
                         }
                     }
                 })
@@ -137,12 +162,11 @@ class SearchFormViewModel @Inject constructor(
         }
     }
 
+
     fun onBrandSpinnerItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
         Timber.d("Position clicked: $position")
-
         val brand = brandsMutableLiveData.value?.get(position)
-
                 if (brand.equals("-Marca-")) {
                     return
                 } else {
@@ -150,29 +174,6 @@ class SearchFormViewModel @Inject constructor(
                         loadModelsByBrand(it)
                     }
                 }
-
-    }
-
-    private fun onLoadModelsSuccess(respose: List<MotoEntity>) {
-
-        var brandModels = ArrayList<String>()
-
-        respose.forEachIndexed { index, motoResponseItemModel ->
-            brandModels.add(motoResponseItemModel.model)
-        }
-
-        brandModels.add(0, "-Elegir Marca-")
-
-        models.value = brandModels
-    }
-
-    private fun onLoadModelsError(throwableError: Throwable) {
-        Log.e(Constants.MOTOTAG, "error is ${throwableError?.message}")
-        errorMessage.value = R.string.load_fields_error
-    }
-
-    override fun onCleared() {
-        super.onCleared()
     }
 
     fun refreshData() {

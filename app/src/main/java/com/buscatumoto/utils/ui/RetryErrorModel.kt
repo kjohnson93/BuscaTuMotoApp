@@ -7,5 +7,7 @@ data class RetryErrorModel(val errorMessage: Int?, val requestType: Int) {
     companion object {
         const val FILTER_ERROR = 0
         const val SEARCH_ERROR = 1
+        const val FIELDS_ERROR = 2
+        const val MODELS_ERROR = 3
     }
 }

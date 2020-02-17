@@ -99,11 +99,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         return binding.root
     }
 
-    private fun navigateWithBrand(brand: String?) {
-        Timber.d("Navigated with brand $brand")
-        basicNavigator.navigateToIntent(requireActivity(), CatalogueActivity::class.java, null)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         binding.fragmentSearchBrandsRv.stopAutoScroll()
