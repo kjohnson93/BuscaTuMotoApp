@@ -19,4 +19,7 @@
     <string name="load_models_error">An error occurred while loading the bike models</string>
     <string name="title_activity_catalogue">CatalogueActivity</string>
     <string name="build_fields_form_error">Something went wrong building filter form</string>
+    <string name="elegir_marca">-Marca-</string>
+    <string name="elegir_modelo">-Elegir Modelo-</string>
+    <string name="elegir_tipo">-Tipo de moto-</string>
 </resources>

@@ -3,8 +3,10 @@ package com.buscatumoto.ui.viewmodels
 import androidx.lifecycle.MutableLiveData
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Spinner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
+import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
 import com.buscatumoto.data.local.entity.FieldsEntity
 import com.buscatumoto.data.local.entity.MotoEntity
@@ -106,6 +108,7 @@ class SearchFormViewModel @Inject constructor(
         loadingVisibility.value = View.GONE
         val fieldsLocalModified = getFieldsUseCase.setupFieldsData(data)
         brandsMutableLiveData.value = fieldsLocalModified.brandList
+        models.value = fieldsLocalModified.modelslist
         bikeTypes.value = fieldsLocalModified.bikeTypesList
         priceMinList.value = fieldsLocalModified.priceMinList
         priceMaxList.value = fieldsLocalModified.priceMaxList
@@ -179,10 +182,10 @@ class SearchFormViewModel @Inject constructor(
 
 
     fun onBrandSpinnerItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
         Timber.d("Position clicked: $position")
+        val context = BuscaTuMotoApplication.getInstance().applicationContext
         val brand = brandsMutableLiveData.value?.get(position)
-                if (brand.equals("-Marca-")) {
+                if (brand.equals(context.getString(R.string.elegir_marca))) {
                     return
                 } else {
                     brand?.let {
@@ -207,12 +210,12 @@ class SearchFormViewModel @Inject constructor(
                weightBottom: String? = null,
                weightTop: String? = null,
                year: String? = null,
-               license: String? = null) {
+               license: String? = null
+    ) {
 
         viewModelScope.launch(Dispatchers.IO) {
 
-            try{
-
+            try {
                 val response = filterUseCase.execute(brand, model,
                     bikeType,
                     priceBottom,
@@ -225,7 +228,6 @@ class SearchFormViewModel @Inject constructor(
                     weightTop,
                     year,
                     license)
-
                 withContext(Dispatchers.Main) {
 
                     response.observe(lifecycleOwner, Observer {
@@ -253,14 +255,4 @@ class SearchFormViewModel @Inject constructor(
         }
 
     }
-
-
-    fun testOnClick() {
-
-    }
-
-    fun testStringOnClick(brnad: String) {
-        Timber.d(brnad)
-    }
-
 }

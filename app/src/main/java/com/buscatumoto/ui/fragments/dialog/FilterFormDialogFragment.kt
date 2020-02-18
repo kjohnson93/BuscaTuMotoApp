@@ -63,6 +63,7 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
         })
 
         searchFormViewModel.lifecycleOwner = this
+        searchFormViewModel.screenNavigator = this
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_filtro_form, container, false)
         binding.viewModel = searchFormViewModel

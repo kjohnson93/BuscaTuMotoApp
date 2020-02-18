@@ -1,6 +1,8 @@
 package com.buscatumoto.domain.features.search
 
 import androidx.lifecycle.LiveData
+import com.buscatumoto.BuscaTuMotoApplication
+import com.buscatumoto.R
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.local.entity.FieldsEntity
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
@@ -18,11 +20,18 @@ class GetFieldsUseCase @Inject constructor(private val searchRepository: BuscaTu
     //This method modifies data coming from API because we need to make adjustments to list data.
     fun setupFieldsData(data: FieldsEntity?): FieldsUI {
 
+        val context = BuscaTuMotoApplication.getInstance().applicationContext
+
         val fieldsUI = FieldsEntityToUIMapper.map(data)
 
         fieldsUI.brandList.apply {
             this?.remove("")
             this?.add(0,"-Marca-")
+        }
+
+        fieldsUI.modelslist.apply {
+            this?.remove("")
+            this?.add(context.getString(R.string.elegir_modelo))
         }
 
         fieldsUI.bikeTypesList.apply {

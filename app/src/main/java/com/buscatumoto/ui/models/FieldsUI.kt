@@ -5,6 +5,7 @@ data class FieldsUI(
     val id: Int?,
     val respuesta: String?,
     val brandList: ArrayList<String>? ,
+    val modelslist: ArrayList<String>?,
     val bikeTypesList: ArrayList<String>?,
     val priceMinList: ArrayList<String>?,
     val priceMaxList: ArrayList<String>?,

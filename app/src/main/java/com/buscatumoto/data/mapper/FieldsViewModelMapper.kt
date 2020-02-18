@@ -10,6 +10,7 @@ object FieldsEntityToUIMapper: BaseMapper<FieldsEntity, FieldsUI> {
         return FieldsUI(
             id = type?.id,
             respuesta = type?.respuesta,
+            modelslist = ArrayList(),
             brandList = type?.brandList as ArrayList<String>?,
             bikeTypesList = type?.bikeTypesList as ArrayList<String>?,
             priceMinList = type?.priceMinList?.map { it.toString() } as? ArrayList<String>?,

@@ -1,6 +1,8 @@
 package com.buscatumoto.domain.features.search
 
 import androidx.lifecycle.LiveData
+import com.buscatumoto.BuscaTuMotoApplication
+import com.buscatumoto.R
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
@@ -19,7 +21,8 @@ class GetModelsUseCase @Inject constructor(private val searchRepository: BuscaTu
 
         localMotosModel.apply {
             this?.remove("")
-            this?.add(0, "-Elegir Modelo-")
+            val context = BuscaTuMotoApplication.getInstance().applicationContext
+            this?.add(0, context.getString(R.string.elegir_modelo))
         }
 
         return localMotosModel

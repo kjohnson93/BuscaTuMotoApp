@@ -1,6 +1,8 @@
 package com.buscatumoto.domain.features.search
 
 import androidx.lifecycle.LiveData
+import com.buscatumoto.BuscaTuMotoApplication
+import com.buscatumoto.R
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
@@ -22,7 +24,11 @@ class FilterUseCase @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRe
                         weightTop: String? = null,
                         year: String? = null,
                         license: String? = null): LiveData<Result<List<MotoEntity>>> {
+9
 
+        var brandForm: String? = null
+        var modelForm: String? = null
+        var bikeTypeForm: String? = null
         var priceBottomForm: Int? = null
         var priceTopForm: Int? = null
         var powerBottomForm: Double? = null
@@ -32,6 +38,20 @@ class FilterUseCase @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRe
         var weightBottomForm: Double? = null
         var weightTopForm: Double? = null
         var yearForm: Int? = null
+
+        val context = BuscaTuMotoApplication.getInstance().applicationContext
+
+        if (!brand.equals(context.getString(R.string.elegir_marca))) {
+            brandForm = brand
+        }
+
+        if (!model.equals(context.getString(R.string.elegir_modelo))) {
+            modelForm = model
+        }
+
+        if (!bikeType.equals(context.getString(R.string.elegir_tipo))) {
+            bikeTypeForm = bikeType
+        }
 
         try {
             priceBottomForm = priceBottom?.toInt()
@@ -46,7 +66,7 @@ class FilterUseCase @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRe
         } catch (exception: NumberFormatException) {
         }
 
-        return buscaTuMotoRepository.filter(brand, model, bikeType, priceBottomForm, priceTopForm,
+        return buscaTuMotoRepository.filter(brandForm, modelForm, bikeTypeForm, priceBottomForm, priceTopForm,
             powerBottomForm, powerTopForm, displacementBottomForm, displacementTopForm, weightBottomForm,
             weightTopForm, yearForm, license)
     }
