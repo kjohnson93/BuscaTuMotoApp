@@ -13,7 +13,7 @@ data class FieldsEntity(
     @field:SerializedName("respuesta")
     val respuesta: String?,
     @field:SerializedName("modelsList")
-    val models: List<String>?,
+    var models: List<String>?,
     @field:SerializedName("brandList")
     val brandList: List<String>? ,
     @field:SerializedName("bikeTypesList")

@@ -17,22 +17,8 @@ interface FieldsDao {
     fun getFieldsLiveData(): LiveData<FieldsEntity>
 
     @Query("SELECT * FROM fields")
-    fun getFields(): List<FieldsEntity>
+    suspend fun getFields(): FieldsEntity
 
-    @Query("SELECT models FROM fields")
-    fun getModels(): LiveData<List<String>>
-
-
-//    @Query("UPDATE tableName SET
-//            field1 = :value1,
-//        field2 = :value2,
-//        ...
-//    //some more fields to update
-//    ...
-//    field_N= :value_N
-//    WHERE id = :id)
-
-    @Query("UPDATE fields SET models= :models")
-    suspend fun updateModels(models: List<String>): Int
-
+    @Update
+    suspend fun updateModels(fieldsEntity: FieldsEntity)
 }

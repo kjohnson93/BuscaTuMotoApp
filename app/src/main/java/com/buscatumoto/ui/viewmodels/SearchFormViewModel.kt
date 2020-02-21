@@ -3,7 +3,6 @@ package com.buscatumoto.ui.viewmodels
 import androidx.lifecycle.MutableLiveData
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Spinner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.buscatumoto.BuscaTuMotoApplication
@@ -16,7 +15,6 @@ import com.buscatumoto.domain.features.search.FilterUseCase
 import com.buscatumoto.domain.features.search.GetFieldsUseCase
 import com.buscatumoto.domain.features.search.GetModelsUseCase
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
-import com.buscatumoto.ui.models.MotoUI
 import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.utils.ui.RetryErrorModel
 import kotlinx.coroutines.*
@@ -132,9 +130,9 @@ class SearchFormViewModel @Inject constructor(
         errorModel.value = retryErrorModel
     }
 
-    private fun onLoadModelsSuccess(data: List<String>?) {
+    private fun onLoadModelsSuccess(data: FieldsEntity?) {
         loadingVisibility.value = View.GONE
-        models.value = data
+        models.value = data?.models
     }
 
     private fun onLoadModelsError(message: String?) {

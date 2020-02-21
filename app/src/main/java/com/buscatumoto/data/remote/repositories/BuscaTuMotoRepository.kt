@@ -1,6 +1,5 @@
 package com.buscatumoto.data.remote.repositories
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.local.dao.FieldsDao
@@ -8,9 +7,6 @@ import com.buscatumoto.data.local.dao.MotoDao
 import com.buscatumoto.data.local.entity.FieldsEntity
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
 import com.buscatumoto.data.local.entity.MotoEntity
-import com.buscatumoto.utils.global.Constants
-import retrofit2.http.Query
-import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -53,8 +49,8 @@ class BuscaTuMotoRepository @Inject constructor(
         }
     }
 
-    suspend fun getModelsByBrand(brand: String) = liveData<Result<List<String>>> {
-        val disposable = emitSource(fieldsDao.getModels().map {
+    suspend fun getModelsByBrand(brand: String) = liveData<Result<FieldsEntity>> {
+        val disposable = emitSource(fieldsDao.getFieldsLiveData().map {
             Result.loading(it)
         })
 
@@ -66,20 +62,22 @@ class BuscaTuMotoRepository @Inject constructor(
 
             if (response.status == Result.Status.SUCCESS) {
                 response.data?.let {
-                    fieldsDao.updateModels(it)
+                    var entity= fieldsDao.getFields()
+                    entity.models = response.data
+                    fieldsDao.updateModels(entity)
                 }
 
                 //Re-establish the emission with success type
-                emitSource(fieldsDao.getModels().map {
+                emitSource(fieldsDao.getFieldsLiveData().map {
                     Result.success(it)
                 })
             } else if (response.status == Result.Status.ERROR) {
-                emitSource(fieldsDao.getModels().map {
+                emitSource(fieldsDao.getFieldsLiveData().map {
                     Result.error(response.message, data = null)
                 })
             }
         } catch (exception: IOException) {
-            emitSource(fieldsDao.getModels().map {
+            emitSource(fieldsDao.getFieldsLiveData().map {
                 Result.error("Error on getting moto repository", null)
             })
         }
