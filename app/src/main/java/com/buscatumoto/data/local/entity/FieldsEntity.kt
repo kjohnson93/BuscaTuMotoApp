@@ -12,6 +12,8 @@ data class FieldsEntity(
     val id: Int?,
     @field:SerializedName("respuesta")
     val respuesta: String?,
+    @field:SerializedName("modelsList")
+    val models: List<String>?,
     @field:SerializedName("brandList")
     val brandList: List<String>? ,
     @field:SerializedName("bikeTypesList")

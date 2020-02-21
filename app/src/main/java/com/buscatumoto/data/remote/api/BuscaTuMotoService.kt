@@ -14,7 +14,7 @@ interface BuscaTuMotoService {
     suspend fun getFields(): Response<FieldsEntity>
 
     @GET(APIConstants.GET_BIKES_BY_BRAND)
-    suspend fun getBikesByBrand(@Path("brand") brand: String): Response<List<MotoEntity>>
+    suspend fun getBikesByBrand(@Path("brand") brand: String): Response<List<String>>
 
     @GET(APIConstants.MOTO_FILTER_URL)
     suspend fun filter(@Query("brand") brand: String? = null,

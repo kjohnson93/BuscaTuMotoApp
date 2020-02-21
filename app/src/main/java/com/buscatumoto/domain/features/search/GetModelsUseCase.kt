@@ -11,21 +11,21 @@ import javax.inject.Inject
 
 class GetModelsUseCase @Inject constructor(private val searchRepository: BuscaTuMotoRepository) {
 
-    suspend fun execute(brand: String): LiveData<Result<List<MotoEntity>>> {
+    suspend fun execute(brand: String): LiveData<Result<List<String>>> {
         return searchRepository.getModelsByBrand(brand)
     }
-
-    fun setupModels(motosEntity: List<MotoEntity>?): List<String>? {
-
-        val localMotosModel = MotoEntityToUiMapper.map(motosEntity)
-
-        localMotosModel.apply {
-            this?.remove("")
-            val context = BuscaTuMotoApplication.getInstance().applicationContext
-            this?.add(0, context.getString(R.string.elegir_modelo))
-        }
-
-        return localMotosModel
-    }
+//
+//    fun setupModels(motosEntity: List<String>?): List<String>? {
+//
+//        val localMotosModel = MotoEntityToUiMapper.map(motosEntity)
+//
+//        localMotosModel.apply {
+//            this?.remove("")
+//            val context = BuscaTuMotoApplication.getInstance().applicationContext
+//            this?.add(0, context.getString(R.string.elegir_modelo))
+//        }
+//
+//        return localMotosModel
+//    }
 
 }

@@ -53,8 +53,8 @@ class BuscaTuMotoRepository @Inject constructor(
         }
     }
 
-    suspend fun getModelsByBrand(brand: String) = liveData<Result<List<MotoEntity>>> {
-        val disposable = emitSource(motoDao.getMotoLiveData().map {
+    suspend fun getModelsByBrand(brand: String) = liveData<Result<List<String>>> {
+        val disposable = emitSource(fieldsDao.getModels().map {
             Result.loading(it)
         })
 
@@ -66,21 +66,20 @@ class BuscaTuMotoRepository @Inject constructor(
 
             if (response.status == Result.Status.SUCCESS) {
                 response.data?.let {
-                    motoDao.deleteMotos()
-                    motoDao.insert(it)
+                    fieldsDao.updateModels(it)
                 }
 
                 //Re-establish the emission with success type
-                emitSource(motoDao.getMotoLiveData().map {
+                emitSource(fieldsDao.getModels().map {
                     Result.success(it)
                 })
             } else if (response.status == Result.Status.ERROR) {
-                emitSource(motoDao.getMotoLiveData().map {
+                emitSource(fieldsDao.getModels().map {
                     Result.error(response.message, data = null)
                 })
             }
         } catch (exception: IOException) {
-            emitSource(motoDao.getMotoLiveData().map {
+            emitSource(fieldsDao.getModels().map {
                 Result.error("Error on getting moto repository", null)
             })
         }

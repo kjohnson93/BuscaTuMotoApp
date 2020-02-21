@@ -132,9 +132,9 @@ class SearchFormViewModel @Inject constructor(
         errorModel.value = retryErrorModel
     }
 
-    private fun onLoadModelsSuccess(data: List<MotoEntity>?) {
+    private fun onLoadModelsSuccess(data: List<String>?) {
         loadingVisibility.value = View.GONE
-        models.value = getModelsUseCase.setupModels(data)
+        models.value = data
     }
 
     private fun onLoadModelsError(message: String?) {
