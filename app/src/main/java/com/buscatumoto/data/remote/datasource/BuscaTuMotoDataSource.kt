@@ -24,9 +24,10 @@ class BuscaTuMotoDataSource @Inject constructor(private val buscaTuMotoService: 
                        weightBottom: Double? = null,
                        weightTop: Double? = null,
                        year: Int? = null,
-                       license: String? = null
-    ) = getResult { buscaTuMotoService.filter(brand, model, bikeType, priceBottom, priceTop, powerBottom, powerTop, displacementBottom, displacementTop, weightBottom, weightTop, year, license) }
+                       license: String? = null,
+                       pageIndex: Int? = null
+    ) = getResult { buscaTuMotoService.filter(brand, model, bikeType, priceBottom, priceTop, powerBottom, powerTop, displacementBottom, displacementTop, weightBottom, weightTop, year, license, pageIndex) }
 
-    suspend fun search(search: String) = getResult { buscaTuMotoService.search(search) }
+    suspend fun search(search: String, pageIndex: Int?) = getResult { buscaTuMotoService.search(search, pageIndex) }
 
 }

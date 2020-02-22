@@ -2,6 +2,7 @@ package com.buscatumoto.data.remote.api
 
 import com.buscatumoto.data.local.entity.FieldsEntity
 import com.buscatumoto.data.local.entity.MotoEntity
+import com.buscatumoto.data.remote.dto.response.MotoResponse
 import com.buscatumoto.utils.data.APIConstants
 import retrofit2.Response
 import retrofit2.http.GET
@@ -29,10 +30,13 @@ interface BuscaTuMotoService {
                        @Query("weight_d") weightBottom: Double? = null,
                        @Query("weight_u") weightTop: Double? = null,
                        @Query("year") year: Int? = null,
-                       @Query("licenses") license: String? = null): Response<List<MotoEntity>>
+                       @Query("licenses") license: String? = null,
+                       @Query("page") page: Int? = null): Response<MotoResponse>
+
+
 
     @GET(APIConstants.MOTO_SEARCH_URL)
-    suspend fun search(@Path("search") search: String): Response<List<MotoEntity>>
+    suspend fun search(@Path("search") search: String, @Query("page") page: Int?): Response<MotoResponse>
 
 
 }

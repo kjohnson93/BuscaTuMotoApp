@@ -22,6 +22,10 @@ import javax.inject.Inject
 
 class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRepository): BaseViewModel(), SearchBrandsRecyclerAdapter.BrandItemClickListener {
 
+    companion object {
+        const val PAGE_START_INDEX = 0
+    }
+
     lateinit var lifeCycleOwner: SearchFragment
 
     lateinit var screenNavigator: ScreenNavigator
@@ -47,7 +51,7 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
                 navigateByFilter(lastBrandSelected)
             }
             RetryErrorModel.SEARCH_ERROR -> {
-                navigateBySerch(lastSearch)
+                navigateBySearch(lastSearch)
             }
         }
     }
@@ -89,7 +93,7 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
                 null, null, null,
                 null, null, null,
                 null, null,
-                null, null, null, null)
+                null, null, null, null, PAGE_START_INDEX)
 
 
             withContext(Dispatchers.Main) {
@@ -123,11 +127,11 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
         }
     }
 
-    fun navigateBySerch(search: String) {
+    fun navigateBySearch(search: String) {
         viewModelScope.launch(Dispatchers.IO) {
 
             //search response
-            val liveData = buscaTuMotoRepository.search(search)
+            val liveData = buscaTuMotoRepository.search(search, PAGE_START_INDEX)
 
             withContext(Dispatchers.Main) {
                 liveData.observe(lifeCycleOwner, Observer {
@@ -164,7 +168,7 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
     fun onSearchRequested(search: String) {
         Timber.d("Search requested: $search")
         lastSearch = search
-        navigateBySerch(search)
+        navigateBySearch(search)
     }
 
 

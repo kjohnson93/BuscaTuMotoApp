@@ -225,7 +225,8 @@ class SearchFormViewModel @Inject constructor(
                     weightBottom,
                     weightTop,
                     year,
-                    license)
+                    license,
+                    0)
                 withContext(Dispatchers.Main) {
 
                     response.observe(lifecycleOwner, Observer {

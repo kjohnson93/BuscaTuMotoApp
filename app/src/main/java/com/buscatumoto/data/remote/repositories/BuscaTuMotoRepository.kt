@@ -102,7 +102,8 @@ class BuscaTuMotoRepository @Inject constructor(
         weightBottom: Double? = null,
         weightTop: Double? = null,
         year: Int? = null,
-        license: String? = null
+        license: String? = null,
+        pageIndex: Int? = null
     ) = liveData<Result<List<MotoEntity>>> {
         val disposable = emitSource(motoDao.getMotoLiveData().map {
             Result.loading(it)
@@ -112,7 +113,7 @@ class BuscaTuMotoRepository @Inject constructor(
             val response = buscaTuMotoDataSource.filter(
                 brand, model, bikeType,
                 priceBottom, priceTop, powerBottom, powerTop, displacementBottom, displacementTop,
-                weightBottom, weightTop, year, license
+                weightBottom, weightTop, year, license, pageIndex
             )
 
             disposable.dispose()
@@ -120,7 +121,7 @@ class BuscaTuMotoRepository @Inject constructor(
             if (response.status == Result.Status.SUCCESS) {
                 response.data?.let {
                     motoDao.deleteMotos()
-                    motoDao.insert(it)
+                    motoDao.insert(it.motos)
                 }
 
                 emitSource(motoDao.getMotoLiveData().map {
@@ -138,7 +139,7 @@ class BuscaTuMotoRepository @Inject constructor(
         }
     }
 
-    suspend fun search(search: String) = liveData<Result<List<MotoEntity>>> {
+    suspend fun search(search: String, pageIndex: Int?) = liveData<Result<List<MotoEntity>>> {
         //first local
         val disposable = emitSource(motoDao.getMotoLiveData().map {
             Result.loading(it)
@@ -146,7 +147,7 @@ class BuscaTuMotoRepository @Inject constructor(
 
         //try network request and dispose local process
         try {
-            val response = buscaTuMotoDataSource.search(search)
+            val response = buscaTuMotoDataSource.search(search, pageIndex)
 
             disposable.dispose()
 
@@ -154,7 +155,7 @@ class BuscaTuMotoRepository @Inject constructor(
                 //save
                 response.data?.let {
                     motoDao.deleteMotos()
-                    motoDao.insert(it)
+                    motoDao.insert(it.motos)
                 }
 
                 emitSource(motoDao.getMotoLiveData().map {
