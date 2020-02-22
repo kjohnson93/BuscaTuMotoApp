@@ -44,7 +44,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
     private fun loadCatalogue(pageIndex: Int?) {
         viewModelScope.launch(Dispatchers.IO) {
-            val motos = loadCatalogueUseCase.execute()
+            val motos = loadCatalogueUseCase.execute(pageIndex)
 
             withContext(Dispatchers.Main) {
                 motos.observe(lifecycleOwner, Observer { result ->

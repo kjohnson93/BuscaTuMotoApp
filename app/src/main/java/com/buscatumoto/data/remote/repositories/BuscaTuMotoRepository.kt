@@ -4,9 +4,11 @@ import androidx.lifecycle.*
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.local.dao.FieldsDao
 import com.buscatumoto.data.local.dao.MotoDao
+import com.buscatumoto.data.local.dao.SearchDao
 import com.buscatumoto.data.local.entity.FieldsEntity
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
 import com.buscatumoto.data.local.entity.MotoEntity
+import com.buscatumoto.data.local.entity.SearchEntity
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,7 +16,8 @@ import javax.inject.Singleton
 @Singleton
 class BuscaTuMotoRepository @Inject constructor(
     private val buscaTuMotoDataSource: BuscaTuMotoDataSource,
-    private val fieldsDao: FieldsDao, private val motoDao: MotoDao
+    private val fieldsDao: FieldsDao, private val motoDao: MotoDao,
+    private val searchDao: SearchDao
 ) {
 
     suspend fun getFieldsEmit() = liveData<Result<FieldsEntity>> {
@@ -120,6 +123,10 @@ class BuscaTuMotoRepository @Inject constructor(
 
             if (response.status == Result.Status.SUCCESS) {
                 response.data?.let {
+                    searchDao.delete()
+                    searchDao.insert(SearchEntity(1, null, brand, model, bikeType, priceBottom.toString(), priceTop.toString(),
+                        powerBottom.toString(), powerTop.toString(), displacementBottom.toString(), displacementTop.toString(),
+                        weightBottom.toString(), weightTop.toString(), year.toString(), license))
                     motoDao.deleteMotos()
                     motoDao.insert(it.motos)
                 }
@@ -154,6 +161,10 @@ class BuscaTuMotoRepository @Inject constructor(
             if (response.status == Result.Status.SUCCESS) {
                 //save
                 response.data?.let {
+                    searchDao.delete()
+                    searchDao.insert(SearchEntity(1, search, null, null, null, null, null,
+                        null, null, null, null,
+                        null, null, null, null))
                     motoDao.deleteMotos()
                     motoDao.insert(it.motos)
                 }
@@ -175,6 +186,8 @@ class BuscaTuMotoRepository @Inject constructor(
 
         //save and return
     }
+
+    fun getSearchParams() = searchDao.getSearchParams()
 
 
 }
