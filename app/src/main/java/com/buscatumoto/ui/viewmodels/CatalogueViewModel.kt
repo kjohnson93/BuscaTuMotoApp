@@ -1,6 +1,7 @@
 package com.buscatumoto.ui.viewmodels
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
@@ -27,11 +28,21 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     lateinit var lifecycleOwner: CatalogueActivity
 
 
-    init {
-        loadCatalogue()
+    private var lastPageRequested: Int? = null
+
+    private var errorMessage = MutableLiveData<String>()
+    fun getErrorMessage() = errorMessage
+
+    var retryClickListener = View.OnClickListener {
+        loadCatalogue(lastPageRequested)
     }
 
-    private fun loadCatalogue() {
+    init {
+        //Always loads first page of moto search/filter
+        loadCatalogue(0)
+    }
+
+    private fun loadCatalogue(pageIndex: Int?) {
         viewModelScope.launch(Dispatchers.IO) {
             val motos = loadCatalogueUseCase.execute()
 
@@ -46,15 +57,15 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
                         }
                         Result.Status.ERROR -> {
-
+                            errorMessage.value = result.message
                         }
                     }
                 })
             }
         }
-
-
     }
+
+
 
 
 }

@@ -17,14 +17,10 @@
     tools:context=".ui.activities.CatalogueActivity"
     tools:showIn="@layout/activity_catalogue">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/catalague_content_rv"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="260dp"
-        android:text="Content Catalogue"
-        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
