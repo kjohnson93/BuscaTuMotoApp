@@ -6,7 +6,7 @@
 
     <data>
         <variable
-            name="secondaryUser"
+            name="viewModel"
             type="com.buscatumoto.ui.viewmodels.CatalogueViewModel" />
     </data>
 
@@ -22,7 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:mutableCatalogueAdapter="@{viewModel.catalogueListAdapter}"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

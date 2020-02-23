@@ -5,10 +5,10 @@ import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.buscatumoto.R
 import com.buscatumoto.databinding.ActivityCatalogueBinding
-import com.buscatumoto.injection.Injectable
-import com.buscatumoto.injection.module.NetworkModule
+import com.buscatumoto.ui.adapters.CatalogueListAdapter
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -44,6 +44,7 @@ class CatalogueActivity : AppCompatActivity(), HasAndroidInjector {
         binding.lifecycleOwner = this
         catalogueViewModel.lifecycleOwner = this
 
+
         setSupportActionBar(toolbar)
 
         //Subscribe for error observable
@@ -69,6 +70,14 @@ class CatalogueActivity : AppCompatActivity(), HasAndroidInjector {
 
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 
-
+    fun setAdapter(adapter: CatalogueListAdapter) {
+        binding.catalogueContent.catalagueContentRv.adapter = adapter
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
+            this,
+            RecyclerView.VERTICAL,
+            false
+        )
+        binding.catalogueContent.catalagueContentRv.layoutManager = layoutManager
+    }
 
 }

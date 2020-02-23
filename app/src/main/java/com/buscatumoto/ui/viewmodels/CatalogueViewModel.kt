@@ -1,32 +1,32 @@
 package com.buscatumoto.ui.viewmodels
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
-import com.buscatumoto.data.local.dao.MotoDao
+import androidx.recyclerview.widget.RecyclerView
+import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.data.local.entity.MotoEntity
-import com.buscatumoto.data.remote.api.BuscaTuMotoService
 import com.buscatumoto.data.remote.api.Result
-import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
 import com.buscatumoto.domain.features.catalogue.LoadCatalogueUseCase
 import com.buscatumoto.ui.activities.CatalogueActivity
-import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
-import com.buscatumoto.ui.models.MotoUI
-import com.buscatumoto.utils.global.Constants
+import com.buscatumoto.ui.adapters.CatalogueListAdapter
+import com.buscatumoto.utils.ui.CatalogueItemClickListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
-class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: LoadCatalogueUseCase): BaseViewModel()  {
+class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: LoadCatalogueUseCase): BaseViewModel(),
+    CatalogueItemClickListener{
 
     private val motosLiveData: MutableLiveData<List<MotoEntity>> = MutableLiveData()
 
     lateinit var lifecycleOwner: CatalogueActivity
 
+    //reference to adapter
+    var catalogueListAdapter = CatalogueListAdapter(this)
 
     private var lastPageRequested: Int? = null
 
@@ -38,6 +38,13 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     }
 
     init {
+        val context = BuscaTuMotoApplication.getInstance().applicationContext
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
+            context,
+            RecyclerView.VERTICAL,
+            false
+        )
+
         //Always loads first page of moto search/filter
         loadCatalogue(0)
     }
@@ -52,6 +59,9 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                         Result.Status.SUCCESS -> {
                             Timber.d("Data: ${result.data}")
                             motosLiveData.value = result.data
+                            result.data?.let {
+                                catalogueListAdapter.updateCatalogue(it)
+                            }
                         }
                         Result.Status.LOADING -> {
 
@@ -65,7 +75,8 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
         }
     }
 
-
+    override fun onItemClick() {
+    }
 
 
 }

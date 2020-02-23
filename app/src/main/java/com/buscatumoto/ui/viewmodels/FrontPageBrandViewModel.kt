@@ -1,15 +1,11 @@
 package com.buscatumoto.ui.viewmodels
 
 import androidx.lifecycle.MutableLiveData
-import com.buscatumoto.data.remote.api.BuscaTuMotoService
 import com.buscatumoto.ui.adapters.SearchBrandsRecyclerAdapter
 import com.buscatumoto.ui.models.BrandRecyclerUiModel
-import javax.inject.Inject
+
 
 class FrontPageBrandViewModel: BaseViewModel() {
-
-    @Inject
-    lateinit var buscaTuMotoService: BuscaTuMotoService
 
     private val brandRecyclerObservable = MutableLiveData<BrandRecyclerUiModel>()
 

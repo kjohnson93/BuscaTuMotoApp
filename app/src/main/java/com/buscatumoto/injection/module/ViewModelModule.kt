@@ -2,6 +2,7 @@ package com.buscatumoto.injection.module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.buscatumoto.ui.viewmodels.CatalogueItemViewModel
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import com.buscatumoto.ui.viewmodels.SearchFormViewModel
@@ -38,6 +39,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CatalogueViewModel::class)
     abstract fun bindCatalogueViewModel(catalogueViewModel: CatalogueViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CatalogueItemViewModel::class)
+    abstract fun bindCatalogueItemViewModel(catalogueItemViewModel: CatalogueItemViewModel): ViewModel
 
 
 

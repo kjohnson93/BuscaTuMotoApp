@@ -33,7 +33,7 @@
     <include
         android:id="@+id/catalogue_content"
         layout="@layout/content_catalogue"
-        bind:secondaryUser="@{viewModel}"/>
+        bind:viewModel="@{viewModel}"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

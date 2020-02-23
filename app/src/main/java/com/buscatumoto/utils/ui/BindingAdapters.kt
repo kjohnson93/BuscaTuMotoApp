@@ -11,6 +11,9 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.buscatumoto.ui.adapters.CatalogueListAdapter
 import com.buscatumoto.ui.adapters.SearchBrandsRecyclerAdapter
 import com.buscatumoto.ui.fragments.InfiniteRotationView
 import com.buscatumoto.ui.models.BrandRecyclerUiModel
@@ -90,9 +93,40 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
 
     }
 
+    @BindingAdapter("mutableModelText")
+    fun setModelText(view: TextView, textModelObservable: MutableLiveData<String>) {
+
+        val parentActivity: AppCompatActivity? = view.getParentActivity()
+
+        if (parentActivity != null) {
+            textModelObservable.observe(parentActivity, Observer { textObservable: String? ->
+                view.text = textObservable
+            })
+        }
+    }
+
     @BindingAdapter("mutableInfiniteViewAdapter")
     fun setRecyclerAdapter(view: InfiniteRotationView, adapter: SearchBrandsRecyclerAdapter) {
         view.setAdapter(adapter)
+    }
+
+/**
+ * This methods set adapter and layout manager to RecyclerView.
+ */
+@BindingAdapter("mutableCatalogueAdapter")
+    fun setCatalogueAdapter(view: RecyclerView, adapter: CatalogueListAdapter) {
+
+        val parentActivity: AppCompatActivity? = view.getParentActivity()
+
+        if (parentActivity != null) {
+            view.adapter = adapter
+            val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
+                parentActivity,
+                RecyclerView.VERTICAL,
+                false
+            )
+            view.layoutManager = layoutManager
+        }
     }
 
     @BindingAdapter("mutableBrandDrawable")
