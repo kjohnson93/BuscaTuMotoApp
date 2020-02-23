@@ -10,13 +10,49 @@ import com.buscatumoto.databinding.CatalogueItemRowBinding
 import com.buscatumoto.ui.viewmodels.CatalogueItemViewModel
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
 
+
 class CatalogueListAdapter(val catalogueItemClickListener: CatalogueItemClickListener): RecyclerView.Adapter<CatalogueListAdapter.CatalogueViewHolder>() {
 
-    private var listMoto: List<MotoEntity> = emptyList()
+    companion object {
+        private const val VIEW_TYPE_LOADING = 0
+        private const val VIEW_TYPE_NORMAL = 1
+    }
+
+    private var isLoaderVisible = false
+
+    private var listMoto: MutableList<MotoEntity> = ArrayList()
+
+    override fun getItemViewType(position: Int): Int {
+        return when (isLoaderVisible) {
+            true -> {
+                if (position == listMoto.size - 1) {
+                    VIEW_TYPE_LOADING
+                } else {
+                    VIEW_TYPE_NORMAL
+                }
+            }
+            false -> {
+                VIEW_TYPE_NORMAL
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogueViewHolder {
-        val binding: CatalogueItemRowBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
-            R.layout.catalogue_item_row, parent, false)
+
+        var binding: CatalogueItemRowBinding = when (viewType) {
+            VIEW_TYPE_NORMAL -> {
+                DataBindingUtil.inflate(LayoutInflater.from(parent.context),
+                    R.layout.catalogue_item_row, parent, false)
+            }
+            VIEW_TYPE_LOADING -> {
+                DataBindingUtil.inflate(LayoutInflater.from(parent.context),
+                    R.layout.catalogue_item_loading, parent, false)
+            }
+            else -> {
+                DataBindingUtil.inflate(LayoutInflater.from(parent.context),
+                    R.layout.catalogue_item_row, parent, false)
+            }
+        }
 
         return CatalogueViewHolder(binding)
     }
@@ -31,11 +67,38 @@ class CatalogueListAdapter(val catalogueItemClickListener: CatalogueItemClickLis
     }
 
     fun updateCatalogue(data: List<MotoEntity>) {
-        this.listMoto = data
+        this.listMoto = data.toMutableList()
         this.notifyDataSetChanged()
     }
 
-    inner class CatalogueViewHolder(private val itemRowBinding: CatalogueItemRowBinding): RecyclerView.ViewHolder(itemRowBinding.root) {
+    fun updateLoading() {
+        isLoaderVisible = true
+        val emptyMotoEntity = Any()
+        listMoto.add(emptyMotoEntity as MotoEntity)
+        notifyItemInserted(listMoto.size - 1)
+    }
+
+    fun removeLoading() {
+        isLoaderVisible = false
+        val pos = listMoto.size - 1
+        val motoEntity = listMoto[pos]
+
+        if (motoEntity != null) {
+            listMoto.removeAt(pos)
+            notifyItemRemoved(pos)
+        }
+    }
+
+    fun clear() {
+        listMoto.clear()
+        notifyDataSetChanged()
+    }
+
+    open inner class BaseCatalogueViewHolder(private val itemRowBinding: CatalogueItemRowBinding): RecyclerView.ViewHolder(itemRowBinding.root) {
+
+    }
+
+    inner class CatalogueViewHolder(private val itemRowBinding: CatalogueItemRowBinding): BaseCatalogueViewHolder(itemRowBinding) {
 
         val catalogueItemViewModel = CatalogueItemViewModel()
 
@@ -44,6 +107,11 @@ class CatalogueListAdapter(val catalogueItemClickListener: CatalogueItemClickLis
             catalogueItemViewModel.catalogueItemClickListener = catalogueItemClickListener
             itemRowBinding.viewModel = catalogueItemViewModel
         }
+    }
+
+    inner class ProgressViewHolder(private val itemRowBinding: CatalogueItemRowBinding): BaseCatalogueViewHolder(itemRowBinding) {
+
+
     }
 
 }
