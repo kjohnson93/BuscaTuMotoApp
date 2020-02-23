@@ -17,6 +17,15 @@
     tools:context=".ui.activities.CatalogueActivity"
     tools:showIn="@layout/activity_catalogue">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/catalague_content_rv"
         android:layout_width="match_parent"
@@ -25,6 +34,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:mutableCatalogueAdapter="@{viewModel.catalogueListAdapter}"
         />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
