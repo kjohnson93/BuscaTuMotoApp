@@ -1,7 +1,6 @@
 package com.buscatumoto.utils.ui
 
 import android.R
-import android.app.Activity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.databinding.BindingAdapter
@@ -12,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.buscatumoto.ui.adapters.CatalogueListAdapter
@@ -28,26 +28,6 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
     if (parentActivity != null && visibility != null) {
         visibility.observe(parentActivity, Observer { observableValue: Int? -> view.visibility = observableValue?: View.VISIBLE })
     }
-
-    //Lamda cheatsheet
-//    Basic Syntax: Lambda expressions are always wrapped in curly braces:
-//
-//    val sum = { x: Int, y: Int -> x + y }
-//    Example
-//    Let's define a function similar to yours in Kotlin:
-//
-//    fun <T, K> mapToEntry(f1: (T) -> K, f2: (T) -> K) {}
-//    The first possibily is straight forward, we simply pass two lambdas as follows:
-//
-//    mapToEntry<String, Int>({ it.length }, { it.length / 2 })
-//    Additionally, it's good to know that if a lambda is the last argument passed to a function, it can be lifted out the parantheses like so:
-//
-//    mapToEntry<String, Int>({ it.length }) {
-//        it.length / 2
-//    }
-//    The first lambda is passed inside the parantheses, whereas the second isn't.
-
-
 }
 
 
@@ -111,19 +91,6 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
         view.setAdapter(adapter)
     }
 
-/**
- * This methods set adapter and layout manager to RecyclerView.
- */
-@BindingAdapter("mutableCatalogueAdapter")
-    fun setCatalogueAdapter(view: RecyclerView, adapter: CatalogueListAdapter) {
-
-        val parentActivity: AppCompatActivity? = view.getParentActivity()
-
-        if (parentActivity != null) {
-            view.setHasFixedSize(true)
-            view.adapter = adapter
-        }
-    }
 
     @BindingAdapter("mutableBrandDrawable")
     fun setBrandDrawable(view: ImageView, brandObservable: MutableLiveData<BrandRecyclerUiModel>) {
@@ -145,4 +112,28 @@ fun setRefreshing(view: SwipeRefreshLayout, booleanObservable: MutableLiveData<B
             view.isRefreshing = result
         })
     }
+}
+
+/**
+ * This methods set adapter and layout manager to RecyclerView.
+ */
+@BindingAdapter("recyclerAdapter")
+fun setCatalogueAdapter(view: RecyclerView, adapter: CatalogueListAdapter) {
+
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+
+    if (parentActivity != null) {
+        view.setHasFixedSize(true)
+        view.adapter = adapter
+    }
+}
+
+@BindingAdapter("recyclerLinearLayoutManager")
+fun setLayoutManager(view: RecyclerView, linearLayoutManager: LinearLayoutManager) {
+        view.layoutManager = linearLayoutManager
+}
+
+@BindingAdapter("scrollableListener")
+fun setScrollableListener(view: RecyclerView, scrollListener: RecyclerView.OnScrollListener) {
+        view.addOnScrollListener(scrollListener)
 }

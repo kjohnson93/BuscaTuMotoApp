@@ -33,7 +33,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:mutableCatalogueAdapter="@{viewModel.catalogueListAdapter}"
+        app:recyclerAdapter="@{viewModel.catalogueListAdapter}"
+        app:recyclerLinearLayoutManager="@{viewModel.layoutManager}"
+        app:scrollableListener="@{viewModel.scrollListener}"
         />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

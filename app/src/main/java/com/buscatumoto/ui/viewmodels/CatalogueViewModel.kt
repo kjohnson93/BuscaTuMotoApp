@@ -1,11 +1,15 @@
 package com.buscatumoto.ui.viewmodels
 
+import android.content.Context
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.domain.features.catalogue.LoadCatalogueUseCase
@@ -28,6 +32,8 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
     lateinit var lifecycleOwner: CatalogueActivity
 
+    private val appContext: Context = BuscaTuMotoApplication.getInstance().applicationContext
+
     //reference to adapter
     var catalogueListAdapter = CatalogueListAdapter(this)
 
@@ -40,13 +46,33 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
         loadCatalogue(lastPageRequested)
     }
 
-    private var currentPage: Int = PaginationListener.PAGE_START
+    private var currentPage: Int = PAGE_START
     private var isLastPage = false
     private val totalPage = 10
     private var isLoading = false
     var itemCount = 0
 
     var refreshingMutable = MutableLiveData<Boolean>()
+
+    val layoutManager = LinearLayoutManager(
+        appContext,
+        RecyclerView.VERTICAL,
+        false
+    )
+
+    val scrollListener = object: PaginationListener(layoutManager) {
+        override fun loadMoreItems() {
+            this@CatalogueViewModel.loadMoreItems()
+        }
+
+        override fun isLastPage(): Boolean {
+            return this@CatalogueViewModel.isLastPage()
+        }
+
+        override fun isLoading(): Boolean {
+            return this@CatalogueViewModel.isLoading()
+        }
+    }
 
     init {
         //Always loads first page of moto search/filter
