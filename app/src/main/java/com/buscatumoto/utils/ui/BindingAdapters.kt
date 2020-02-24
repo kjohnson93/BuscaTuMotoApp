@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.buscatumoto.ui.adapters.CatalogueListAdapter
 import com.buscatumoto.ui.adapters.SearchBrandsRecyclerAdapter
 import com.buscatumoto.ui.fragments.InfiniteRotationView
@@ -119,13 +120,8 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
         val parentActivity: AppCompatActivity? = view.getParentActivity()
 
         if (parentActivity != null) {
+            view.setHasFixedSize(true)
             view.adapter = adapter
-            val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
-                parentActivity,
-                RecyclerView.VERTICAL,
-                false
-            )
-            view.layoutManager = layoutManager
         }
     }
 
@@ -140,3 +136,13 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
                 Observer { drawableObservable: BrandRecyclerUiModel? -> view.setImageDrawable(brandObservable.value?.drawable) })
         }
     }
+@BindingAdapter("mutableRefreshing")
+fun setRefreshing(view: SwipeRefreshLayout, booleanObservable: MutableLiveData<Boolean>) {
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+
+    if (parentActivity != null) {
+        booleanObservable.observe(parentActivity, Observer { result ->
+            view.isRefreshing = result
+        })
+    }
+}
