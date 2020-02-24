@@ -48,7 +48,6 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
     private var currentPage: Int = PAGE_START
     private var isLastPage = false
-    private val totalPage = 10
     private var isLoading = false
     var itemCount = 0
 
@@ -79,7 +78,9 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
         loadCatalogue(0)
     }
 
+    //TODO FIXME: When asking for a page, it returns the persisted and the new items every single request to response from request gets bigger and bigger
     private fun loadCatalogue(pageIndex: Int?) {
+        Timber.d("pageIndex: $pageIndex")
         viewModelScope.launch(Dispatchers.IO) {
             val motos = loadCatalogueUseCase.execute(pageIndex)
 
@@ -97,13 +98,6 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
                                 catalogueListAdapter.addItems(result?.data)
                                 refreshingMutable.value = false
-
-                                if (currentPage < totalPage) {
-                                    catalogueListAdapter.addLoading()
-                                } else {
-                                    isLastPage = true
-                                }
-
                                 isLoading = false
                             }
                         }

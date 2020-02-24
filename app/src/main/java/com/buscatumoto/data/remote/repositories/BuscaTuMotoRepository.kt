@@ -161,6 +161,10 @@ class BuscaTuMotoRepository @Inject constructor(
             if (response.status == Result.Status.SUCCESS) {
                 //save
                 response.data?.let {
+//
+//                    if (it.empty) {
+//
+//                    }
                     searchDao.delete()
                     searchDao.insert(SearchEntity(1, search, null, null, null, null, null,
                         null, null, null, null,

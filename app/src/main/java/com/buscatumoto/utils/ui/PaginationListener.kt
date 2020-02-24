@@ -4,10 +4,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
-abstract class PaginationListener (val layoutManager: LinearLayoutManager): RecyclerView.OnScrollListener() {
+abstract class PaginationListener (private val layoutManager: LinearLayoutManager): RecyclerView.OnScrollListener() {
 
     companion object {
-        const val PAGE_START = 1
+        const val PAGE_START = 0
         const val PAGE_SIZE = 20
     }
 
