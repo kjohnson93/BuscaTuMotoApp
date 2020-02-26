@@ -78,7 +78,6 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
         loadCatalogue(0)
     }
 
-    //TODO FIXME: When asking for a page, it returns the persisted and the new items every single request to response from request gets bigger and bigger
     private fun loadCatalogue(pageIndex: Int?) {
         Timber.d("pageIndex: $pageIndex")
         viewModelScope.launch(Dispatchers.IO) {
@@ -100,12 +99,14 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                                 refreshingMutable.value = false
                                 isLoading = false
                             }
+                            motos.removeObservers(lifecycleOwner)
                         }
                         Result.Status.LOADING -> {
 
                         }
                         Result.Status.ERROR -> {
                             errorMessage.value = result.message
+                            motos.removeObservers(lifecycleOwner)
                         }
                     }
                 })

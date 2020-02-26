@@ -30,6 +30,8 @@ class LoadCatalogueUseCase @Inject constructor(private val buscaTuMotoRepository
         var weightBottomForm: Double? = null
         var weightTopForm: Double? = null
         var yearForm: Int? = null
+        var licenseForm: String? = null
+        var pageIndexForm: Int? = null
 
         if (lastParams.search != null) {
             return buscaTuMotoRepository.search(lastParams.search, pageIndex)
@@ -44,11 +46,14 @@ class LoadCatalogueUseCase @Inject constructor(private val buscaTuMotoRepository
                 weightBottomForm = lastParams.weightMin?.toDouble()
                 weightTopForm = lastParams.weightMax?.toDouble()
                 yearForm = lastParams.year?.toInt()
+                licenseForm = lastParams.license
+//                pageIndexForm = lastParams.pageIndex
             } catch (exception: NumberFormatException) {
+
             }
             return buscaTuMotoRepository.filter(lastParams.brand, lastParams.model, lastParams.bikeType,
                 priceBottomForm, priceTopForm, powerBottomForm, powerTopForm, displacementBottomForm,
-                displacementTopForm, weightBottomForm, weightTopForm, yearForm)
+                displacementTopForm, weightBottomForm, weightTopForm, yearForm, licenseForm, pageIndex)
         }
     }
 

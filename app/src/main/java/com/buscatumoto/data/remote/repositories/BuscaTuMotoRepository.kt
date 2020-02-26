@@ -111,7 +111,7 @@ class BuscaTuMotoRepository @Inject constructor(
         val disposable = emitSource(motoDao.getMotoLiveData().map {
             Result.loading(it)
         })
-
+8
         try {
             val response = buscaTuMotoDataSource.filter(
                 brand, model, bikeType,
@@ -123,12 +123,15 @@ class BuscaTuMotoRepository @Inject constructor(
 
             if (response.status == Result.Status.SUCCESS) {
                 response.data?.let {
-                    searchDao.delete()
-                    searchDao.insert(SearchEntity(1, null, brand, model, bikeType, priceBottom.toString(), priceTop.toString(),
-                        powerBottom.toString(), powerTop.toString(), displacementBottom.toString(), displacementTop.toString(),
-                        weightBottom.toString(), weightTop.toString(), year.toString(), license))
-                    motoDao.deleteMotos()
-                    motoDao.insert(it.motos)
+                    //Empty means no more pages
+                    if (!it.empty) {
+                        searchDao.delete()
+                        searchDao.insert(SearchEntity(1, null, brand, model, bikeType, priceBottom.toString(), priceTop.toString(),
+                            powerBottom.toString(), powerTop.toString(), displacementBottom.toString(), displacementTop.toString(),
+                            weightBottom.toString(), weightTop.toString(), year.toString(), license))
+                        motoDao.deleteMotos()
+                        motoDao.insert(it.motos)
+                    }
                 }
 
                 emitSource(motoDao.getMotoLiveData().map {
