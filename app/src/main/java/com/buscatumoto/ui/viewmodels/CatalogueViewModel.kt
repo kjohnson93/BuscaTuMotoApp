@@ -1,6 +1,7 @@
 package com.buscatumoto.ui.viewmodels
 
 import android.content.Context
+import android.content.IntentFilter
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -91,7 +92,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                             motosLiveData.value = result.data
                             result.data?.let {
 
-                                if (currentPage != PAGE_START) {
+                                if (pageIndex != PAGE_START) {
                                     catalogueListAdapter.removeLoading()
                                 }
 
@@ -102,7 +103,9 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                             motos.removeObservers(lifecycleOwner)
                         }
                         Result.Status.LOADING -> {
-
+                            if (pageIndex != PAGE_START) {
+                                catalogueListAdapter.addLoading()
+                            }
                         }
                         Result.Status.ERROR -> {
                             errorMessage.value = result.message
