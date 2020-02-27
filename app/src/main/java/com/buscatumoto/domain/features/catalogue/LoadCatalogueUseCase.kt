@@ -19,7 +19,7 @@ class LoadCatalogueUseCase @Inject constructor(private val buscaTuMotoRepository
 
         val lastParams = buscaTuMotoRepository.getSearchParams()
 
-        Timber.d("params :${lastParams.toString()}")
+        Timber.d("params :${lastParams}")
 
         var priceBottomForm: Int? = null
         var priceTopForm: Int? = null

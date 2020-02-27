@@ -29,6 +29,7 @@ class BasicNavigator @Inject constructor() {
         val intent : Intent?
         intent = Intent(appContext, classToStartIntent)
         intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+        intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
         activityLauncher.startActivity(intent)
     }
 

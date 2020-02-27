@@ -35,6 +35,8 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
     private val appContext: Context = BuscaTuMotoApplication.getInstance().applicationContext
 
+    val loadingVisibility = MutableLiveData<Int>()
+
     //reference to adapter
     var catalogueListAdapter = CatalogueListAdapter(this)
 
@@ -91,6 +93,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                             Timber.d("Data: ${result.data}")
                             motosLiveData.value = result.data
                             result.data?.let {
+                                loadingVisibility.value = View.GONE
 
                                 if (pageIndex != PAGE_START) {
                                     catalogueListAdapter.removeLoading()
@@ -105,9 +108,13 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                         Result.Status.LOADING -> {
                             if (pageIndex != PAGE_START) {
                                 catalogueListAdapter.addLoading()
+                            } else {
+                                //show global loading
+                                loadingVisibility.value = View.VISIBLE
                             }
                         }
                         Result.Status.ERROR -> {
+                            loadingVisibility.value = View.GONE
                             errorMessage.value = result.message
                             motos.removeObservers(lifecycleOwner)
                         }

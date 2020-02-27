@@ -131,15 +131,11 @@ class BuscaTuMotoRepository @Inject constructor(
                             weightBottom.toString(), weightTop.toString(), year.toString(), license))
                         motoDao.deleteMotos()
                         motoDao.insert(motoResponse.motos)
-
-                        emitSource(motoDao.getMotoLiveData().map {
-                            Result.success(motoResponse.motos)
-                        })
-                    } else {
-                        emitSource(motoDao.getMotoLiveData().map {
-                            Result.success(motoResponse.motos)
-                        })
                     }
+
+                    emitSource(motoDao.getMotoLiveData().map {
+                        Result.success(motoResponse.motos)
+                    })
                 }
 
             } else if (response.status == Result.Status.ERROR) {
@@ -168,17 +164,20 @@ class BuscaTuMotoRepository @Inject constructor(
 
             if (response.status == Result.Status.SUCCESS) {
                 //save
-                response.data?.let {
-//
-//                    if (it.empty) {
-//
-//                    }
-                    searchDao.delete()
-                    searchDao.insert(SearchEntity(1, search, null, null, null, null, null,
-                        null, null, null, null,
-                        null, null, null, null))
-                    motoDao.deleteMotos()
-                    motoDao.insert(it.motos)
+                response.data?.let { motoResponse ->
+
+                    if (!motoResponse.empty) {
+                        searchDao.delete()
+                        searchDao.insert(SearchEntity(1, search, null, null, null, null, null,
+                            null, null, null, null,
+                            null, null, null, null))
+                        motoDao.deleteMotos()
+                        motoDao.insert(motoResponse.motos)
+                    }
+
+                    emitSource(motoDao.getMotoLiveData().map {
+                        Result.success(motoResponse.motos)
+                    })
                 }
 
                 emitSource(motoDao.getMotoLiveData().map {
