@@ -1,27 +1,24 @@
 package com.buscatumoto.ui.fragments
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.databinding.DataBindingUtil
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
 import androidx.annotation.StringRes
-import com.buscatumoto.utils.global.Constants
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentSearchBinding
 import com.buscatumoto.injection.Injectable
-import com.buscatumoto.injection.module.NetworkModule
 import com.buscatumoto.ui.activities.CatalogueActivity
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
 import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
+import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.BasicNavigator
 import com.google.android.material.snackbar.Snackbar
@@ -42,7 +39,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 
     var activityReadyListener: ReadyListener? = null
 
-    var bannerLogo: ImageView? = null
     var arrowDownImgBtn: ImageButton? = null
     var filtrarBtn: Button? = null
 
@@ -57,7 +53,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 
     lateinit var frontPageViewModel: FrontPageViewModel
     private lateinit var binding: FragmentSearchBinding
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,6 +70,23 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         frontPageViewModel.screenNavigator = this
         binding.viewModel = frontPageViewModel
         binding.lifecycleOwner = this
+
+
+        binding.codPacienteInput.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
+                return when (keyCode) {
+                    KeyEvent.KEYCODE_ENTER -> {
+                        frontPageViewModel.onSearchRequested(binding.codPacienteInput?.text.toString())
+                        hideSoftKeyboard()
+                        true
+                    }
+                    else -> {
+                        false
+                    }
+                }
+            }
+
+        })
 
         frontPageViewModel.getError().observe(this, Observer { result ->
             if (result.errorMessage != null) {
@@ -172,4 +184,11 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
     private fun hideError() {
         errorSnackbar?.dismiss()
     }
+
+    fun hideSoftKeyboard() {
+        val inputMethodManager: InputMethodManager? =
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        inputMethodManager!!.hideSoftInputFromWindow(view?.getWindowToken(), 0)
+    }
+
 }
