@@ -57,6 +57,12 @@
                     android:progress="0"
                     android:progressDrawable="@drawable/circular_progress_bar"
                     />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No se han encontrado resultados"
+            app:mutableVisibility="@{viewModel.noResultVisibility}"/>
     </FrameLayout>
 
 

@@ -36,6 +36,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     private val appContext: Context = BuscaTuMotoApplication.getInstance().applicationContext
 
     val loadingVisibility = MutableLiveData<Int>()
+    val noResultVisibility = MutableLiveData<Int>()
 
     //reference to adapter
     var catalogueListAdapter = CatalogueListAdapter(this)
@@ -93,6 +94,19 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                             Timber.d("Data: ${result.data}")
                             motosLiveData.value = result.data
                             result.data?.let {
+
+                                noResultVisibility.value = View.GONE
+
+                                /*
+                                FIXME: Added workaround to display correctly empty result.
+                                 Caching is lost.
+                                 Fixing pagination from WS should recover caching.
+                                 Because we can control empty results and empty pages
+                                 */
+                                if (it.isEmpty() && catalogueListAdapter.itemCount == 0) {
+                                    noResultVisibility.value = View.VISIBLE
+                                }
+
                                 loadingVisibility.value = View.GONE
 
                                 if (pageIndex != PAGE_START) {
@@ -106,6 +120,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                             motos.removeObservers(lifecycleOwner)
                         }
                         Result.Status.LOADING -> {
+                            noResultVisibility.value = View.GONE
                             if (pageIndex != PAGE_START) {
                                 catalogueListAdapter.addLoading()
                             } else {
@@ -114,6 +129,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                             }
                         }
                         Result.Status.ERROR -> {
+                            noResultVisibility.value = View.GONE
                             loadingVisibility.value = View.GONE
                             errorMessage.value = result.message
                             motos.removeObservers(lifecycleOwner)
