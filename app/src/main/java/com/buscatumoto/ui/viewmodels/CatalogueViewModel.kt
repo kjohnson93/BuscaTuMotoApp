@@ -120,7 +120,6 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                             motos.removeObservers(lifecycleOwner)
                         }
                         Result.Status.LOADING -> {
-                            noResultVisibility.value = View.GONE
                             if (pageIndex != PAGE_START) {
                                 catalogueListAdapter.addLoading()
                             } else {
@@ -129,7 +128,6 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                             }
                         }
                         Result.Status.ERROR -> {
-                            noResultVisibility.value = View.GONE
                             loadingVisibility.value = View.GONE
                             errorMessage.value = result.message
                             motos.removeObservers(lifecycleOwner)

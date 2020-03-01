@@ -109,7 +109,7 @@ class BuscaTuMotoRepository @Inject constructor(
         pageIndex: Int? = null
     ) = liveData<Result<List<MotoEntity>>> {
         val disposable = emitSource(motoDao.getMotoLiveData().map {
-            Result.loading(null)
+            Result.loading(it)
         })
 
         try {
@@ -128,15 +128,8 @@ class BuscaTuMotoRepository @Inject constructor(
                         searchDao.insert(SearchEntity(1, null, brand, model, bikeType, priceBottom.toString(), priceTop.toString(),
                             powerBottom.toString(), powerTop.toString(), displacementBottom.toString(), displacementTop.toString(),
                             weightBottom.toString(), weightTop.toString(), year.toString(), license))
-
-                            /*
-                            FIXME: Added workaround to display correctly empty result.
-                            Caching is lost.
-                            Fixing pagination from WS should recover caching.
-                            Because we can control empty results and empty pages
-                            */
-//                        motoDao.deleteMotos()
-//                        motoDao.insert(motoResponse.motos)
+                        motoDao.deleteMotos()
+                        motoDao.insert(motoResponse.motos)
 
                     emitSource(motoDao.getMotoLiveData().map {
                         Result.success(motoResponse.motos)
