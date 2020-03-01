@@ -164,14 +164,12 @@ class BuscaTuMotoRepository @Inject constructor(
                 //save
                 response.data?.let { motoResponse ->
 
-                    if (!motoResponse.empty) {
                         searchDao.delete()
                         searchDao.insert(SearchEntity(1, search, null, null, null, null, null,
                             null, null, null, null,
                             null, null, null, null))
                         motoDao.deleteMotos()
                         motoDao.insert(motoResponse.motos)
-                    }
 
                     emitSource(motoDao.getMotoLiveData().map {
                         Result.success(motoResponse.motos)
