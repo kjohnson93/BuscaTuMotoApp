@@ -19,7 +19,8 @@
         <activity
             android:name=".ui.activities.CatalogueActivity"
             android:label="@string/title_activity_catalogue"
-            android:theme="@style/AppThemeNoActionBar.NoActionBar"></activity>
+            android:screenOrientation="portrait">
+        android:theme="@style/AppThemeNoActionBar.NoActionBar"></activity>
         <activity
             android:name=".ui.activities.SearchActivity"
             android:screenOrientation="portrait">
@@ -31,7 +32,8 @@
         </activity>
         <activity
             android:name=".ui.activities.SplashScreenActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
