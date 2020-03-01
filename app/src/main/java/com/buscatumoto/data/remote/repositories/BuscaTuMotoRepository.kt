@@ -123,7 +123,7 @@ class BuscaTuMotoRepository @Inject constructor(
 
             if (response.status == Result.Status.SUCCESS) {
                 response.data?.let { motoResponse ->
-                    //Empty means no more pages
+
                         searchDao.delete()
                         searchDao.insert(SearchEntity(1, null, brand, model, bikeType, priceBottom.toString(), priceTop.toString(),
                             powerBottom.toString(), powerTop.toString(), displacementBottom.toString(), displacementTop.toString(),

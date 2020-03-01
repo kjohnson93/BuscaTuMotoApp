@@ -87,22 +87,20 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
         viewModelScope.launch(Dispatchers.IO) {
             val motos = loadCatalogueUseCase.execute(pageIndex)
 
+            //Initial no resu'lt visibility.
+            noResultVisibility.postValue(View.GONE)
+
             withContext(Dispatchers.Main) {
                 motos.observe(lifecycleOwner, Observer { result ->
                     when(result.status) {
                         Result.Status.SUCCESS -> {
+                            noResultVisibility.value = View.GONE
                             Timber.d("Data: ${result.data}")
                             motosLiveData.value = result.data
                             result.data?.let {
 
                                 noResultVisibility.value = View.GONE
 
-                                /*
-                                FIXME: Added workaround to display correctly empty result.
-                                 Caching is lost.
-                                 Fixing pagination from WS should recover caching.
-                                 Because we can control empty results and empty pages
-                                 */
                                 if (it.isEmpty() && catalogueListAdapter.itemCount == 0) {
                                     noResultVisibility.value = View.VISIBLE
                                 }
