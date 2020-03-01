@@ -18,6 +18,8 @@ import com.buscatumoto.ui.adapters.CatalogueListAdapter
 import com.buscatumoto.ui.adapters.SearchBrandsRecyclerAdapter
 import com.buscatumoto.ui.fragments.InfiniteRotationView
 import com.buscatumoto.ui.models.BrandRecyclerUiModel
+import com.buscatumoto.ui.viewmodels.CatalogueViewModel
+import timber.log.Timber
 
 @BindingAdapter("mutableVisibility")
 fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
@@ -107,12 +109,24 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
 fun setRefreshing(view: SwipeRefreshLayout, booleanObservable: MutableLiveData<Boolean>) {
     val parentActivity: AppCompatActivity? = view.getParentActivity()
 
+
+
     if (parentActivity != null) {
         booleanObservable.observe(parentActivity, Observer { result ->
             view.isRefreshing = result
         })
     }
 }
+
+@BindingAdapter("refreshListener")
+fun setRefreshListener(view: SwipeRefreshLayout, viewModel: CatalogueViewModel) {
+
+    view.setOnRefreshListener(object: SwipeRefreshLayout.OnRefreshListener {
+        override fun onRefresh() {
+            Timber.d("Called on refresh")
+            viewModel.onRefresh()
+        }
+    })}
 
 /**
  * This methods set adapter and layout manager to RecyclerView.
