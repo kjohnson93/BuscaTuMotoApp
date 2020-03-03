@@ -1,21 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="viewModel"
             type="com.buscatumoto.ui.viewmodels.CatalogueItemViewModel" />
     </data>
-<LinearLayout
-    android:orientation="vertical" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/catalogue_item_imgvw"
+        android:layout_width="245dp"
+        android:layout_height="165dp"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/search_icon_128"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/search_icon_128" />
+
     <TextView
-        android:id="@+id/textModel"
+        android:id="@+id/catalogue_item_model"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/catalogue_item_imgvw"
+        app:mutableText="@{viewModel.modelTitleLiveData}" />
+
+    <TextView
+        android:id="@+id/catalogue_item_highlights"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/catalogue_item_model"
+        app:layout_constraintStart_toStartOf="@+id/catalogue_item_model"
+        app:layout_constraintTop_toBottomOf="@+id/catalogue_item_model"
+        app:mutableText="@{viewModel.modelHighlightsLiveData}"/>
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:mutableModelText="@{viewModel.modelTitleLiveData}" />
-</LinearLayout>
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/grey_separator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/catalogue_item_imgvw" />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

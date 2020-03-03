@@ -76,7 +76,7 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
 
     }
 
-    @BindingAdapter("mutableModelText")
+    @BindingAdapter("mutableText")
     fun setModelText(view: TextView, textModelObservable: MutableLiveData<String>) {
 
         val parentActivity: AppCompatActivity? = view.getParentActivity()
