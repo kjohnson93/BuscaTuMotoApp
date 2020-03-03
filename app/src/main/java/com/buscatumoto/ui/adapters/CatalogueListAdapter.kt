@@ -9,6 +9,7 @@ import com.buscatumoto.R
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.databinding.CatalogueItemLoadingBinding
 import com.buscatumoto.databinding.CatalogueItemRowBinding
+import com.buscatumoto.domain.features.catalogue.GetModelImageUseCase
 import com.buscatumoto.ui.viewmodels.CatalogueItemViewModel
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
 
@@ -127,7 +128,7 @@ class CatalogueListAdapter(val catalogueItemClickListener: CatalogueItemClickLis
     inner class CatalogueViewHolder(private val itemRowBinding: CatalogueItemRowBinding) :
         BaseCatalogueViewHolder(itemRowBinding) {
 
-        val catalogueItemViewModel = CatalogueItemViewModel()
+        private val catalogueItemViewModel = CatalogueItemViewModel(GetModelImageUseCase())
 
         fun bind(motoEntity: MotoEntity) {
             catalogueItemViewModel.bind(motoEntity)

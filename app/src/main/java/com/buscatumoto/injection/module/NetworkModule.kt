@@ -5,6 +5,7 @@ import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.data.local.AppDatabase
 import com.buscatumoto.data.remote.api.BuscaTuMotoService
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
+import com.buscatumoto.domain.features.catalogue.GetModelImageUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
