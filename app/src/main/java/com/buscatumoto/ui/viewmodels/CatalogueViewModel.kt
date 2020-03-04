@@ -136,7 +136,8 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
         }
     }
 
-    override fun onItemClick() {
+    override fun onItemClick(id: String) {
+
     }
 
     override fun onRefresh() {

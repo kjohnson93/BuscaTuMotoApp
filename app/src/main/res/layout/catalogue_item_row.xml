@@ -9,8 +9,8 @@
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
+    android:layout_height="wrap_content"
+    android:onClick="@{() -> viewModel.clickListenerTap(viewModel.modelId)}">
     <ImageView
         android:id="@+id/catalogue_item_imgvw"
         android:layout_width="245dp"

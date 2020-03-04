@@ -19,10 +19,12 @@ class CatalogueItemViewModel @Inject constructor(private val getModelImageUseCas
     val modelImageLiveData = MutableLiveData<Drawable>()
     val modelHighlightsLiveData = MutableLiveData<String>()
 
+    lateinit var modelId: String
 
     fun bind(motoEntity: MotoEntity) {
         modelTitleLiveData.value = motoEntity.model
         modelHighlightsLiveData.value = motoEntity.modelHighlights
+        modelId = motoEntity.id
 
         viewModelScope.launch(Dispatchers.IO) {
 
@@ -37,8 +39,8 @@ class CatalogueItemViewModel @Inject constructor(private val getModelImageUseCas
     /**
      * This should be called from databinding
      */
-    fun clickListenerTap() {
-        catalogueItemClickListener.onItemClick()
+    fun clickListenerTap(id: String) {
+        catalogueItemClickListener.onItemClick(id)
     }
 
 
