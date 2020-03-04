@@ -2,10 +2,7 @@ package com.buscatumoto.injection.component
 
 import android.app.Application
 import com.buscatumoto.BuscaTuMotoApplication
-import com.buscatumoto.injection.module.CatalogueActivityModule
-import com.buscatumoto.injection.module.NetworkModule
-import com.buscatumoto.injection.module.SearchActivityModule
-import com.buscatumoto.injection.module.ViewModelModule
+import com.buscatumoto.injection.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -16,7 +13,7 @@ import javax.inject.Singleton
     modules = [
         AndroidInjectionModule::class,
         NetworkModule::class, ViewModelModule::class, SearchActivityModule::class,
-        CatalogueActivityModule::class]
+        CatalogueActivityModule::class, MotoDetailActivityModule::class]
 )
 interface AppComponent {
     @Component.Builder

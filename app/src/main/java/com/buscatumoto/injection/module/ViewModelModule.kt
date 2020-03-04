@@ -2,10 +2,7 @@ package com.buscatumoto.injection.module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.buscatumoto.ui.viewmodels.CatalogueItemViewModel
-import com.buscatumoto.ui.viewmodels.CatalogueViewModel
-import com.buscatumoto.ui.viewmodels.FrontPageViewModel
-import com.buscatumoto.ui.viewmodels.SearchFormViewModel
+import com.buscatumoto.ui.viewmodels.*
 import com.buscatumoto.utils.injection.ViewModelFactory
 import dagger.*
 import dagger.multibindings.IntoMap
@@ -45,6 +42,9 @@ abstract class ViewModelModule {
     @ViewModelKey(CatalogueItemViewModel::class)
     abstract fun bindCatalogueItemViewModel(catalogueItemViewModel: CatalogueItemViewModel): ViewModel
 
-
+    @Binds
+    @IntoMap
+    @ViewModelKey(MotoDetailViewModel::class)
+    abstract fun bindMotoDetailViewModel(motoDetailViewModel: MotoDetailViewModel): ViewModel
 
 }

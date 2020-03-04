@@ -15,7 +15,9 @@ import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.domain.features.catalogue.LoadCatalogueUseCase
 import com.buscatumoto.ui.activities.CatalogueActivity
+import com.buscatumoto.ui.activities.MotoDetailActivity
 import com.buscatumoto.ui.adapters.CatalogueListAdapter
+import com.buscatumoto.utils.ui.BasicNavigator
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
 import com.buscatumoto.utils.ui.PaginationListener
 import com.buscatumoto.utils.ui.PaginationListener.Companion.PAGE_START
@@ -137,7 +139,8 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     }
 
     override fun onItemClick(id: String) {
-
+        val basicNavigator = BasicNavigator()
+        basicNavigator.navigateToIntent(lifecycleOwner, MotoDetailActivity::class.java, null)
     }
 
     override fun onRefresh() {
