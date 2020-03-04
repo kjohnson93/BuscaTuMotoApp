@@ -22,5 +22,8 @@ interface MotoDao {
     @Query("DELETE FROM moto")
     suspend fun deleteMotos()
 
-    //suspend get moto by id vs MotoDetailDao
+    //Tryng to get motyEntity
+    //on get objects from DB suspend fun is not required!
+    @Query("SELECT * FROM moto WHERE id=:id ")
+    fun getMotoById(id: String): LiveData<MotoEntity>
 }
