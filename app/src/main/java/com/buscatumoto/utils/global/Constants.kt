@@ -11,5 +11,7 @@ class Constants {
         const val RELEASE = "release"
 
         const val AUTO_SCROLL_TIME_ELLAPSE_MILLIS: Long = 3000
+
+        const val MOTO_ID_KEY = "MotoId"
     }
 }

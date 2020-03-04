@@ -15,14 +15,88 @@
     tools:context=".ui.activities.MotoDetailActivity">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/detailTitleTvw"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="120dp"
-        android:text="TextView TEST"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:text="TextView"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/detailHighlightsTvw"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/detailTitleTvw"
+        app:layout_constraintStart_toStartOf="@+id/detailTitleTvw"
+        app:layout_constraintTop_toBottomOf="@+id/detailTitleTvw" />
+
+    <TextView
+        android:id="@+id/detailPriceTvw"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/detailHighlightsTvw"
+        app:layout_constraintTop_toBottomOf="@+id/detailHighlightsTvw" />
+
+    <TextView
+        android:id="@+id/detailPriceTitleTvw"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/detailPriceTvw"
+        app:layout_constraintTop_toBottomOf="@+id/detailPriceTvw" />
+
+    <TextView
+        android:id="@+id/detailPriceDescTvw"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/detailPriceTitleTvw"
+        app:layout_constraintTop_toBottomOf="@+id/detailPriceTitleTvw" />
+
+    <TextView
+        android:id="@+id/detailMainDesc"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/detailPriceDescTvw"
+        app:layout_constraintTop_toBottomOf="@+id/detailPriceDescTvw" />
+
+    <TextView
+        android:id="@+id/detailLicensesTitleTvw"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/detailMainDesc"
+        app:layout_constraintTop_toBottomOf="@+id/detailMainDesc" />
+
+    <TextView
+        android:id="@+id/detailLicensesTvw"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/detailLicensesTitleTvw"
+        app:layout_constraintTop_toBottomOf="@+id/detailLicensesTitleTvw" />
+
+    <TextView
+        android:id="@+id/detailSpecsTitleTvw"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/detailLicensesTvw"
+        app:layout_constraintTop_toBottomOf="@+id/detailLicensesTvw" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

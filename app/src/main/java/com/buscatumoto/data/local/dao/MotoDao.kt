@@ -21,4 +21,6 @@ interface MotoDao {
 
     @Query("DELETE FROM moto")
     suspend fun deleteMotos()
+
+    //suspend get moto by id vs MotoDetailDao
 }

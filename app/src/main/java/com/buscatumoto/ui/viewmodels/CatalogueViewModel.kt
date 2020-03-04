@@ -2,6 +2,7 @@ package com.buscatumoto.ui.viewmodels
 
 import android.content.Context
 import android.content.IntentFilter
+import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -17,6 +18,8 @@ import com.buscatumoto.domain.features.catalogue.LoadCatalogueUseCase
 import com.buscatumoto.ui.activities.CatalogueActivity
 import com.buscatumoto.ui.activities.MotoDetailActivity
 import com.buscatumoto.ui.adapters.CatalogueListAdapter
+import com.buscatumoto.ui.navigation.ScreenNavigator
+import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.utils.ui.BasicNavigator
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
 import com.buscatumoto.utils.ui.PaginationListener
@@ -34,6 +37,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     private val motosLiveData: MutableLiveData<List<MotoEntity>> = MutableLiveData()
 
     lateinit var lifecycleOwner: CatalogueActivity
+    lateinit var screenNavigator: ScreenNavigator
 
     private val appContext: Context = BuscaTuMotoApplication.getInstance().applicationContext
 
@@ -139,8 +143,9 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     }
 
     override fun onItemClick(id: String) {
-        val basicNavigator = BasicNavigator()
-        basicNavigator.navigateToIntent(lifecycleOwner, MotoDetailActivity::class.java, null)
+        val extras = Bundle()
+        extras.putString(Constants.MOTO_ID_KEY, id)
+        screenNavigator.navigateToNext(CatalogueActivity.NAVIGATE_TO_DETAIL, extras)
     }
 
     override fun onRefresh() {

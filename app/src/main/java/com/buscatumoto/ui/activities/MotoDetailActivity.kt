@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.buscatumoto.R
 import com.buscatumoto.databinding.ActivityMotoDetailBinding
 import com.buscatumoto.ui.viewmodels.MotoDetailViewModel
+import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.utils.injection.ViewModelFactory
+import com.buscatumoto.utils.ui.CatalogueUiOp
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -32,9 +34,25 @@ class MotoDetailActivity : AppCompatActivity(), HasAndroidInjector {
 
         motoDetailViewModel = ViewModelProviders.of(this, viewModelFactory).get(MotoDetailViewModel::class.java)
         motoDetailViewModel.lifeCycleOwner = this
+
+        //Assign id from UI -> not good but necessary to avoid creating an additional Dao.
+        intent?.extras?.getString(Constants.MOTO_ID_KEY)?.let {
+            motoDetailViewModel.id = it
+            executeUiOp(CatalogueUiOp.NavigateToDetail(it))
+        } ?: run {
+            motoDetailViewModel.id = ""
+        }
         binding.viewModel = motoDetailViewModel
         binding.lifecycleOwner = this
     }
 
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
+
+    fun executeUiOp(uiOp: CatalogueUiOp) {
+        when (uiOp) {
+            is CatalogueUiOp.NavigateToDetail -> {
+                motoDetailViewModel.loadMotoDetail(uiOp.id)
+            }
+        }
+    }
 }

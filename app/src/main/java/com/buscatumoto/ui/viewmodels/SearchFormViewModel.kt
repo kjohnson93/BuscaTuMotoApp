@@ -142,7 +142,7 @@ class SearchFormViewModel @Inject constructor(
     }
 
     private fun onFilterSuccess(data: List<MotoEntity>?){
-        screenNavigator.navigateToNext(FilterFormDialogFragment.NAVIGATE_TO_CATALOGUE)
+        screenNavigator.navigateToNext(FilterFormDialogFragment.NAVIGATE_TO_CATALOGUE, null)
     }
 
     private fun onFilterError(message: String?) {

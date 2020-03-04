@@ -105,7 +105,7 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
                             Result.Status.SUCCESS -> {
                                 Timber.d("Filter Success")
                                 loadingVisibility.value = View.GONE
-                                screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE)
+                                screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE, null)
                                 liveData.removeObservers(lifeCycleOwner)
                             }
                             Result.Status.LOADING -> {
@@ -139,7 +139,7 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
                     when (result.status) {
                         Result.Status.SUCCESS -> {
                             loadingVisibility.value = View.GONE
-                            screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE)
+                            screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE, null)
                             liveData.removeObservers(lifeCycleOwner)
                         }
                         Result.Status.LOADING -> {

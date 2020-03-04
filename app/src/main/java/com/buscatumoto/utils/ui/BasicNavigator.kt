@@ -25,11 +25,14 @@ class BasicNavigator @Inject constructor() {
      * @param classToStartIntent: The class specified to navigate to.
      * @param extras: Any data associated with a intent.
      */
-    fun navigateToIntent(activityLauncher: Activity, classToStartIntent: Class<out Any>, extras: Bundle?): Unit{
+    fun navigateToIntent(activityLauncher: Activity, classToStartIntent: Class<out Any>, extras: Bundle?) {
         val intent : Intent?
         intent = Intent(appContext, classToStartIntent)
         intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+        extras?.let {
+            intent.putExtras(it)
+        }
         activityLauncher.startActivity(intent)
     }
 

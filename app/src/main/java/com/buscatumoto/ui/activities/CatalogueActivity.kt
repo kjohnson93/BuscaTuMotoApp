@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.buscatumoto.R
 import com.buscatumoto.databinding.ActivityCatalogueBinding
+import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
+import com.buscatumoto.utils.ui.BasicNavigator
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -17,10 +19,14 @@ import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_catalogue.*
 import javax.inject.Inject
 
-class CatalogueActivity : AppCompatActivity(), HasAndroidInjector {
+class CatalogueActivity : AppCompatActivity(), HasAndroidInjector, ScreenNavigator {
+
+    companion object {
+        const val NAVIGATE_TO_DETAIL = 0
+    }
 
     @Inject
-    lateinit var dispatchingAndroidInjector : DispatchingAndroidInjector<Any>
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -36,7 +42,9 @@ class CatalogueActivity : AppCompatActivity(), HasAndroidInjector {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_catalogue)
 
-        catalogueViewModel = ViewModelProviders.of(this, viewModelFactory).get(CatalogueViewModel::class.java)
+        catalogueViewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(CatalogueViewModel::class.java)
+        catalogueViewModel.screenNavigator = this
         binding.viewModel = catalogueViewModel
         binding.lifecycleOwner = this
         catalogueViewModel.lifecycleOwner = this
@@ -44,8 +52,7 @@ class CatalogueActivity : AppCompatActivity(), HasAndroidInjector {
         setSupportActionBar(toolbar)
 
         //Subscribe for error observable
-        catalogueViewModel.getErrorMessage().observe(this, Observer {
-            errorMessage ->
+        catalogueViewModel.getErrorMessage().observe(this, Observer { errorMessage ->
             if (errorMessage != null) {
                 showErrorMessage(errorMessage)
             } else {
@@ -59,11 +66,20 @@ class CatalogueActivity : AppCompatActivity(), HasAndroidInjector {
     }
 
     private fun showErrorMessage(errorMessage: String?) {
-        snackbarError = Snackbar.make(binding.root, errorMessage.toString(), Snackbar.LENGTH_INDEFINITE)
+        snackbarError =
+            Snackbar.make(binding.root, errorMessage.toString(), Snackbar.LENGTH_INDEFINITE)
         snackbarError?.setAction(R.string.retry, catalogueViewModel.retryClickListener)
         snackbarError?.show()
     }
 
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 
+    override fun navigateToNext(event: Int, extras: Bundle?) {
+        when (event) {
+            NAVIGATE_TO_DETAIL -> {
+                val basicNavigator = BasicNavigator()
+                basicNavigator.navigateToIntent(this, MotoDetailActivity::class.java, extras)
+            }
+        }
+    }
 }
