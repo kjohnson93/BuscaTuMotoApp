@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
-class MotoDetailViewModel @Inject constructor(val motoDao: MotoDao) : ViewModel() {
+class MotoDetailViewModel @Inject constructor(private val motoDao: MotoDao) : ViewModel() {
     lateinit var lifeCycleOwner: MotoDetailActivity
 
     var id: String = ""
