@@ -118,6 +118,18 @@ fun setRefreshing(view: SwipeRefreshLayout, booleanObservable: MutableLiveData<B
     }
 }
 
+@BindingAdapter("mutableBackground")
+fun setBackground(view: ImageView, drawableObservable: MutableLiveData<Drawable>) {
+
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+
+    if (parentActivity != null) {
+        drawableObservable.observe(parentActivity, Observer { result ->
+            view.background = result
+        })
+    }
+}
+
 @BindingAdapter("refreshListener")
 fun setRefreshListener(view: SwipeRefreshLayout, viewModel: CatalogueViewModel) {
 

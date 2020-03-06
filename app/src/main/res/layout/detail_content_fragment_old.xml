@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.buscatumoto.ui.viewmodels.DetailContentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activities.MotoDetailActivity">
+
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            mutableDrawable="@{viewModel.bannerLiveData}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/gallery_thumb" />
+
+        <TextView
+            android:id="@+id/detailTitleTvw"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5"
+            app:mutableText="@{viewModel.modelTitleLiveData}" />
+
+        <TextView
+            android:id="@+id/detailHighlightsTvw"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/detailTitleTvw"
+            app:layout_constraintStart_toStartOf="@+id/detailTitleTvw"
+            app:layout_constraintTop_toBottomOf="@+id/detailTitleTvw"
+            app:mutableText="@{viewModel.highLightsLiveData}" />
+
+        <TextView
+            android:id="@+id/detailPriceTitleTvw"
+            mutableText="@{viewModel.priceTitleLiveData}"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/detailHighlightsTvw"
+            app:layout_constraintTop_toBottomOf="@+id/detailHighlightsTvw" />
+
+        <TextView
+            android:id="@+id/detailPriceDescTvw"
+            mutableText="@{viewModel.priceDescLiveData}"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:scrollbars="vertical"
+            app:layout_constraintStart_toStartOf="@+id/detailPriceTitleTvw"
+            app:layout_constraintTop_toBottomOf="@+id/detailPriceTitleTvw" />
+
+        <TextView
+            android:id="@+id/detailMainDesc"
+            mutableText="@{viewModel.mainDescLiveData}"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:scrollbars="vertical"
+            app:layout_constraintStart_toStartOf="@+id/detailPriceDescTvw"
+            app:layout_constraintTop_toBottomOf="@+id/detailPriceDescTvw" />
+
+        <TextView
+            android:id="@+id/detailLicensesTitleTvw"
+            mutableText="@{viewModel.licensesTitleLiveData}"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/detailMainDesc"
+            app:layout_constraintTop_toBottomOf="@+id/detailMainDesc" />
+
+        <TextView
+            android:id="@+id/detailLicensesTvw"
+            mutableText="@{viewModel.licensesLiveData}"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/detailLicensesTitleTvw"
+            app:layout_constraintTop_toBottomOf="@+id/detailLicensesTitleTvw" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
