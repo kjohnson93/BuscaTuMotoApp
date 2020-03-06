@@ -109,5 +109,9 @@ dependencies {
     //Image downloader
     implementation "io.coil-kt:coil:$coil_kt_version"
 
+    //Viewpager page indicator dots
+    implementation "com.tbuonomo.andrui:viewpagerdotsindicator:$viewpagerdotsindicator_version"
+
+
 
 }

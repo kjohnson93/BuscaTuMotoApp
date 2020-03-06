@@ -43,6 +43,7 @@ class MotoDetailActivity : AppCompatActivity(), HasAndroidInjector {
         } ?: run {
             motoDetailViewModel.id = ""
         }
+
         binding.viewModel = motoDetailViewModel
         binding.lifecycleOwner = this
 
@@ -50,6 +51,9 @@ class MotoDetailActivity : AppCompatActivity(), HasAndroidInjector {
         //test
         val detailPagerAdapter = DetailViewPagerAdapter(supportFragmentManager)
         binding.detailViewPager.adapter = detailPagerAdapter
+
+        val dotsIndicator = binding.dotsIndicator
+        dotsIndicator.setViewPager(binding.detailViewPager)
     }
 
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
