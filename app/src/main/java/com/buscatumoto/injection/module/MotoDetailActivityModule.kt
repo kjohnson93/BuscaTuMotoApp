@@ -7,6 +7,6 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class MotoDetailActivityModule {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [DetailScreenFragmentBuilderModule::class])
     abstract fun contributeMotoDetailActivity(): MotoDetailActivity
 }

@@ -47,4 +47,19 @@ abstract class ViewModelModule {
     @ViewModelKey(MotoDetailViewModel::class)
     abstract fun bindMotoDetailViewModel(motoDetailViewModel: MotoDetailViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailContentViewModel::class)
+    abstract fun bindDetailContentViewModel(detailContentViewModel: DetailContentViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailSpecsViewModel::class)
+    abstract fun bindDetailSpecsViewModel(detailSpecsViewModel: DetailSpecsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailRelatedViewModel::class)
+    abstract fun bindDetailRelatedViewModel(relatedViewModel: DetailRelatedViewModel): ViewModel
+
 }
