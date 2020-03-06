@@ -3,7 +3,6 @@ package com.buscatumoto.ui.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.buscatumoto.R
 import com.buscatumoto.databinding.ActivityMotoDetailBinding
@@ -36,20 +35,19 @@ class MotoDetailActivity : AppCompatActivity(), HasAndroidInjector {
         motoDetailViewModel = ViewModelProviders.of(this, viewModelFactory).get(MotoDetailViewModel::class.java)
         motoDetailViewModel.lifeCycleOwner = this
 
+        var motoId: String? = null
+
         //Assign id from UI -> not good but necessary to avoid creating an additional Dao.
         intent?.extras?.getString(Constants.MOTO_ID_KEY)?.let {
-            motoDetailViewModel.id = it
-            executeUiOp(CatalogueUiOp.NavigateToDetail(it))
+            motoId = it
         } ?: run {
-            motoDetailViewModel.id = ""
+            motoId = ""
         }
 
         binding.viewModel = motoDetailViewModel
         binding.lifecycleOwner = this
 
-
-        //test
-        val detailPagerAdapter = DetailViewPagerAdapter(supportFragmentManager)
+        val detailPagerAdapter = DetailViewPagerAdapter(motoId ,supportFragmentManager)
         binding.detailViewPager.adapter = detailPagerAdapter
 
         val dotsIndicator = binding.wormDotsIndicator
@@ -57,12 +55,4 @@ class MotoDetailActivity : AppCompatActivity(), HasAndroidInjector {
     }
 
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
-
-    fun executeUiOp(uiOp: CatalogueUiOp) {
-        when (uiOp) {
-            is CatalogueUiOp.NavigateToDetail -> {
-                motoDetailViewModel.loadMotoDetail(uiOp.id)
-            }
-        }
-    }
 }

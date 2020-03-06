@@ -11,7 +11,9 @@ import com.buscatumoto.R
 import com.buscatumoto.databinding.DetailContentFragmentBinding
 import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.viewmodels.DetailContentViewModel
+import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.utils.injection.ViewModelFactory
+import com.buscatumoto.utils.ui.CatalogueUiOp
 import javax.inject.Inject
 
 class DetailContentFragment: Fragment(), Injectable {
@@ -35,7 +37,20 @@ class DetailContentFragment: Fragment(), Injectable {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        //Assign id from UI -> not good but necessary to avoid creating an additional Dao.
+        arguments?.getString(Constants.MOTO_ID_KEY)?.let {
+            executeUiOp(CatalogueUiOp.NavigateToDetail(it))
+        }
+
         return binding.root
+    }
+
+    fun executeUiOp(uiOp: CatalogueUiOp) {
+        when (uiOp) {
+            is CatalogueUiOp.NavigateToDetail -> {
+                viewModel.loadMotoDetail(uiOp.id)
+            }
+        }
     }
 
 

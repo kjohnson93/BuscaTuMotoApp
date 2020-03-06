@@ -24,22 +24,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-<!--        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator-->
-<!--            android:id="@+id/dots_indicator"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="15dp"-->
-<!--            app:dotsColor="#FFFFFF"-->
-<!--            app:dotsCornerRadius="8dp"-->
-<!--            app:dotsSize="16dp"-->
-<!--            app:dotsSpacing="4dp"-->
-<!--            app:dotsWidthFactor="2.5"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/detailViewPager"-->
-<!--            app:layout_constraintEnd_toEndOf="@+id/detailViewPager"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:progressMode="false"-->
-<!--            app:selectedDotColor="@color/grey_dot_indicator" />-->
-
         <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
             android:id="@+id/worm_dots_indicator"
             android:layout_width="wrap_content"
