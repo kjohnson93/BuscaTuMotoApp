@@ -29,7 +29,6 @@ class DetailContentViewModel @Inject constructor(private val loadMotoDetailUseCa
     val mainDescLiveData = MutableLiveData<String>()
     val licensesTitleLiveData = MutableLiveData<String>()
     val licensesLiveData = MutableLiveData<String>()
-    val specsTableTitleLiveData = MutableLiveData<String>()
 
 
     fun loadMotoDetail(id: String) {
@@ -57,7 +56,6 @@ class DetailContentViewModel @Inject constructor(private val loadMotoDetailUseCa
                             mainDescLiveData.value = motoDetailUi?.mainDesc
                             licensesTitleLiveData.value = motoDetailUi?.licensesTitle
                             licensesLiveData.value = motoDetailUi?.licenses
-                            specsTableTitleLiveData.value = motoDetailUi?.specsTitle
                         }
                     }
                 })
