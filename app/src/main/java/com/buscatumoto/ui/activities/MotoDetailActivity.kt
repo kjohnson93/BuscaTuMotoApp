@@ -52,7 +52,7 @@ class MotoDetailActivity : AppCompatActivity(), HasAndroidInjector {
         val detailPagerAdapter = DetailViewPagerAdapter(supportFragmentManager)
         binding.detailViewPager.adapter = detailPagerAdapter
 
-        val dotsIndicator = binding.dotsIndicator
+        val dotsIndicator = binding.wormDotsIndicator
         dotsIndicator.setViewPager(binding.detailViewPager)
     }
 

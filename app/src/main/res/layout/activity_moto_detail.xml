@@ -15,40 +15,45 @@
         android:layout_height="match_parent"
         tools:context=".ui.activities.MotoDetailActivity">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.9"
-            />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/detailViewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:layout_constraintDimensionRatio="1:2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-            android:id="@+id/dots_indicator"
+<!--        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator-->
+<!--            android:id="@+id/dots_indicator"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="15dp"-->
+<!--            app:dotsColor="#FFFFFF"-->
+<!--            app:dotsCornerRadius="8dp"-->
+<!--            app:dotsSize="16dp"-->
+<!--            app:dotsSpacing="4dp"-->
+<!--            app:dotsWidthFactor="2.5"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/detailViewPager"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/detailViewPager"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:progressMode="false"-->
+<!--            app:selectedDotColor="@color/grey_dot_indicator" />-->
+
+        <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+            android:id="@+id/worm_dots_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            app:dotsColor="#FFFFFF"
+            app:dotsColor="@color/grey_dot_indicator_fill_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/detailViewPager"
+            app:layout_constraintBottom_toBottomOf="@+id/detailViewPager"
+            android:layout_marginBottom="25dp"
+            app:dotsStrokeColor="@color/grey_dot_indicator_border"
             app:dotsCornerRadius="8dp"
             app:dotsSize="16dp"
             app:dotsSpacing="4dp"
-            app:dotsWidthFactor="2.5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline"
-            app:progressMode="false"
-            app:selectedDotColor="#FF33FF"
+            app:dotsStrokeWidth="2dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
