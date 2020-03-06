@@ -41,65 +41,59 @@
             android:id="@+id/detailHighlightsTvw"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:mutableText="@{viewModel.highLightsLiveData}"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="@+id/detailTitleTvw"
             app:layout_constraintStart_toStartOf="@+id/detailTitleTvw"
-            app:layout_constraintTop_toBottomOf="@+id/detailTitleTvw" />
+            app:layout_constraintTop_toBottomOf="@+id/detailTitleTvw"
+            app:mutableText="@{viewModel.highLightsLiveData}" />
 
         <TextView
             android:id="@+id/detailPriceTitleTvw"
+            mutableText="@{viewModel.priceTitleLiveData}"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            mutableText="@{viewModel.priceTitleLiveData}"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="@+id/detailHighlightsTvw"
             app:layout_constraintTop_toBottomOf="@+id/detailHighlightsTvw" />
 
         <TextView
             android:id="@+id/detailPriceDescTvw"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             mutableText="@{viewModel.priceDescLiveData}"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:scrollbars="vertical"
             app:layout_constraintStart_toStartOf="@+id/detailPriceTitleTvw"
             app:layout_constraintTop_toBottomOf="@+id/detailPriceTitleTvw" />
 
         <TextView
             android:id="@+id/detailMainDesc"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             mutableText="@{viewModel.mainDescLiveData}"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:scrollbars="vertical"
             app:layout_constraintStart_toStartOf="@+id/detailPriceDescTvw"
             app:layout_constraintTop_toBottomOf="@+id/detailPriceDescTvw" />
 
         <TextView
             android:id="@+id/detailLicensesTitleTvw"
+            mutableText="@{viewModel.licensesTitleLiveData}"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            mutableText="@{viewModel.licensesTitleLiveData}"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="@+id/detailMainDesc"
             app:layout_constraintTop_toBottomOf="@+id/detailMainDesc" />
 
         <TextView
             android:id="@+id/detailLicensesTvw"
+            mutableText="@{viewModel.licensesLiveData}"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            mutableText="@{viewModel.licensesLiveData}"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="@+id/detailLicensesTitleTvw"
             app:layout_constraintTop_toBottomOf="@+id/detailLicensesTitleTvw" />
 
-        <TextView
-            android:id="@+id/detailSpecsTitleTvw"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            mutableText="@{viewModel.specsTableTitleLiveData}"
-            app:layout_constraintStart_toStartOf="@+id/detailLicensesTvw"
-            app:layout_constraintTop_toBottomOf="@+id/detailLicensesTvw" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

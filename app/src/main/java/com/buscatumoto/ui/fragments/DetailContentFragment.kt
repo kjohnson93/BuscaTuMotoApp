@@ -1,6 +1,7 @@
 package com.buscatumoto.ui.fragments
 
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,9 @@ class DetailContentFragment: Fragment(), Injectable {
         arguments?.getString(Constants.MOTO_ID_KEY)?.let {
             executeUiOp(CatalogueUiOp.NavigateToDetail(it))
         }
+
+        binding.detailPriceDescTvw.movementMethod = ScrollingMovementMethod()
+        binding.detailMainDesc.movementMethod = ScrollingMovementMethod()
 
         return binding.root
     }
