@@ -19,11 +19,11 @@ interface MotoDao {
     @Query("SELECT * FROM moto")
     fun getMotos(): List<MotoEntity>
 
-    @Query("DELETE FROM moto")
-    suspend fun deleteMotos()
-
     //Tryng to get motyEntity
     //on get objects from DB suspend fun is not required!
     @Query("SELECT * FROM moto WHERE id=:id ")
     fun getMotoById(id: String): LiveData<MotoEntity>
+
+    @Query("SELECT * FROM moto WHERE id=:id ")
+    fun getMotoByIdNoLiveData(id: String): MotoEntity
 }

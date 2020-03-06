@@ -128,7 +128,6 @@ class BuscaTuMotoRepository @Inject constructor(
                         searchDao.insert(SearchEntity(1, null, brand, model, bikeType, priceBottom.toString(), priceTop.toString(),
                             powerBottom.toString(), powerTop.toString(), displacementBottom.toString(), displacementTop.toString(),
                             weightBottom.toString(), weightTop.toString(), year.toString(), license))
-                        motoDao.deleteMotos()
                         motoDao.insert(motoResponse.motos)
 
                     emitSource(motoDao.getMotoLiveData().map {
@@ -168,7 +167,6 @@ class BuscaTuMotoRepository @Inject constructor(
                         searchDao.insert(SearchEntity(1, search, null, null, null, null, null,
                             null, null, null, null,
                             null, null, null, null))
-                        motoDao.deleteMotos()
                         motoDao.insert(motoResponse.motos)
 
                     emitSource(motoDao.getMotoLiveData().map {
