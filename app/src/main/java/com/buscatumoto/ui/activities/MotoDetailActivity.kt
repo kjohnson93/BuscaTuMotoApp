@@ -40,8 +40,7 @@ class MotoDetailActivity : AppCompatActivity(), HasAndroidInjector {
         //Assign id from UI -> not good but necessary to avoid creating an additional Dao.
         intent?.extras?.getString(Constants.MOTO_ID_KEY)?.let {
             motoId = it
-        } ?: run {
-            motoId = ""
+            executeUiOp(CatalogueUiOp.NavigateToDetail(it))
         }
 
         binding.viewModel = motoDetailViewModel
@@ -55,4 +54,12 @@ class MotoDetailActivity : AppCompatActivity(), HasAndroidInjector {
     }
 
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
+
+    fun executeUiOp(uiOp: CatalogueUiOp) {
+        when (uiOp) {
+            is CatalogueUiOp.NavigateToDetail -> {
+                motoDetailViewModel.loadMotoDetail(uiOp.id)
+            }
+        }
+    }
 }

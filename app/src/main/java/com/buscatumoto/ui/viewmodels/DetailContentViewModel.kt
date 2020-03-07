@@ -21,7 +21,6 @@ class DetailContentViewModel @Inject constructor(private val loadMotoDetailUseCa
 
     var id: String = ""
 
-    val bannerLiveData = MutableLiveData<Drawable>()
     val modelTitleLiveData = MutableLiveData<String>()
     val highLightsLiveData = MutableLiveData<String>()
     val priceTitleLiveData = MutableLiveData<String>()
@@ -48,7 +47,6 @@ class DetailContentViewModel @Inject constructor(private val loadMotoDetailUseCa
                         val motoDetailUi: MotoDetailUi? = loadMotoDetailUseCase.parseMotoEntity(motoResult)
 
                         withContext(Dispatchers.Main) {
-                            bannerLiveData.value = motoDetailUi?.bannerImg
                             modelTitleLiveData.value = motoDetailUi?.modelTitle
                             highLightsLiveData.value = motoDetailUi?.modelDetailHighlights
                             priceTitleLiveData.value = motoDetailUi?.priceTitle
