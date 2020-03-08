@@ -64,21 +64,20 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            tools:context=".ui.activities.MotoDetailActivity">
 
 
-        <androidx.viewpager.widget.ViewPager
+            <androidx.viewpager.widget.ViewPager
             android:id="@+id/detailViewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            />
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+                android:paddingBottom="30dp"
+                android:overScrollMode="ifContentScrolls"
+                />
+
 
         <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
             android:id="@+id/worm_dots_indicator"
@@ -88,15 +87,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/detailViewPager"
             app:layout_constraintBottom_toBottomOf="@+id/detailViewPager"
-            android:layout_marginBottom="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             app:dotsStrokeColor="@color/grey_dot_indicator_border"
             app:dotsCornerRadius="8dp"
             app:dotsSize="16dp"
             app:dotsSpacing="4dp"
             app:dotsStrokeWidth="2dp"
+            app:layout_anchor="@id/detailViewPager"
+            app:layout_anchorGravity="bottom|center"
             />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
