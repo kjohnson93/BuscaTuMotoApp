@@ -2,6 +2,8 @@ package com.buscatumoto.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.buscatumoto.R
@@ -43,6 +45,15 @@ class MotoDetailActivity : AppCompatActivity(), HasAndroidInjector {
             executeUiOp(CatalogueUiOp.NavigateToDetail(it))
         }
 
+        val toolbar =binding.detailContentToolbar
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.let {
+            it.title = ""
+        }
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         binding.viewModel = motoDetailViewModel
         binding.lifecycleOwner = this
 
@@ -61,5 +72,17 @@ class MotoDetailActivity : AppCompatActivity(), HasAndroidInjector {
                 motoDetailViewModel.loadMotoDetail(uiOp.id)
             }
         }
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            else -> {
+                //default menu
+                finish()
+                return super.onOptionsItemSelected(item)
+            }
+        }
+
     }
 }
