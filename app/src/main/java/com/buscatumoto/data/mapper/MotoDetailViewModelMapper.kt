@@ -35,9 +35,19 @@ object MotoEntityToMotoDetailUiMapper: BaseSuspendMapper<MotoEntity, MotoDetailU
             }
             val licenses = licensesStrBuilder.toString()
 
+//            val specsTable : MutableList<SpecItem> = arrayListOf()
+
+            val specsTable = ArrayList<ArrayList<String>> ()
+
+
+            //table values
+//            type.specsTable.forEachIndexed {
+//                index, element ->
+//                specsTable.add(index, SpecItem(element[0], element[1]))
+//            }
 
             result = MotoDetailUi(bannerDrawable, it.model, modelDetailHighLights, it.priceTitle,
-                it.priceDesc, it.mainDesc, it.licensesTitle, licenses, it.specsTitle)
+                it.priceDesc, it.mainDesc, it.licensesTitle, licenses, it.specsTitle, specsTable)
         }
 
         return result

@@ -12,7 +12,9 @@ data class MotoDetailUi (
      var mainDesc : String,
      var licensesTitle : String,
      var licenses : String,
-     var specsTitle : String
+     var specsTitle : String,
+     var specsTable: ArrayList<ArrayList<String>>
+     //list of
     //                       @field:SerializedName("specsTable") val specsTable : List<List<String>>
 //     val relatedItems : List<String>,
 )
