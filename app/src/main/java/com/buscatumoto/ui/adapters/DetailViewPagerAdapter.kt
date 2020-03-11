@@ -7,10 +7,11 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.buscatumoto.ui.fragments.DetailContentFragment
 import com.buscatumoto.ui.fragments.DetailRelatedFragment
 import com.buscatumoto.ui.fragments.DetailSpecsFragment
+import com.buscatumoto.ui.models.MotoDetailUi
 import com.buscatumoto.utils.global.Constants
 
 
-class DetailViewPagerAdapter(val idMoto: String?,fragmentManager: FragmentManager): FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class DetailViewPagerAdapter(private val detailUi: MotoDetailUi?, private val idMoto: String?, fragmentManager: FragmentManager): FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     companion object {
         const val DETAIL_CONTENT_PAGE = 0
@@ -21,6 +22,7 @@ class DetailViewPagerAdapter(val idMoto: String?,fragmentManager: FragmentManage
     override fun getItem(position: Int): Fragment {
         val bundle = Bundle()
         bundle.putString(Constants.MOTO_ID_KEY, idMoto)
+        bundle.putParcelable(Constants.MOTO_DETAIL_UI_KEY, detailUi)
 
         when (position) {
             DETAIL_CONTENT_PAGE -> {

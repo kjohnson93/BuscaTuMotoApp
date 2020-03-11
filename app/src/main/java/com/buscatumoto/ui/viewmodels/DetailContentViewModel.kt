@@ -31,7 +31,11 @@ class DetailContentViewModel @Inject constructor(private val loadMotoDetailUseCa
 
 
     fun loadMotoDetail(id: String) {
-        Timber.d("Id on VM: $id")
+
+    }
+
+    fun bind(id: String, motoDetailUi: MotoDetailUi) {
+        Timber.d("Id on VM: $")
         viewModelScope.launch(Dispatchers.IO) {
             val motoEntity = loadMotoDetailUseCase.execute(id)
 

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.buscatumoto.R
 import com.buscatumoto.databinding.DetailSpecsFragmentBinding
 import com.buscatumoto.injection.Injectable
+import com.buscatumoto.ui.models.MotoDetailUi
 import com.buscatumoto.ui.viewmodels.DetailSpecsViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
 import javax.inject.Inject
@@ -38,6 +39,10 @@ class DetailSpecsFragment: Fragment(), Injectable {
         binding.lifecycleOwner = this
 
         return binding.root
+    }
+
+    fun bind(motoDetailUi: MotoDetailUi) {
+        viewModel.bind(motoDetailUi)
     }
 
 }

@@ -1,7 +1,8 @@
 package com.buscatumoto.utils.ui
 
-import android.graphics.drawable.Drawable
+import com.buscatumoto.ui.models.MotoDetailUi
 
 sealed class CatalogueUiOp {
-    class NavigateToDetail(val id: String): CatalogueUiOp()
+    class LoadDetailActivity(val id: String): CatalogueUiOp()
+    class LoadFragmentPageContent(val id: String, val motoDetailUi: MotoDetailUi): CatalogueUiOp()
 }

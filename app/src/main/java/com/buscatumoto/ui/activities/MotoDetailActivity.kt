@@ -42,7 +42,7 @@ class MotoDetailActivity : AppCompatActivity(), HasAndroidInjector {
         //Assign id from UI -> not good but necessary to avoid creating an additional Dao.
         intent?.extras?.getString(Constants.MOTO_ID_KEY)?.let {
             motoId = it
-            executeUiOp(CatalogueUiOp.NavigateToDetail(it))
+            executeUiOp(CatalogueUiOp.LoadDetailActivity(it))
         }
 
         val toolbar =binding.detailContentToolbar
@@ -56,10 +56,10 @@ class MotoDetailActivity : AppCompatActivity(), HasAndroidInjector {
 
         binding.viewModel = motoDetailViewModel
         binding.lifecycleOwner = this
+    }
 
-        val detailPagerAdapter = DetailViewPagerAdapter(motoId ,supportFragmentManager)
-        binding.detailViewPager.adapter = detailPagerAdapter
-
+    fun bindAdapter(detailViewPagerAdapter: DetailViewPagerAdapter) {
+        binding.detailViewPager.adapter = detailViewPagerAdapter
         val dotsIndicator = binding.wormDotsIndicator
         dotsIndicator.setViewPager(binding.detailViewPager)
     }
@@ -68,8 +68,8 @@ class MotoDetailActivity : AppCompatActivity(), HasAndroidInjector {
 
     fun executeUiOp(uiOp: CatalogueUiOp) {
         when (uiOp) {
-            is CatalogueUiOp.NavigateToDetail -> {
-                motoDetailViewModel.loadMotoDetail(uiOp.id)
+            is CatalogueUiOp.LoadDetailActivity -> {
+                motoDetailViewModel.loadMotoDetail(uiOp.id, supportFragmentManager)
             }
         }
     }
