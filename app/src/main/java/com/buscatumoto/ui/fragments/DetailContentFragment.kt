@@ -56,7 +56,7 @@ class DetailContentFragment: Fragment(), Injectable {
     fun executeUiOp(uiOp: CatalogueUiOp) {
         when (uiOp) {
             is CatalogueUiOp.LoadFragmentPageContent -> {
-                viewModel.bind(uiOp.id ,uiOp.motoDetailUi)
+                viewModel.bind(uiOp.motoDetailUi)
             }
         }
     }

@@ -19,7 +19,8 @@ import timber.log.Timber
 
 import javax.inject.Inject
 
-class MotoDetailViewModel @Inject constructor(private val loadMotoDetailUseCase: LoadMotoDetailUseCase) : ViewModel() {
+class MotoDetailViewModel @Inject constructor(private val loadMotoDetailUseCase: LoadMotoDetailUseCase) :
+    ViewModel() {
     lateinit var lifeCycleOwner: MotoDetailActivity
 
     val bannerLiveData = MutableLiveData<Drawable>()
@@ -30,32 +31,15 @@ class MotoDetailViewModel @Inject constructor(private val loadMotoDetailUseCase:
     fun loadMotoDetail(id: String, fragmentManager: FragmentManager) {
         Timber.d("Id on VM: $id")
         viewModelScope.launch(Dispatchers.IO) {
-            val motoEntity = loadMotoDetailUseCase.execute(id)
             val motoEntityVal = loadMotoDetailUseCase.executeNoLiveData(id)
 
-            Timber.d(motoEntityVal.toString())
+            val motoDetailUi: MotoDetailUi? = loadMotoDetailUseCase.parseMotoEntity(motoEntityVal)
 
             withContext(Dispatchers.Main) {
-                motoEntity.observe(lifeCycleOwner, Observer {
-                        motoResult ->
-                    viewModelScope.launch (Dispatchers.IO) {
-                        val motoDetailUi: MotoDetailUi? = loadMotoDetailUseCase.parseMotoEntity(motoResult)
-
-                        withContext(Dispatchers.Main) {
-                             detailPagerAdapter = DetailViewPagerAdapter(motoDetailUi, id, fragmentManager)
-                             lifeCycleOwner.bindAdapter(detailPagerAdapter)
-                             bannerLiveData.value = motoDetailUi?.bannerImg
-                        }
-                    }
-                })
+                detailPagerAdapter = DetailViewPagerAdapter(motoDetailUi, id, fragmentManager)
+                lifeCycleOwner.bindAdapter(detailPagerAdapter)
+                bannerLiveData.value = motoDetailUi?.bannerImg
             }
         }
     }
-
-    fun bind(motoDetailUi: MotoDetailUi) {
-
-    }
-
-
-
 }

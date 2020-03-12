@@ -12,7 +12,9 @@ import com.buscatumoto.databinding.DetailSpecsFragmentBinding
 import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.models.MotoDetailUi
 import com.buscatumoto.ui.viewmodels.DetailSpecsViewModel
+import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.utils.injection.ViewModelFactory
+import com.buscatumoto.utils.ui.CatalogueUiOp
 import javax.inject.Inject
 
 class DetailSpecsFragment: Fragment(), Injectable {
@@ -35,10 +37,25 @@ class DetailSpecsFragment: Fragment(), Injectable {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailSpecsViewModel::class.java)
         viewModel.lifeCyclerOwner = this
 
+        arguments?.getString(Constants.MOTO_ID_KEY)?.let { id ->
+            //get parcelable motodetail and pass it to viewModel
+            arguments?.getParcelable<MotoDetailUi>(Constants.MOTO_DETAIL_UI_KEY)?.let { motoDetailUid ->
+                executeUiOp(CatalogueUiOp.LoadFragmentPageContent(id, motoDetailUid))
+            }
+        }
+
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
         return binding.root
+    }
+
+    fun executeUiOp(uiOp: CatalogueUiOp) {
+        when (uiOp) {
+            is CatalogueUiOp.LoadFragmentPageContent -> {
+                viewModel.bind(uiOp.motoDetailUi)
+            }
+        }
     }
 
     fun bind(motoDetailUi: MotoDetailUi) {
