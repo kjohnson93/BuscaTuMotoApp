@@ -37,7 +37,9 @@ object MotoEntityToMotoDetailUiMapper: BaseSuspendMapper<MotoEntity, MotoDetailU
 
 //            val specsTable : MutableList<SpecItem> = arrayListOf()
 
-            val specsTable = ArrayList<ArrayList<String>> ()
+            var specsTable = ArrayList<ArrayList<String>> ()
+
+            specsTable = type?.specsTable as ArrayList<ArrayList<String>>
 
 
             //table values

@@ -1,17 +1,30 @@
 package com.buscatumoto.ui.viewmodels
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.buscatumoto.data.local.dao.MotoDao
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.buscatumoto.BuscaTuMotoApplication
+import com.buscatumoto.ui.adapters.DetailSpecsRecyclerAdapter
 import com.buscatumoto.ui.fragments.DetailSpecsFragment
 import com.buscatumoto.ui.models.MotoDetailUi
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class DetailSpecsViewModel @Inject constructor(private val motoDao: MotoDao): ViewModel() {
+class DetailSpecsViewModel @Inject constructor(): ViewModel() {
     lateinit var lifeCyclerOwner: DetailSpecsFragment
 
-    fun bind(motoDetailUi: MotoDetailUi) {
+    val detailSpecsRecyclerAdapter = DetailSpecsRecyclerAdapter()
 
+    private val appContext: Context = BuscaTuMotoApplication.getInstance().applicationContext
+    val layoutManager = LinearLayoutManager(
+        appContext,
+        RecyclerView.VERTICAL,
+        false
+    )
+
+    fun bind(motoDetailUi: MotoDetailUi) {
+        detailSpecsRecyclerAdapter.updateData(motoDetailUi.specsTable)
+
+        //TODO If specstable is empty use databind to show textview instead of recyclerlayout inside a framelayout
     }
 }

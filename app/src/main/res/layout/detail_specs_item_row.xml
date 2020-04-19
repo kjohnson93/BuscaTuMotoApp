@@ -3,21 +3,19 @@
     <data>
         <variable
             name="viewModel"
-            type="com.buscatumoto.ui.viewmodels.DetailSpecsViewModel" />
+            type="com.buscatumoto.ui.viewmodels.DetailSpecItemViewModel" />
     </data>
-
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/detailSpecsRV"
-        android:layout_width="match_parent"
-        app:detailRecyclerAdapter="@{viewModel.detailSpecsRecyclerAdapter}"
-        app:recyclerLinearLayoutManager="@{viewModel.layoutManager}"
+    <TextView
+        android:id="@+id/detailSpecsItemTvw"
+        android:layout_width="150dp"
+        app:mutableText="@{viewModel.mutableText}"
         android:layout_height="wrap_content"/>
 
 </LinearLayout>
-
 </layout>
+

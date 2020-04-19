@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
 import com.buscatumoto.R
 import com.buscatumoto.databinding.DetailSpecsFragmentBinding
 import com.buscatumoto.injection.Injectable
+import com.buscatumoto.ui.adapters.DetailSpecsRecyclerAdapter
 import com.buscatumoto.ui.models.MotoDetailUi
 import com.buscatumoto.ui.viewmodels.DetailSpecsViewModel
 import com.buscatumoto.utils.global.Constants
@@ -43,9 +46,16 @@ class DetailSpecsFragment: Fragment(), Injectable {
                 executeUiOp(CatalogueUiOp.LoadFragmentPageContent(id, motoDetailUid))
             }
         }
-
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        //gridlayout manager
+        val gridLayoutManager = GridLayoutManager(context, 2)
+        //TODO notifyDatasetchanged not working on gridlayout.
+        binding.detailSpecsRV.layoutManager = gridLayoutManager
+        binding.detailSpecsRV.itemAnimator = DefaultItemAnimator()
+        binding.detailSpecsRV.adapter = DetailSpecsRecyclerAdapter()
+
 
         return binding.root
     }

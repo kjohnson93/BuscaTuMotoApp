@@ -62,4 +62,9 @@ abstract class ViewModelModule {
     @ViewModelKey(DetailRelatedViewModel::class)
     abstract fun bindDetailRelatedViewModel(relatedViewModel: DetailRelatedViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailSpecItemViewModel::class)
+    abstract fun bindDetailSpecItemViewModel(detailSpecItemViewModel: DetailSpecItemViewModel): ViewModel
+
 }

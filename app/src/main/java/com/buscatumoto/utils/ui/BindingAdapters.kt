@@ -11,10 +11,12 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.buscatumoto.ui.adapters.CatalogueListAdapter
+import com.buscatumoto.ui.adapters.DetailSpecsRecyclerAdapter
 import com.buscatumoto.ui.adapters.SearchBrandsRecyclerAdapter
 import com.buscatumoto.ui.fragments.InfiniteRotationView
 import com.buscatumoto.ui.models.BrandRecyclerUiModel
@@ -154,9 +156,36 @@ fun setCatalogueAdapter(view: RecyclerView, adapter: CatalogueListAdapter) {
     }
 }
 
+@BindingAdapter("detailRecyclerAdapter")
+fun setDetailSpecsAdapter(view: RecyclerView, adapter: DetailSpecsRecyclerAdapter) {
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+
+    if (parentActivity != null) {
+        view.setHasFixedSize(true)
+        view.adapter = adapter
+    }
+}
+
 @BindingAdapter("recyclerLinearLayoutManager")
 fun setLayoutManager(view: RecyclerView, linearLayoutManager: LinearLayoutManager) {
         view.layoutManager = linearLayoutManager
+}
+
+//@BindingAdapter("genericRecyclerAdapter")
+//fun setDetailSpecsAdapter(view: RecyclerView, adapter: DetailSpecsRecyclerAdapter) {
+//
+//    val parentActivity: AppCompatActivity? = view.getParentActivity()
+//
+//    if (parentActivity != null) {
+//        view.setHasFixedSize(true)
+//        view.adapter = adapter
+//    }
+//}
+
+
+@BindingAdapter("recyclerGridLayoutManager")
+fun setGridLayoutManager(view: RecyclerView, gridLayoutManager: GridLayoutManager) {
+    view.layoutManager = gridLayoutManager
 }
 
 @BindingAdapter("scrollableListener")

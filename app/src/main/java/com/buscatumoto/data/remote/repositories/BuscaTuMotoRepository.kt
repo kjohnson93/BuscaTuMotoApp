@@ -173,10 +173,6 @@ class BuscaTuMotoRepository @Inject constructor(
                         Result.success(motoResponse.motos)
                     })
                 }
-
-                emitSource(motoDao.getMotoLiveData().map {
-                    Result.success(it)
-                })
             } else if (response.status == Result.Status.ERROR) {
                 emitSource(motoDao.getMotoLiveData().map {
                     Result.error("An IO error has ocurred on search data fetch", null)
