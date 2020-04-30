@@ -133,34 +133,13 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         this.activityReadyListener = activity
     }
 
-    fun openFilterDialogFragment() {
-        // Make sure the current transaction finishes first
-//        var isFMnull = true
-//        isFMnull = fragmentManager == null
-//
-//        Timber.d("Is FM NULL $isFMnull")
-//        fragmentManager?.executePendingTransactions()
-////        val fragmentTransactionAdd = fragmentManager?.beginTransaction()
-//        val prev = fragmentManager?.findFragmentByTag("dialog")
-//        // If there is no fragment yet with this tag then show it. Otherwise donothing
-//        //This is to prevent crash if user is clicking too fast
-//        if (prev == null) {
-//            fragmentManager?.let {
-//                dialogFiltoFragment.show(it, "dialog")
-//            }
-//        }
-    }
-
     override fun onClick(view: View?) {
         when (view?.id) {
             binding.filtrarBtn.id -> {
                 findNavController().navigate(R.id.action_searchFragment_to_filterFormDialogFragment)
-//                openFilterDialogFragment()
-
             }
             binding.arrowDownImgBtn.id -> {
                 findNavController().navigate(R.id.action_searchFragment_to_filterFormDialogFragment)
-//                openFilterDialogFragment()
             }
         }
     }

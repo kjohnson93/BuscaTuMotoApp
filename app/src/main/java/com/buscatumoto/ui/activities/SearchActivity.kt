@@ -2,14 +2,11 @@ package com.buscatumoto.ui.activities
 
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.buscatumoto.R
 import com.buscatumoto.ui.fragments.SearchFragment
 import com.buscatumoto.utils.ui.CustomScrollView
@@ -103,10 +100,16 @@ class SearchActivity : AppCompatActivity(),
 
 
     override fun onReady() {
-        val secondsDelayed = 2
+        val autoScrollDelay = 2
         Handler().postDelayed(Runnable {
             searchBarLayout!!.setExpanded(false, true)
-        }, (secondsDelayed * 1000).toLong())
+
+            val hideHeaderDelay = 0.2
+
+            Handler().postDelayed({
+                searchBarLayout!!.visibility = View.GONE
+            }, (hideHeaderDelay * 1000).toLong())
+        }, (autoScrollDelay * 1000).toLong())
     }
 
     /**
