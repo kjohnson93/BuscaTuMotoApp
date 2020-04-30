@@ -11,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentFiltroFormBinding
@@ -25,7 +27,7 @@ import com.buscatumoto.utils.ui.BasicNavigator
 import javax.inject.Inject
 
 
-class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnClickListener, Injectable, ScreenNavigator {
+class FilterFormDialogFragment: Fragment(), View.OnClickListener, Injectable, ScreenNavigator {
 
     companion object {
         fun newInstance(): FilterFormDialogFragment {
@@ -81,7 +83,7 @@ class FilterFormDialogFragment: androidx.fragment.app.DialogFragment(), View.OnC
     override fun onClick(view: View?) {
         when (view?.id) {
             binding.filtrarCloseIbtn.id -> {
-                dismiss()
+            findNavController().popBackStack()
             }
             R.id.filtrar_refresh_ibtn -> {
                 //OK: View only can notify view model. View doest no pass any view related classes to view model.

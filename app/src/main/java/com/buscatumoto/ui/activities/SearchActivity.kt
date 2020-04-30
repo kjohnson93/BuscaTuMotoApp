@@ -101,14 +101,6 @@ class SearchActivity : AppCompatActivity(),
 //        transaction.add(R.id.fragmentLL, fragment, "LOGIN FRAGMENT").commit()
     }
 
-    /**
-     * Overriding backpressed to finish instead of navigating to Splashscreen
-     */
-    override fun onBackPressed() {
-        super.onBackPressed()
-        this.finish()
-    }
-
 
     override fun onReady() {
         val secondsDelayed = 2

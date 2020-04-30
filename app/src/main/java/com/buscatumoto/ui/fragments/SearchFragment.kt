@@ -11,6 +11,7 @@ import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentSearchBinding
 import com.buscatumoto.injection.Injectable
@@ -42,8 +43,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 
     var arrowDownImgBtn: ImageButton? = null
     var filtrarBtn: Button? = null
-
-    var dialogFiltoFragment: FilterFormDialogFragment = FilterFormDialogFragment.newInstance()
 
     private var errorSnackbar: Snackbar? = null
 
@@ -89,7 +88,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 
         })
 
-        frontPageViewModel.getError().observe(this, Observer { result ->
+        frontPageViewModel.getError().observe(viewLifecycleOwner, Observer { result ->
             if (result.errorMessage != null) {
                 showError(result.errorMessage)
             } else {
@@ -136,30 +135,32 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 
     fun openFilterDialogFragment() {
         // Make sure the current transaction finishes first
-        var isFMnull = true
-        isFMnull = fragmentManager == null
-
-        Timber.d("Is FM NULL $isFMnull")
-        fragmentManager?.executePendingTransactions()
-//        val fragmentTransactionAdd = fragmentManager?.beginTransaction()
-        val prev = fragmentManager?.findFragmentByTag("dialog")
-        // If there is no fragment yet with this tag then show it. Otherwise donothing
-        //This is to prevent crash if user is clicking too fast
-        if (prev == null) {
-            fragmentManager?.let {
-                dialogFiltoFragment.show(it, "dialog")
-            }
-        }
+//        var isFMnull = true
+//        isFMnull = fragmentManager == null
+//
+//        Timber.d("Is FM NULL $isFMnull")
+//        fragmentManager?.executePendingTransactions()
+////        val fragmentTransactionAdd = fragmentManager?.beginTransaction()
+//        val prev = fragmentManager?.findFragmentByTag("dialog")
+//        // If there is no fragment yet with this tag then show it. Otherwise donothing
+//        //This is to prevent crash if user is clicking too fast
+//        if (prev == null) {
+//            fragmentManager?.let {
+//                dialogFiltoFragment.show(it, "dialog")
+//            }
+//        }
     }
 
     override fun onClick(view: View?) {
         when (view?.id) {
             binding.filtrarBtn.id -> {
-                openFilterDialogFragment()
+                findNavController().navigate(R.id.action_searchFragment_to_filterFormDialogFragment)
+//                openFilterDialogFragment()
 
             }
             binding.arrowDownImgBtn.id -> {
-                openFilterDialogFragment()
+                findNavController().navigate(R.id.action_searchFragment_to_filterFormDialogFragment)
+//                openFilterDialogFragment()
             }
         }
     }

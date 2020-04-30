@@ -17,5 +17,13 @@
         <action
             android:id="@+id/action_searchFragment_to_catalogueActivity"
             app:destination="@id/catalogueActivity" />
+        <action
+            android:id="@+id/action_searchFragment_to_filterFormDialogFragment"
+            app:destination="@id/filterFormDialogFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/filterFormDialogFragment"
+        tools:layout="@layout/fragment_filtro_form"
+        android:name="com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment"
+        android:label="FilterFormDialogFragment" />
 </navigation>
