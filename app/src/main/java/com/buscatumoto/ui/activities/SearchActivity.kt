@@ -59,7 +59,7 @@ class SearchActivity : AppCompatActivity(),
         nestedScrollView!!.isEnableScrolling = false
         disableHeaderScroll()
 
-        this.openFragment()
+//        this.openFragment()
 
 
 
@@ -98,7 +98,7 @@ class SearchActivity : AppCompatActivity(),
             R.anim.slide_out_bottom
         )
         transaction.addToBackStack(null)
-        transaction.add(R.id.fragmentLL, fragment, "LOGIN FRAGMENT").commit()
+//        transaction.add(R.id.fragmentLL, fragment, "LOGIN FRAGMENT").commit()
     }
 
     /**
@@ -111,7 +111,7 @@ class SearchActivity : AppCompatActivity(),
 
 
     override fun onReady() {
-        val secondsDelayed = 6
+        val secondsDelayed = 2
         Handler().postDelayed(Runnable {
             searchBarLayout!!.setExpanded(false, true)
         }, (secondsDelayed * 1000).toLong())

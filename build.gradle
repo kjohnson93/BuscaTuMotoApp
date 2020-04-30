@@ -40,6 +40,7 @@ buildscript {
     ext.cardview_version = '1.0.0'
     ext.coil_kt_version = '0.9.5'
     ext.viewpagerdotsindicator_version = '4.1.2'
+    ext.navigation_version = '2.3.0-alpha02'
 
 }
 

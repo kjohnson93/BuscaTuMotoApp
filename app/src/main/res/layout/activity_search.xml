@@ -42,9 +42,15 @@
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:id="@+id/fragmentLL"
-            android:layout_width="match_parent" android:layout_height="wrap_content"></LinearLayout>
-    </com.buscatumoto.utils.ui.CustomScrollView>
+        <!--Nav host-->
+        <fragment
+            android:id="@+id/nav_host_fragment_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/app_navigation"
+            />
+
+            </com.buscatumoto.utils.ui.CustomScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

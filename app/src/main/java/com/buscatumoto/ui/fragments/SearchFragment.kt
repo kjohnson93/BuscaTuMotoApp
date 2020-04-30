@@ -15,6 +15,7 @@ import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentSearchBinding
 import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.activities.CatalogueActivity
+import com.buscatumoto.ui.activities.SearchActivity
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
 import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
@@ -118,9 +119,9 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        this.activityReadyListener?.let {
-            this.activityReadyListener!!.onReady()
-        }
+
+        //Casting to SearchActivity because we don't have a delegate as we did with previous navigation.
+        (requireActivity() as SearchActivity).onReady()
     }
 
     interface ReadyListener {

@@ -111,7 +111,8 @@ dependencies {
 
     //Viewpager page indicator dots
     implementation "com.tbuonomo.andrui:viewpagerdotsindicator:$viewpagerdotsindicator_version"
-
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
 
 }
