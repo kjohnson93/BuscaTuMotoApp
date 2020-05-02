@@ -55,7 +55,7 @@ class FilterFormDialogFragment: Fragment(), View.OnClickListener, Injectable, Sc
     ): View? {
         searchFormViewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchFormViewModel::class.java)
 
-        searchFormViewModel.getError().observe(this, Observer {
+        searchFormViewModel.getError().observe(viewLifecycleOwner, Observer {
             result ->
             if (result.errorMessage != null) {
                 showError(result.errorMessage)

@@ -28,6 +28,7 @@
                 android:src="@drawable/moto_banner_2"
                 android:scaleType="centerCrop"/>
             <androidx.appcompat.widget.Toolbar
+                android:visibility="gone"
                 android:id="@+id/search_toolbar"
                 app:layout_collapseMode="pin"
                 android:layout_height="?attr/actionBarSize"
