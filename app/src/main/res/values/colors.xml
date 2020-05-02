@@ -6,4 +6,5 @@
     <color name="grey_separator">#BBBBBB</color>
     <color name="grey_dot_indicator_border">#CCCCCC</color>
     <color name="grey_dot_indicator_fill_color">#B82323</color>
+    <color name="white">#FFFFFF</color>
 </resources>

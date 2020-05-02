@@ -1,5 +1,7 @@
 package com.buscatumoto.ui.activities
 
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -7,12 +9,19 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.buscatumoto.R
 import com.buscatumoto.ui.fragments.SearchFragment
 import com.buscatumoto.utils.ui.CustomScrollView
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import kotlinx.android.synthetic.main.activity_search.*
 import javax.inject.Inject
 
 class SearchActivity : AppCompatActivity(),
@@ -39,26 +48,42 @@ class SearchActivity : AppCompatActivity(),
      */
     private var nestedScrollView: CustomScrollView? = null
 
+    private var searchToolbar: Toolbar? = null
+
+    private var appBarlayout: AppBarLayout? = null
+
+    private lateinit var navController: NavController
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         setContentView(R.layout.activity_search)
-
-
 
         searchBarLayout = findViewById(R.id.searchAppBar)
         collapsingToolbar = findViewById(R.id.collapsingToolbar)
         coordLayout = findViewById(R.id.searchCoordLayout)
         nestedScrollView = findViewById(R.id.nestedscrollview)
+        searchToolbar = findViewById(R.id.search_toolbar)
+        appBarlayout = findViewById(R.id.searchAppBar)
+
+//        collapsingToolbar?.setExpandedTitleColor(R.style.collapsingToolbarLayoutTitleColor)
+        collapsingToolbar?.setCollapsedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleColorCollapsed)
 
         nestedScrollView!!.isEnableScrolling = false
         disableHeaderScroll()
 
-//        this.openFragment()
+        navController = findNavController(R.id.nav_host_fragment_search)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
 
+        val appBarConfigurationBack = AppBarConfiguration(setOf(R.id.searchFragment))
 
+//        setupActionBarWithNavController(navController, appBarConfiguration)
+        this.collapsingToolbar?.setupWithNavController(searchToolbar!!, navController)
+
+        val navIcon = search_toolbar.navigationIcon?.changingConfigurations
 
     }
 
@@ -107,7 +132,7 @@ class SearchActivity : AppCompatActivity(),
             val hideHeaderDelay = 0.2
 
             Handler().postDelayed({
-                searchBarLayout!!.visibility = View.GONE
+//                searchBarLayout!!.visibility = View.GONE
             }, (hideHeaderDelay * 1000).toLong())
         }, (autoScrollDelay * 1000).toLong())
     }
@@ -122,6 +147,10 @@ class SearchActivity : AppCompatActivity(),
 
     override fun androidInjector(): AndroidInjector<Any> {
         return dispatchingAndroidInjector
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController?.navigateUp() ?: false
     }
 
 

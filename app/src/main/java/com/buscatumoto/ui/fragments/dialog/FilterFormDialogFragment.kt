@@ -74,7 +74,6 @@ class FilterFormDialogFragment: Fragment(), View.OnClickListener, Injectable, Sc
         // the LiveData will not be observed and updates to it will not be propagated to the UI.
         binding.lifecycleOwner = this
 
-        binding.filtrarCloseIbtn.setOnClickListener(this)
         binding.filtrarRefreshIbtn.setOnClickListener(this)
 
         return binding.root
@@ -82,9 +81,6 @@ class FilterFormDialogFragment: Fragment(), View.OnClickListener, Injectable, Sc
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            binding.filtrarCloseIbtn.id -> {
-            findNavController().popBackStack()
-            }
             R.id.filtrar_refresh_ibtn -> {
                 //OK: View only can notify view model. View doest no pass any view related classes to view model.
                 searchFormViewModel.refreshData()
