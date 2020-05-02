@@ -8,7 +8,7 @@
         android:id="@+id/catalogueActivity"
         tools:layout="@layout/activity_catalogue"
         android:name="com.buscatumoto.ui.activities.CatalogueActivity"
-        android:label="CatalogueActivity" />
+        android:label="dasdasdasd" />
     <fragment
         android:id="@+id/searchFragment"
         tools:layout="@layout/fragment_search"

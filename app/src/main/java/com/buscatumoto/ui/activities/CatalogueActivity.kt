@@ -49,8 +49,6 @@ class CatalogueActivity : AppCompatActivity(), HasAndroidInjector, ScreenNavigat
         binding.lifecycleOwner = this
         catalogueViewModel.lifecycleOwner = this
 
-        setSupportActionBar(toolbar)
-
         //Subscribe for error observable
         catalogueViewModel.getErrorMessage().observe(this, Observer { errorMessage ->
             if (errorMessage != null) {

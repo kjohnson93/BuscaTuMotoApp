@@ -15,12 +15,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-        <activity android:name=".ui.activities.MotoDetailActivity"></activity>
+        <activity android:name=".ui.activities.MotoDetailActivity"
+            android:label="MotoDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBar"
+            ></activity>
         <activity
             android:name=".ui.activities.CatalogueActivity"
             android:label="@string/title_activity_catalogue"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:theme="@style/AppThemeNoActionBar"
             android:name=".ui.activities.SearchActivity"
