@@ -168,7 +168,12 @@ fun setDetailSpecsAdapter(view: RecyclerView, adapter: DetailSpecsRecyclerAdapte
 
 @BindingAdapter("recyclerLinearLayoutManager")
 fun setLayoutManager(view: RecyclerView, linearLayoutManager: LinearLayoutManager) {
-        view.layoutManager = linearLayoutManager
+
+        view.layoutManager = null
+
+        if (view.layoutManager == null) {
+            view.layoutManager = linearLayoutManager
+        }
 }
 
 //@BindingAdapter("genericRecyclerAdapter")

@@ -8,6 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentCatalogueBinding
 import com.buscatumoto.injection.Injectable
@@ -67,7 +69,7 @@ class CatalogueFragment: Fragment(), Injectable, ScreenNavigator {
     }
 
     override fun navigateToNext(event: Int, extras: Bundle?) {
-
+        findNavController().navigate(R.id.action_catalogueFragment_to_motoDetailHostFragment, extras)
     }
 
     private fun hideErrorMessage() {

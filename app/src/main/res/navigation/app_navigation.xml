@@ -29,6 +29,15 @@
         android:id="@+id/catalogueFragment"
         android:name="com.buscatumoto.ui.fragments.CatalogueFragment"
         tools:layout="@layout/fragment_catalogue"
-        android:label="CatalogueFragment" />
+        android:label="CatalogueFragment" >
+        <action
+            android:id="@+id/action_catalogueFragment_to_motoDetailHostFragment"
+            app:destination="@id/motoDetailHostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/motoDetailHostFragment"
+        android:name="com.buscatumoto.ui.fragments.MotoDetailHostFragment"
+        tools:layout="@layout/fragment_host_moto_detail"
+        android:label="MotoDetailHostFragment" />
 
 </navigation>

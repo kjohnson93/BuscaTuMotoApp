@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.buscatumoto.R
 import com.buscatumoto.databinding.ActivityCatalogueBinding
 import com.buscatumoto.ui.navigation.ScreenNavigator
@@ -75,8 +76,8 @@ class CatalogueActivity : AppCompatActivity(), HasAndroidInjector, ScreenNavigat
     override fun navigateToNext(event: Int, extras: Bundle?) {
         when (event) {
             NAVIGATE_TO_DETAIL -> {
-                val basicNavigator = BasicNavigator()
-                basicNavigator.navigateToIntent(this, MotoDetailActivity::class.java, extras)
+//                val basicNavigator = BasicNavigator()
+//                basicNavigator.navigateToIntent(this, MotoDetailActivity::class.java, extras)
             }
         }
     }
