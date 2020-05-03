@@ -102,14 +102,15 @@ class FilterFormDialogFragment: Fragment(), View.OnClickListener, Injectable, Sc
     }
 
     override fun navigateToNext(event: Int, extras: Bundle?) {
-        when (event) {
-            SearchFragment.NAVIGATE_TO_CATALOGUE -> {
-                basicNavigator.navigateToIntent(
-                    requireActivity(),
-                    CatalogueActivity::class.java,
-                    extras
-                )
-            }
-        }
+        findNavController().navigate(R.id.action_filterFormDialogFragment_to_catalogueFragment, extras)
+//        when (event) {
+//            SearchFragment.NAVIGATE_TO_CATALOGUE -> {
+//                basicNavigator.navigateToIntent(
+//                    requireActivity(),
+//                    CatalogueActivity::class.java,
+//                    extras
+//                )
+//            }
+//        }
     }
 }

@@ -1,5 +1,6 @@
 package com.buscatumoto.injection.module
 
+import com.buscatumoto.ui.fragments.CatalogueFragment
 import com.buscatumoto.ui.fragments.SearchFragment
 import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
 import dagger.Module
@@ -14,4 +15,7 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSearchFragment(): SearchFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeCatalogueFragment(): CatalogueFragment
 }

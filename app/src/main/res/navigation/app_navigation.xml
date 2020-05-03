@@ -4,26 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
     app:startDestination="@id/searchFragment">
-    <activity
-        android:id="@+id/catalogueActivity"
-        tools:layout="@layout/activity_catalogue"
-        android:name="com.buscatumoto.ui.activities.CatalogueActivity"
-        android:label="dasdasdasd" />
     <fragment
         android:id="@+id/searchFragment"
         tools:layout="@layout/fragment_search"
         android:name="com.buscatumoto.ui.fragments.SearchFragment"
         android:label="SearchFragment" >
         <action
-            android:id="@+id/action_searchFragment_to_catalogueActivity"
-            app:destination="@id/catalogueActivity" />
-        <action
             android:id="@+id/action_searchFragment_to_filterFormDialogFragment"
             app:destination="@id/filterFormDialogFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_catalogueFragment"
+            app:destination="@id/catalogueFragment" />
     </fragment>
     <fragment
         android:id="@+id/filterFormDialogFragment"
         tools:layout="@layout/fragment_filtro_form"
         android:name="com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment"
-        android:label="FilterFormDialogFragment" />
+        android:label="FilterFormDialogFragment" >
+        <action
+            android:id="@+id/action_filterFormDialogFragment_to_catalogueFragment"
+            app:destination="@id/catalogueFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/catalogueFragment"
+        android:name="com.buscatumoto.ui.fragments.CatalogueFragment"
+        tools:layout="@layout/fragment_catalogue"
+        android:label="CatalogueFragment" />
+
 </navigation>

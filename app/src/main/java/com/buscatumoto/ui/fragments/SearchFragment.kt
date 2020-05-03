@@ -145,15 +145,16 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
     }
 
     override fun navigateToNext(event: Int, extras: Bundle?) {
-        when (event) {
-            NAVIGATE_TO_CATALOGUE -> {
-                basicNavigator.navigateToIntent(
-                    requireActivity(),
-                    CatalogueActivity::class.java,
-                    extras
-                )
-            }
-        }
+//        when (event) {
+////            NAVIGATE_TO_CATALOGUE -> {
+////                basicNavigator.navigateToIntent(
+////                    requireActivity(),
+////                    CatalogueActivity::class.java,
+////                    extras
+////                )
+////            }
+////        }
+        findNavController().navigate(R.id.action_searchFragment_to_catalogueFragment, extras)
     }
 
     private fun showError(@StringRes errorMessage: Int) {

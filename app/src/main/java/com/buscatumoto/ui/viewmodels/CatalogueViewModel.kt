@@ -4,10 +4,7 @@ import android.content.Context
 import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -36,7 +33,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
     private val motosLiveData: MutableLiveData<List<MotoEntity>> = MutableLiveData()
 
-    lateinit var lifecycleOwner: CatalogueActivity
+    lateinit var lifecycleOwner: LifecycleOwner
     lateinit var screenNavigator: ScreenNavigator
 
     private val appContext: Context = BuscaTuMotoApplication.getInstance().applicationContext
