@@ -157,6 +157,8 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     }
 
     fun getLinearLayoutManager(): LinearLayoutManager? {
+
+        //TODO check if only create when layout manager is null
             layoutManager = LinearLayoutManager(
                 appContext,
                 RecyclerView.VERTICAL,
