@@ -60,25 +60,11 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
     var refreshingMutable = MutableLiveData<Boolean>()
 
-    val layoutManager = LinearLayoutManager(
+    var layoutManager: LinearLayoutManager? = LinearLayoutManager(
         appContext,
         RecyclerView.VERTICAL,
         false
     )
-
-    val scrollListener = object: PaginationListener(layoutManager) {
-        override fun loadMoreItems() {
-            this@CatalogueViewModel.loadMoreItems()
-        }
-
-        override fun isLastPage(): Boolean {
-            return this@CatalogueViewModel.isLastPage()
-        }
-
-        override fun isLoading(): Boolean {
-            return this@CatalogueViewModel.isLoading()
-        }
-    }
 
     init {
         //Always loads first page of moto search/filter
@@ -117,6 +103,8 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                                 catalogueListAdapter.addItems(result?.data)
                                 refreshingMutable.value = false
                                 isLoading = false
+
+                                layoutManager = null
                             }
                             motos.removeObservers(lifecycleOwner)
                         }
@@ -132,6 +120,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                             loadingVisibility.value = View.GONE
                             errorMessage.value = result.message
                             motos.removeObservers(lifecycleOwner)
+                            layoutManager = null
                         }
                     }
                 })
@@ -165,6 +154,60 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
     fun isLoading(): Boolean {
         return isLoading
+    }
+
+    fun getLinearLayoutManager(): LinearLayoutManager? {
+            layoutManager = LinearLayoutManager(
+                appContext,
+                RecyclerView.VERTICAL,
+                false
+            )
+            return layoutManager
+    }
+
+    fun getScrollableListener(): RecyclerView.OnScrollListener? {
+
+        var scrollListener: RecyclerView.OnScrollListener? = null
+
+        layoutManager?.let {
+            scrollListener = object: PaginationListener(it) {
+                override fun loadMoreItems() {
+                    this@CatalogueViewModel.loadMoreItems()
+                }
+
+                override fun isLastPage(): Boolean {
+                    return this@CatalogueViewModel.isLastPage()
+                }
+
+                override fun isLoading(): Boolean {
+                    return this@CatalogueViewModel.isLoading()
+                }
+            }
+
+        } ?: run {
+            var linearLayoutM = getLinearLayoutManager()
+
+            linearLayoutM?.let {
+                scrollListener = object: PaginationListener(it) {
+                    override fun loadMoreItems() {
+                        this@CatalogueViewModel.loadMoreItems()
+                    }
+
+                    override fun isLastPage(): Boolean {
+                        return this@CatalogueViewModel.isLastPage()
+                    }
+
+                    override fun isLoading(): Boolean {
+                        return this@CatalogueViewModel.isLoading()
+                    }
+                }
+            }
+        }
+
+        return scrollListener
+
+
+
     }
 
 
