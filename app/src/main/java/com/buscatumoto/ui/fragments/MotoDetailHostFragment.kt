@@ -15,6 +15,7 @@ import com.buscatumoto.ui.viewmodels.MotoDetailViewModel
 import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueUiOp
+import kotlinx.android.synthetic.*
 import javax.inject.Inject
 
 class MotoDetailHostFragment: Fragment(), Injectable {

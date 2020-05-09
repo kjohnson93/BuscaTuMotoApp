@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.buscatumoto.ui.fragments.DetailContentFragment
 import com.buscatumoto.ui.fragments.DetailRelatedFragment
 import com.buscatumoto.ui.fragments.DetailSpecsFragment
@@ -11,7 +12,7 @@ import com.buscatumoto.ui.models.MotoDetailUi
 import com.buscatumoto.utils.global.Constants
 
 
-class DetailViewPagerAdapter(private val detailUi: MotoDetailUi?, private val idMoto: String?, fragmentManager: FragmentManager): FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class DetailViewPagerAdapter(private val detailUi: MotoDetailUi?, private val idMoto: String?, fragmentManager: FragmentManager): FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     companion object {
         const val DETAIL_CONTENT_PAGE = 0
