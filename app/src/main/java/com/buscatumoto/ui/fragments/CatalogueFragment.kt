@@ -65,6 +65,13 @@ class CatalogueFragment: Fragment(), Injectable, ScreenNavigator {
 
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        /**This line does what doc says. It tells viewmodels attached to this view that they are no longer used.
+        This way we avoid any variable state undesirable.*/
+        viewModelStore.clear()
+    }
+
     override fun navigateToNext(event: Int, extras: Bundle?) {
         hideError()
         findNavController().navigate(R.id.action_catalogueFragment_to_motoDetailHostFragment, extras)

@@ -79,6 +79,13 @@ class FilterFormDialogFragment: Fragment(), View.OnClickListener, Injectable, Sc
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        /**This line does what doc says. It tells viewmodels attached to this view that they are no longer used.
+        This way we avoid any variable state undesirable.*/
+        viewModelStore.clear()
+    }
+
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.filtrar_refresh_ibtn -> {

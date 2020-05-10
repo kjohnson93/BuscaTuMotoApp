@@ -44,6 +44,12 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
         this.value = View.GONE
     }
 
+    override fun onCleared() {
+        super.onCleared()
+    }
+
+    fun clear() = onCleared()
+
     private val retryErrorClickListener = View.OnClickListener {
 
         when (retryErrorModel.requestType) {

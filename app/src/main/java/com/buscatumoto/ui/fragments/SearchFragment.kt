@@ -116,6 +116,13 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         binding.fragmentSearchBrandsRv.stopAutoScroll()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        /**This line does what doc says. It tells viewmodels attached to this view that they are no longer used.
+        This way we avoid any variable state undesirable.*/
+        viewModelStore.clear()
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -145,15 +152,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
     }
 
     override fun navigateToNext(event: Int, extras: Bundle?) {
-//        when (event) {
-////            NAVIGATE_TO_CATALOGUE -> {
-////                basicNavigator.navigateToIntent(
-////                    requireActivity(),
-////                    CatalogueActivity::class.java,
-////                    extras
-////                )
-////            }
-////        }
         hideError()
         findNavController().navigate(R.id.action_searchFragment_to_catalogueFragment, extras)
     }
@@ -161,6 +159,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
     private fun showError(@StringRes errorMessage: Int) {
         errorSnackbar = Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_INDEFINITE)
         errorSnackbar?.setAction(R.string.retry, frontPageViewModel.getErrorClickListener())
+        errorSnackbar?.show()
         errorSnackbar?.show()
     }
 
