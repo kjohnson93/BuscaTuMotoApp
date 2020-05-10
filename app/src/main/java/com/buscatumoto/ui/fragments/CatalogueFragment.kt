@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentCatalogueBinding
@@ -17,8 +16,6 @@ import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
 import javax.inject.Inject
 
 class CatalogueFragment: Fragment(), Injectable, ScreenNavigator {
@@ -58,7 +55,7 @@ class CatalogueFragment: Fragment(), Injectable, ScreenNavigator {
             if (errorMessage != null) {
                 showErrorMessage(errorMessage)
             } else {
-                hideErrorMessage()
+                hideError()
             }
         })
 
@@ -69,10 +66,11 @@ class CatalogueFragment: Fragment(), Injectable, ScreenNavigator {
     }
 
     override fun navigateToNext(event: Int, extras: Bundle?) {
+        hideError()
         findNavController().navigate(R.id.action_catalogueFragment_to_motoDetailHostFragment, extras)
     }
 
-    private fun hideErrorMessage() {
+    private fun hideError() {
         snackbarError?.dismiss()
     }
 

@@ -154,6 +154,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 ////                )
 ////            }
 ////        }
+        hideError()
         findNavController().navigate(R.id.action_searchFragment_to_catalogueFragment, extras)
     }
 
