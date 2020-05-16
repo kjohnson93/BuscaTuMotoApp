@@ -31,7 +31,7 @@
                 android:layout_height="186dp"
                 android:fitsSystemWindows="true"
                 app:contentScrim="@color/colorPrimary"
-                app:layout_scrollFlags="exitUntilCollapsed|snap"
+                app:layout_scrollFlags="snap"
                 app:titleEnabled="false">
 
                 <ImageView
@@ -66,19 +66,16 @@
         </com.google.android.material.appbar.AppBarLayout>
 
 
-
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/detailViewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:overScrollMode="ifContentScrolls"
+            android:paddingBottom="30dp"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            android:paddingBottom="30dp"
-            android:overScrollMode="ifContentScrolls"
-            />
-
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
             android:id="@+id/worm_dots_indicator"

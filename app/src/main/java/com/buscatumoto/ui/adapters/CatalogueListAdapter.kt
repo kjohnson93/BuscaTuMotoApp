@@ -106,7 +106,14 @@ class CatalogueListAdapter(val catalogueItemClickListener: CatalogueItemClickLis
 
     fun removeLoading() {
         isLoaderVisible = false
-        val pos = listMoto.size - 1
+
+        var pos = 0
+
+        if (listMoto.size == 0 ) {
+            pos = 0
+        } else {
+            pos = listMoto.size - 1
+        }
         val motoEntity = listMoto[pos]
 
         if (motoEntity != null) {

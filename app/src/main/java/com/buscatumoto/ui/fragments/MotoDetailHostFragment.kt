@@ -1,5 +1,6 @@
 package com.buscatumoto.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +11,13 @@ import androidx.lifecycle.ViewModelProviders
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentHostMotoDetailBinding
 import com.buscatumoto.injection.Injectable
+import com.buscatumoto.ui.activities.SearchActivity
 import com.buscatumoto.ui.adapters.DetailViewPagerAdapter
 import com.buscatumoto.ui.viewmodels.MotoDetailViewModel
 import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueUiOp
+import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.*
 import javax.inject.Inject
 
@@ -32,6 +35,7 @@ class MotoDetailHostFragment: Fragment(), Injectable {
     private lateinit var motoDetailViewModel: MotoDetailViewModel
     private lateinit var binding: FragmentHostMotoDetailBinding
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,6 +54,9 @@ class MotoDetailHostFragment: Fragment(), Injectable {
             executeUiOp(CatalogueUiOp.LoadDetailActivity(it))
         }
 
+//        disableHeaderScroll()
+//        binding.detailContentToolbar.setCollapsible(false)
+
         return binding.root
     }
 
@@ -65,6 +72,22 @@ class MotoDetailHostFragment: Fragment(), Injectable {
                 motoDetailViewModel.loadMotoDetail(uiOp.id, requireActivity().supportFragmentManager)
             }
         }
+    }
+
+    fun disableHeaderScroll() {
+
+        val activity = requireActivity() as SearchActivity
+        val appBarLayout: AppBarLayout = activity.findViewById(R.id.searchAppBar)
+
+        val params =  appBarLayout.layoutParams as androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
+        if (params.behavior == null)
+            params.behavior = AppBarLayout.Behavior()
+        val behaviour = params.behavior as AppBarLayout.Behavior
+        behaviour.setDragCallback(object : AppBarLayout.Behavior.DragCallback() {
+            override fun canDrag(appBarLayout: AppBarLayout): Boolean {
+                return false
+            }
+        })
     }
 
 

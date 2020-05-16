@@ -12,9 +12,11 @@ import androidx.navigation.fragment.findNavController
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentCatalogueBinding
 import com.buscatumoto.injection.Injectable
+import com.buscatumoto.ui.activities.SearchActivity
 import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
@@ -58,8 +60,6 @@ class CatalogueFragment: Fragment(), Injectable, ScreenNavigator {
                 hideError()
             }
         })
-
-
 
         return binding.root
 

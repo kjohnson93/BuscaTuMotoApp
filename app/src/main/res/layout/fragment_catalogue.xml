@@ -29,6 +29,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 app:theme="@style/collapsingToolbarLayoutTitleColorCollapsed"
+                android:visibility="gone"
                 app:title="Catalogo"
                 app:titleTextColor="@color/white"
                 app:layout_collapseMode="pin" />
