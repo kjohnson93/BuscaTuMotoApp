@@ -3,6 +3,7 @@ package com.buscatumoto.ui.fragments
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -127,7 +128,21 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         super.onActivityCreated(savedInstanceState)
 
         //Casting to SearchActivity because we don't have a delegate as we did with previous navigation.
-        (requireActivity() as SearchActivity).onReady()
+//        (requireActivity() as SearchActivity).onReady()
+        scrollHeader()
+    }
+
+    private fun scrollHeader() {
+                val autoScrollDelay = 2
+        Handler().postDelayed(Runnable {
+            binding.searchAppBar.setExpanded(false, true)
+
+            val hideHeaderDelay = 0.2
+
+            Handler().postDelayed({
+//                searchBarLayout!!.visibility = View.GONE
+            }, (hideHeaderDelay * 1000).toLong())
+        }, (autoScrollDelay * 1000).toLong())
     }
 
     interface ReadyListener {
