@@ -16,8 +16,7 @@ class DetailViewPagerAdapter(private val detailUi: MotoDetailUi?, private val id
 
     companion object {
         const val DETAIL_CONTENT_PAGE = 0
-        const val DETAIL_SPECS_PAGE = 1
-        const val DETAIL_RELATED_PAGE = 2
+        const val DETAIL_RELATED_PAGE = 1
     }
 
     override fun getItem(position: Int): Fragment {
@@ -30,11 +29,6 @@ class DetailViewPagerAdapter(private val detailUi: MotoDetailUi?, private val id
                 val detailContentFragment = DetailContentFragment()
                 detailContentFragment.arguments = bundle
                 return detailContentFragment
-            }
-            DETAIL_SPECS_PAGE -> {
-                val detailSpecsFragment = DetailSpecsFragment()
-                detailSpecsFragment.arguments = bundle
-                return detailSpecsFragment
             }
             DETAIL_RELATED_PAGE -> {
                 val detailRelatedFragment = DetailRelatedFragment()
@@ -50,6 +44,6 @@ class DetailViewPagerAdapter(private val detailUi: MotoDetailUi?, private val id
     }
 
     override fun getCount(): Int {
-        return 3
+        return 2
     }
 }
