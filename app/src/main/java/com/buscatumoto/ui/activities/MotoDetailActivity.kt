@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.buscatumoto.R
 import com.buscatumoto.databinding.ActivityMotoDetailBinding
-import com.buscatumoto.ui.adapters.DetailViewPagerAdapter
 import com.buscatumoto.ui.viewmodels.MotoDetailViewModel
 import com.buscatumoto.utils.global.Constants
 import com.buscatumoto.utils.injection.ViewModelFactory
@@ -56,12 +55,6 @@ class MotoDetailActivity : AppCompatActivity(), HasAndroidInjector {
 
         binding.viewModel = motoDetailViewModel
         binding.lifecycleOwner = this
-    }
-
-    fun bindAdapter(detailViewPagerAdapter: DetailViewPagerAdapter) {
-        binding.detailViewPager.adapter = detailViewPagerAdapter
-        val dotsIndicator = binding.wormDotsIndicator
-        dotsIndicator.setViewPager(binding.detailViewPager)
     }
 
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector

@@ -12,11 +12,16 @@ import com.buscatumoto.ui.models.MotoDetailUi
 import com.buscatumoto.utils.global.Constants
 
 
-class DetailViewPagerAdapter(private val detailUi: MotoDetailUi?, private val idMoto: String?, fragmentManager: FragmentManager): FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class DetailViewPagerAdapter(private val detailUi: MotoDetailUi?, private val idMoto: String?,
+                             fragmentManager: FragmentManager):
+    FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    companion object {
-        const val DETAIL_CONTENT_PAGE = 0
-        const val DETAIL_RELATED_PAGE = 1
+    private var fragmentList: MutableList<Fragment> = ArrayList()
+    private var fragmentTitleList : MutableList<String> = ArrayList()
+
+    override fun getPageTitle(position: Int): CharSequence? {
+
+        return fragmentTitleList[position]
     }
 
     override fun getItem(position: Int): Fragment {
@@ -24,26 +29,18 @@ class DetailViewPagerAdapter(private val detailUi: MotoDetailUi?, private val id
         bundle.putString(Constants.MOTO_ID_KEY, idMoto)
         bundle.putParcelable(Constants.MOTO_DETAIL_UI_KEY, detailUi)
 
-        when (position) {
-            DETAIL_CONTENT_PAGE -> {
-                val detailContentFragment = DetailContentFragment()
-                detailContentFragment.arguments = bundle
-                return detailContentFragment
-            }
-            DETAIL_RELATED_PAGE -> {
-                val detailRelatedFragment = DetailRelatedFragment()
-                detailRelatedFragment.arguments = bundle
-                return detailRelatedFragment
-            }
-            else -> {
-                val detailContentFragment = DetailContentFragment()
-                detailContentFragment.arguments = bundle
-                return detailContentFragment
-            }
-        }
+        val fragment = fragmentList[position]
+        fragment.arguments = bundle
+
+        return fragment
     }
 
     override fun getCount(): Int {
-        return 2
+        return fragmentList.size
+    }
+
+    fun addFragment(fragment: Fragment, title: String) {
+        fragmentList.add(fragment)
+        fragmentTitleList.add(title)
     }
 }
