@@ -4,6 +4,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
+import android.transition.TransitionInflater
 import androidx.annotation.StringRes
 import com.google.android.material.snackbar.Snackbar
 import android.util.Log
@@ -47,6 +48,18 @@ class FilterFormDialogFragment: Fragment(), View.OnClickListener, Injectable, Sc
     @Inject
     lateinit var basicNavigator: BasicNavigator
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val inflater = TransitionInflater.from(requireContext())
+        allowEnterTransitionOverlap = false
+        allowReturnTransitionOverlap = false
+        exitTransition = inflater.inflateTransition(R.transition.slide_left_long)
+        enterTransition = inflater.inflateTransition(R.transition.slide_right_long)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

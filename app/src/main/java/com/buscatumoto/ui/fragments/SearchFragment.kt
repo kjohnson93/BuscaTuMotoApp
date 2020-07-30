@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.transition.TransitionInflater
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -54,6 +55,19 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 
     lateinit var frontPageViewModel: FrontPageViewModel
     private lateinit var binding: FragmentSearchBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val inflater = TransitionInflater.from(requireContext())
+        allowEnterTransitionOverlap = false
+        allowReturnTransitionOverlap = false
+        exitTransition = inflater.inflateTransition(R.transition.slide_left_long)
+        enterTransition = inflater.inflateTransition(R.transition.slide_right_long)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -108,6 +122,14 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
             brandListSize,
             Constants.AUTO_SCROLL_TIME_ELLAPSE_MILLIS
         )
+
+
+        frontPageViewModel.drawableLoadMutable.observe(viewLifecycleOwner, Observer {
+            result ->
+            Handler().postDelayed( {
+                binding.fragmentSearchBrandsRv.visibility = View.VISIBLE
+            }, 1500)
+        })
 
         return binding.root
     }

@@ -171,6 +171,7 @@
                         app:srcCompat="@drawable/down_arrow_icon_128_dark" />
 
                     <com.buscatumoto.ui.fragments.InfiniteRotationView
+                        android:visibility="gone"
                         android:id="@+id/fragment_search_brands_rv"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"

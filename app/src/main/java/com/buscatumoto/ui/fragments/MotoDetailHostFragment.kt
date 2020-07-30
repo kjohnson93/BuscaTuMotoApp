@@ -2,6 +2,7 @@ package com.buscatumoto.ui.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,13 @@ class MotoDetailHostFragment: Fragment(), Injectable {
 
     private lateinit var motoDetailViewModel: MotoDetailViewModel
     private lateinit var binding: FragmentHostMotoDetailBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.slide_right)
+        exitTransition = inflater.inflateTransition(R.transition.fade)
+    }
 
     @SuppressLint("RestrictedApi")
     override fun onCreateView(

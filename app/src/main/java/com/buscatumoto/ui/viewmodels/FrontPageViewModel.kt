@@ -38,6 +38,8 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
 
     private lateinit var retryErrorModel: RetryErrorModel
 
+    val drawableLoadMutable = MutableLiveData<Boolean> ()
+
     val searchBrandsAdapter = SearchBrandsRecyclerAdapter(this)
 
     val loadingVisibility = MutableLiveData<Int>().apply {
@@ -67,6 +69,7 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
 
     init {
         loadBrands()
+        drawableLoadMutable.value = true
     }
 
     private fun loadBrands() {

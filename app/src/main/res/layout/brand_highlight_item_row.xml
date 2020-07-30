@@ -20,8 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:onClick="@{() -> viewModel.brandImageClick(viewModel.brandObservable.brand)}"
-            app:mutableBrandDrawable="@{viewModel.brandObservable}"
-            app:srcCompat="@drawable/cross_icon_128_dark" />
+            app:mutableBrandDrawable="@{viewModel.brandObservable}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
