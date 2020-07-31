@@ -39,8 +39,8 @@ class MotoDetailHostFragment: Fragment(), Injectable {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val inflater = TransitionInflater.from(requireContext())
-        enterTransition = inflater.inflateTransition(R.transition.slide_right)
-        exitTransition = inflater.inflateTransition(R.transition.fade)
+        enterTransition = inflater.inflateTransition(R.transition.slide_right_combo)
+        exitTransition = inflater.inflateTransition(R.transition.slide_left_combo)
     }
 
     @SuppressLint("RestrictedApi")
