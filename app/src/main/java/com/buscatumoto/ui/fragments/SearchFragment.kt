@@ -27,6 +27,7 @@ import com.buscatumoto.utils.global.hideKeyboardFrom
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.BasicNavigator
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_search.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -106,7 +107,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 
         frontPageViewModel.getError().observe(viewLifecycleOwner, Observer { result ->
             if (result.errorMessage != null) {
-                hideKeyboardFrom(requireContext(), binding.root)
                 showError(result.errorMessage)
             } else {
                 hideError()
@@ -116,15 +116,15 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         getActivity()?.getWindow()
             ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        arrowDownImgBtn?.setOnClickListener(this)
-        filtrarBtn?.setOnClickListener(this)
-
         val brandListSize = frontPageViewModel.searchBrandsAdapter.itemCount
         binding.FragmentSearchBrandsRV.autoScroll(
             brandListSize,
             Constants.AUTO_SCROLL_TIME_ELLAPSE_MILLIS
         )
 
+        /*
+        Observer section
+         */
 
         frontPageViewModel.drawableLoadMutable.observe(viewLifecycleOwner, Observer {
             result ->
@@ -132,6 +132,14 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
                 binding.FragmentSearchBrandsRV.visibility = View.VISIBLE
             }, 1500)
         })
+
+        frontPageViewModel.searchTextMutable.observe(viewLifecycleOwner, Observer {
+            hideKeyboardFrom(requireContext(), binding.root)
+        })
+
+        /*
+        Observer section
+         */
 
         return binding.root
     }
@@ -150,7 +158,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         //Casting to SearchActivity because we don't have a delegate as we did with previous navigation.
 //        (requireActivity() as SearchActivity).onReady()
         scrollHeader()
@@ -164,7 +171,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
             val hideHeaderDelay = 0.2
 
             Handler().postDelayed({
-//                searchBarLayout!!.visibility = View.GONE
             }, (hideHeaderDelay * 1000).toLong())
         }, (autoScrollDelay * 1000).toLong())
     }
@@ -173,10 +179,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         fun onReady()
         fun showError(errorResponse: String?) {
         }
-    }
-
-    fun setActivityDelegate(activity: ReadyListener) {
-        this.activityReadyListener = activity
     }
 
     override fun onClick(view: View?) {
@@ -192,7 +194,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 
     override fun navigateToNext(event: Int, extras: Bundle?) {
         hideError()
-        hideKeyboardFrom(requireContext(), binding.root)
         findNavController().navigate(R.id.action_searchFragment_to_catalogueFragment, extras)
     }
 

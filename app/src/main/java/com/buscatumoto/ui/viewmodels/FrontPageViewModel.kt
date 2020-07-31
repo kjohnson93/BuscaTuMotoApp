@@ -46,6 +46,8 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
         this.value = View.GONE
     }
 
+    val searchTextMutable = MutableLiveData<String> ()
+
     override fun onCleared() {
         super.onCleared()
     }
@@ -178,6 +180,7 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
     fun onSearchRequested(search: String) {
         Timber.d("Search requested: $search")
         lastSearch = search
+        searchTextMutable.value = search
         navigateBySearch(search)
     }
 
