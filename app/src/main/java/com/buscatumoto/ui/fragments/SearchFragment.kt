@@ -144,6 +144,11 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         return binding.root
     }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        binding.searchInputText.setText("")
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         binding.FragmentSearchBrandsRV.stopAutoScroll()
