@@ -21,15 +21,12 @@ class BuscaTuMotoRepository @Inject constructor(
 ) {
 
     suspend fun getFieldsEmit() = liveData<Result<FieldsEntity>> {
-        val disposable = emitSource(fieldsDao.getFieldsLiveData().map {
-            Result.loading(it)
-        })
+
+        //Not using emitSource because it's not getting observed by subscribers for some reason
+        emit(Result.loading())
 
         try {
             val response = buscaTuMotoDataSource.getFields()
-
-            //Stop the previous emission to avoid dispatching the updated value as 'loading'
-            disposable.dispose()
 
             if (response.status == Result.Status.SUCCESS) {
                 //update the database
@@ -53,15 +50,12 @@ class BuscaTuMotoRepository @Inject constructor(
     }
 
     suspend fun getModelsByBrand(brand: String) = liveData<Result<FieldsEntity>> {
-        val disposable = emitSource(fieldsDao.getFieldsLiveData().map {
-            Result.loading(it)
-        })
+
+        //Not using emitSource because it's not getting observed by subscribers for some reason
+        emit(Result.loading())
 
         try {
             val response = buscaTuMotoDataSource.getMotos(brand)
-
-            //Stop the previous emission to avoid dispatching the updated value as 'loading'
-            disposable.dispose()
 
             if (response.status == Result.Status.SUCCESS) {
                 response.data?.let {
@@ -108,9 +102,8 @@ class BuscaTuMotoRepository @Inject constructor(
         license: String? = null,
         pageIndex: Int? = null
     ) = liveData<Result<List<MotoEntity>>> {
-        val disposable = emitSource(motoDao.getMotoLiveData().map {
-            Result.loading(it)
-        })
+        //Not using emitSource because it's not getting observed by subscribers for some reason
+        emit(Result.loading())
 
         try {
             val response = buscaTuMotoDataSource.filter(
@@ -118,8 +111,6 @@ class BuscaTuMotoRepository @Inject constructor(
                 priceBottom, priceTop, powerBottom, powerTop, displacementBottom, displacementTop,
                 weightBottom, weightTop, year, license, pageIndex
             )
-
-            disposable.dispose()
 
             if (response.status == Result.Status.SUCCESS) {
                 response.data?.let { motoResponse ->
@@ -148,16 +139,13 @@ class BuscaTuMotoRepository @Inject constructor(
     }
 
     suspend fun search(search: String, pageIndex: Int?) = liveData<Result<List<MotoEntity>>> {
-        //first local
-        val disposable = emitSource(motoDao.getMotoLiveData().map {
-            Result.loading(it)
-        })
+
+        //Not using emitSource because it's not getting observed by subscribers for some reason
+        emit(Result.loading())
 
         //try network request and dispose local process
         try {
             val response = buscaTuMotoDataSource.search(search, pageIndex)
-
-            disposable.dispose()
 
             if (response.status == Result.Status.SUCCESS) {
                 //save

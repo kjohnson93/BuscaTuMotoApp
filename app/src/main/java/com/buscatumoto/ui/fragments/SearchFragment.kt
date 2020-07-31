@@ -61,7 +61,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         val inflater = TransitionInflater.from(requireContext())
         allowEnterTransitionOverlap = false
         allowReturnTransitionOverlap = false
-        exitTransition = inflater.inflateTransition(R.transition.slide_left_long)
+        exitTransition = inflater.inflateTransition(R.transition.slide_left)
         enterTransition = inflater.inflateTransition(R.transition.slide_right_long)
     }
 
