@@ -9,7 +9,7 @@
     android:focusableInTouchMode="true">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/bannerImg"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginTop="36dp"
@@ -23,21 +23,21 @@
         app:srcCompat="@drawable/banner_logo" />
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/searchLinearLayout"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginTop="70dp"
         android:background="@drawable/border_llayout"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="@+id/bannerImg"
         app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="@+id/bannerImg"
+        app:layout_constraintTop_toBottomOf="@+id/bannerImg"
         app:layout_constraintWidth_percent="0.8">
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/codpacienteLayout"
+            android:id="@+id/searchInputLayout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="86.5"
@@ -45,7 +45,7 @@
             app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/codPacienteInput"
+                android:id="@+id/searchInputText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/colorPrimary"
@@ -61,7 +61,7 @@
             android:layout_weight="1"></View>
 
         <ImageButton
-            android:id="@+id/imageView4"
+            android:id="@+id/searchIconImgBtn"
             style="@style/DefaultButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -81,12 +81,12 @@
         android:text="Filtrar"
         android:textColor="#FFFFFF"
         app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintStart_toStartOf="@+id/searchLinearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/searchLinearLayout"
         app:layout_constraintWidth_percent="0.7" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/filterBtnTextHint"
         android:layout_width="0dp"
         android:layout_height="15dp"
         android:maxLines="1"
@@ -100,13 +100,13 @@
         app:layout_constraintWidth_percent="0.3" />
 
     <ImageButton
-        android:id="@+id/arrowDownImgBtn"
+        android:id="@+id/filterBtnArrowImg"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/filtrarBtn"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="@+id/searchLinearLayout"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintStart_toEndOf="@+id/filtrarBtn"
         app:layout_constraintTop_toTopOf="@+id/filtrarBtn"

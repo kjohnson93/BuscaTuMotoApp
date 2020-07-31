@@ -23,6 +23,7 @@ import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
 import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import com.buscatumoto.utils.global.Constants
+import com.buscatumoto.utils.global.hideKeyboardFrom
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.BasicNavigator
 import com.google.android.material.snackbar.Snackbar
@@ -76,7 +77,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
     ): View? {
         binding =
             DataBindingUtil.inflate(layoutInflater, R.layout.fragment_search, container, false)
-        binding.arrowDownImgBtn.setOnClickListener(this)
+        binding.filterBtnArrowImg.setOnClickListener(this)
         binding.filtrarBtn.setOnClickListener(this)
 
         frontPageViewModel =
@@ -87,12 +88,12 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         binding.lifecycleOwner = this
 
 
-        binding.codPacienteInput.setOnKeyListener(object : View.OnKeyListener {
+        binding.searchInputText.setOnKeyListener(object : View.OnKeyListener {
             override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
                 return when (keyCode) {
                     KeyEvent.KEYCODE_ENTER -> {
-                        frontPageViewModel.onSearchRequested(binding.codPacienteInput?.text.toString())
-                        hideSoftKeyboard()
+                        frontPageViewModel.onSearchRequested(binding.searchInputText?.text.toString())
+                        hideKeyboardFrom(requireContext(), binding.root)
                         true
                     }
                     else -> {
@@ -105,6 +106,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 
         frontPageViewModel.getError().observe(viewLifecycleOwner, Observer { result ->
             if (result.errorMessage != null) {
+                hideKeyboardFrom(requireContext(), binding.root)
                 showError(result.errorMessage)
             } else {
                 hideError()
@@ -118,7 +120,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         filtrarBtn?.setOnClickListener(this)
 
         val brandListSize = frontPageViewModel.searchBrandsAdapter.itemCount
-        binding.fragmentSearchBrandsRv.autoScroll(
+        binding.FragmentSearchBrandsRV.autoScroll(
             brandListSize,
             Constants.AUTO_SCROLL_TIME_ELLAPSE_MILLIS
         )
@@ -127,7 +129,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         frontPageViewModel.drawableLoadMutable.observe(viewLifecycleOwner, Observer {
             result ->
             Handler().postDelayed( {
-                binding.fragmentSearchBrandsRv.visibility = View.VISIBLE
+                binding.FragmentSearchBrandsRV.visibility = View.VISIBLE
             }, 1500)
         })
 
@@ -136,7 +138,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 
     override fun onDestroy() {
         super.onDestroy()
-        binding.fragmentSearchBrandsRv.stopAutoScroll()
+        binding.FragmentSearchBrandsRV.stopAutoScroll()
     }
 
     override fun onDestroyView() {
@@ -182,7 +184,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
             binding.filtrarBtn.id -> {
                 findNavController().navigate(R.id.action_searchFragment_to_filterFormDialogFragment)
             }
-            binding.arrowDownImgBtn.id -> {
+            binding.filterBtnArrowImg.id -> {
                 findNavController().navigate(R.id.action_searchFragment_to_filterFormDialogFragment)
             }
         }
@@ -190,6 +192,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 
     override fun navigateToNext(event: Int, extras: Bundle?) {
         hideError()
+        hideKeyboardFrom(requireContext(), binding.root)
         findNavController().navigate(R.id.action_searchFragment_to_catalogueFragment, extras)
     }
 
@@ -203,11 +206,4 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
     private fun hideError() {
         errorSnackbar?.dismiss()
     }
-
-    fun hideSoftKeyboard() {
-        val inputMethodManager: InputMethodManager? =
-            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        inputMethodManager!!.hideSoftInputFromWindow(view?.getWindowToken(), 0)
-    }
-
 }
