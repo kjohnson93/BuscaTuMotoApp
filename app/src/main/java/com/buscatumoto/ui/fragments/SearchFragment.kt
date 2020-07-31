@@ -1,12 +1,11 @@
 package com.buscatumoto.ui.fragments
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.transition.TransitionInflater
 import android.view.*
-import android.view.inputmethod.InputMethodManager
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.annotation.StringRes
@@ -17,9 +16,6 @@ import androidx.navigation.fragment.findNavController
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentSearchBinding
 import com.buscatumoto.injection.Injectable
-import com.buscatumoto.ui.activities.CatalogueActivity
-import com.buscatumoto.ui.activities.SearchActivity
-import com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment
 import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import com.buscatumoto.utils.global.Constants
@@ -27,8 +23,6 @@ import com.buscatumoto.utils.global.hideKeyboardFrom
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.BasicNavigator
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_search.*
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -122,6 +116,9 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
             Constants.AUTO_SCROLL_TIME_ELLAPSE_MILLIS
         )
 
+        val slideUp: Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up)
+
+
         /*
         Observer section
          */
@@ -130,6 +127,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
             result ->
             Handler().postDelayed( {
                 binding.FragmentSearchBrandsRV.visibility = View.VISIBLE
+                binding.FragmentSearchBrandsRV.startAnimation(slideUp)
             }, 1500)
         })
 
