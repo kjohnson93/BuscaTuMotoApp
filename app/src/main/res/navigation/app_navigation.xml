@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/searchFragment">
+    app:startDestination="@id/splashFragment">
     <fragment
         android:id="@+id/searchFragment"
         tools:layout="@layout/fragment_search"
@@ -39,5 +39,18 @@
         android:name="com.buscatumoto.ui.fragments.MotoDetailHostFragment"
         tools:layout="@layout/fragment_host_moto_detail"
         android:label="MotoDetailHostFragment" />
+    <fragment
+        android:id="@+id/splashFragment"
+        tools:layout="@layout/fragment_splash"
+        android:name="com.buscatumoto.utils.ui.SplashFragment"
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/action_splashFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
 
 </navigation>
