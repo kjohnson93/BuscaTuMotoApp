@@ -43,8 +43,8 @@ class ContainerMainFragment: Fragment() {
         viewpager.adapter = viewPagerAdapter
 
         val iconList = arrayOf(resources
-            .getDrawable(R.drawable.ic_home_128, requireActivity().theme),
-        resources.getDrawable(R.drawable.filter_icon_128, requireActivity().theme))
+            .getDrawable(R.drawable.icon_home_128, requireActivity().theme),
+        resources.getDrawable(R.drawable.icon_filter_128, requireActivity().theme))
 
         val tabLayout = view.findViewById<TabLayout>(R.id.mainTabLayout)
         TabLayoutMediator(tabLayout, viewpager) {

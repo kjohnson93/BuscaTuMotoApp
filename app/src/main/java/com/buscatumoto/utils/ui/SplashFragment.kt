@@ -35,7 +35,7 @@ class SplashFragment: Fragment() {
         super.onResume()
         Handler().postDelayed({
             findNavController().navigate(R.id.action_splashFragment_to_containerMainFragment)
-        }, 5000)
+        }, 1000)
 
     }
 }
