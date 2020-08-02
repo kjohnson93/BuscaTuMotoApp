@@ -2,6 +2,8 @@ package com.buscatumoto.utils.ui
 
 import android.os.Bundle
 import android.os.Handler
+import android.transition.Transition
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,11 @@ class SplashFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val transitionInflater = TransitionInflater.from(requireContext())
+        allowEnterTransitionOverlap = false
+        allowReturnTransitionOverlap = false
+        enterTransition = transitionInflater.inflateTransition(R.transition.fade)
+        exitTransition = transitionInflater.inflateTransition(R.transition.fade)
     }
 
     override fun onCreateView(
