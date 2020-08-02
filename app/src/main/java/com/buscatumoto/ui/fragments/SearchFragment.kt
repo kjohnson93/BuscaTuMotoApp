@@ -26,7 +26,7 @@ import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 
-class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, Injectable,
+class SearchFragment : androidx.fragment.app.Fragment(), Injectable,
     ScreenNavigator {
 
     companion object {
@@ -72,8 +72,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
     ): View? {
         binding =
             DataBindingUtil.inflate(layoutInflater, R.layout.fragment_search, container, false)
-        binding.filterBtnArrowImg.setOnClickListener(this)
-        binding.filtrarBtn.setOnClickListener(this)
 
         frontPageViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(FrontPageViewModel::class.java)
@@ -82,22 +80,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         binding.viewModel = frontPageViewModel
         binding.lifecycleOwner = this
 
-
-        binding.searchInputText.setOnKeyListener(object : View.OnKeyListener {
-            override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
-                return when (keyCode) {
-                    KeyEvent.KEYCODE_ENTER -> {
-                        frontPageViewModel.onSearchRequested(binding.searchInputText?.text.toString())
-                        hideKeyboardFrom(requireContext(), binding.root)
-                        true
-                    }
-                    else -> {
-                        false
-                    }
-                }
-            }
-
-        })
 
         frontPageViewModel.getError().observe(viewLifecycleOwner, Observer { result ->
             if (result.errorMessage != null) {
@@ -144,7 +126,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        binding.searchInputText.setText("")
     }
 
     override fun onDestroy() {
@@ -162,17 +143,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
     interface ReadyListener {
         fun onReady()
         fun showError(errorResponse: String?) {
-        }
-    }
-
-    override fun onClick(view: View?) {
-        when (view?.id) {
-            binding.filtrarBtn.id -> {
-                findNavController().navigate(R.id.action_searchFragment_to_filterFormDialogFragment)
-            }
-            binding.filterBtnArrowImg.id -> {
-                findNavController().navigate(R.id.action_searchFragment_to_filterFormDialogFragment)
-            }
         }
     }
 

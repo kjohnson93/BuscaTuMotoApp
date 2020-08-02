@@ -19,7 +19,7 @@
                         android:id="@+id/bannerImg"
                         android:layout_width="0dp"
                         android:layout_height="70dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="40dp"
                         android:adjustViewBounds="true"
                         android:scaleType="fitXY"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -29,110 +29,18 @@
                         app:layout_constraintWidth_percent="0.8"
                         app:srcCompat="@drawable/banner_logo" />
 
-                    <LinearLayout
-                        android:id="@+id/searchLinearLayout"
-                        android:layout_width="0dp"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="50dp"
-                        android:background="@drawable/border_llayout"
-                        android:orientation="horizontal"
-                        app:layout_constraintEnd_toEndOf="@+id/bannerImg"
-                        app:layout_constraintHeight_percent="0.1"
-                        app:layout_constraintStart_toStartOf="@+id/bannerImg"
-                        app:layout_constraintTop_toBottomOf="@+id/bannerImg"
-                        app:layout_constraintWidth_percent="0.8">
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/searchInputLayout"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="86.5"
-                            android:backgroundTint="@color/colorPrimary"
-                            app:hintEnabled="false">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/searchInputText"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:backgroundTint="@color/colorPrimary"
-                                android:hint="Buscar marca, modelo, etc"
-                                android:inputType="textNoSuggestions|textVisiblePassword"
-                                android:maxLines="1"
-                                android:textColor="@android:color/white"
-                                android:textColorHint="@android:color/white"
-                                android:textSize="16sp" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <View
-                            android:id="@+id/searchViewSeparator"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"></View>
-
-                        <ImageButton
-                            android:id="@+id/searchIconImgBtn"
-                            style="@style/DefaultButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="10"
-                            android:onClick="@{() -> viewModel.onSearchRequested(searchInputText.getText().toString())}"
-                            android:paddingStart="5dp"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/search_icon_128" />
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/filtrarBtn"
-                        android:layout_width="0dp"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="50dp"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:text="Filtrar"
-                        android:textColor="#FFFFFF"
-                        app:layout_constraintHeight_percent="0.1"
-                        app:layout_constraintStart_toStartOf="@+id/searchLinearLayout"
-                        app:layout_constraintTop_toBottomOf="@+id/searchLinearLayout"
-                        app:layout_constraintWidth_percent="0.7" />
-
-                    <TextView
-                        android:id="@+id/filterBtnTextHint"
-                        android:layout_width="0dp"
-                        android:layout_height="15dp"
-                        android:maxLines="1"
-                        android:text="Filtrar Búsqueda"
-                        android:textSize="11sp"
-                        app:layout_constraintBottom_toTopOf="@+id/filtrarBtn"
-                        app:layout_constraintHeight_percent="0.02"
-                        app:layout_constraintStart_toStartOf="@+id/filtrarBtn"
-                        app:layout_constraintWidth_percent="0.3" />
-
-                    <ImageButton
-                        android:id="@+id/filterBtnArrowImg"
-                        android:layout_width="0dp"
-                        android:layout_height="70dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        app:layout_constraintBottom_toBottomOf="@+id/filtrarBtn"
-                        app:layout_constraintEnd_toEndOf="@+id/searchLinearLayout"
-                        app:layout_constraintHeight_percent="0.1"
-                        app:layout_constraintStart_toEndOf="@+id/filtrarBtn"
-                        app:layout_constraintTop_toTopOf="@+id/filtrarBtn"
-                        app:layout_constraintWidth_percent="0.1"
-                        app:srcCompat="@drawable/down_arrow_icon_128_dark" />
 
                     <com.buscatumoto.ui.fragments.InfiniteRotationView
                         android:id="@+id/FragmentSearchBrandsRV"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginTop="50dp"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHeight_percent="0.3"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/filtrarBtn"
-                        app:layout_constraintVertical_bias="0.50"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.65"
                         app:mutableInfiniteViewAdapter="@{viewModel.searchBrandsAdapter}" />
 
                     <ProgressBar
