@@ -27,7 +27,7 @@ class SplashFragment: Fragment() {
     override fun onResume() {
         super.onResume()
         Handler().postDelayed({
-            findNavController().navigate(R.id.action_splashFragment_to_searchFragment)
+            findNavController().navigate(R.id.action_splashFragment_to_containerMainFragment)
         }, 5000)
 
     }
