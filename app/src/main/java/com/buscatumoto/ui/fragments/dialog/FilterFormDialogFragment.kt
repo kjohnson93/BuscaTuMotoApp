@@ -123,6 +123,6 @@ class FilterFormDialogFragment: Fragment(), View.OnClickListener, Injectable, Sc
 
     override fun navigateToNext(event: Int, extras: Bundle?) {
         hideError()
-        findNavController().navigate(R.id.action_filterFormDialogFragment_to_catalogueFragment, extras)
+        findNavController().navigate(R.id.action_containerMainFragment_to_catalogueFragment, extras)
     }
 }

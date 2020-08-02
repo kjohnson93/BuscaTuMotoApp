@@ -5,27 +5,6 @@
     android:id="@+id/app_navigation"
     app:startDestination="@id/splashFragment">
     <fragment
-        android:id="@+id/searchFragment"
-        tools:layout="@layout/fragment_search"
-        android:name="com.buscatumoto.ui.fragments.SearchFragment"
-        android:label="SearchFragment" >
-        <action
-            android:id="@+id/action_searchFragment_to_filterFormDialogFragment"
-            app:destination="@id/filterFormDialogFragment" />
-        <action
-            android:id="@+id/action_searchFragment_to_catalogueFragment"
-            app:destination="@id/catalogueFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/filterFormDialogFragment"
-        tools:layout="@layout/fragment_filtro_form"
-        android:name="com.buscatumoto.ui.fragments.dialog.FilterFormDialogFragment"
-        android:label="FilterFormDialogFragment" >
-        <action
-            android:id="@+id/action_filterFormDialogFragment_to_catalogueFragment"
-            app:destination="@id/catalogueFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/catalogueFragment"
         android:name="com.buscatumoto.ui.fragments.CatalogueFragment"
         tools:layout="@layout/fragment_catalogue"
@@ -44,12 +23,6 @@
         tools:layout="@layout/fragment_splash"
         android:name="com.buscatumoto.utils.ui.SplashFragment"
         android:label="SplashFragment" >
-        <action
-            android:id="@+id/action_splashFragment_to_searchFragment"
-            app:destination="@id/searchFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_splashFragment_to_containerMainFragment"
             app:destination="@id/containerMainFragment"

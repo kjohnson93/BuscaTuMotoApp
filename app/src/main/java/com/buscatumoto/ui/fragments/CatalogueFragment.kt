@@ -39,8 +39,10 @@ class CatalogueFragment: Fragment(), Injectable, ScreenNavigator {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val inflater = TransitionInflater.from(requireContext())
+        allowEnterTransitionOverlap = false
+        allowReturnTransitionOverlap = false
         enterTransition = inflater.inflateTransition(R.transition.slide_right_combo)
-        exitTransition = inflater.inflateTransition(R.transition.slide_left_combo)
+        exitTransition = inflater.inflateTransition(R.transition.fade)
     }
 
     override fun onCreateView(

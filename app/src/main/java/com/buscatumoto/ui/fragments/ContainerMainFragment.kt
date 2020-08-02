@@ -23,7 +23,7 @@ class ContainerMainFragment: Fragment() {
         allowEnterTransitionOverlap = false
         allowReturnTransitionOverlap = false
         exitTransition = inflater.inflateTransition(R.transition.slide_left)
-        enterTransition = inflater.inflateTransition(R.transition.slide_right_long)
+        enterTransition = inflater.inflateTransition(R.transition.slide_right_combo)
     }
 
     override fun onCreateView(

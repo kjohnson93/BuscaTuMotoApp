@@ -148,7 +148,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), Injectable,
 
     override fun navigateToNext(event: Int, extras: Bundle?) {
         hideError()
-        findNavController().navigate(R.id.action_searchFragment_to_catalogueFragment, extras)
+        findNavController().navigate(R.id.action_containerMainFragment_to_catalogueFragment, extras)
     }
 
     private fun showError(@StringRes errorMessage: Int) {
