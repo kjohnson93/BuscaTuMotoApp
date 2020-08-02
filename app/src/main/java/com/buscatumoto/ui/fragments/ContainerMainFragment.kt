@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.DrawableRes
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.buscatumoto.R
@@ -26,16 +28,18 @@ class ContainerMainFragment: Fragment() {
         val viewPagerAdapter: TabViewPageAdapter = TabViewPageAdapter(requireActivity())
         val viewpager = view.findViewById<ViewPager2>(R.id.mainViewPager)
 
-        viewPagerAdapter.addFragment(FilterFormDialogFragment())
+        viewPagerAdapter.addFragment(SearchFragment())
         viewPagerAdapter.addFragment(FilterFormDialogFragment())
         viewpager.adapter = viewPagerAdapter
 
-        val titleList = arrayOf("Content", "Related")
+        val iconList = arrayOf(resources
+            .getDrawable(R.drawable.ic_home_128, requireActivity().theme),
+        resources.getDrawable(R.drawable.filter_icon_128, requireActivity().theme))
 
         val tabLayout = view.findViewById<TabLayout>(R.id.mainTabLayout)
         TabLayoutMediator(tabLayout, viewpager) {
             tab, position ->
-            tab.text = titleList[position]
+            tab.icon = iconList[position]
         }.attach()
     }
 
