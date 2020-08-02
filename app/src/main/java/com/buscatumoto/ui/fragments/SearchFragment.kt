@@ -159,25 +159,6 @@ class SearchFragment : androidx.fragment.app.Fragment(), View.OnClickListener, I
         viewModelStore.clear()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        //Casting to SearchActivity because we don't have a delegate as we did with previous navigation.
-//        (requireActivity() as SearchActivity).onReady()
-        scrollHeader()
-    }
-
-    private fun scrollHeader() {
-                val autoScrollDelay = 2
-        Handler().postDelayed(Runnable {
-            binding.searchAppBar.setExpanded(false, true)
-
-            val hideHeaderDelay = 0.2
-
-            Handler().postDelayed({
-            }, (hideHeaderDelay * 1000).toLong())
-        }, (autoScrollDelay * 1000).toLong())
-    }
-
     interface ReadyListener {
         fun onReady()
         fun showError(errorResponse: String?) {

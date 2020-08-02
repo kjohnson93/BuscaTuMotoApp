@@ -9,57 +9,6 @@
             type="com.buscatumoto.ui.viewmodels.FrontPageViewModel" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/searchCoordLayout"
-        android:fitsSystemWindows="true"
-        android:animateLayoutChanges="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/searchAppBar"
-            android:layout_height="500dp"
-            android:layout_width="match_parent">
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/collapsingToolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:expandedTitleGravity="top"
-                app:theme="@style/collapsingToolbarLayoutTitleColorCollapsed"
-                app:toolbarId="@+id/search_toolbar"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
-                app:contentScrim="?attr/colorPrimary">
-                <ImageView
-                    android:id="@+id/app_bar_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_collapseMode="parallax"
-                    android:src="@drawable/moto_banner_2"
-                    android:scaleType="centerCrop"/>
-                <androidx.appcompat.widget.Toolbar
-                    android:visibility="gone"
-                    android:id="@+id/search_toolbar"
-                    app:layout_collapseMode="pin"
-                    android:layout_height="?attr/actionBarSize"
-                    android:layout_width="match_parent">
-                </androidx.appcompat.widget.Toolbar>
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-        </com.google.android.material.appbar.AppBarLayout>
-        <com.buscatumoto.utils.ui.CustomScrollView
-            android:fitsSystemWindows="true"
-            android:layout_gravity="fill_vertical"
-            android:fillViewport="true"
-            android:layout_marginBottom="?attr/actionBarSize"
-            android:id="@+id/nestedscrollview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -205,7 +154,4 @@
                         app:mutableVisibility="@{viewModel.loadingVisibility}" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </FrameLayout>
-        </com.buscatumoto.utils.ui.CustomScrollView>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -81,22 +81,4 @@ class MotoDetailHostFragment: Fragment(), Injectable {
             }
         }
     }
-
-    fun disableHeaderScroll() {
-
-        val activity = requireActivity() as SearchActivity
-        val appBarLayout: AppBarLayout = activity.findViewById(R.id.searchAppBar)
-
-        val params =  appBarLayout.layoutParams as androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
-        if (params.behavior == null)
-            params.behavior = AppBarLayout.Behavior()
-        val behaviour = params.behavior as AppBarLayout.Behavior
-        behaviour.setDragCallback(object : AppBarLayout.Behavior.DragCallback() {
-            override fun canDrag(appBarLayout: AppBarLayout): Boolean {
-                return false
-            }
-        })
-    }
-
-
 }
