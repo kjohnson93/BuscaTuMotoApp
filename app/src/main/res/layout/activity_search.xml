@@ -48,7 +48,6 @@
                         android:singleLine="true"
                         android:maxLines="1"
                         android:lines="1"
-                        android:gravity="center"
                         android:hint="Buscar por marca o modelo"
                         android:nextFocusUp="@id/searchLinearLayoutActivity"
                         android:nextFocusLeft="@id/searchLinearLayoutActivity"
