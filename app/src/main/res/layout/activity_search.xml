@@ -41,9 +41,11 @@
                     android:focusableInTouchMode="true"
                     android:orientation="horizontal">
                     <EditText
+                        android:id="@+id/searchEditText"
                         android:layout_width="0dp"
                         android:layout_weight="80"
                         android:background="@null"
+                        android:inputType="textVisiblePassword"
                         android:textSize="14sp"
                         android:singleLine="true"
                         android:maxLines="1"
