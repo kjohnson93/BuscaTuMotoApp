@@ -67,4 +67,9 @@ abstract class ViewModelModule {
     @ViewModelKey(DetailSpecItemViewModel::class)
     abstract fun bindDetailSpecItemViewModel(detailSpecItemViewModel: DetailSpecItemViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel::class)
+    abstract fun bindSearchViewModel(searchFormViewModel: SearchViewModel): ViewModel
+
 }

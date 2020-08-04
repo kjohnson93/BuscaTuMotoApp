@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.buscatumoto.ui.viewmodels.SearchViewModel" />
+    </data>
 <androidx.drawerlayout.widget.DrawerLayout
     android:id="@+id/searchDrawerLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,6 +64,7 @@
                         android:layout_height="wrap_content"/>
 
                     <ImageView
+                        android:id="@+id/searchIconImgView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
@@ -68,9 +77,7 @@
             </androidx.appcompat.widget.Toolbar>
         </LinearLayout>
 
-
-
-            <!--Nav host-->
+        <!--Nav host-->
     <fragment
         android:id="@+id/nav_host_fragment_search"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -78,8 +85,27 @@
         android:layout_height="0dp"
         app:defaultNavHost="true"
         android:layout_weight="90"
-        app:navGraph="@navigation/app_navigation" />
+        app:navGraph="@navigation/app_navigation" >
+    </fragment>
+
     </LinearLayout>
+
+        <ProgressBar
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:mutableVisibility="@{viewModel.loadingVisibility}"
+            android:indeterminate="false"
+            android:indeterminateBehavior="cycle"
+            android:layout_gravity="center"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            />
+
+
+    </FrameLayout>
+
 
 
     <com.google.android.material.navigation.NavigationView
@@ -90,3 +116,4 @@
         android:fitsSystemWindows="true" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
+</layout>
