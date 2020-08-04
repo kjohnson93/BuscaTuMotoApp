@@ -81,6 +81,7 @@ class SearchActivity : AppCompatActivity(),
         binding.searchIconImgView.setOnClickListener {
             searchViewModel.onSearchRequested(binding.searchEditText?.text.toString())
             hideKeyboardFrom(this@SearchActivity, binding.root)
+            searchEditText.setText("")
         }
 
         navController = findNavController(R.id.nav_host_fragment_search)
@@ -101,6 +102,7 @@ class SearchActivity : AppCompatActivity(),
                         if (event?.getAction() == KeyEvent.ACTION_DOWN) {
                             searchViewModel.onSearchRequested(binding.searchEditText?.text.toString())
                             hideKeyboardFrom(this@SearchActivity, binding.root)
+                            searchEditText.setText("")
                             true
                         } else {
                             false
@@ -178,6 +180,20 @@ class SearchActivity : AppCompatActivity(),
 
     private fun hideError() {
         errorSnackbar?.dismiss()
+    }
+
+    override fun onBackPressed() {
+        when (navController.currentBackStackEntry?.destination?.id) {
+            R.id.catalogueFragment -> {
+                navController.popBackStack(R.id.containerMainFragment, false)
+            }
+            R.id.motoDetailHostFragment -> {
+                navController.popBackStack(R.id.catalogueFragment, false)
+            }
+            else -> {
+                super.onBackPressed()
+            }
+        }
     }
 
 

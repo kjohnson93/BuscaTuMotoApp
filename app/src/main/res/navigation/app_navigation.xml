@@ -11,6 +11,7 @@
         android:label="CatalogueFragment" >
         <action
             android:id="@+id/action_catalogueFragment_to_motoDetailHostFragment"
+            app:popUpTo="@id/catalogueFragment"
             app:destination="@id/motoDetailHostFragment" />
     </fragment>
     <fragment
