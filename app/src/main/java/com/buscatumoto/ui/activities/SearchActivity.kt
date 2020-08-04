@@ -98,9 +98,13 @@ class SearchActivity : AppCompatActivity(),
             override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
                 return when (keyCode) {
                     KeyEvent.KEYCODE_ENTER -> {
-                        searchViewModel.onSearchRequested(binding.searchEditText?.text.toString())
-                        hideKeyboardFrom(this@SearchActivity, binding.root)
-                        true
+                        if (event?.getAction() == KeyEvent.ACTION_DOWN) {
+                            searchViewModel.onSearchRequested(binding.searchEditText?.text.toString())
+                            hideKeyboardFrom(this@SearchActivity, binding.root)
+                            true
+                        } else {
+                            false
+                        }
                     }
                     else -> {
                         false

@@ -61,7 +61,6 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
                 navigateByFilter(lastBrandSelected)
             }
             RetryErrorModel.SEARCH_ERROR -> {
-                navigateBySearch(lastSearch)
             }
         }
     }
@@ -138,53 +137,9 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
         }
     }
 
-    fun navigateBySearch(search: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-
-            //search response
-            val liveData = buscaTuMotoRepository.search(search, PAGE_START_INDEX)
-
-            withContext(Dispatchers.Main) {
-                liveData.observe(lifeCycleOwner, Observer {
-                    result ->
-                    when (result.status) {
-                        Result.Status.SUCCESS -> {
-                            loadingVisibility.value = View.GONE
-                            screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE, null)
-                            liveData.removeObservers(lifeCycleOwner)
-                        }
-                        Result.Status.LOADING -> {
-                            Timber.d("Search V LOADING")
-                            loadingVisibility.value = View.VISIBLE
-
-                        }
-                        Result.Status.ERROR -> {
-                            Timber.d("Search VM Error")
-                            loadingVisibility.value = View.GONE
-                            retryErrorModel = RetryErrorModel(R.string.load_search_error, RetryErrorModel.SEARCH_ERROR)
-                            errorModel.value = retryErrorModel
-                            liveData.removeObservers(lifeCycleOwner)
-                        }
-                    }
-                })
-            }
-        }
-    }
-
     override fun onBrandItemClick(brand: String) {
         Timber.d("brand: $brand")
         lastBrandSelected = brand
         navigateByFilter(brand)
     }
-
-    fun onSearchRequested(search: String) {
-        Timber.d("Search requested: $search")
-        lastSearch = search
-        searchTextMutable.value = search
-        navigateBySearch(search)
-    }
-
-
-
-
 }

@@ -42,6 +42,11 @@ class SearchViewModel @Inject constructor
         this.value = View.GONE
     }
 
+    override fun onCleared() {
+        super.onCleared()
+
+    }
+
     fun navigateBySearch(search: String) {
         viewModelScope.launch(Dispatchers.IO) {
             //search response
