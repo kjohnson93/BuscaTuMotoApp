@@ -47,23 +47,7 @@ class LanguagePickerFragment: Fragment(), Injectable {
 
         viewModel.languageSelectedMutable.observe(viewLifecycleOwner, Observer {
             val activity = requireActivity() as SearchActivity
-//            val currentLang = BuscaTuMotoApplication.getInstance().getDefaultLanguage().displayName
-//
-//            when (currentLang) {
-//                LANGUAGE_CA -> {
-//
-//                }
-//                LANGUAGE_ES -> {
-//
-//                }
-//                LANGUAGE_ENG ->{
-//
-//                }
-//            }
-
-//            if (currentLang != it) {
-                activity.setLanguage(it)
-//            }
+            activity.setLanguage(it)
         })
 
         return binding.root

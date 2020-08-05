@@ -52,17 +52,16 @@
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/catalaCheckbox"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="12dp"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
                 app:languageMutable="@{viewModel.catalanSelectedMutable}"
                 android:button="@drawable/checkbox_custom"
                 android:clickable="false"
-                android:paddingEnd="5dp"
+                android:paddingTop="15dp"
                 app:layout_constraintBottom_toBottomOf="@+id/catala_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/catala_label"
-                app:layout_constraintWidth_percent="0.1" />
+                />
 
 
 
@@ -110,11 +109,12 @@
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/spanishCheckBox"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginEnd="12dp"
                 android:button="@drawable/checkbox_custom"
                 android:clickable="false"
+                android:paddingTop="5dp"
                 android:paddingEnd="5dp"
                 app:languageMutable="@{viewModel.spanishSelectedMutable}"
                 app:layout_constraintBottom_toBottomOf="@+id/spanishLabel"
@@ -165,17 +165,17 @@
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/englishCheckBox"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginEnd="12dp"
                 android:button="@drawable/checkbox_custom"
                 android:clickable="false"
+                android:paddingTop="5dp"
                 android:paddingEnd="5dp"
                 app:languageMutable="@{viewModel.englishSelectedMutable}"
                 app:layout_constraintBottom_toBottomOf="@+id/englishLabel"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/englishLabel"
-                app:layout_constraintWidth_percent="0.1" />
+                app:layout_constraintTop_toTopOf="@+id/englishLabel" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
@@ -187,6 +187,22 @@
             app:layout_constraintTop_toBottomOf="@+id/englishCsLayout"
             app:layout_constraintStart_toStartOf="@+id/englishCsLayout"
             />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="false"
+            android:indeterminateBehavior="cycle"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
