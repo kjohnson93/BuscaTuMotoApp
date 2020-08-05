@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentLanguagePickerBinding
 import com.buscatumoto.injection.Injectable
@@ -46,7 +47,23 @@ class LanguagePickerFragment: Fragment(), Injectable {
 
         viewModel.languageSelectedMutable.observe(viewLifecycleOwner, Observer {
             val activity = requireActivity() as SearchActivity
-            activity.setLanguage(it)
+//            val currentLang = BuscaTuMotoApplication.getInstance().getDefaultLanguage().displayName
+//
+//            when (currentLang) {
+//                LANGUAGE_CA -> {
+//
+//                }
+//                LANGUAGE_ES -> {
+//
+//                }
+//                LANGUAGE_ENG ->{
+//
+//                }
+//            }
+
+//            if (currentLang != it) {
+                activity.setLanguage(it)
+//            }
         })
 
         return binding.root

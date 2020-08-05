@@ -11,10 +11,14 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.ui.adapters.CatalogueListAdapter
 import com.buscatumoto.ui.adapters.DetailSpecsRecyclerAdapter
 import com.buscatumoto.ui.adapters.SearchBrandsRecyclerAdapter
@@ -193,4 +197,36 @@ fun setGridLayoutManager(view: RecyclerView, gridLayoutManager: GridLayoutManage
 @BindingAdapter("scrollableListener")
 fun setScrollableListener(view: RecyclerView, scrollListener: RecyclerView.OnScrollListener) {
         view.addOnScrollListener(scrollListener)
+}
+
+@BindingAdapter("languageMutable")
+fun setLanguageSelected(view: ConstraintLayout, selectedMutable: MutableLiveData<Boolean>) {
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+
+    if (parentActivity != null) {
+        selectedMutable.observe(
+            parentActivity,
+            Observer {
+                result ->
+                if (result) {
+                    val backgroundColor = ContextCompat.getColor(
+                        view.context, com.buscatumoto.R.color.colorPrimary_transparent)
+                    view.setBackgroundColor(backgroundColor)
+                }
+            })
+    }
+}
+
+@BindingAdapter("languageMutable")
+fun setLanguageSelected(view: AppCompatCheckBox, selectedMutable: MutableLiveData<Boolean>) {
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+
+    if (parentActivity != null) {
+        selectedMutable.observe(
+            parentActivity,
+            Observer {
+                    result ->
+                view.isChecked = result
+            })
+    }
 }

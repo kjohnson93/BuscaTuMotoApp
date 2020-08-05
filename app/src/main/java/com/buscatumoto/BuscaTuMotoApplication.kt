@@ -34,6 +34,7 @@ class BuscaTuMotoApplication: LocalizationApplication(), HasAndroidInjector {
 
     private val localizationDelegate = LocalizationApplicationDelegate()
 
+    //Gets current app's language
     override fun getDefaultLanguage(): Locale {
         return Locale.getDefault()
     }
