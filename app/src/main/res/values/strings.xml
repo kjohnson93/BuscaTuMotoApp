@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BuscaTuMoto</string>
+    <string name="app_name" translatable="false">BuscaTuMoto</string>
     <string-array name="planets_array">
         <item>-</item>
         <item>Husqvarna</item>
@@ -13,11 +13,11 @@
     </string-array>
 
     <string name="retry">Retry</string>
-    <string name="load_fields_error">An error occurred while loading the fields data</string>
-    <string name="load_search_error">An error occurred while loading the data Search</string>
-    <string name="load_filter_error">An error occurred while loading the data Filter</string>
+    <string name="load_fields_error">An error occurred while loading the fields</string>
+    <string name="load_search_error">An error occurred while loading the data</string>
+    <string name="load_filter_error">An error occurred while loading the data</string>
     <string name="load_models_error">An error occurred while loading the bike models</string>
-    <string name="title_activity_catalogue">CatalogueActivity</string>
+    <string name="title_activity_catalogue">Catalogue</string>
     <string name="build_fields_form_error">Something went wrong building filter form</string>
     <string name="elegir_marca">-Marca-</string>
     <string name="elegir_modelo">-Elegir Modelo-</string>

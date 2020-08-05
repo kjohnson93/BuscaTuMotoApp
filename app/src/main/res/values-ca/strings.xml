@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BuscaTuMoto</string>
+    <string name="retry">Reintentar</string>
+    <string name="build_fields_form_error">Quelcom ha fallat formant filtre</string>
+    <string name="load_fields_error">S\'ha produït un error a l\'carregar les dades dels camps</string>
+    <string name="load_search_error">S\'ha produït un error a l\'carregar les dades</string>
+    <string name="load_filter_error">S\'ha produït un error a l\'carregar les dades</string>
+    <string name="load_models_error">S\'ha produït un error a l\'carregar els tipus de moto</string>
+    <string name="title_activity_catalogue">Catàleg</string>
+    <string name="elegir_marca">Marca</string>
+    <string name="elegir_modelo">Model</string>
+    <string name="elegir_tipo">Tipus de moto</string>
+</resources>

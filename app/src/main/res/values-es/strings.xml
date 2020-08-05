@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BuscaTuMoto</string>
+    <string name="load_fields_error">Se produjo un error al cargar los datos de los campos</string>
+    <string name="retry">Reintentar</string>
+    <string name="load_search_error">Se produjo un error al cargar los datos</string>
+    <string name="load_filter_error">Se produjo un error al cargar los datos</string>
+    <string name="load_models_error">Se produjo un error al cargar los tipos de moto</string>
+    <string name="title_activity_catalogue">Catálogo</string>
+    <string name="build_fields_form_error">Algo salió mal cuando se construía el filtro</string>
+    <string name="elegir_marca">Marca</string>
+    <string name="elegir_modelo">Modelo</string>
+    <string name="elegir_tipo">Tipo de moto</string>
+</resources>
