@@ -25,4 +25,5 @@
     <string name="castellano">Spanish</string>
     <string name="catala">Catalan</string>
     <string name="english">English</string>
+    <string name="activity_search_text">Search by brand or model</string>
 </resources>

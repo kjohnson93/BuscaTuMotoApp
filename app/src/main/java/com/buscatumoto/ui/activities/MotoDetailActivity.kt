@@ -2,14 +2,13 @@ package com.buscatumoto.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.buscatumoto.R
 import com.buscatumoto.databinding.ActivityMotoDetailBinding
 import com.buscatumoto.ui.viewmodels.MotoDetailViewModel
-import com.buscatumoto.utils.global.Constants
+import com.buscatumoto.utils.global.MOTO_ID_KEY
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueUiOp
 import dagger.android.AndroidInjector
@@ -39,7 +38,7 @@ class MotoDetailActivity : AppCompatActivity(), HasAndroidInjector {
         var motoId: String? = null
 
         //Assign id from UI -> not good but necessary to avoid creating an additional Dao.
-        intent?.extras?.getString(Constants.MOTO_ID_KEY)?.let {
+        intent?.extras?.getString(MOTO_ID_KEY)?.let {
             motoId = it
             executeUiOp(CatalogueUiOp.LoadDetailActivity(it))
         }

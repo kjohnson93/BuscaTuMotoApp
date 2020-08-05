@@ -1,8 +1,8 @@
 package com.buscatumoto.data.remote.api
 
 import android.util.Log
+import com.buscatumoto.utils.global.MOTOTAG
 import retrofit2.Response
-import com.buscatumoto.utils.global.Constants
 
 /**
  * Abstract Base Data source class with error handling
@@ -23,7 +23,7 @@ abstract class BaseDataSource {
     }
 
     private fun <T> error(message: String): Result<T> {
-        Log.e(Constants.MOTOTAG, "error data source: $message")
+        Log.e(MOTOTAG, "error data source: $message")
         return Result.error("Network call has failed for a following reason: $message")
     }
 

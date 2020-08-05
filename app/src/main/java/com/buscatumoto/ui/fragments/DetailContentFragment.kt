@@ -13,7 +13,8 @@ import com.buscatumoto.databinding.DetailContentFragmentBinding
 import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.models.MotoDetailUi
 import com.buscatumoto.ui.viewmodels.DetailContentViewModel
-import com.buscatumoto.utils.global.Constants
+import com.buscatumoto.utils.global.MOTO_DETAIL_UI_KEY
+import com.buscatumoto.utils.global.MOTO_ID_KEY
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueUiOp
 import javax.inject.Inject
@@ -40,9 +41,9 @@ class DetailContentFragment: Fragment(), Injectable {
         binding.lifecycleOwner = this
 
         //Assign id from UI -> not good but necessary to avoid creating an additional Dao.
-        arguments?.getString(Constants.MOTO_ID_KEY)?.let { id ->
+        arguments?.getString(MOTO_ID_KEY)?.let { id ->
             //get parcelable motodetail and pass it to viewModel
-            arguments?.getParcelable<MotoDetailUi>(Constants.MOTO_DETAIL_UI_KEY)?.let {motoDetailUid ->
+            arguments?.getParcelable<MotoDetailUi>(MOTO_DETAIL_UI_KEY)?.let { motoDetailUid ->
                 executeUiOp(CatalogueUiOp.LoadFragmentPageContent(id, motoDetailUid))
             }
         }

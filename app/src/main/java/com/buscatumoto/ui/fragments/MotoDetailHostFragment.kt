@@ -12,14 +12,11 @@ import androidx.lifecycle.ViewModelProviders
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentHostMotoDetailBinding
 import com.buscatumoto.injection.Injectable
-import com.buscatumoto.ui.activities.SearchActivity
 import com.buscatumoto.ui.adapters.DetailViewPagerAdapter
 import com.buscatumoto.ui.viewmodels.MotoDetailViewModel
-import com.buscatumoto.utils.global.Constants
+import com.buscatumoto.utils.global.MOTO_ID_KEY
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueUiOp
-import com.google.android.material.appbar.AppBarLayout
-import kotlinx.android.synthetic.*
 import javax.inject.Inject
 
 class MotoDetailHostFragment: Fragment(), Injectable {
@@ -58,7 +55,7 @@ class MotoDetailHostFragment: Fragment(), Injectable {
         binding.lifecycleOwner = this
 
         //Assign id from UI -> not good but necessary to avoid creating an additional Dao.
-       arguments?.getString(Constants.MOTO_ID_KEY)?.let {
+       arguments?.getString(MOTO_ID_KEY)?.let {
             executeUiOp(CatalogueUiOp.LoadDetailActivity(it))
         }
 

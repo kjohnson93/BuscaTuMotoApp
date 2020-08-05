@@ -117,6 +117,9 @@ dependencies {
     //viewpager2
     implementation "androidx.viewpager2:viewpager2:$viewpager2_version"
 
+    //localization
+    implementation "com.akexorcist:localization:$localization_version"
+
 
 
 }

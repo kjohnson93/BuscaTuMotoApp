@@ -18,7 +18,7 @@ import com.buscatumoto.databinding.FragmentSearchBinding
 import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
-import com.buscatumoto.utils.global.Constants
+import com.buscatumoto.utils.global.AUTO_SCROLL_TIME_ELLAPSE_MILLIS
 import com.buscatumoto.utils.global.hideKeyboardFrom
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.BasicNavigator
@@ -95,7 +95,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), Injectable,
         val brandListSize = frontPageViewModel.searchBrandsAdapter.itemCount
         binding.FragmentSearchBrandsRV.autoScroll(
             brandListSize,
-            Constants.AUTO_SCROLL_TIME_ELLAPSE_MILLIS
+            AUTO_SCROLL_TIME_ELLAPSE_MILLIS
         )
 
         val slideUp: Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up)

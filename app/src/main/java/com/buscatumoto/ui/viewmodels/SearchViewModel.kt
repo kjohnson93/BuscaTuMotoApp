@@ -32,19 +32,15 @@ class SearchViewModel @Inject constructor
     private lateinit var lastSearch: String
     val searchTextMutable = MutableLiveData<String> ()
 
-
     fun getErrorClickListener() : View.OnClickListener = retryErrorClickListener
     private val retryErrorClickListener = View.OnClickListener {
                 navigateBySearch(lastSearch)
     }
 
+
+
     val loadingVisibility = MutableLiveData<Int>().apply {
         this.value = View.GONE
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-
     }
 
     fun navigateBySearch(search: String) {

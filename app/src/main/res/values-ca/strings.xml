@@ -14,4 +14,5 @@
     <string name="castellano">Castellà</string>
     <string name="catala">Català</string>
     <string name="english">Àngles</string>
+    <string name="activity_search_text">Cercar per marca o model</string>
 </resources>

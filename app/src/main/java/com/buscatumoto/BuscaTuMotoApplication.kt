@@ -1,18 +1,22 @@
 package com.buscatumoto
 
-import android.app.Application
-import android.os.Build
+import android.content.Context
+import android.content.res.Configuration
+import com.akexorcist.localizationactivity.core.LocalizationApplicationDelegate
+import com.akexorcist.localizationactivity.ui.LocalizationApplication
 import com.buscatumoto.injection.AppInjector
 import com.buscatumoto.utils.data.Environment
-import com.buscatumoto.utils.global.Constants
+import com.buscatumoto.utils.global.DEBUG
+import com.buscatumoto.utils.global.RELEASE
 import com.buscatumoto.utils.global.ReleaseTree
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
-class BuscaTuMotoApplication: Application(), HasAndroidInjector {
+class BuscaTuMotoApplication: LocalizationApplication(), HasAndroidInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
@@ -28,16 +32,36 @@ class BuscaTuMotoApplication: Application(), HasAndroidInjector {
         }
     }
 
+    private val localizationDelegate = LocalizationApplicationDelegate()
+
+    override fun getDefaultLanguage(): Locale {
+        return Locale.getDefault()
+    }
+
+    override fun attachBaseContext(base: Context) {
+        localizationDelegate.setDefaultLanguage(base, Locale("es"))
+        super.attachBaseContext(localizationDelegate.attachBaseContext(base))
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        localizationDelegate.onConfigurationChanged(this)
+    }
+
+    override fun getApplicationContext(): Context {
+        return localizationDelegate.getApplicationContext(super.getApplicationContext())
+    }
+
     override fun onCreate() {
         super.onCreate()
 
         sInstance = this
 
         when (BuildConfig.BUILD_TYPE.toLowerCase()) {
-            Constants.DEBUG.toLowerCase() -> {
+            DEBUG.toLowerCase() -> {
                 Timber.plant(Timber.DebugTree())
             }
-            Constants.RELEASE.toLowerCase() -> {
+            RELEASE.toLowerCase() -> {
                 Timber.plant(ReleaseTree())
             }
         }
@@ -50,10 +74,10 @@ class BuscaTuMotoApplication: Application(), HasAndroidInjector {
         var enviroment = Environment.DEVELOP.path
 
         when (BuildConfig.BUILD_TYPE.toLowerCase()) {
-            Constants.DEBUG.toLowerCase() -> {
+            DEBUG.toLowerCase() -> {
                 enviroment = Environment.DEVELOP.path
             }
-            Constants.RELEASE.toLowerCase() -> {
+            RELEASE.toLowerCase() -> {
                 enviroment = Environment.RELEASE.path
             }
         }

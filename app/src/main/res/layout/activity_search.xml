@@ -59,7 +59,7 @@
                         android:singleLine="true"
                         android:maxLines="1"
                         android:lines="1"
-                        android:hint="Buscar por marca o modelo"
+                        android:hint="@string/activity_search_text"
                         android:nextFocusUp="@id/searchLinearLayoutActivity"
                         android:nextFocusLeft="@id/searchLinearLayoutActivity"
                         android:layout_height="wrap_content"/>

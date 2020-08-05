@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -25,6 +26,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.akexorcist.localizationactivity.ui.LocalizationActivity
 import com.buscatumoto.R
 import com.buscatumoto.databinding.ActivitySearchBinding
 import com.buscatumoto.ui.fragments.SearchFragment
@@ -42,7 +44,7 @@ import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_search.*
 import javax.inject.Inject
 
-class SearchActivity : AppCompatActivity(),
+class SearchActivity : LocalizationActivity(),
     SearchFragment.ReadyListener, HasAndroidInjector, ScreenNavigator {
 
     @Inject
@@ -115,10 +117,14 @@ class SearchActivity : AppCompatActivity(),
             }
         })
 
-        binding.linearlayouts.catalaLinearLayout.setOnClickListener {
+        binding.linearlayouts.languageLinearLayout.setOnClickListener {
             binding.searchDrawerLayout.closeDrawers()
             navController.navigate(R.id.languagePickerFragment)
         }
+
+        searchViewModel.searchTextMutable.observe(this, Observer {
+                setLanguage(it)
+        })
     }
 
     private fun configureToolbar() {

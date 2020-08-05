@@ -1,7 +1,6 @@
 package com.buscatumoto.ui.viewmodels
 
 import android.content.Context
-import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.*
@@ -13,11 +12,9 @@ import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.domain.features.catalogue.LoadCatalogueUseCase
 import com.buscatumoto.ui.activities.CatalogueActivity
-import com.buscatumoto.ui.activities.MotoDetailActivity
 import com.buscatumoto.ui.adapters.CatalogueListAdapter
 import com.buscatumoto.ui.navigation.ScreenNavigator
-import com.buscatumoto.utils.global.Constants
-import com.buscatumoto.utils.ui.BasicNavigator
+import com.buscatumoto.utils.global.MOTO_ID_KEY
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
 import com.buscatumoto.utils.ui.PaginationListener
 import com.buscatumoto.utils.ui.PaginationListener.Companion.PAGE_START
@@ -130,7 +127,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
     override fun onItemClick(id: String) {
         val extras = Bundle()
-        extras.putString(Constants.MOTO_ID_KEY, id)
+        extras.putString(MOTO_ID_KEY, id)
         screenNavigator.navigateToNext(CatalogueActivity.NAVIGATE_TO_DETAIL, extras)
     }
 
