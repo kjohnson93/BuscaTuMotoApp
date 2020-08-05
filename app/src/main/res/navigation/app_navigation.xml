@@ -40,5 +40,10 @@
             android:id="@+id/action_containerMainFragment_to_catalogueFragment"
             app:destination="@id/catalogueFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/languagePickerFragment"
+        tools:layout="@layout/fragment_language_picker"
+        android:name="com.buscatumoto.ui.fragments.LanguagePickerFragment"
+        android:label="LanguagePickerFragment" />
 
 </navigation>

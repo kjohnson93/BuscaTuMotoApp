@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.buscatumoto.ui.viewmodels.LanguagePickerViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/catalaCsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary_transparent"
+            android:gravity="center_vertical"
+            android:padding="20dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/catala_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:paddingTop="0dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/catala" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/catalaCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="12dp"
+                android:button="@drawable/checkbox_custom"
+                android:checked="true"
+                android:clickable="false"
+                android:paddingEnd="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/catala_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/catala_label"
+                app:layout_constraintWidth_percent="0.1" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/catalaViewSeparator"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_marginStart="20dp"
+            android:background="@color/grey_separator"
+            app:layout_constraintTop_toBottomOf="@+id/catalaCsLayout"
+            app:layout_constraintStart_toStartOf="@+id/catalaCsLayout"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/spanishCsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:padding="20dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/catalaViewSeparator"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/spanishLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:paddingTop="0dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/castellano" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/spanishCheckBox"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="12dp"
+                android:button="@drawable/checkbox_custom"
+                android:checked="true"
+                android:clickable="false"
+                android:paddingEnd="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/spanishLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/spanishLabel"
+                app:layout_constraintWidth_percent="0.1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/spanishViewSeparator"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_marginStart="20dp"
+            android:background="@color/grey_separator"
+            app:layout_constraintTop_toBottomOf="@+id/spanishCsLayout"
+            app:layout_constraintStart_toStartOf="@+id/spanishCsLayout"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/englishCsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:padding="20dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/spanishViewSeparator"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/englishLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:paddingTop="0dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/english" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/englishCheckBox"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="12dp"
+                android:button="@drawable/checkbox_custom"
+                android:checked="true"
+                android:clickable="false"
+                android:paddingEnd="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/englishLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/englishLabel"
+                app:layout_constraintWidth_percent="0.1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/englishViewSeparator"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_marginStart="20dp"
+            android:background="@color/grey_separator"
+            app:layout_constraintTop_toBottomOf="@+id/englishCsLayout"
+            app:layout_constraintStart_toStartOf="@+id/englishCsLayout"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

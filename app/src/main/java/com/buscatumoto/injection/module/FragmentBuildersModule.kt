@@ -29,4 +29,7 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeMotoDetailRelatedFragment(): DetailRelatedFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeLanguagePickerFragment(): LanguagePickerFragment
 }

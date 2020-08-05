@@ -11,4 +11,7 @@
     <string name="elegir_marca">Marca</string>
     <string name="elegir_modelo">Modelo</string>
     <string name="elegir_tipo">Tipo de moto</string>
+    <string name="castellano">Castellano</string>
+    <string name="catala">Catalán</string>
+    <string name="english">Inglés</string>
 </resources>

@@ -72,4 +72,9 @@ abstract class ViewModelModule {
     @ViewModelKey(SearchViewModel::class)
     abstract fun bindSearchViewModel(searchFormViewModel: SearchViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(LanguagePickerViewModel::class)
+    abstract fun bindIdiomaPickerViewModel(idiomaPickerViewModel: LanguagePickerViewModel): ViewModel
+
 }

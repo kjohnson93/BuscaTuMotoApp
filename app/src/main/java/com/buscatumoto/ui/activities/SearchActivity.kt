@@ -113,11 +113,12 @@ class SearchActivity : AppCompatActivity(),
                     }
                 }
             }
-
         })
 
-//        configureNavigationDrawer()
-//        configureToolbar()
+        binding.linearlayouts.catalaLinearLayout.setOnClickListener {
+            binding.searchDrawerLayout.closeDrawers()
+            navController.navigate(R.id.languagePickerFragment)
+        }
     }
 
     private fun configureToolbar() {

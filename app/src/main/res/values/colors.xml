@@ -7,4 +7,6 @@
     <color name="grey_dot_indicator_border">#CCCCCC</color>
     <color name="grey_dot_indicator_fill_color">#B82323</color>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="colorPrimary_transparent">#40CA2A1D</color>
 </resources>
