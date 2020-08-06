@@ -40,10 +40,12 @@ class ContainerMainFragment: Fragment() {
 
         viewPagerAdapter.addFragment(SearchFragment())
         viewPagerAdapter.addFragment(FilterFormDialogFragment())
+        viewPagerAdapter.addFragment(FilterFragment())
         viewpager.adapter = viewPagerAdapter
 
         val iconList = arrayOf(resources
             .getDrawable(R.drawable.icon_home_128, requireActivity().theme),
+        resources.getDrawable(R.drawable.icon_filter_128, requireActivity().theme),
         resources.getDrawable(R.drawable.icon_filter_128, requireActivity().theme))
 
         val tabLayout = view.findViewById<TabLayout>(R.id.mainTabLayout)

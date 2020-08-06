@@ -17,4 +17,18 @@
     <string name="activity_search_text">Buscar por marca o modelo</string>
     <string name="version">Versión</string>
     <string name="language">Idioma</string>
+    <string name="delete_filter">Borrar el filtro</string>
+    <string name="brand">Marca</string>
+    <string name="model">Modelo</string>
+    <string name="type">Tipo</string>
+    <string name="minimum_price">Precio mínimo</string>
+    <string name="maximum_price">Precio máximo</string>
+    <string name="minimum_power">Potencia mínima</string>
+    <string name="maximum_power">Potencia máxima</string>
+    <string name="minimum_displacement">Cilindrada máxima</string>
+    <string name="maximum_displacement">Cilindrada máxima</string>
+    <string name="minimum_weight">Peso mínimo</string>
+    <string name="maximum_weight">Peso máximo</string>
+    <string name="year">Año</string>
+    <string name="license">Permiso</string>
 </resources>

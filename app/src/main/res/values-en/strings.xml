@@ -17,4 +17,18 @@
     <string name="activity_search_text">Search by brand or model</string>
     <string name="version">Version</string>
     <string name="language">Language</string>
+    <string name="delete_filter">Delete filter</string>
+    <string name="brand">Brand</string>
+    <string name="model">Model</string>
+    <string name="type">Type</string>
+    <string name="minimum_price">Minimum price</string>
+    <string name="maximum_price">Maximum price</string>
+    <string name="minimum_power">Minimum power</string>
+    <string name="maximum_power">Maximum power</string>
+    <string name="minimum_displacement">Mininum displacement</string>
+    <string name="maximum_displacement">Maximum displacement</string>
+    <string name="minimum_weight">Minimum weight</string>
+    <string name="maximum_weight">Maximum weight</string>
+    <string name="year">Year</string>
+    <string name="license">License</string>
 </resources>

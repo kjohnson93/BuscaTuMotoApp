@@ -43,7 +43,6 @@
             android:layout_margin="20dp"
             />
 
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -62,10 +61,7 @@
             android:clickable="false"
             android:focusable="false"
             android:src="@drawable/next_grey_dark" />
-
-
     </androidx.appcompat.widget.LinearLayoutCompat>
-
 
     <TextView
         android:id="@+id/searchDrawerVersionTvw"
@@ -81,7 +77,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
