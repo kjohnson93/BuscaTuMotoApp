@@ -15,4 +15,5 @@
     <string name="catala">Català</string>
     <string name="english">Àngles</string>
     <string name="activity_search_text">Cercar per marca o model</string>
+    <string name="version">Versió</string>
 </resources>

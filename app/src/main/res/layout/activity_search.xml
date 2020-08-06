@@ -116,7 +116,8 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true" >
         <include layout="@layout/lay_drawer_menu"
-            android:id="@+id/linearlayouts" />
+            android:id="@+id/linearlayouts"
+            bind:viewModel="@{viewModel}"/>
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

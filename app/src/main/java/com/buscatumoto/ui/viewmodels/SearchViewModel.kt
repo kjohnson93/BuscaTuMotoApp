@@ -1,10 +1,14 @@
 package com.buscatumoto.ui.viewmodels
 
+import android.os.Build
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
+import com.buscatumoto.BuildConfig
+import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
@@ -17,6 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.lang.StringBuilder
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor
@@ -31,13 +36,23 @@ class SearchViewModel @Inject constructor
     fun getError() = errorModel
     private lateinit var lastSearch: String
     val searchTextMutable = MutableLiveData<String> ()
+    val versionNameMutable = MutableLiveData<String>()
 
     fun getErrorClickListener() : View.OnClickListener = retryErrorClickListener
     private val retryErrorClickListener = View.OnClickListener {
                 navigateBySearch(lastSearch)
     }
 
+    init {
+        loadVersionOnDrawerLayout()
+    }
 
+    private fun loadVersionOnDrawerLayout() {
+        val builder = StringBuilder()
+        builder.append(BuscaTuMotoApplication.getInstance().getString(R.string.version))
+        builder.append(" ").append(BuildConfig.VERSION_NAME)
+        versionNameMutable.value = builder.toString()
+    }
 
     val loadingVisibility = MutableLiveData<Int>().apply {
         this.value = View.GONE
@@ -80,6 +95,4 @@ class SearchViewModel @Inject constructor
         searchTextMutable.value = search
         navigateBySearch(search)
     }
-
-
 }

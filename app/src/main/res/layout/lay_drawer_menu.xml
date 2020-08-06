@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.buscatumoto.ui.viewmodels.LanguagePickerViewModel" />
+            type="com.buscatumoto.ui.viewmodels.SearchViewModel" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -75,7 +75,7 @@
         android:onClick="onClick"
         android:textAlignment="textStart"
         android:gravity="start"
-        android:text="Version 1.0.0"
+        app:mutableText="@{viewModel.versionNameMutable}"
         android:layout_margin="20dp"
         android:paddingStart="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
