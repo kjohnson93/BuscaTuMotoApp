@@ -16,4 +16,5 @@
     <string name="english">English</string>
     <string name="activity_search_text">Search by brand or model</string>
     <string name="version">Version</string>
+    <string name="language">Language</string>
 </resources>
