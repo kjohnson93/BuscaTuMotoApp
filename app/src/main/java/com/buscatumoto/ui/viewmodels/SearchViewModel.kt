@@ -47,7 +47,7 @@ class SearchViewModel @Inject constructor
         loadVersionOnDrawerLayout()
     }
 
-    private fun loadVersionOnDrawerLayout() {
+    fun loadVersionOnDrawerLayout() {
         val builder = StringBuilder()
         builder.append(BuscaTuMotoApplication.getInstance().getString(R.string.version))
         builder.append(" ").append(BuildConfig.VERSION_NAME)

@@ -126,6 +126,28 @@ class SearchActivity : LocalizationActivity(),
         searchViewModel.searchTextMutable.observe(this, Observer {
                 setLanguage(it)
         })
+
+        /**
+         * This breaks VMMV rules because view should not command what view model should do.
+         * To review and find if there's a better way to update a mutable that depends
+         * on the initialisation of a viewmodel. Because the way it was, it could not be changed after.
+         * Because it depends of changes made and managed by other view and viewmodel.
+         */
+        binding.searchDrawerLayout.addDrawerListener(object: DrawerLayout.DrawerListener {
+            override fun onDrawerStateChanged(newState: Int) {
+            }
+
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+                searchViewModel.loadVersionOnDrawerLayout()
+            }
+
+        })
     }
 
     private fun configureToolbar() {
