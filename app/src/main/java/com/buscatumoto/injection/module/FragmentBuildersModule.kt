@@ -32,4 +32,7 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeLanguagePickerFragment(): LanguagePickerFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeFilterFragment(): FilterFragment
 }

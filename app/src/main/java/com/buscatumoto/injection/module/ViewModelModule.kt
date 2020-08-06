@@ -77,4 +77,8 @@ abstract class ViewModelModule {
     @ViewModelKey(LanguagePickerViewModel::class)
     abstract fun bindIdiomaPickerViewModel(idiomaPickerViewModel: LanguagePickerViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(FilterViewModel::class)
+    abstract fun bindFilterViewModel(filterViewModel: FilterViewModel): ViewModel
 }
