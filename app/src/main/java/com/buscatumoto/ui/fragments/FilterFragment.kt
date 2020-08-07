@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentFilterBinding
@@ -35,5 +36,18 @@ class FilterFragment: Fragment(), Injectable {
         binding.lifecycleOwner = this
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.brandExpanded.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
+                binding.brandArrowImg.setImageDrawable(arrowUpDrawable)
+            } else {
+                val arrowDownDrawable = requireContext().getDrawable(R.drawable.icon_arrow_down)
+                binding.brandArrowImg.setImageDrawable(arrowDownDrawable)
+            }
+        })
     }
 }

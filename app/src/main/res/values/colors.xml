@@ -9,4 +9,5 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="colorPrimary_transparent">#40CA2A1D</color>
+    <color name="color_background_recyclerlist">#FAFAFA</color>
 </resources>

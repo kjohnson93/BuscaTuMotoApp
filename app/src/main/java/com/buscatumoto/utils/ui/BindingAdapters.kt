@@ -38,6 +38,22 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
     }
 }
 
+@BindingAdapter("mutableExpand")
+fun setMutableExpand(view: View, visibility: MutableLiveData<Boolean>) {
+
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+
+    if (parentActivity != null && visibility != null) {
+        visibility.observe(parentActivity, Observer {
+            if (it) {
+                view.visibility = View.VISIBLE
+            } else {
+                view.visibility = View.GONE
+            }
+        })
+    }
+}
+
 
     @BindingAdapter("mutableSpinner")
     fun setSpinner(view: Spinner, spinnerDataObservable: MutableLiveData<List<String>>) {
