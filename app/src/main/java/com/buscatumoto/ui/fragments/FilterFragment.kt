@@ -40,6 +40,10 @@ class FilterFragment: Fragment(), Injectable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        /**
+         * Observer section
+         */
         viewModel.brandExpanded.observe(viewLifecycleOwner, Observer {
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
@@ -49,5 +53,18 @@ class FilterFragment: Fragment(), Injectable {
                 binding.brandArrowImg.setImageDrawable(arrowDownDrawable)
             }
         })
+
+        viewModel.bikeTypeExpanded.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
+                binding.typeArrowImg.setImageDrawable(arrowUpDrawable)
+            } else {
+                val arrowDownDrawable = requireContext().getDrawable(R.drawable.icon_arrow_down)
+                binding.typeArrowImg.setImageDrawable(arrowDownDrawable)
+            }
+        })
+        /**
+         * Observer section
+         */
     }
 }

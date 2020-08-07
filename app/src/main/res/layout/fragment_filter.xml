@@ -161,6 +161,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:onClick="@{() -> viewModel.onBikeTypeLayoutClick()}"
                     android:orientation="vertical"
                     android:padding="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -184,6 +185,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
+                        android:id="@+id/typeArrowImg"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -196,13 +198,31 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <FrameLayout
+                    android:id="@+id/typeFrameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:visibility="gone"
+                    android:background="@color/color_background_recyclerlist"
+                    app:mutableExpand="@{viewModel.bikeTypeExpanded}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/typeCsLayout"
+                    app:layout_constraintTop_toBottomOf="@id/typeCsLayout">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sample text"/>
+                </FrameLayout>
+
                 <View
                     android:id="@+id/typeFilterSeparator"
                     android:layout_width="0dp"
                     android:layout_height="0.5dp"
                     android:background="@color/grey_separator"
-                    app:layout_constraintStart_toStartOf="@+id/typeCsLayout"
-                    app:layout_constraintTop_toBottomOf="@+id/typeCsLayout" />
+                    app:layout_constraintStart_toStartOf="@+id/typeFrameLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/typeFrameLayout" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/minPriceCsLayout"
