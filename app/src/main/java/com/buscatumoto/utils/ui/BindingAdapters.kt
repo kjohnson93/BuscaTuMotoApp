@@ -1,12 +1,15 @@
 package com.buscatumoto.utils.ui
 
 import android.R
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.databinding.BindingAdapter
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
@@ -25,7 +28,9 @@ import com.buscatumoto.ui.adapters.SearchBrandsRecyclerAdapter
 import com.buscatumoto.ui.fragments.InfiniteRotationView
 import com.buscatumoto.ui.models.BrandRecyclerUiModel
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
+import com.buscatumoto.utils.global.*
 import timber.log.Timber
+import java.util.logging.Handler
 
 @BindingAdapter("mutableVisibility")
 fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
@@ -42,13 +47,47 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
 fun setMutableExpand(view: View, visibility: MutableLiveData<Boolean>) {
 
     val parentActivity: AppCompatActivity? = view.getParentActivity()
+    val context = BuscaTuMotoApplication.getInstance().applicationContext
+
+    val fadeIn = fadeInAnimation(context)
+    val fadeOut = fadeOutAnimation(context)
 
     if (parentActivity != null && visibility != null) {
         visibility.observe(parentActivity, Observer {
             if (it) {
-                view.visibility = View.VISIBLE
+                view.apply {
+                    // Set the content view to 0% opacity but visible, so that it is visible
+                    // (but fully transparent) during the animation.
+                    alpha = ALPHA_OPACITY_TRANSPARENT
+                    view.visibility = View.VISIBLE
+
+                    // Animate the content view to 100% opacity, and clear any animation
+                    // listener set on the view.
+                    animate()
+                        .alpha(ALPHA_OPACITY_OPAQUE)
+                        .setDuration(FADE_IN_ANIMATION_DURATION)
+                        .setListener(null)
+                }
             } else {
-                view.visibility = View.GONE
+                view.apply {
+                    // Set the content view to 0% opacity but visible, so that it is visible
+                    // (but fully transparent) during the animation.
+                    alpha = ALPHA_OPACITY_OPAQUE
+
+                    // Animate the content view to 100% opacity, and clear any animation
+                    // listener set on the view.
+                    animate()
+                        .alpha(ALPHA_OPACITY_TRANSPARENT)
+                        .setDuration(FADE_OUT_ANIMATION_DURATION)
+                        .setListener(object: AnimatorListenerAdapter() {
+                            //Usa un onAnimationEnd() en un Animator.AnimatorListener
+                            //para establecer la visibilidad de la vista que se desvanecía en GONE
+                            //https://developer.android.com/training/animation/reveal-or-hide-view#Crossfade
+                            override fun onAnimationEnd(animation: Animator?) {
+                                view.visibility = View.GONE
+                            }
+                        })
+                }
             }
         })
     }

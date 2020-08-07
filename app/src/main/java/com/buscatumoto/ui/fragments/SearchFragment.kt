@@ -20,6 +20,7 @@ import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import com.buscatumoto.utils.global.AUTO_SCROLL_TIME_ELLAPSE_MILLIS
 import com.buscatumoto.utils.global.hideKeyboardFrom
+import com.buscatumoto.utils.global.slideUpAnimation
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.BasicNavigator
 import com.google.android.material.snackbar.Snackbar
@@ -98,8 +99,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), Injectable,
             AUTO_SCROLL_TIME_ELLAPSE_MILLIS
         )
 
-        val slideUp: Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up)
-
+        val slideUp = slideUpAnimation(requireContext())
 
         /*
         Observer section
