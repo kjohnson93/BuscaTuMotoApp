@@ -3,20 +3,20 @@ package com.buscatumoto.utils.ui
 import android.R
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.databinding.BindingAdapter
 import android.graphics.drawable.Drawable
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
-import android.view.WindowManager
+import android.view.View.OnTouchListener
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.databinding.BindingAdapter
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,7 +30,6 @@ import com.buscatumoto.ui.models.BrandRecyclerUiModel
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
 import com.buscatumoto.utils.global.*
 import timber.log.Timber
-import java.util.logging.Handler
 
 @BindingAdapter("mutableVisibility")
 fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
@@ -283,5 +282,21 @@ fun setLanguageSelected(view: AppCompatCheckBox, selectedMutable: MutableLiveDat
                     result ->
                 view.isChecked = result
             })
+    }
+}
+
+@BindingAdapter("mutableitemSelected")
+fun setMutableItemSelected(view: View, visibility: MutableLiveData<Boolean>) {
+
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+
+    if (parentActivity != null && visibility != null) {
+        visibility.observe(parentActivity, Observer {
+                if (it) {
+                    view.visibility = View.VISIBLE
+                } else {
+                    view.visibility = View.GONE
+                }
+        })
     }
 }

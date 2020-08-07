@@ -34,6 +34,7 @@ class FilterFragment: Fragment(), Injectable {
             this, viewModelFactory).get(FilterViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+//        binding.testCircleImg
 
         return binding.root
     }
@@ -63,6 +64,7 @@ class FilterFragment: Fragment(), Injectable {
                 binding.typeArrowImg.setImageDrawable(arrowDownDrawable)
             }
         })
+
         /**
          * Observer section
          */
