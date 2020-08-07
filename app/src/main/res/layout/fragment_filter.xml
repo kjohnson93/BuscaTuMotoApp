@@ -1,606 +1,607 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewModel"
             type="com.buscatumoto.ui.viewmodels.FilterViewModel" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/deleteFilterTvw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:text="@string/delete_filter"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:padding="20dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"/>
-
-    <View
-        android:id="@+id/deleteFilterSeparator"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:background="@color/grey_separator"
-        app:layout_constraintTop_toBottomOf="@+id/deleteFilterTvw"
-        app:layout_constraintStart_toStartOf="@+id/deleteFilterTvw"
-        />
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/brandCsLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="20dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/deleteFilterSeparator"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/brand_label"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/deleteFilterTvw"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingTop="0dp"
-            android:paddingEnd="5dp"
+            android:padding="20dp"
+            android:text="@string/delete_filter"
             android:textColor="@color/black"
             android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/brand" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/icon_arrow_down"
-            app:layout_constraintBottom_toBottomOf="@+id/brand_label"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/brand_label" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/brandFilterSeparator"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:background="@color/grey_separator"
-        app:layout_constraintTop_toBottomOf="@+id/brandCsLayout"
-        app:layout_constraintStart_toStartOf="@+id/brandCsLayout"
-        />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/modelCsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="20dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/brandFilterSeparator"
-        app:layout_constraintStart_toStartOf="@id/brandFilterSeparator"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/model_label"
+        <View
+            android:id="@+id/deleteFilterSeparator"
             android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:background="@color/grey_separator"
+            app:layout_constraintStart_toStartOf="@+id/deleteFilterTvw"
+            app:layout_constraintTop_toBottomOf="@+id/deleteFilterTvw" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingTop="0dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/model" />
+            app:layout_constraintTop_toBottomOf="@id/deleteFilterSeparator">
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/icon_arrow_down"
-            app:layout_constraintBottom_toBottomOf="@+id/model_label"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/model_label" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/brandCsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/brand_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/brand"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:src="@drawable/icon_arrow_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/brand_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/brand_label" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/brandFilterSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/grey_separator"
+                    app:layout_constraintStart_toStartOf="@+id/brandCsLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/brandCsLayout" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/modelCsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/brandFilterSeparator"
+                    app:layout_constraintTop_toBottomOf="@id/brandFilterSeparator">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/model_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/model"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:src="@drawable/icon_arrow_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/model_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/model_label" />
 
 
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/modelFilterSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/grey_separator"
+                    app:layout_constraintStart_toStartOf="@+id/modelCsLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/modelCsLayout" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/typeCsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/modelFilterSeparator"
+                    app:layout_constraintTop_toBottomOf="@id/modelFilterSeparator">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/type_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/type"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:src="@drawable/icon_arrow_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/type_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/type_label" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/typeFilterSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/grey_separator"
+                    app:layout_constraintStart_toStartOf="@+id/typeCsLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/typeCsLayout" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/minPriceCsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/typeFilterSeparator"
+                    app:layout_constraintTop_toBottomOf="@id/typeFilterSeparator">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/minimum_price_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/minimum_price"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:src="@drawable/icon_arrow_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/minimum_price_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/minimum_price_label" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/minimumPriceSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/grey_separator"
+                    app:layout_constraintStart_toStartOf="@+id/minPriceCsLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/minPriceCsLayout" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/maxPriceCsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/minimumPriceSeparator"
+                    app:layout_constraintTop_toBottomOf="@id/minimumPriceSeparator">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/maxPriceLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/minimum_price"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:src="@drawable/icon_arrow_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/maxPriceLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/maxPriceLabel" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/maximumPriceSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/grey_separator"
+                    app:layout_constraintStart_toStartOf="@+id/maxPriceCsLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/maxPriceCsLayout" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/maxPowerCsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/maximumPriceSeparator"
+                    app:layout_constraintTop_toBottomOf="@id/maximumPriceSeparator">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/maxPowerLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/maximum_power"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:src="@drawable/icon_arrow_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/maxPowerLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/maxPowerLabel" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/maxPowerSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/grey_separator"
+                    app:layout_constraintStart_toStartOf="@+id/maxPowerCsLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/maxPowerCsLayout" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/maxDisplacementCsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/maxPowerSeparator"
+                    app:layout_constraintTop_toBottomOf="@id/maxPowerSeparator">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/maxDisplacementLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/maximum_displacement"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:src="@drawable/icon_arrow_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/maxDisplacementLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/maxDisplacementLabel" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/maxDisplacementSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/grey_separator"
+                    app:layout_constraintStart_toStartOf="@+id/maxDisplacementCsLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/maxDisplacementCsLayout" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/minDisplacementCsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/maxDisplacementSeparator"
+                    app:layout_constraintTop_toBottomOf="@id/maxDisplacementSeparator">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/mimDisplacementLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/minimum_displacement"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:src="@drawable/icon_arrow_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/mimDisplacementLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/mimDisplacementLabel" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/mimDisplacementSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/grey_separator"
+                    app:layout_constraintStart_toStartOf="@+id/minDisplacementCsLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/minDisplacementCsLayout" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/minWeightCsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/mimDisplacementSeparator"
+                    app:layout_constraintTop_toBottomOf="@id/mimDisplacementSeparator">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/mimWeightLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/minimum_weight"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:src="@drawable/icon_arrow_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/mimWeightLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/mimWeightLabel" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/minWeightSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/grey_separator"
+                    app:layout_constraintStart_toStartOf="@+id/minWeightCsLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/minWeightCsLayout" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/maxWeightCsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/minWeightSeparator"
+                    app:layout_constraintTop_toBottomOf="@id/minWeightSeparator">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/maxWeightLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/maximum_weight"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:src="@drawable/icon_arrow_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/maxWeightLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/maxWeightLabel" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/maxWeightSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/grey_separator"
+                    app:layout_constraintStart_toStartOf="@+id/maxWeightCsLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/maxWeightCsLayout" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/yearCsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/minWeightSeparator"
+                    app:layout_constraintTop_toBottomOf="@id/maxWeightSeparator">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/yearLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/year"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:src="@drawable/icon_arrow_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/yearLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/yearLabel" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/yearSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/grey_separator"
+                    app:layout_constraintStart_toStartOf="@+id/yearCsLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/yearCsLayout" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/licenseCsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/yearSeparator"
+                    app:layout_constraintTop_toBottomOf="@id/yearSeparator">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/licenseLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/license"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:src="@drawable/icon_arrow_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/licenseLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/licenseLabel" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/licenseSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/grey_separator"
+                    app:layout_constraintStart_toStartOf="@+id/licenseCsLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/licenseCsLayout" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/modelFilterSeparator"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:background="@color/grey_separator"
-        app:layout_constraintTop_toBottomOf="@+id/modelCsLayout"
-        app:layout_constraintStart_toStartOf="@+id/modelCsLayout"
-        />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/typeCsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="20dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/modelFilterSeparator"
-        app:layout_constraintStart_toStartOf="@id/modelFilterSeparator"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/type_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingTop="0dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/type" />
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/icon_arrow_down"
-            app:layout_constraintBottom_toBottomOf="@+id/type_label"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/type_label" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/typeFilterSeparator"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:background="@color/grey_separator"
-        app:layout_constraintTop_toBottomOf="@+id/typeCsLayout"
-        app:layout_constraintStart_toStartOf="@+id/typeCsLayout"
-        />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/minPriceCsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="20dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/typeFilterSeparator"
-        app:layout_constraintStart_toStartOf="@id/typeFilterSeparator"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/minimum_price_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingTop="0dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/minimum_price" />
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/icon_arrow_down"
-            app:layout_constraintBottom_toBottomOf="@+id/minimum_price_label"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/minimum_price_label" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/minimumPriceSeparator"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:background="@color/grey_separator"
-        app:layout_constraintTop_toBottomOf="@+id/minPriceCsLayout"
-        app:layout_constraintStart_toStartOf="@+id/minPriceCsLayout"
-        />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/maxPriceCsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="20dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/minimumPriceSeparator"
-        app:layout_constraintStart_toStartOf="@id/minimumPriceSeparator"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/maxPriceLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingTop="0dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/minimum_price" />
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/icon_arrow_down"
-            app:layout_constraintBottom_toBottomOf="@+id/maxPriceLabel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/maxPriceLabel" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/maximumPriceSeparator"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:background="@color/grey_separator"
-        app:layout_constraintTop_toBottomOf="@+id/maxPriceCsLayout"
-        app:layout_constraintStart_toStartOf="@+id/maxPriceCsLayout"
-        />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/maxPowerCsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="20dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/maximumPriceSeparator"
-        app:layout_constraintStart_toStartOf="@id/maximumPriceSeparator"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/maxPowerLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingTop="0dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/maximum_power" />
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/icon_arrow_down"
-            app:layout_constraintBottom_toBottomOf="@+id/maxPowerLabel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/maxPowerLabel" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/maxPowerSeparator"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:background="@color/grey_separator"
-        app:layout_constraintTop_toBottomOf="@+id/maxPowerCsLayout"
-        app:layout_constraintStart_toStartOf="@+id/maxPowerCsLayout"
-        />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/maxDisplacementCsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="20dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/maxPowerSeparator"
-        app:layout_constraintStart_toStartOf="@id/maxPowerSeparator"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/maxDisplacementLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingTop="0dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/maximum_displacement" />
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/icon_arrow_down"
-            app:layout_constraintBottom_toBottomOf="@+id/maxDisplacementLabel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/maxDisplacementLabel" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/maxDisplacementSeparator"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:background="@color/grey_separator"
-        app:layout_constraintTop_toBottomOf="@+id/maxDisplacementCsLayout"
-        app:layout_constraintStart_toStartOf="@+id/maxDisplacementCsLayout"
-        />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/minDisplacementCsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="20dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/maxDisplacementSeparator"
-        app:layout_constraintStart_toStartOf="@id/maxDisplacementSeparator"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/mimDisplacementLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingTop="0dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/minimum_displacement" />
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/icon_arrow_down"
-            app:layout_constraintBottom_toBottomOf="@+id/mimDisplacementLabel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/mimDisplacementLabel" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/mimDisplacementSeparator"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:background="@color/grey_separator"
-        app:layout_constraintTop_toBottomOf="@+id/minDisplacementCsLayout"
-        app:layout_constraintStart_toStartOf="@+id/minDisplacementCsLayout"
-        />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/minWeightCsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="20dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/mimDisplacementSeparator"
-        app:layout_constraintStart_toStartOf="@id/mimDisplacementSeparator"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/mimWeightLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingTop="0dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/minimum_weight" />
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/icon_arrow_down"
-            app:layout_constraintBottom_toBottomOf="@+id/mimWeightLabel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/mimWeightLabel" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/minWeightSeparator"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:background="@color/grey_separator"
-        app:layout_constraintTop_toBottomOf="@+id/minWeightCsLayout"
-        app:layout_constraintStart_toStartOf="@+id/minWeightCsLayout"
-        />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/maxWeightCsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="20dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/minWeightSeparator"
-        app:layout_constraintStart_toStartOf="@id/minWeightSeparator"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/maxWeightLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingTop="0dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/maximum_weight" />
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/icon_arrow_down"
-            app:layout_constraintBottom_toBottomOf="@+id/maxWeightLabel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/maxWeightLabel" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/maxWeightSeparator"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:background="@color/grey_separator"
-        app:layout_constraintTop_toBottomOf="@+id/maxWeightCsLayout"
-        app:layout_constraintStart_toStartOf="@+id/maxWeightCsLayout"
-        />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/yearCsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="20dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/maxWeightSeparator"
-        app:layout_constraintStart_toStartOf="@id/minWeightSeparator"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/yearLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingTop="0dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/year" />
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/icon_arrow_down"
-            app:layout_constraintBottom_toBottomOf="@+id/yearLabel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/yearLabel" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/yearSeparator"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:background="@color/grey_separator"
-        app:layout_constraintTop_toBottomOf="@+id/yearCsLayout"
-        app:layout_constraintStart_toStartOf="@+id/yearCsLayout"
-        />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/licenseCsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="20dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/yearSeparator"
-        app:layout_constraintStart_toStartOf="@id/yearSeparator"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/licenseLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingTop="0dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/license" />
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/icon_arrow_down"
-            app:layout_constraintBottom_toBottomOf="@+id/licenseLabel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/licenseLabel" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/licenseSeparator"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:background="@color/grey_separator"
-        app:layout_constraintTop_toBottomOf="@+id/licenseCsLayout"
-        app:layout_constraintStart_toStartOf="@+id/licenseCsLayout"
-        />
-</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
