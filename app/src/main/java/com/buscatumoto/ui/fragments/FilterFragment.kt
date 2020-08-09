@@ -8,6 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentFilterBinding
 import com.buscatumoto.injection.Injectable
@@ -34,7 +36,8 @@ class FilterFragment: Fragment(), Injectable {
             this, viewModelFactory).get(FilterViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-//        binding.testCircleImg
+        val verticalLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.fragmentFiltTypeList.layoutManager = verticalLayoutManager
 
         return binding.root
     }

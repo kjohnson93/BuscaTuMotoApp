@@ -210,24 +210,12 @@
                     app:layout_constraintStart_toStartOf="@id/typeCsLayout"
                     app:layout_constraintTop_toBottomOf="@id/typeCsLayout">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/testCircleImg"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:clickable="true"
-                        android:onClick="@{() -> viewModel.onItemClicked()}"
-                        android:src="@drawable/montesa150x150"
-                        app:civ_border_width="2dp"
-                        app:civ_border_color="#FF000000"
-                        android:focusable="true" />
-
-                    <ImageView
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        app:mutableitemSelected="@{viewModel.itemClick}"
-                        android:src="@drawable/ic_check"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/fragmentFiltTypeList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:recyclerAdapter="@{viewModel.filterRecyclerAdapter}"
+                        />
                 </FrameLayout>
 
                 <View

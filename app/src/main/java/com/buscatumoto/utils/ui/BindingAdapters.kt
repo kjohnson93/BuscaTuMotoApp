@@ -31,6 +31,11 @@ import com.buscatumoto.ui.viewmodels.CatalogueViewModel
 import com.buscatumoto.utils.global.*
 import timber.log.Timber
 
+@BindingAdapter("recyclerAdapter")
+fun setRecyclerAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
+    view.adapter = adapter
+}
+
 @BindingAdapter("mutableVisibility")
 fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
 

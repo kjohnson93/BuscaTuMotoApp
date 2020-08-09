@@ -120,7 +120,8 @@ dependencies {
     //localization
     implementation "com.akexorcist:localization:$localization_version"
 
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    //circle image view
+    implementation "de.hdodenhof:circleimageview:$circleimageview_version"
 
 
 

@@ -11,7 +11,7 @@ import com.buscatumoto.ui.viewmodels.FrontPageBrandViewModel
 
 class SearchBrandsRecyclerAdapter(val itemClickListener: BrandItemClickListener): RecyclerView.Adapter<SearchBrandsRecyclerAdapter.BrandViewHolder>() {
 
-    private var brandHighLightList: List<BrandRecyclerUiModel> = emptyList()
+    private lateinit var brandHighLightList: List<BrandRecyclerUiModel>
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrandViewHolder {
@@ -21,8 +21,7 @@ class SearchBrandsRecyclerAdapter(val itemClickListener: BrandItemClickListener)
     }
 
     override fun getItemCount(): Int {
-//        return if(::brandHighLightList.isInitialized) brandHighLightList.size else 0
-        return brandHighLightList.size
+        return if(::brandHighLightList.isInitialized) brandHighLightList.size else 0
     }
 
     override fun onBindViewHolder(viewHolder: BrandViewHolder, position: Int) {
