@@ -10,13 +10,14 @@ import com.buscatumoto.ui.adapters.FilterRecyclerAdapter
 import com.buscatumoto.ui.adapters.TestRecyclerItemData
 import javax.inject.Inject
 
-class FilterViewModel @Inject constructor() : BaseViewModel() {
+class FilterViewModel @Inject constructor() : BaseViewModel(),
+    FilterRecyclerAdapter.FilterItemClickListener {
 
     val brandExpanded = MutableLiveData<Boolean> ()
     val bikeTypeExpanded = MutableLiveData<Boolean> ()
 
     val itemClick = MutableLiveData<Boolean> ()
-    val filterRecyclerAdapter = FilterRecyclerAdapter()
+    var filterRecyclerAdapter = FilterRecyclerAdapter(this)
 
     init {
         brandExpanded.value = false
@@ -50,6 +51,21 @@ class FilterViewModel @Inject constructor() : BaseViewModel() {
 
     fun onItemClicked() {
         itemClick.value = itemClick.value?.not()
+    }
+
+    override fun onClick(filterItem: TestRecyclerItemData, position: Int) {
+        val isItemSelected = filterItem.isSelected
+
+        if (isItemSelected) {
+            filterItem.isSelected = false
+        } else {
+            filterRecyclerAdapter.filterItemsList.forEach {
+                it.isSelected = false
+            }
+            filterRecyclerAdapter.filterItemsList[position].isSelected = true
+        }
+
+        filterRecyclerAdapter.notifyDataSetChanged()
     }
 
 
