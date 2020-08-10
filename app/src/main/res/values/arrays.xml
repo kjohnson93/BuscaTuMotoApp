@@ -3,7 +3,9 @@
 
     <array name="brand_names_array">
         <item>Aprilia</item>
+        <item>Arc</item>
         <item>Benelli</item>
+        <item>Beta</item>
         <item>BMW</item>
         <item>Bultaco</item>
         <item>Daelim</item>
@@ -43,7 +45,9 @@
 
     <array name="brand_logos_array">
         <item>@drawable/aprilia150x150</item>
+        <item>@drawable/arc150x150</item>
         <item>@drawable/benelli150x150</item>
+        <item>@drawable/beta150x150</item>
         <item>@drawable/bmw150x150</item>
         <item>@drawable/bultaco150x150</item>
         <item>@drawable/daelim150x150</item>
