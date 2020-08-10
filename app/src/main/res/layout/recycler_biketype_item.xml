@@ -26,8 +26,6 @@
             android:id="@+id/itemCheckImg"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:clickable="true"
-            android:focusable="true"
             android:src="@drawable/ic_check"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/itemCircleText"
