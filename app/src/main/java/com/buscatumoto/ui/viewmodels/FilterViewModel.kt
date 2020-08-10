@@ -100,9 +100,9 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         val drawabletypedArray = context.resources.obtainTypedArray(R.array.brand_logos_array)
         val  brandFilterList = ArrayList<FilterRecyclerItem>()
 
-        if (mutableList.size != drawabletypedArray.length()) {
-            return
-        } else {
+//        if (mutableList.size != drawabletypedArray.length()) {
+//            return
+//        } else {
             var index = 0
             while (index < drawabletypedArray.length()) {
                 val filterRecyclerItem = FilterRecyclerItem(mutableList[index], drawabletypedArray.getDrawable(index))
@@ -110,7 +110,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
                 index ++
             }
             brandRecyclerAdapter.updateFilterItemsList(brandFilterList.toList())
-        }
+//        }
     }
 
     private fun loadBikeTypeAdapter(listData: List<String>) {
