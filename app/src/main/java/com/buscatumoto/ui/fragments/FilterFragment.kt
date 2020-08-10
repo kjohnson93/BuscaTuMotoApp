@@ -38,7 +38,7 @@ class FilterFragment: Fragment(), Injectable {
         binding.lifecycleOwner = this
         val gridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
         val verticalLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.fragmentFiltTypeList.layoutManager = gridLayoutManager
+        binding.fragmentFiltBrandList.layoutManager = gridLayoutManager
 
         return binding.root
     }

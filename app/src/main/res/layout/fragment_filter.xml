@@ -86,7 +86,8 @@
                     android:id="@+id/brandFrameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:visibility="gone"
                     android:background="@color/color_background_recyclerlist"
                     app:mutableExpand="@{viewModel.brandExpanded}"
@@ -94,11 +95,14 @@
                     app:layout_constraintStart_toStartOf="@id/brandCsLayout"
                     app:layout_constraintTop_toBottomOf="@id/brandCsLayout">
 
-                    <TextView
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/fragmentFiltBrandList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sample text"/>
+                        app:recyclerAdapter="@{viewModel.brandRecyclerAdapter}"
+                        />
                 </FrameLayout>
+
 
                 <View
                     android:id="@+id/brandFilterSeparator"
@@ -211,12 +215,12 @@
                     app:layout_constraintStart_toStartOf="@id/typeCsLayout"
                     app:layout_constraintTop_toBottomOf="@id/typeCsLayout">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/fragmentFiltTypeList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:recyclerAdapter="@{viewModel.filterRecyclerAdapter}"
-                        />
+<!--                    <androidx.recyclerview.widget.RecyclerView-->
+<!--                        android:id="@+id/fragmentFiltTypeList"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        app:recyclerAdapter="@{viewModel.brandRecyclerAdapter}"-->
+<!--                        />-->
                 </FrameLayout>
 
                 <View
