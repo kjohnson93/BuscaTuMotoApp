@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,6 +16,7 @@ import com.buscatumoto.databinding.FragmentFilterBinding
 import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.viewmodels.FilterViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 class FilterFragment: Fragment(), Injectable {
@@ -23,6 +25,7 @@ class FilterFragment: Fragment(), Injectable {
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: FilterViewModel
     private lateinit var binding: FragmentFilterBinding
+    private var errorSnackbar: Snackbar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,8 +72,27 @@ class FilterFragment: Fragment(), Injectable {
             }
         })
 
+        viewModel.errorMutable.observe(viewLifecycleOwner, Observer { result ->
+            if (result.errorMessage != null) {
+                showError(result.errorMessage)
+            } else {
+                hideError()
+            }
+        })
+
         /**
          * Observer section
          */
+    }
+
+    private fun showError(@StringRes errorMessage: Int) {
+        errorSnackbar = Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_INDEFINITE)
+        errorSnackbar?.setAction(R.string.retry, viewModel.getErrorClickListener())
+        errorSnackbar?.show()
+        errorSnackbar?.show()
+    }
+
+    private fun hideError() {
+        errorSnackbar?.dismiss()
     }
 }

@@ -82,7 +82,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), Injectable,
         binding.lifecycleOwner = this
 
 
-        frontPageViewModel.getError().observe(viewLifecycleOwner, Observer { result ->
+        frontPageViewModel.errorModelMutable.observe(viewLifecycleOwner, Observer { result ->
             if (result.errorMessage != null) {
                 showError(result.errorMessage)
             } else {

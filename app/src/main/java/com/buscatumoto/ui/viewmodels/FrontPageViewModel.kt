@@ -26,37 +26,30 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
         const val PAGE_START_INDEX = 0
     }
 
+    //UI  TODO (Should be removed) and use observerForever also remove observers.
     lateinit var lifeCycleOwner: SearchFragment
-
     lateinit var screenNavigator: ScreenNavigator
 
-    private var errorModel = MutableLiveData<RetryErrorModel>()
-    fun getError() = errorModel
-
-    private lateinit var lastBrandSelected: String
-    private lateinit var lastSearch: String
-
-    private lateinit var retryErrorModel: RetryErrorModel
-
+    //Mutables
     val drawableLoadMutable = MutableLiveData<Boolean> ()
+    val searchTextMutable = MutableLiveData<String> ()
 
+    //Adapters
     val searchBrandsAdapter = SearchBrandsRecyclerAdapter(this)
 
+    //Visibilities
     val loadingVisibility = MutableLiveData<Int>().apply {
         this.value = View.GONE
     }
 
-    val searchTextMutable = MutableLiveData<String> ()
+    //Utils
+    private lateinit var lastBrandSelected: String
+    private lateinit var lastSearch: String
 
-    override fun onCleared() {
-        super.onCleared()
-    }
-
-    fun clear() = onCleared()
-
+    //Error retry management
+    public var errorModelMutable = MutableLiveData<RetryErrorModel>()
     private val retryErrorClickListener = View.OnClickListener {
-
-        when (retryErrorModel.requestType) {
+        when (errorModelMutable.value?.requestType) {
             RetryErrorModel.FILTER_ERROR -> {
                 navigateByFilter(lastBrandSelected)
             }
@@ -64,8 +57,13 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
             }
         }
     }
-
     fun getErrorClickListener() : View.OnClickListener = retryErrorClickListener
+
+    override fun onCleared() {
+        super.onCleared()
+    }
+
+    fun clear() = onCleared()
 
 
     init {
@@ -125,8 +123,7 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
                             Result.Status.ERROR -> {
                                 Timber.d("Filter error")
                                 loadingVisibility.value = View.GONE
-                                retryErrorModel = RetryErrorModel(R.string.load_filter_error, RetryErrorModel.FILTER_ERROR)
-                                errorModel.value = retryErrorModel
+                                errorModelMutable.value = RetryErrorModel(R.string.load_filter_error, RetryErrorModel.FILTER_ERROR)
                                 liveData.removeObservers(lifeCycleOwner)
                             }
                         }

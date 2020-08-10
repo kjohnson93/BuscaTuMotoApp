@@ -12,7 +12,6 @@ import com.buscatumoto.domain.features.search.GetFieldsUseCase
 import com.buscatumoto.domain.features.search.GetModelsUseCase
 import com.buscatumoto.ui.adapters.FilterRecyclerAdapter
 import com.buscatumoto.ui.adapters.FilterRecyclerItem
-import com.buscatumoto.ui.models.BrandRecyclerUiModel
 import com.buscatumoto.utils.ui.RetryErrorModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,25 +23,27 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
                                           , private val getModelsUseCase: GetModelsUseCase) : BaseViewModel(),
     FilterRecyclerAdapter.FilterItemClickListener {
 
+    //Visibilities
+    val loadingVisibility = MutableLiveData<Int> ()
     val brandExpanded = MutableLiveData<Boolean> ()
     val bikeTypeExpanded = MutableLiveData<Boolean> ()
 
-    val loadingVisibility = MutableLiveData<Int> ()
-
-    val itemClick = MutableLiveData<Boolean> ()
+    //Adapters
     var brandRecyclerAdapter = FilterRecyclerAdapter(this)
-    private lateinit var retryErrorModel: RetryErrorModel
-    private var errorModel = MutableLiveData<RetryErrorModel>()
-    fun getError() = errorModel
 
-    private lateinit var lastBrandSelected: String
+    //Mutables
     val models: MutableLiveData<List<String>> = MutableLiveData()
 
 
+    //Utils
+    private lateinit var lastBrandSelected: String
+
+    //Error retry management
+    public var errorMutable = MutableLiveData<RetryErrorModel>()
     private val errorClickListener = View.OnClickListener {
-        when (retryErrorModel.requestType) {
+        when (errorMutable.value?.requestType) {
             RetryErrorModel.FIELDS_ERROR -> {
-                loadRecyclerValues()
+                loadFilterData()
             }
             RetryErrorModel.MODELS_ERROR -> {
                 loadModelsByBrand(lastBrandSelected)
@@ -55,23 +56,17 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
     init {
         brandExpanded.value = false
         bikeTypeExpanded.value = false
-        itemClick.value = false
-
-        loadRecyclerValues()
+        loadFilterData()
     }
 
-    private fun loadRecyclerValues() {
+    private fun loadFilterData() {
         viewModelScope.launch(Dispatchers.IO) {
-            //Get livedata on background
             val fieldLiveData =  getFieldsUseCase.execute()
 
-            //Observe on MainThread to update UI
             withContext(Dispatchers.Main) {
                 fieldLiveData.observeForever(Observer { result ->
                     when (result.status) {
                         Result.Status.SUCCESS -> {
-//                            onLoadFieldsSuccess(result.data)
-//                            brandRecyclerAdapter.updateFilterItemsList(result.data.)
                             loadBrandRecycler(result.data?.brandList)
                             fieldLiveData.removeObserver {
                                 Timber.d("Observer removed")
@@ -139,8 +134,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
 
     private fun onLoadFieldsError(message: String?) {
         loadingVisibility.value = View.GONE
-        retryErrorModel = RetryErrorModel(R.string.load_fields_error, RetryErrorModel.FIELDS_ERROR)
-        errorModel.value = retryErrorModel
+        errorMutable.value = RetryErrorModel(R.string.load_fields_error, RetryErrorModel.FIELDS_ERROR)
     }
 
     fun loadModelsByBrand(brand: String) {
@@ -180,8 +174,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
 
     private fun onLoadModelsError(message: String?) {
         loadingVisibility.value = View.GONE
-        retryErrorModel = RetryErrorModel(R.string.load_models_error, RetryErrorModel.MODELS_ERROR)
-        errorModel.value = retryErrorModel
+        errorMutable.value = RetryErrorModel(R.string.load_models_error, RetryErrorModel.MODELS_ERROR)
     }
 
 
