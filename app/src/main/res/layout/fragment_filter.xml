@@ -33,6 +33,7 @@
             app:layout_constraintTop_toBottomOf="@+id/deleteFilterTvw" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,8 +48,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="vertical"
                     android:onClick="@{() -> viewModel.onBrandLayoutClick()}"
+                    android:orientation="vertical"
                     android:padding="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -86,21 +87,20 @@
                     android:id="@+id/brandFrameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/color_background_recyclerlist"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:visibility="gone"
-                    android:background="@color/color_background_recyclerlist"
-                    app:mutableExpand="@{viewModel.brandExpanded}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/brandCsLayout"
-                    app:layout_constraintTop_toBottomOf="@id/brandCsLayout">
+                    app:layout_constraintTop_toBottomOf="@id/brandCsLayout"
+                    app:mutableExpand="@{viewModel.brandExpanded}">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/fragmentFiltBrandList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:recyclerAdapter="@{viewModel.brandRecyclerAdapter}"
-                        />
+                        app:recyclerAdapter="@{viewModel.brandRecyclerAdapter}" />
                 </FrameLayout>
 
 
@@ -206,21 +206,21 @@
                     android:id="@+id/typeFrameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/color_background_recyclerlist"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:visibility="gone"
-                    android:background="@color/color_background_recyclerlist"
-                    app:mutableExpand="@{viewModel.bikeTypeExpanded}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/typeCsLayout"
-                    app:layout_constraintTop_toBottomOf="@id/typeCsLayout">
+                    app:layout_constraintTop_toBottomOf="@id/typeCsLayout"
+                    app:mutableExpand="@{viewModel.bikeTypeExpanded}">
 
-<!--                    <androidx.recyclerview.widget.RecyclerView-->
-<!--                        android:id="@+id/fragmentFiltTypeList"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        app:recyclerAdapter="@{viewModel.brandRecyclerAdapter}"-->
-<!--                        />-->
+                    <!--                    <androidx.recyclerview.widget.RecyclerView-->
+                    <!--                        android:id="@+id/fragmentFiltTypeList"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        app:recyclerAdapter="@{viewModel.brandRecyclerAdapter}"-->
+                    <!--                        />-->
                 </FrameLayout>
 
                 <View
@@ -648,5 +648,22 @@
                     app:layout_constraintTop_toBottomOf="@+id/licenseCsLayout" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="false"
+            android:indeterminateBehavior="cycle"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:mutableVisibility="@{viewModel.loadingVisibility}" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

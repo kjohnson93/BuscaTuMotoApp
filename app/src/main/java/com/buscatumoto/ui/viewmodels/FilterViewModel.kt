@@ -30,10 +30,10 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
 
     //Adapters
     var brandRecyclerAdapter = FilterRecyclerAdapter(this)
+    var typeRecyclerAdapter = FilterRecyclerAdapter(this)
 
     //Mutables
     val models: MutableLiveData<List<String>> = MutableLiveData()
-
 
     //Utils
     private lateinit var lastBrandSelected: String
@@ -67,6 +67,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
                 fieldLiveData.observeForever(Observer { result ->
                     when (result.status) {
                         Result.Status.SUCCESS -> {
+                            loadingVisibility.value = View.GONE
                             loadBrandRecycler(result.data?.brandList)
                             fieldLiveData.removeObserver {
                                 Timber.d("Observer removed")
@@ -91,11 +92,9 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
     private fun loadBrandRecycler(data: List<String>?) {
         val context = BuscaTuMotoApplication.getInstance().baseContext
         val drawabletypedArray = context.resources.obtainTypedArray(R.array.brand_logos_array)
-
         val  brandFilterList = ArrayList<FilterRecyclerItem>()
 
         var index = 0
-
         while (index < drawabletypedArray.length()) {
             val filterRecyclerItem = FilterRecyclerItem(data?.get(index), drawabletypedArray.getDrawable(index))
             brandFilterList.add(filterRecyclerItem)
@@ -128,7 +127,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         brandRecyclerAdapter.notifyDataSetChanged()
     }
 
-    fun onLoading() {
+    private fun onLoading() {
         loadingVisibility.value = View.VISIBLE
     }
 
