@@ -40,8 +40,10 @@ class FilterFragment: Fragment(), Injectable {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         val gridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
-        val verticalLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        val bikeTypeGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+
         binding.fragmentFiltBrandList.layoutManager = gridLayoutManager
+        binding.fragmentFiltTypeList.layoutManager = bikeTypeGridLayoutManager
 
         return binding.root
     }

@@ -12,12 +12,14 @@ import com.buscatumoto.domain.features.search.GetFieldsUseCase
 import com.buscatumoto.domain.features.search.GetModelsUseCase
 import com.buscatumoto.ui.adapters.FilterRecyclerAdapter
 import com.buscatumoto.ui.adapters.FilterRecyclerItem
+import com.buscatumoto.utils.global.removeEmptyValues
 import com.buscatumoto.utils.ui.RetryErrorModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
+
 
 class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetFieldsUseCase
                                           , private val getModelsUseCase: GetModelsUseCase) : BaseViewModel(),
@@ -30,7 +32,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
 
     //Adapters
     var brandRecyclerAdapter = FilterRecyclerAdapter(this)
-    var typeRecyclerAdapter = FilterRecyclerAdapter(this)
+    var bikeTypeRecyclerAdapter = FilterRecyclerAdapter(this)
 
     //Mutables
     val models: MutableLiveData<List<String>> = MutableLiveData()
@@ -68,7 +70,8 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
                     when (result.status) {
                         Result.Status.SUCCESS -> {
                             loadingVisibility.value = View.GONE
-                            loadBrandRecycler(result.data?.brandList)
+                            result.data?.brandList?.let { loadBrandAdapter(it) }
+                            result.data?.bikeTypesList?.let { loadBikeTypeAdapter(it) }
                             fieldLiveData.removeObserver {
                                 Timber.d("Observer removed")
                             }
@@ -86,22 +89,50 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
                 })
             }
         }
-
     }
 
-    private fun loadBrandRecycler(data: List<String>?) {
+    private fun loadBrandAdapter(listData: List<String>) {
+        var mutableList = listData as ArrayList
+        //Using iterator to avoid ConcurrentModificationException
+        mutableList = removeEmptyValues(mutableList)
+
         val context = BuscaTuMotoApplication.getInstance().baseContext
         val drawabletypedArray = context.resources.obtainTypedArray(R.array.brand_logos_array)
         val  brandFilterList = ArrayList<FilterRecyclerItem>()
 
-        var index = 0
-        while (index < drawabletypedArray.length()) {
-            val filterRecyclerItem = FilterRecyclerItem(data?.get(index), drawabletypedArray.getDrawable(index))
-            brandFilterList.add(filterRecyclerItem)
-            index ++
+        if (mutableList.size != drawabletypedArray.length()) {
+            return
+        } else {
+            var index = 0
+            while (index < drawabletypedArray.length()) {
+                val filterRecyclerItem = FilterRecyclerItem(mutableList[index], drawabletypedArray.getDrawable(index))
+                brandFilterList.add(filterRecyclerItem)
+                index ++
+            }
+            brandRecyclerAdapter.updateFilterItemsList(brandFilterList.toList())
         }
+    }
 
-        brandRecyclerAdapter.updateFilterItemsList(brandFilterList.toList())
+    private fun loadBikeTypeAdapter(listData: List<String>) {
+        var mutableList = listData as ArrayList
+        //Using iterator to avoid ConcurrentModificationException
+        mutableList = removeEmptyValues(mutableList)
+
+        val bikeTypeList = ArrayList<FilterRecyclerItem>()
+        val context = BuscaTuMotoApplication.getInstance().baseContext
+        val drawabletypedArray = context.resources.obtainTypedArray(R.array.bike_types_array)
+
+        if (mutableList.size != drawabletypedArray.length()) {
+            return
+        } else {
+            var index = 0
+            while (index < drawabletypedArray.length()) {
+                val filterRecyclerItem = FilterRecyclerItem(mutableList[index], drawabletypedArray.getDrawable(index))
+                bikeTypeList.add(filterRecyclerItem)
+                index ++
+            }
+            bikeTypeRecyclerAdapter.updateFilterItemsList(bikeTypeList.toList())
+        }
     }
 
     fun onBrandLayoutClick() {

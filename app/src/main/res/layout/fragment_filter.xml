@@ -215,12 +215,13 @@
                     app:layout_constraintTop_toBottomOf="@id/typeCsLayout"
                     app:mutableExpand="@{viewModel.bikeTypeExpanded}">
 
-                    <!--                    <androidx.recyclerview.widget.RecyclerView-->
-                    <!--                        android:id="@+id/fragmentFiltTypeList"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        app:recyclerAdapter="@{viewModel.brandRecyclerAdapter}"-->
-                    <!--                        />-->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/fragmentFiltTypeList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:recyclerAdapter="@{viewModel.bikeTypeRecyclerAdapter}" />
+
+
                 </FrameLayout>
 
                 <View

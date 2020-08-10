@@ -82,4 +82,25 @@
 
     </array>
 
+    <array name="bike_types_array">
+        <item>@drawable/aprilia150x150</item>
+        <item>@drawable/benelli150x150</item>
+        <item>@drawable/bmw150x150</item>
+        <item>@drawable/bultaco150x150</item>
+        <item>@drawable/daelim150x150</item>
+        <item>@drawable/ducati150x150</item>
+        <item>@drawable/ebr150x150</item>
+        <item>@drawable/gasgas150x150</item>
+        <item>@drawable/goes150x150</item>
+        <item>@drawable/hanway150x150</item>
+        <item>@drawable/harley150x150</item>
+        <item>@drawable/honda150x150</item>
+        <item>@drawable/husqvarna150x150</item>
+        <item>@drawable/hyosung150x150</item>
+        <item>@drawable/indian150x150</item>
+        <item>@drawable/kawasaki150x150</item>
+        <item>@drawable/ktm150x150</item>
+    </array>
+
+
 </resources>

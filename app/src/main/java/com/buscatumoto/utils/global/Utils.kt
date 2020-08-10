@@ -10,6 +10,7 @@ import com.buscatumoto.R
 import java.lang.Double
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 fun hideKeyboardFrom(
@@ -87,6 +88,21 @@ fun validateNameForApi(nombre: String): Boolean {
     }
 
     return result
+}
+
+fun removeEmptyValues(list: List<String>): ArrayList<String> {
+    val mutableList = list as ArrayList
+
+    //Using iterator to avoid ConcurrentModificationException
+    with(mutableList.iterator()) {
+        forEach {
+            if (it  == "") {
+                remove()
+            }
+        }
+    }
+
+    return mutableList
 }
 
 /**
