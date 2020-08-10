@@ -1,13 +1,11 @@
 package com.buscatumoto.ui.viewmodels
 
-import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
 import com.buscatumoto.ui.adapters.FilterRecyclerAdapter
-import com.buscatumoto.ui.adapters.TestRecyclerItemData
+import com.buscatumoto.ui.adapters.FilterRecyclerItem
 import javax.inject.Inject
 
 class FilterViewModel @Inject constructor() : BaseViewModel(),
@@ -30,13 +28,19 @@ class FilterViewModel @Inject constructor() : BaseViewModel(),
     }
 
     private fun loadRecyclerValues() {
-        val list = ArrayList<TestRecyclerItemData>()
+        val list = ArrayList<FilterRecyclerItem>()
         val res1 = ContextCompat.getDrawable(BuscaTuMotoApplication.getInstance().applicationContext,
         R.drawable.montesa150x150)
         val res2 = ContextCompat.getDrawable(BuscaTuMotoApplication.getInstance().applicationContext,
             R.drawable.honda150x150)
-        list.add(TestRecyclerItemData("Montesa", res1))
-        list.add(TestRecyclerItemData("Montesa", res2))
+        val res3 = ContextCompat.getDrawable(BuscaTuMotoApplication.getInstance().applicationContext,
+            R.drawable.yamaha150x150)
+        val res4 = ContextCompat.getDrawable(BuscaTuMotoApplication.getInstance().applicationContext,
+            R.drawable.daelim150x150)
+        list.add(FilterRecyclerItem("Montesa", res1))
+        list.add(FilterRecyclerItem("Honda", res2))
+        list.add(FilterRecyclerItem("Yamaha", res3))
+        list.add(FilterRecyclerItem("Daelim", res4))
 
         filterRecyclerAdapter.updateFilterItemsList(list)
     }
@@ -49,11 +53,7 @@ class FilterViewModel @Inject constructor() : BaseViewModel(),
         bikeTypeExpanded.value = bikeTypeExpanded.value?.not()
     }
 
-    fun onItemClicked() {
-        itemClick.value = itemClick.value?.not()
-    }
-
-    override fun onClick(filterItem: TestRecyclerItemData, position: Int) {
+    override fun onClick(filterItem: FilterRecyclerItem, position: Int) {
         val isItemSelected = filterItem.isSelected
 
         if (isItemSelected) {

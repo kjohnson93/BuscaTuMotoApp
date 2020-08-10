@@ -5,16 +5,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.buscatumoto.R
-import com.buscatumoto.ui.viewmodels.FilterViewModel
-import android.content.Context
 import android.view.View
 import com.buscatumoto.databinding.RecyclerBiketypeItemBinding
-import timber.log.Timber
 
 
 class FilterRecyclerAdapter(private val filterItemClickListener: FilterItemClickListener): RecyclerView.Adapter<FilterRecyclerAdapter.FilterRecyclerViewHolder>() {
 
-    lateinit var filterItemsList : List<TestRecyclerItemData>
+    lateinit var filterItemsList : List<FilterRecyclerItem>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterRecyclerViewHolder {
         val binding: RecyclerBiketypeItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
@@ -30,7 +27,7 @@ class FilterRecyclerAdapter(private val filterItemClickListener: FilterItemClick
         return if (::filterItemsList.isInitialized) filterItemsList.size else 0
     }
 
-    fun updateFilterItemsList(data: List<TestRecyclerItemData>) {
+    fun updateFilterItemsList(data: List<FilterRecyclerItem>) {
         this.filterItemsList = data
         notifyDataSetChanged()
     }
@@ -40,9 +37,9 @@ class FilterRecyclerAdapter(private val filterItemClickListener: FilterItemClick
         val binding: RecyclerBiketypeItemBinding):
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
-        private lateinit var filterItem: TestRecyclerItemData
+        private lateinit var filterItem: FilterRecyclerItem
 
-        fun bind(filterItem: TestRecyclerItemData) {
+        fun bind(filterItem: FilterRecyclerItem) {
             this.filterItem = filterItem
             binding.itemCircleImg.setImageDrawable(filterItem.drawable)
             binding.itemCircleText.text = filterItem.title
@@ -60,6 +57,6 @@ class FilterRecyclerAdapter(private val filterItemClickListener: FilterItemClick
     }
 
     interface FilterItemClickListener {
-        fun onClick(filterItem: TestRecyclerItemData, position: Int)
+        fun onClick(filterItem: FilterRecyclerItem, position: Int)
     }
 }
