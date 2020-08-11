@@ -10,4 +10,5 @@
     <color name="black">#000000</color>
     <color name="colorPrimary_transparent">#40CA2A1D</color>
     <color name="color_background_recyclerlist">#FAFAFA</color>
+    <color name="grey_tint">#7A7A7A</color>
 </resources>

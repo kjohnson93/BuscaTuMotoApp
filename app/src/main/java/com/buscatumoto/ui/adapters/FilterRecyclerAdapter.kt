@@ -1,11 +1,15 @@
 package com.buscatumoto.ui.adapters
 
+import android.content.res.ColorStateList
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.buscatumoto.R
 import android.view.View
+import androidx.core.content.ContextCompat
+import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.databinding.RecyclerBiketypeItemBinding
 
 
@@ -60,6 +64,8 @@ class FilterRecyclerAdapter(): RecyclerView.Adapter<FilterRecyclerAdapter.Filter
             binding.itemCircleText.text = filterItem.title
             if (filterItem.isSelected) {
                 binding.itemCheckImg.visibility = View.VISIBLE
+                binding.itemCircleImg.setColorFilter(ContextCompat.getColor(
+                    BuscaTuMotoApplication.getInstance().applicationContext, R.color.grey_tint), PorterDuff.Mode.MULTIPLY)
             } else {
                 binding.itemCheckImg.visibility = View.GONE
             }
