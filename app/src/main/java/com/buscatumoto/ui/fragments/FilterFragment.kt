@@ -32,18 +32,14 @@ class FilterFragment: Fragment(), Injectable {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_filter, container, false)
         viewModel = ViewModelProviders.of(
             this, viewModelFactory).get(FilterViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        val gridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
-        val bikeTypeGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
 
-        binding.fragmentFiltBrandList.layoutManager = gridLayoutManager
-        binding.fragmentFiltTypeList.layoutManager = bikeTypeGridLayoutManager
+        setupGridLayoutManagers()
 
         return binding.root
     }
@@ -96,5 +92,15 @@ class FilterFragment: Fragment(), Injectable {
 
     private fun hideError() {
         errorSnackbar?.dismiss()
+    }
+
+    private fun setupGridLayoutManagers() {
+        val gridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val bikeTypeGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val minPriceGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+
+        binding.fragmentFiltBrandList.layoutManager = gridLayoutManager
+        binding.fragmentFiltTypeList.layoutManager = bikeTypeGridLayoutManager
+        binding.fragmentMinPriceList.layoutManager = minPriceGridLayoutManager
     }
 }

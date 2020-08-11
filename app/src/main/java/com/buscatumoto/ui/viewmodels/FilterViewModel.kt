@@ -29,10 +29,12 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
     val loadingVisibility = MutableLiveData<Int> ()
     val brandExpanded = MutableLiveData<Boolean> ()
     val bikeTypeExpanded = MutableLiveData<Boolean> ()
+    val minPriceExpanded = MutableLiveData<Boolean> ()
 
     //Adapters
     var brandRecyclerAdapter = FilterRecyclerAdapter(this)
     var bikeTypeRecyclerAdapter = FilterRecyclerAdapter(this)
+    var minPriceRecyclerAdapter = FilterRecyclerAdapter(this)
 
     //Mutables
     val models: MutableLiveData<List<String>> = MutableLiveData()
@@ -58,6 +60,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
     init {
         brandExpanded.value = false
         bikeTypeExpanded.value = false
+        minPriceExpanded.value = false
         loadFilterData()
     }
 
@@ -72,6 +75,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
                             loadingVisibility.value = View.GONE
                             result.data?.brandList?.let { loadBrandAdapter(it) }
                             result.data?.bikeTypesList?.let { loadBikeTypeAdapter(it) }
+                            result.data?.priceMinList?.let { loadMinPriceAdapter(it) }
                             fieldLiveData.removeObserver {
                                 Timber.d("Observer removed")
                             }
@@ -91,6 +95,35 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         }
     }
 
+    private fun loadMinPriceAdapter(listData: List<Int>) {
+        val context = BuscaTuMotoApplication.getInstance().baseContext
+        val drawabletypedArray =
+            context.resources.obtainTypedArray(R.array.brand_logos_array)
+        val  brandFilterList = ArrayList<FilterRecyclerItem>()
+
+        /**
+         * Size workaround until images are hosted online and not locally.
+         */
+        var smallerSize = 0
+        smallerSize = if (listData.size <= drawabletypedArray.length()) {
+            listData.size
+        } else {
+            drawabletypedArray.length()
+        }
+        /**
+         * Size workaround until images are hosted online and not locally.
+         */
+
+        var index = 0
+        while (index < smallerSize) {
+            val filterRecyclerItem = FilterRecyclerItem(listData[index].toString(),
+                drawabletypedArray.getDrawable(index))
+            brandFilterList.add(filterRecyclerItem)
+            index ++
+        }
+        minPriceRecyclerAdapter.updateFilterItemsList(brandFilterList.toList())
+    }
+
     private fun loadBrandAdapter(listData: List<String>) {
         var mutableList = listData as ArrayList
         //Using iterator to avoid ConcurrentModificationException
@@ -100,17 +133,26 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         val drawabletypedArray = context.resources.obtainTypedArray(R.array.brand_logos_array)
         val  brandFilterList = ArrayList<FilterRecyclerItem>()
 
-//        if (mutableList.size != drawabletypedArray.length()) {
-//            return
-//        } else {
+        /**
+         * Size workaround until images are hosted online and not locally.
+         */
+        var smallerSize = 0
+        smallerSize = if (listData.size <= drawabletypedArray.length()) {
+            listData.size
+        } else {
+            drawabletypedArray.length()
+        }
+        /**
+         * Size workaround until images are hosted online and not locally.
+         */
+
             var index = 0
-            while (index < drawabletypedArray.length()) {
+            while (index < smallerSize) {
                 val filterRecyclerItem = FilterRecyclerItem(mutableList[index], drawabletypedArray.getDrawable(index))
                 brandFilterList.add(filterRecyclerItem)
                 index ++
             }
             brandRecyclerAdapter.updateFilterItemsList(brandFilterList.toList())
-//        }
     }
 
     private fun loadBikeTypeAdapter(listData: List<String>) {
@@ -122,17 +164,27 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         val context = BuscaTuMotoApplication.getInstance().baseContext
         val drawabletypedArray = context.resources.obtainTypedArray(R.array.bike_types_array)
 
-        if (mutableList.size != drawabletypedArray.length()) {
-            return
+        /**
+         * Size workaround until images are hosted online and not locally.
+         */
+        var smallerSize = 0
+        smallerSize = if (listData.size <= drawabletypedArray.length()) {
+            listData.size
         } else {
+            drawabletypedArray.length()
+        }
+        /**
+         * Size workaround until images are hosted online and not locally.
+         */
+
+
             var index = 0
-            while (index < drawabletypedArray.length()) {
+            while (index < smallerSize) {
                 val filterRecyclerItem = FilterRecyclerItem(mutableList[index], drawabletypedArray.getDrawable(index))
                 bikeTypeList.add(filterRecyclerItem)
                 index ++
             }
             bikeTypeRecyclerAdapter.updateFilterItemsList(bikeTypeList.toList())
-        }
     }
 
     fun onBrandLayoutClick() {
@@ -141,6 +193,10 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
 
     fun onBikeTypeLayoutClick() {
         bikeTypeExpanded.value = bikeTypeExpanded.value?.not()
+    }
+
+    fun onMinPriceLayoutClick() {
+        minPriceExpanded.value = minPriceExpanded.value?.not()
     }
 
     override fun onClick(filterItem: FilterRecyclerItem, position: Int) {

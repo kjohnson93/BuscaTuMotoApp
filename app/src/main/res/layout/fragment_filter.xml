@@ -239,6 +239,7 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:padding="20dp"
+                    android:onClick="@{() -> viewModel.onMinPriceLayoutClick()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/typeFilterSeparator"
                     app:layout_constraintTop_toBottomOf="@id/typeFilterSeparator">
@@ -272,13 +273,34 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <FrameLayout
+                    android:id="@+id/minPriceFrameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_background_recyclerlist"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/minPriceCsLayout"
+                    app:layout_constraintTop_toBottomOf="@id/minPriceCsLayout"
+                    app:mutableExpand="@{viewModel.minPriceExpanded}">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/fragmentMinPriceList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:recyclerAdapter="@{viewModel.minPriceRecyclerAdapter}" />
+                </FrameLayout>
+
+
                 <View
                     android:id="@+id/minimumPriceSeparator"
                     android:layout_width="0dp"
                     android:layout_height="0.5dp"
                     android:background="@color/grey_separator"
-                    app:layout_constraintStart_toStartOf="@+id/minPriceCsLayout"
-                    app:layout_constraintTop_toBottomOf="@+id/minPriceCsLayout" />
+                    app:layout_constraintStart_toStartOf="@+id/minPriceFrameLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/minPriceFrameLayout" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/maxPriceCsLayout"
