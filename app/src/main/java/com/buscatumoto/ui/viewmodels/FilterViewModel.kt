@@ -49,9 +49,6 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
             RetryErrorModel.FIELDS_ERROR -> {
                 loadFilterData()
             }
-            RetryErrorModel.MODELS_ERROR -> {
-                loadModelsByBrand(lastBrandSelected)
-            }
         }
     }
 
@@ -221,46 +218,6 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
     private fun onLoadFieldsError(message: String?) {
         loadingVisibility.value = View.GONE
         errorMutable.value = RetryErrorModel(R.string.load_fields_error, RetryErrorModel.FIELDS_ERROR)
-    }
-
-    fun loadModelsByBrand(brand: String) {
-        lastBrandSelected = brand
-
-        viewModelScope.launch(Dispatchers.IO) {
-            val motoModelsLiveData = getModelsUseCase.execute(brand)
-
-            withContext(Dispatchers.Main) {
-                motoModelsLiveData.observeForever { result ->
-                    when (result.status) {
-                        Result.Status.SUCCESS -> {
-                            onLoadModelsSuccess(result.data)
-                            motoModelsLiveData.removeObserver {
-                                Timber.d("Observer removed")
-                            }
-                        }
-                        Result.Status.LOADING -> {
-                            onLoading()
-                        }
-                        Result.Status.ERROR -> {
-                            onLoadModelsError(result.message)
-                            motoModelsLiveData.removeObserver {
-                                Timber.d("Observer removed")
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun onLoadModelsSuccess(data: FieldsEntity?) {
-        loadingVisibility.value = View.GONE
-        models.value = data?.models
-    }
-
-    private fun onLoadModelsError(message: String?) {
-        loadingVisibility.value = View.GONE
-        errorMutable.value = RetryErrorModel(R.string.load_models_error, RetryErrorModel.MODELS_ERROR)
     }
 
 
