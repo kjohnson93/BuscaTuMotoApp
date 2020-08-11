@@ -98,9 +98,14 @@ class FilterFragment: Fragment(), Injectable {
         val gridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
         val bikeTypeGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
         val minPriceGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val maxPriceGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val minDisplacementGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+
 
         binding.fragmentFiltBrandList.layoutManager = gridLayoutManager
         binding.fragmentFiltTypeList.layoutManager = bikeTypeGridLayoutManager
         binding.fragmentMinPriceList.layoutManager = minPriceGridLayoutManager
+        binding.fragmentFiltMaxPriceList.layoutManager = maxPriceGridLayoutManager
+        binding.fragmentFiltMinDisplacementList.layoutManager = minDisplacementGridLayoutManager
     }
 }

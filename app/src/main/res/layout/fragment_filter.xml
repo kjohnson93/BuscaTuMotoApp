@@ -263,6 +263,7 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:padding="20dp"
+                    android:onClick="@{() -> viewModel.onMaxPriceLayoutClick()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/minimumPriceSeparator"
                     app:layout_constraintTop_toBottomOf="@id/minimumPriceSeparator">
@@ -277,7 +278,7 @@
                         android:maxLines="1"
                         android:paddingTop="0dp"
                         android:paddingEnd="5dp"
-                        android:text="@string/minimum_price"
+                        android:text="@string/maximum_price"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -294,13 +295,33 @@
                         app:layout_constraintTop_toTopOf="@+id/maxPriceLabel" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <FrameLayout
+                    android:id="@+id/maxPriceFrameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_background_recyclerlist"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/maxPriceCsLayout"
+                    app:layout_constraintTop_toBottomOf="@id/maxPriceCsLayout"
+                    app:mutableExpand="@{viewModel.maxPriceExpanded}">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/fragmentFiltMaxPriceList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:recyclerAdapter="@{viewModel.maxPriceRecyclerAdapter}" />
+                </FrameLayout>
+
                 <View
                     android:id="@+id/maximumPriceSeparator"
                     android:layout_width="0dp"
                     android:layout_height="0.5dp"
                     android:background="@color/grey_separator"
-                    app:layout_constraintStart_toStartOf="@+id/maxPriceCsLayout"
-                    app:layout_constraintTop_toBottomOf="@+id/maxPriceCsLayout" />
+                    app:layout_constraintStart_toStartOf="@+id/maxPriceFrameLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/maxPriceFrameLayout" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/maxPowerCsLayout"
@@ -401,6 +422,7 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:padding="20dp"
+                    android:onClick="@{() -> viewModel.onMinDisplacementLayoutClick()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/maxDisplacementSeparator"
                     app:layout_constraintTop_toBottomOf="@id/maxDisplacementSeparator">
@@ -432,13 +454,34 @@
                         app:layout_constraintTop_toTopOf="@+id/mimDisplacementLabel" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <FrameLayout
+                    android:id="@+id/minDisplacementFrameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_background_recyclerlist"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/minDisplacementCsLayout"
+                    app:layout_constraintTop_toBottomOf="@id/minDisplacementCsLayout"
+                    app:mutableExpand="@{viewModel.minDisplacementExpanded}">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/fragmentFiltMinDisplacementList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:recyclerAdapter="@{viewModel.minDisplacementRecyclerAdapter}" />
+                </FrameLayout>
+
+
                 <View
                     android:id="@+id/mimDisplacementSeparator"
                     android:layout_width="0dp"
                     android:layout_height="0.5dp"
                     android:background="@color/grey_separator"
-                    app:layout_constraintStart_toStartOf="@+id/minDisplacementCsLayout"
-                    app:layout_constraintTop_toBottomOf="@+id/minDisplacementCsLayout" />
+                    app:layout_constraintStart_toStartOf="@+id/minDisplacementFrameLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/minDisplacementFrameLayout" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/minWeightCsLayout"
