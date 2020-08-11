@@ -26,6 +26,13 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
     val brandExpanded = MutableLiveData<Boolean> ()
     val bikeTypeExpanded = MutableLiveData<Boolean> ()
     val minPriceExpanded = MutableLiveData<Boolean> ()
+    val maxPriceExpanded = MutableLiveData<Boolean> ()
+    val minDisplacementExpanded = MutableLiveData<Boolean> ()
+    val maxDisplacementExpanded = MutableLiveData<Boolean> ()
+    val minWeightExpanded = MutableLiveData<Boolean> ()
+    val maxWeightExpanded = MutableLiveData<Boolean> ()
+    val yearExpanded = MutableLiveData<Boolean> ()
+    val licenseExpanded = MutableLiveData<Boolean> ()
 
     //Adapters
     var brandRecyclerAdapter = FilterRecyclerAdapter()

@@ -36,6 +36,8 @@
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="80dp"
+            android:fillViewport="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/deleteFilterSeparator">
 
