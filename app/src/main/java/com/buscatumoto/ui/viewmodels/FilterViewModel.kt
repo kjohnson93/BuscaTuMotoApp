@@ -6,10 +6,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
-import com.buscatumoto.data.local.entity.FieldsEntity
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.domain.features.search.GetFieldsUseCase
-import com.buscatumoto.domain.features.search.GetModelsUseCase
 import com.buscatumoto.ui.adapters.FilterRecyclerAdapter
 import com.buscatumoto.ui.adapters.FilterRecyclerItem
 import com.buscatumoto.utils.global.removeEmptyValues
@@ -21,9 +19,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 
-class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetFieldsUseCase
-                                          , private val getModelsUseCase: GetModelsUseCase) : BaseViewModel(),
-    FilterRecyclerAdapter.FilterItemClickListener {
+class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetFieldsUseCase) : BaseViewModel() {
 
     //Visibilities
     val loadingVisibility = MutableLiveData<Int> ()
@@ -32,9 +28,9 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
     val minPriceExpanded = MutableLiveData<Boolean> ()
 
     //Adapters
-    var brandRecyclerAdapter = FilterRecyclerAdapter(this)
-    var bikeTypeRecyclerAdapter = FilterRecyclerAdapter(this)
-    var minPriceRecyclerAdapter = FilterRecyclerAdapter(this)
+    var brandRecyclerAdapter = FilterRecyclerAdapter()
+    var bikeTypeRecyclerAdapter = FilterRecyclerAdapter()
+    var minPriceRecyclerAdapter = FilterRecyclerAdapter()
 
     //Mutables
     val models: MutableLiveData<List<String>> = MutableLiveData()
@@ -194,21 +190,6 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
 
     fun onMinPriceLayoutClick() {
         minPriceExpanded.value = minPriceExpanded.value?.not()
-    }
-
-    override fun onClick(filterItem: FilterRecyclerItem, position: Int) {
-        val isItemSelected = filterItem.isSelected
-
-        if (isItemSelected) {
-            filterItem.isSelected = false
-        } else {
-            brandRecyclerAdapter.filterItemsList.forEach {
-                it.isSelected = false
-            }
-            brandRecyclerAdapter.filterItemsList[position].isSelected = true
-        }
-
-        brandRecyclerAdapter.notifyDataSetChanged()
     }
 
     private fun onLoading() {

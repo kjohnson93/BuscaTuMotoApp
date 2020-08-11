@@ -9,7 +9,7 @@ import android.view.View
 import com.buscatumoto.databinding.RecyclerBiketypeItemBinding
 
 
-class FilterRecyclerAdapter(private val filterItemClickListener: FilterItemClickListener): RecyclerView.Adapter<FilterRecyclerAdapter.FilterRecyclerViewHolder>() {
+class FilterRecyclerAdapter(): RecyclerView.Adapter<FilterRecyclerAdapter.FilterRecyclerViewHolder>() {
 
     lateinit var filterItemsList : List<FilterRecyclerItem>
 
@@ -20,7 +20,22 @@ class FilterRecyclerAdapter(private val filterItemClickListener: FilterItemClick
     }
 
     override fun onBindViewHolder(holder: FilterRecyclerViewHolder, position: Int) {
-        holder.bind(filterItemsList[position])
+        val filterItem = filterItemsList[position]
+        holder.bind(filterItem)
+        holder.binding.root.setOnClickListener {
+            val isItemSelected = filterItem.isSelected
+
+            if (isItemSelected) {
+                filterItem.isSelected = false
+            } else {
+                filterItemsList.forEach {
+                    it.isSelected = false
+                }
+                filterItem.isSelected = true
+            }
+
+            this.notifyDataSetChanged()
+        }
     }
 
     override fun getItemCount(): Int {
@@ -35,7 +50,7 @@ class FilterRecyclerAdapter(private val filterItemClickListener: FilterItemClick
     //ViewHolder are not meant to having a view model.
     inner class FilterRecyclerViewHolder(
         val binding: RecyclerBiketypeItemBinding):
-        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+        RecyclerView.ViewHolder(binding.root) {
 
         private lateinit var filterItem: FilterRecyclerItem
 
@@ -43,20 +58,11 @@ class FilterRecyclerAdapter(private val filterItemClickListener: FilterItemClick
             this.filterItem = filterItem
             binding.itemCircleImg.setImageDrawable(filterItem.drawable)
             binding.itemCircleText.text = filterItem.title
-            binding.root.setOnClickListener(this)
             if (filterItem.isSelected) {
                 binding.itemCheckImg.visibility = View.VISIBLE
             } else {
                 binding.itemCheckImg.visibility = View.GONE
             }
         }
-
-        override fun onClick(v: View?) {
-            filterItemClickListener.onClick(filterItem, layoutPosition)
-        }
-    }
-
-    interface FilterItemClickListener {
-        fun onClick(filterItem: FilterRecyclerItem, position: Int)
     }
 }

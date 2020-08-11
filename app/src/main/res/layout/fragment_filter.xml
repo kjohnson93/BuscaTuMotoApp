@@ -112,54 +112,6 @@
                     app:layout_constraintStart_toStartOf="@+id/brandFrameLayout"
                     app:layout_constraintTop_toBottomOf="@+id/brandFrameLayout" />
 
-<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                    android:id="@+id/modelCsLayout"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:orientation="vertical"-->
-<!--                    android:padding="20dp"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintStart_toStartOf="@id/brandFilterSeparator"-->
-<!--                    app:layout_constraintTop_toBottomOf="@id/brandFilterSeparator">-->
-
-<!--                    <androidx.appcompat.widget.AppCompatTextView-->
-<!--                        android:id="@+id/model_label"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:ellipsize="end"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:maxLines="1"-->
-<!--                        android:paddingTop="0dp"-->
-<!--                        android:paddingEnd="5dp"-->
-<!--                        android:text="@string/model"-->
-<!--                        android:textColor="@color/black"-->
-<!--                        android:textSize="14sp"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                    <ImageView-->
-<!--                        android:layout_width="15dp"-->
-<!--                        android:layout_height="15dp"-->
-<!--                        android:clickable="false"-->
-<!--                        android:focusable="false"-->
-<!--                        android:src="@drawable/icon_arrow_down"-->
-<!--                        app:layout_constraintBottom_toBottomOf="@+id/model_label"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="@+id/model_label" />-->
-
-
-<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--                <View-->
-<!--                    android:id="@+id/modelFilterSeparator"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="0.5dp"-->
-<!--                    android:background="@color/grey_separator"-->
-<!--                    app:layout_constraintStart_toStartOf="@+id/modelCsLayout"-->
-<!--                    app:layout_constraintTop_toBottomOf="@+id/modelCsLayout" />-->
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/typeCsLayout"
                     android:layout_width="match_parent"
