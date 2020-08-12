@@ -1,6 +1,5 @@
 package com.buscatumoto.ui.adapters
 
-import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.buscatumoto.R
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.databinding.RecyclerBiketypeItemBinding
 
@@ -16,6 +16,7 @@ import com.buscatumoto.databinding.RecyclerBiketypeItemBinding
 class FilterRecyclerAdapter(): RecyclerView.Adapter<FilterRecyclerAdapter.FilterRecyclerViewHolder>() {
 
     lateinit var filterItemsList : List<FilterRecyclerItem>
+    val itemNameSelectedMutable = MutableLiveData<String> ()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterRecyclerViewHolder {
         val binding: RecyclerBiketypeItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
@@ -27,15 +28,18 @@ class FilterRecyclerAdapter(): RecyclerView.Adapter<FilterRecyclerAdapter.Filter
         val filterItem = filterItemsList[position]
         holder.bind(filterItem)
         holder.binding.root.setOnClickListener {
+
             val isItemSelected = filterItem.isSelected
 
             if (isItemSelected) {
                 filterItem.isSelected = false
+                itemNameSelectedMutable.value = ""
             } else {
                 filterItemsList.forEach {
                     it.isSelected = false
                 }
                 filterItem.isSelected = true
+                itemNameSelectedMutable.value = filterItem.title
             }
 
             this.notifyDataSetChanged()

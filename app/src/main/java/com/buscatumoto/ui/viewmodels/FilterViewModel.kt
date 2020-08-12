@@ -51,7 +51,18 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
     var licenseRecyclerAdapter = FilterRecyclerAdapter()
 
     //Mutables
-    val models: MutableLiveData<List<String>> = MutableLiveData()
+    val brandSelectedMutable = MutableLiveData<String> ()
+    val bikeTypeSelectedMutable = MutableLiveData<String> ()
+    val minPriceSelectedMutable = MutableLiveData<String> ()
+    val maxPriceSelectedMutable = MutableLiveData<String> ()
+    val minPowerSelectedMutable = MutableLiveData<String> ()
+    val maxPowerSelectedMutable = MutableLiveData<String> ()
+    val minDisplacementSelectedMutable = MutableLiveData<String> ()
+    val maxDisplacementSelectedMutable = MutableLiveData<String> ()
+    val minWeightSelectedMutable = MutableLiveData<String> ()
+    val maxWeightSelectedMutable = MutableLiveData<String> ()
+    val yearSelectedMutable = MutableLiveData<String> ()
+    val licenseSelectedMutable = MutableLiveData<String> ()
 
     //Utils
     private lateinit var lastBrandSelected: String
@@ -68,6 +79,56 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
 
     fun getErrorClickListener() : View.OnClickListener = errorClickListener
 
+    //Observers
+    private val brandObserver = Observer<String> {
+        brandSelectedMutable.value = it
+        brandExpanded.value = false
+    }
+    private val bikeTypeObserver = Observer<String> {
+        bikeTypeSelectedMutable.value = it
+        bikeTypeExpanded.value = false
+    }
+    private val minPriceObserver = Observer<String> {
+        minPriceSelectedMutable.value = it
+        minPriceExpanded.value = false
+    }
+    private val maxPriceObserver = Observer<String> {
+        maxPriceSelectedMutable.value = it
+        maxPriceExpanded.value = false
+    }
+    private val minPowerObserver = Observer<String> {
+        minPowerSelectedMutable.value = it
+        minPowerExpanded.value = false
+    }
+    private val maxPowerObserver = Observer<String> {
+        maxPowerSelectedMutable.value = it
+        maxPowerExpanded.value = false
+    }
+    private val minDisplacementObserver = Observer<String> {
+        minDisplacementSelectedMutable.value = it
+        minDisplacementExpanded.value = false
+    }
+    private val maxDisplacementObserver = Observer<String> {
+        maxDisplacementSelectedMutable.value = it
+        maxDisplacementExpanded.value = false
+    }
+    private val minWeightObserver = Observer<String> {
+        minWeightSelectedMutable.value = it
+        minWeightExpanded.value = false
+    }
+    private val maxWeightObserver = Observer<String> {
+        maxWeightSelectedMutable.value = it
+        maxWeightExpanded.value = false
+    }
+    private val yearObserver = Observer<String> {
+        yearSelectedMutable.value = it
+        yearExpanded.value = false
+    }
+    private val licenseObserver = Observer<String> {
+        licenseSelectedMutable.value = it
+        licenseExpanded.value = false
+    }
+
     init {
         brandExpanded.value = false
         bikeTypeExpanded.value = false
@@ -81,7 +142,42 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         maxWeightExpanded.value = false
         yearExpanded.value = false
         licenseExpanded.value = false
+
         loadFilterData()
+        observeSelectedValues()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        brandRecyclerAdapter.itemNameSelectedMutable.removeObserver(brandObserver)
+        bikeTypeRecyclerAdapter.itemNameSelectedMutable.removeObserver(bikeTypeObserver)
+        minPriceRecyclerAdapter.itemNameSelectedMutable.removeObserver(minPriceObserver)
+        maxPriceRecyclerAdapter.itemNameSelectedMutable.removeObserver(maxPriceObserver)
+        minPowerRecyclerAdapter.itemNameSelectedMutable.removeObserver(minPowerObserver)
+        maxPowerRecyclerAdapter.itemNameSelectedMutable.removeObserver(maxPowerObserver)
+        minDisplacementRecyclerAdapter.itemNameSelectedMutable.removeObserver(minDisplacementObserver)
+        maxDisplacementRecyclerAdapter.itemNameSelectedMutable.removeObserver(maxDisplacementObserver)
+        minWeightRecyclerAdapter.itemNameSelectedMutable.removeObserver(minWeightObserver)
+        maxWeightRecyclerAdapter.itemNameSelectedMutable.removeObserver(maxWeightObserver)
+        maxDisplacementRecyclerAdapter.itemNameSelectedMutable.removeObserver(maxWeightObserver)
+        yearRecyclerAdapter.itemNameSelectedMutable.removeObserver(yearObserver)
+        licenseRecyclerAdapter.itemNameSelectedMutable.removeObserver(licenseObserver)
+    }
+
+    private fun observeSelectedValues() {
+        brandRecyclerAdapter.itemNameSelectedMutable.observeForever(brandObserver)
+        bikeTypeRecyclerAdapter.itemNameSelectedMutable.observeForever(bikeTypeObserver)
+        minPriceRecyclerAdapter.itemNameSelectedMutable.observeForever(minPriceObserver)
+        maxPriceRecyclerAdapter.itemNameSelectedMutable.observeForever(maxPriceObserver)
+        minPowerRecyclerAdapter.itemNameSelectedMutable.observeForever(minPowerObserver)
+        maxPowerRecyclerAdapter.itemNameSelectedMutable.observeForever(maxPowerObserver)
+        minDisplacementRecyclerAdapter.itemNameSelectedMutable.observeForever(minDisplacementObserver)
+        maxDisplacementRecyclerAdapter.itemNameSelectedMutable.observeForever(maxDisplacementObserver)
+        minWeightRecyclerAdapter.itemNameSelectedMutable.observeForever(minWeightObserver)
+        maxWeightRecyclerAdapter.itemNameSelectedMutable.observeForever(maxWeightObserver)
+        maxDisplacementRecyclerAdapter.itemNameSelectedMutable.observeForever(maxWeightObserver)
+        yearRecyclerAdapter.itemNameSelectedMutable.observeForever(yearObserver)
+        licenseRecyclerAdapter.itemNameSelectedMutable.observeForever(licenseObserver)
     }
 
     private fun loadFilterData() {
