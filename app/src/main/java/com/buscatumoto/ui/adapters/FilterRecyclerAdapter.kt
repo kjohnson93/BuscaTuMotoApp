@@ -68,6 +68,11 @@ class FilterRecyclerAdapter(): RecyclerView.Adapter<FilterRecyclerAdapter.Filter
                     BuscaTuMotoApplication.getInstance().applicationContext, R.color.grey_tint), PorterDuff.Mode.MULTIPLY)
             } else {
                 binding.itemCheckImg.visibility = View.GONE
+                /**
+                 * Somehow this line is necessary. The reason is because other holders were applying
+                 * a filter when they are not selected.
+                 */
+                binding.itemCircleImg.clearColorFilter()
             }
         }
     }
