@@ -41,7 +41,6 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>) {
 
     val parentActivity: AppCompatActivity? = view.getParentActivity()
 
-    //Manualx
     if (parentActivity != null && visibility != null) {
         visibility.observe(parentActivity, Observer { observableValue: Int? -> view.visibility = observableValue?: View.VISIBLE })
     }

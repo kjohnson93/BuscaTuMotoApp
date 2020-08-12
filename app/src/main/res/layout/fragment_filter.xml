@@ -61,17 +61,35 @@
                         android:id="@+id/brand_label"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:maxLines="1"
-                        android:paddingTop="0dp"
-                        android:paddingEnd="5dp"
                         android:text="@string/brand"
                         android:textColor="@color/black"
                         android:textSize="14sp"
+                        app:layout_constraintWidth_percent="0.3"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/brand_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:text="MH Motor Hispania"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/brand_label"
+                        app:layout_constraintEnd_toStartOf="@+id/brandArrowImg"
+                        app:layout_constraintStart_toEndOf="@+id/brand_label"
+                        app:layout_constraintTop_toTopOf="@+id/brand_label"
+                        app:layout_constraintWidth_percent="0.7"
+                        tools:text="MH Motor Hispania" />
 
                     <ImageView
                         android:id="@+id/brandArrowImg"
@@ -137,10 +155,32 @@
                         android:paddingTop="0dp"
                         android:paddingEnd="5dp"
                         android:text="@string/type"
+                        app:layout_constraintWidth_percent="0.3"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/type_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        app:layout_constraintWidth_percent="0.7"
+                        android:text="Triumph"
+                        android:layout_marginStart="10dp"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/type_label"
+                        app:layout_constraintEnd_toStartOf="@+id/typeArrowImg"
+                        app:layout_constraintStart_toEndOf="@+id/type_label"
+                        app:layout_constraintTop_toTopOf="@+id/type_label"
+                        tools:text="Triumph" />
+
 
                     <ImageView
                         android:id="@+id/typeArrowImg"
@@ -210,11 +250,34 @@
                         android:paddingEnd="5dp"
                         android:text="@string/minimum_price"
                         android:textColor="@color/black"
+                        app:layout_constraintWidth_percent="0.5"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/minimum_price_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        app:layout_constraintWidth_percent="0.5"
+                        android:text="Triumph"
+                        android:layout_marginStart="10dp"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/minimum_price_label"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                        app:layout_constraintStart_toEndOf="@+id/minimum_price_label"
+                        app:layout_constraintTop_toTopOf="@+id/minimum_price_label"
+                        tools:text="Triumph" />
+
+
                     <ImageView
+                        android:id="@+id/imageView3"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -281,10 +344,33 @@
                         android:text="@string/maximum_price"
                         android:textColor="@color/black"
                         android:textSize="14sp"
+                        app:layout_constraintWidth_percent="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/maximum_price_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintWidth_percent="0.5"
+                        android:text="Triumph"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/maxPriceLabel"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+                        app:layout_constraintStart_toEndOf="@+id/maxPriceLabel"
+                        app:layout_constraintTop_toTopOf="@+id/maxPriceLabel"
+                        tools:text="Triumph" />
+
+
                     <ImageView
+                        android:id="@+id/imageView4"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -348,10 +434,32 @@
                         android:text="@string/minimum_power"
                         android:textColor="@color/black"
                         android:textSize="14sp"
+                        app:layout_constraintWidth_percent="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/min_power_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:text="Triumph"
+                        android:layout_marginStart="10dp"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/minPowerLabel"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                        app:layout_constraintStart_toEndOf="@+id/minPowerLabel"
+                        app:layout_constraintTop_toTopOf="@+id/minPowerLabel"
+                        app:layout_constraintWidth_percent="0.5"
+                        tools:text="Triumph" />
+
                     <ImageView
+                        android:id="@+id/imageView5"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -415,10 +523,33 @@
                         android:text="@string/maximum_power"
                         android:textColor="@color/black"
                         android:textSize="14sp"
+                        app:layout_constraintWidth_percent="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/max_power_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintWidth_percent="0.5"
+                        android:text="Triumph"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/maxPowerLabel"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView6"
+                        app:layout_constraintStart_toEndOf="@+id/maxPowerLabel"
+                        app:layout_constraintTop_toTopOf="@+id/maxPowerLabel"
+                        tools:text="Triumph" />
+
+
                     <ImageView
+                        android:id="@+id/imageView6"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -470,30 +601,50 @@
                     app:layout_constraintTop_toBottomOf="@id/maxPowerSeparator">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/mimDisplacementLabel"
+                        android:id="@+id/minDisplacementLabel"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:maxLines="1"
-                        android:paddingTop="0dp"
-                        android:paddingEnd="5dp"
+                        app:layout_constraintWidth_percent="0.6"
                         android:text="@string/minimum_displacement"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/min_displacement_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:text="500 CC"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/minDisplacementLabel"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView7"
+                        app:layout_constraintStart_toEndOf="@+id/minDisplacementLabel"
+                        app:layout_constraintTop_toTopOf="@+id/minDisplacementLabel"
+                        app:layout_constraintWidth_percent="0.4"
+                        tools:text="500cc" />
+
                     <ImageView
+                        android:id="@+id/imageView7"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
                         android:focusable="false"
                         android:src="@drawable/icon_arrow_down"
-                        app:layout_constraintBottom_toBottomOf="@+id/mimDisplacementLabel"
+                        app:layout_constraintBottom_toBottomOf="@+id/minDisplacementLabel"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/mimDisplacementLabel" />
+                        app:layout_constraintTop_toTopOf="@+id/minDisplacementLabel" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <FrameLayout
@@ -549,10 +700,32 @@
                         android:text="@string/maximum_displacement"
                         android:textColor="@color/black"
                         android:textSize="14sp"
+                        app:layout_constraintWidth_percent="0.6"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/max_displacement_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        app:layout_constraintWidth_percent="0.4"
+                        android:text="Triumph"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/maxDisplacementLabel"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView9"
+                        app:layout_constraintStart_toEndOf="@+id/maxDisplacementLabel"
+                        app:layout_constraintTop_toTopOf="@+id/maxDisplacementLabel"
+                        tools:text="Triumph" />
+
                     <ImageView
+                        android:id="@+id/imageView9"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -617,10 +790,31 @@
                         android:text="@string/minimum_weight"
                         android:textColor="@color/black"
                         android:textSize="14sp"
+                        app:layout_constraintWidth_percent="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/min_weight_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        app:layout_constraintWidth_percent="0.5"
+                        android:text="Triumph"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/mimWeightLabel"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView10"
+                        app:layout_constraintStart_toEndOf="@+id/mimWeightLabel"
+                        app:layout_constraintTop_toTopOf="@+id/mimWeightLabel"
+                        tools:text="Triumph" />
+
                     <ImageView
+                        android:id="@+id/imageView10"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -684,10 +878,31 @@
                         android:text="@string/maximum_weight"
                         android:textColor="@color/black"
                         android:textSize="14sp"
+                        app:layout_constraintWidth_percent="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/max_weight_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        app:layout_constraintWidth_percent="0.5"
+                        android:text="Triumph"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/maxWeightLabel"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView11"
+                        app:layout_constraintStart_toEndOf="@+id/maxWeightLabel"
+                        app:layout_constraintTop_toTopOf="@+id/maxWeightLabel"
+                        tools:text="Triumph" />
+
                     <ImageView
+                        android:id="@+id/imageView11"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -752,9 +967,31 @@
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.3" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/year_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        app:layout_constraintWidth_percent="0.7"
+                        android:text="Triumph"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/yearLabel"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView13"
+                        app:layout_constraintStart_toEndOf="@+id/yearLabel"
+                        app:layout_constraintTop_toTopOf="@+id/yearLabel"
+                        tools:text="Triumph" />
 
                     <ImageView
+                        android:id="@+id/imageView13"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -818,10 +1055,32 @@
                         android:text="@string/license"
                         android:textColor="@color/black"
                         android:textSize="14sp"
+                        app:layout_constraintWidth_percent="0.3"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/license_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        app:layout_constraintWidth_percent="0.7"
+                        android:text="Triumph"
+                        android:layout_marginStart="10dp"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/licenseLabel"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView14"
+                        app:layout_constraintTop_toTopOf="@+id/licenseLabel"
+                        app:layout_constraintStart_toEndOf="@+id/licenseLabel"
+                        tools:text="Triumph" />
+
                     <ImageView
+                        android:id="@+id/imageView14"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
