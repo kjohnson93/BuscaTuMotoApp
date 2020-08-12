@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentFilterBinding
 import com.buscatumoto.injection.Injectable
@@ -95,17 +94,31 @@ class FilterFragment: Fragment(), Injectable {
     }
 
     private fun setupGridLayoutManagers() {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val brandGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
         val bikeTypeGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
         val minPriceGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
         val maxPriceGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val minPowerGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val maxPowerGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
         val minDisplacementGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val maxDisplacementLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val minWeightGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val maxWeightLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val yearGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val licenseGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
 
 
-        binding.fragmentFiltBrandList.layoutManager = gridLayoutManager
+        binding.fragmentFiltBrandList.layoutManager = brandGridLayoutManager
         binding.fragmentFiltTypeList.layoutManager = bikeTypeGridLayoutManager
         binding.fragmentMinPriceList.layoutManager = minPriceGridLayoutManager
         binding.fragmentFiltMaxPriceList.layoutManager = maxPriceGridLayoutManager
+        binding.fragmentFiltMinPowerList.layoutManager = minPowerGridLayoutManager
+        binding.fragmentFiltMaxPowerList.layoutManager = maxPowerGridLayoutManager
         binding.fragmentFiltMinDisplacementList.layoutManager = minDisplacementGridLayoutManager
+        binding.fragmentFiltMaxDisplacementList.layoutManager = maxDisplacementLayoutManager
+        binding.fragmentFiltMinWeightList.layoutManager = minWeightGridLayoutManager
+        binding.fragmentFiltMaxWeightList.layoutManager = maxWeightLayoutManager
+        binding.fragmentFiltYearList.layoutManager = yearGridLayoutManager
+        binding.fragmentFiltLicenseList.layoutManager = licenseGridLayoutManager
     }
 }
