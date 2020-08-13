@@ -55,6 +55,13 @@ class FilterRecyclerAdapter(): RecyclerView.Adapter<FilterRecyclerAdapter.Filter
         notifyDataSetChanged()
     }
 
+    fun clearSelectedValue() {
+        this.filterItemsList.forEach {
+            it.isSelected = false
+        }
+        notifyDataSetChanged()
+    }
+
     //ViewHolder are not meant to having a view model.
     inner class FilterRecyclerViewHolder(
         val binding: RecyclerBiketypeItemBinding):

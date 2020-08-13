@@ -278,26 +278,38 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
     }
 
     private fun filterWithMutablesValue() {
-        filter(brandSelectedMutable.value, bikeTypeSelectedMutable.value, minPriceSelectedMutable.value,
+        filter(brandSelectedMutable.value, null, bikeTypeSelectedMutable.value, minPriceSelectedMutable.value,
             maxPriceSelectedMutable.value, minPowerSelectedMutable.value, maxPowerSelectedMutable.value,
             minDisplacementSelectedMutable.value, maxDisplacementSelectedMutable.value, minWeightSelectedMutable.value,
             maxWeightSelectedMutable.value, yearSelectedMutable.value, licenseSelectedMutable.value)
     }
 
     fun clearMutableValues() {
-        brandSelectedMutable.value = ""
-        bikeTypeSelectedMutable.value = ""
-        minPriceSelectedMutable.value = ""
-        maxPriceSelectedMutable.value = ""
-        minPowerSelectedMutable.value = ""
-        maxPowerSelectedMutable.value = ""
-        minDisplacementSelectedMutable.value = ""
-        maxDisplacementSelectedMutable.value = ""
-        minWeightSelectedMutable.value = ""
-        maxWeightSelectedMutable.value = ""
-        yearSelectedMutable.value = ""
-        licenseSelectedMutable.value = ""
+        brandSelectedMutable.value = null
+        bikeTypeSelectedMutable.value = null
+        minPriceSelectedMutable.value = null
+        maxPriceSelectedMutable.value = null
+        minPowerSelectedMutable.value = null
+        maxPowerSelectedMutable.value = null
+        minDisplacementSelectedMutable.value = null
+        maxDisplacementSelectedMutable.value = null
+        minWeightSelectedMutable.value = null
+        maxWeightSelectedMutable.value = null
+        yearSelectedMutable.value = null
+        licenseSelectedMutable.value = null
         navigationButtonVisibility.value = View.GONE
+        brandRecyclerAdapter.clearSelectedValue()
+        bikeTypeRecyclerAdapter.clearSelectedValue()
+        minPriceRecyclerAdapter.clearSelectedValue()
+        maxPriceRecyclerAdapter.clearSelectedValue()
+        minPowerRecyclerAdapter.clearSelectedValue()
+        maxPowerRecyclerAdapter.clearSelectedValue()
+        minDisplacementRecyclerAdapter.clearSelectedValue()
+        maxDisplacementRecyclerAdapter.clearSelectedValue()
+        minWeightRecyclerAdapter.clearSelectedValue()
+        maxWeightRecyclerAdapter.clearSelectedValue()
+        yearRecyclerAdapter.clearSelectedValue()
+        licenseRecyclerAdapter.clearSelectedValue()
     }
 
     private fun formatIntListToStringList(it: List<Int>) = it.map { it.toString() }
