@@ -25,7 +25,6 @@ class FilterUseCase @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRe
                         year: String? = null,
                         license: String? = null,
                         pageIndex: Int? = null): LiveData<Result<List<MotoEntity>>> {
-9
 
         var brandForm: String? = null
         var modelForm: String? = null

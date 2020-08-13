@@ -1,12 +1,12 @@
 package com.buscatumoto.ui.viewmodels
 
 import android.view.View
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
+import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
+import com.buscatumoto.domain.features.search.FilterUseCase
 import com.buscatumoto.domain.features.search.GetFieldsUseCase
 import com.buscatumoto.ui.adapters.FilterRecyclerAdapter
 import com.buscatumoto.ui.adapters.FilterRecyclerItem
@@ -16,10 +16,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.lang.Exception
 import javax.inject.Inject
 
 
-class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetFieldsUseCase) : BaseViewModel() {
+class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetFieldsUseCase,
+                                          private val filterUseCase: FilterUseCase) : BaseViewModel() {
+
+    private lateinit var filterResponse: LiveData<Result<List<MotoEntity>>>
 
     //Visibilities
     val loadingVisibility = MutableLiveData<Int> ()
@@ -35,6 +39,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
     val maxWeightExpanded = MutableLiveData<Boolean> ()
     val yearExpanded = MutableLiveData<Boolean> ()
     val licenseExpanded = MutableLiveData<Boolean> ()
+    val navigationButtonVisibility = MutableLiveData<Int> ()
 
     //Adapters
     var brandRecyclerAdapter = FilterRecyclerAdapter()
@@ -63,6 +68,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
     val maxWeightSelectedMutable = MutableLiveData<String> ()
     val yearSelectedMutable = MutableLiveData<String> ()
     val licenseSelectedMutable = MutableLiveData<String> ()
+    val navigationButtonTextMutable = MutableLiveData<String> ()
 
     //Utils
     private lateinit var lastBrandSelected: String
@@ -74,6 +80,12 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
             RetryErrorModel.FIELDS_ERROR -> {
                 loadFilterData()
             }
+            RetryErrorModel.FILTER_ERROR -> {
+                filter(brandSelectedMutable.value, bikeTypeSelectedMutable.value, minPriceSelectedMutable.value,
+                    maxPriceSelectedMutable.value, minPowerSelectedMutable.value, maxPowerSelectedMutable.value,
+                    minDisplacementSelectedMutable.value, maxDisplacementSelectedMutable.value, minWeightSelectedMutable.value,
+                    maxWeightSelectedMutable.value, yearSelectedMutable.value, licenseSelectedMutable.value)
+            }
         }
     }
 
@@ -83,50 +95,63 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
     private val brandObserver = Observer<String> {
         brandSelectedMutable.value = it
         brandExpanded.value = false
+        filterWithMutablesValue()
     }
+
     private val bikeTypeObserver = Observer<String> {
         bikeTypeSelectedMutable.value = it
         bikeTypeExpanded.value = false
+        filterWithMutablesValue()
     }
     private val minPriceObserver = Observer<String> {
         minPriceSelectedMutable.value = it
         minPriceExpanded.value = false
+        filterWithMutablesValue()
     }
     private val maxPriceObserver = Observer<String> {
         maxPriceSelectedMutable.value = it
         maxPriceExpanded.value = false
+        filterWithMutablesValue()
     }
     private val minPowerObserver = Observer<String> {
         minPowerSelectedMutable.value = it
         minPowerExpanded.value = false
+        filterWithMutablesValue()
     }
     private val maxPowerObserver = Observer<String> {
         maxPowerSelectedMutable.value = it
         maxPowerExpanded.value = false
+        filterWithMutablesValue()
     }
     private val minDisplacementObserver = Observer<String> {
         minDisplacementSelectedMutable.value = it
         minDisplacementExpanded.value = false
+        filterWithMutablesValue()
     }
     private val maxDisplacementObserver = Observer<String> {
         maxDisplacementSelectedMutable.value = it
         maxDisplacementExpanded.value = false
+        filterWithMutablesValue()
     }
     private val minWeightObserver = Observer<String> {
         minWeightSelectedMutable.value = it
         minWeightExpanded.value = false
+        filterWithMutablesValue()
     }
     private val maxWeightObserver = Observer<String> {
         maxWeightSelectedMutable.value = it
         maxWeightExpanded.value = false
+        filterWithMutablesValue()
     }
     private val yearObserver = Observer<String> {
         yearSelectedMutable.value = it
         yearExpanded.value = false
+        filterWithMutablesValue()
     }
     private val licenseObserver = Observer<String> {
         licenseSelectedMutable.value = it
         licenseExpanded.value = false
+        filterWithMutablesValue()
     }
 
     init {
@@ -142,6 +167,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         maxWeightExpanded.value = false
         yearExpanded.value = false
         licenseExpanded.value = false
+        navigationButtonVisibility.value = View.GONE
 
         loadFilterData()
         observeSelectedValues()
@@ -162,6 +188,8 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         maxDisplacementRecyclerAdapter.itemNameSelectedMutable.removeObserver(maxWeightObserver)
         yearRecyclerAdapter.itemNameSelectedMutable.removeObserver(yearObserver)
         licenseRecyclerAdapter.itemNameSelectedMutable.removeObserver(licenseObserver)
+
+        if(::filterResponse.isInitialized) filterResponse.removeObserver(filterObserver)
     }
 
     private fun observeSelectedValues() {
@@ -249,11 +277,32 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         }
     }
 
+    private fun filterWithMutablesValue() {
+        filter(brandSelectedMutable.value, bikeTypeSelectedMutable.value, minPriceSelectedMutable.value,
+            maxPriceSelectedMutable.value, minPowerSelectedMutable.value, maxPowerSelectedMutable.value,
+            minDisplacementSelectedMutable.value, maxDisplacementSelectedMutable.value, minWeightSelectedMutable.value,
+            maxWeightSelectedMutable.value, yearSelectedMutable.value, licenseSelectedMutable.value)
+    }
+
+    fun clearMutableValues() {
+        brandSelectedMutable.value = ""
+        bikeTypeSelectedMutable.value = ""
+        minPriceSelectedMutable.value = ""
+        maxPriceSelectedMutable.value = ""
+        minPowerSelectedMutable.value = ""
+        maxPowerSelectedMutable.value = ""
+        minDisplacementSelectedMutable.value = ""
+        maxDisplacementSelectedMutable.value = ""
+        minWeightSelectedMutable.value = ""
+        maxWeightSelectedMutable.value = ""
+        yearSelectedMutable.value = ""
+        licenseSelectedMutable.value = ""
+        navigationButtonVisibility.value = View.GONE
+    }
+
     private fun formatIntListToStringList(it: List<Int>) = it.map { it.toString() }
 
     private fun formatFloatListToStringList(it: List<Float>) = it.map { it.toString() }
-
-
 
     private fun loadBrandAdapter(listData: List<String>) {
         var mutableList = listData as ArrayList
@@ -678,6 +727,73 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         loadingVisibility.value = View.GONE
         errorMutable.value = RetryErrorModel(R.string.load_fields_error, RetryErrorModel.FIELDS_ERROR)
     }
+
+    private fun onFilterSuccess(data: List<MotoEntity>?) {
+        loadingVisibility.value = View.GONE
+        navigationButtonVisibility.value = View.VISIBLE
+        navigationButtonTextMutable.value = data?.size.toString()
+
+    }
+
+    private fun onFilterError(message: String?) {
+        loadingVisibility.value = View.GONE
+        navigationButtonVisibility.value = View.GONE
+    }
+
+    private val filterObserver = Observer<Result<List<MotoEntity>>> {
+            result ->
+        when (result.status) {
+            Result.Status.SUCCESS -> {
+                onFilterSuccess(result.data)
+            }
+            Result.Status.LOADING -> {
+                onLoading()
+            }
+            Result.Status.ERROR -> {
+                onFilterError(result.message)
+            }
+        }
+    }
+
+    fun filter(brand: String? = null,
+               model: String? = null,
+               bikeType: String? = null,
+               priceBottom: String? = null,
+               priceTop: String? = null,
+               powerBottom: String? = null,
+               powerTop: String? = null,
+               displacementBottom: String? = null,
+               displacementTop: String? = null,
+               weightBottom: String? = null,
+               weightTop: String? = null,
+               year: String? = null,
+               license: String? = null
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                    filterResponse = filterUseCase.execute(brand, model,
+                    bikeType,
+                    priceBottom,
+                    priceTop,
+                    powerBottom,
+                    powerTop,
+                    displacementBottom,
+                    displacementTop,
+                    weightBottom,
+                    weightTop,
+                    year,
+                    license,
+                    0)
+                withContext(Dispatchers.Main) {
+                    filterResponse.observeForever(filterObserver)
+                }
+            } catch (exception: Exception) {
+                Timber.e("Something went wrong building filter form")
+                errorMutable.value = RetryErrorModel(R.string.build_fields_form_error, RetryErrorModel.FILTER_ERROR)
+            }
+        }
+    }
+
 
 
 

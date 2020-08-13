@@ -77,6 +77,12 @@ class FilterFragment: Fragment(), Injectable {
             }
         })
 
+        viewModel.navigationButtonTextMutable.observe(viewLifecycleOwner, Observer {
+            result ->
+            val showListText = requireContext().resources.getString(R.string.filter_btn_navigation).format(result)
+            binding.navigationResultBtn.text = showListText
+        })
+
         /**
          * Observer section
          */

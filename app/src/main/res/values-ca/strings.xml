@@ -31,4 +31,5 @@
     <string name="maximum_weight">Pes màxim</string>
     <string name="year">Any</string>
     <string name="license">Permís</string>
+    <string name="filter_btn_navigation">MOSTRA ELS %1$s RESULTATS</string>
 </resources>

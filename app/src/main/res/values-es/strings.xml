@@ -31,4 +31,5 @@
     <string name="maximum_weight">Peso máximo</string>
     <string name="year">Año</string>
     <string name="license">Permiso</string>
+    <string name="filter_btn_navigation">MUESTRA LOS %1$s RESULTADOS</string>
 </resources>
