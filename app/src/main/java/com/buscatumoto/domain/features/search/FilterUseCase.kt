@@ -5,6 +5,7 @@ import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
+import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import java.lang.NumberFormatException
 import javax.inject.Inject
@@ -24,7 +25,7 @@ class FilterUseCase @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRe
                         weightTop: String? = null,
                         year: String? = null,
                         license: String? = null,
-                        pageIndex: Int? = null): LiveData<Result<List<MotoEntity>>> {
+                        pageIndex: Int? = null): LiveData<Result<PagedListMotoEntity>> {
 
         var brandForm: String? = null
         var modelForm: String? = null

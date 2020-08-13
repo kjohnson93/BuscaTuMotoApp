@@ -10,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
+import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
 import com.buscatumoto.domain.features.catalogue.LoadCatalogueUseCase
 import com.buscatumoto.ui.activities.CatalogueActivity
 import com.buscatumoto.ui.adapters.CatalogueListAdapter
@@ -28,7 +29,7 @@ import javax.inject.Inject
 class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: LoadCatalogueUseCase): ViewModel(),
     CatalogueItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    private val motosLiveData: MutableLiveData<List<MotoEntity>> = MutableLiveData()
+    private val motosLiveData: MutableLiveData<PagedListMotoEntity> = MutableLiveData()
 
     lateinit var lifecycleOwner: LifecycleOwner
     lateinit var screenNavigator: ScreenNavigator
@@ -87,7 +88,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
                                 noResultVisibility.value = View.GONE
 
-                                if (it.isEmpty() && catalogueListAdapter.itemCount == 0) {
+                                if (it.list.isEmpty() && catalogueListAdapter.itemCount == 0) {
                                     noResultVisibility.value = View.VISIBLE
                                 }
 
@@ -97,7 +98,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                                     catalogueListAdapter.removeLoading()
                                 }
 
-                                catalogueListAdapter.addItems(result?.data)
+                                catalogueListAdapter.addItems(result?.data.list)
                                 refreshingMutable.value = false
                                 isLoading = false
 

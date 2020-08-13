@@ -3,6 +3,7 @@ package com.buscatumoto.domain.features.catalogue
 import androidx.lifecycle.LiveData
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
+import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import timber.log.Timber
 import java.lang.NumberFormatException
@@ -15,7 +16,7 @@ class LoadCatalogueUseCase @Inject constructor(private val buscaTuMotoRepository
      * This methods ask a Dao for the last search command executed on the app. So it can
      * request more pages using the same command and the same parameters.
      */
-    suspend fun execute(pageIndex: Int?): LiveData<Result<List<MotoEntity>>> {
+    suspend fun execute(pageIndex: Int?): LiveData<Result<PagedListMotoEntity>> {
 
         val lastParams = buscaTuMotoRepository.getSearchParams()
 

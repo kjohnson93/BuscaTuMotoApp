@@ -9,6 +9,7 @@ import com.buscatumoto.data.local.entity.FieldsEntity
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.local.entity.SearchEntity
+import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -101,7 +102,7 @@ class BuscaTuMotoRepository @Inject constructor(
         year: Int? = null,
         license: String? = null,
         pageIndex: Int? = null
-    ) = liveData<Result<List<MotoEntity>>> {
+    ) = liveData<Result<PagedListMotoEntity>> {
         //Not using emitSource because it's not getting observed by subscribers for some reason
         emit(Result.loading())
 
@@ -114,7 +115,6 @@ class BuscaTuMotoRepository @Inject constructor(
 
             if (response.status == Result.Status.SUCCESS) {
                 response.data?.let { motoResponse ->
-
                         searchDao.delete()
                         searchDao.insert(SearchEntity(1, null, brand, model, bikeType, priceBottom.toString(), priceTop.toString(),
                             powerBottom.toString(), powerTop.toString(), displacementBottom.toString(), displacementTop.toString(),
@@ -122,7 +122,7 @@ class BuscaTuMotoRepository @Inject constructor(
                         motoDao.insert(motoResponse.motos)
 
                     emitSource(motoDao.getMotoLiveData().map {
-                        Result.success(motoResponse.motos)
+                        Result.success(PagedListMotoEntity(it, motoResponse.totalElements))
                     })
                 }
 
@@ -138,7 +138,7 @@ class BuscaTuMotoRepository @Inject constructor(
         }
     }
 
-    suspend fun search(search: String, pageIndex: Int?) = liveData<Result<List<MotoEntity>>> {
+    suspend fun search(search: String, pageIndex: Int?) = liveData<Result<PagedListMotoEntity>> {
 
         //Not using emitSource because it's not getting observed by subscribers for some reason
         emit(Result.loading())
@@ -158,7 +158,7 @@ class BuscaTuMotoRepository @Inject constructor(
                         motoDao.insert(motoResponse.motos)
 
                     emitSource(motoDao.getMotoLiveData().map {
-                        Result.success(motoResponse.motos)
+                        Result.success(PagedListMotoEntity(it, motoResponse.totalElements))
                     })
                 }
             } else if (response.status == Result.Status.ERROR) {

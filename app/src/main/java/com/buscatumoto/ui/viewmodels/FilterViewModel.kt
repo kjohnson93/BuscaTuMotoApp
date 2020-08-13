@@ -6,6 +6,7 @@ import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
+import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
 import com.buscatumoto.domain.features.search.FilterUseCase
 import com.buscatumoto.domain.features.search.GetFieldsUseCase
 import com.buscatumoto.ui.adapters.FilterRecyclerAdapter
@@ -23,7 +24,7 @@ import javax.inject.Inject
 class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetFieldsUseCase,
                                           private val filterUseCase: FilterUseCase) : BaseViewModel() {
 
-    private lateinit var filterResponse: LiveData<Result<List<MotoEntity>>>
+    private lateinit var filterResponse: LiveData<Result<PagedListMotoEntity>>
 
     //Visibilities
     val loadingVisibility = MutableLiveData<Int> ()
@@ -740,10 +741,10 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         errorMutable.value = RetryErrorModel(R.string.load_fields_error, RetryErrorModel.FIELDS_ERROR)
     }
 
-    private fun onFilterSuccess(data: List<MotoEntity>?) {
+    private fun onFilterSuccess(data: PagedListMotoEntity?) {
         loadingVisibility.value = View.GONE
         navigationButtonVisibility.value = View.VISIBLE
-        navigationButtonTextMutable.value = data?.size.toString()
+        navigationButtonTextMutable.value = data?.totalElements.toString()
 
     }
 
@@ -752,7 +753,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         navigationButtonVisibility.value = View.GONE
     }
 
-    private val filterObserver = Observer<Result<List<MotoEntity>>> {
+    private val filterObserver = Observer<Result<PagedListMotoEntity>> {
             result ->
         when (result.status) {
             Result.Status.SUCCESS -> {

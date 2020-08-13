@@ -29,11 +29,6 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SearchFormViewModel::class)
-    abstract fun bindSearchFormViewModel(searchFormViewModel: SearchFormViewModel): ViewModel
-
-    @Binds
-    @IntoMap
     @ViewModelKey(CatalogueViewModel::class)
     abstract fun bindCatalogueViewModel(catalogueViewModel: CatalogueViewModel): ViewModel
 
