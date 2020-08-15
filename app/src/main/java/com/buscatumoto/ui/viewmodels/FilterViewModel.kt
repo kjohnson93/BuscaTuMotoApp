@@ -4,13 +4,13 @@ import android.view.View
 import androidx.lifecycle.*
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
-import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
 import com.buscatumoto.domain.features.search.FilterUseCase
 import com.buscatumoto.domain.features.search.GetFieldsUseCase
 import com.buscatumoto.ui.adapters.FilterRecyclerAdapter
 import com.buscatumoto.ui.adapters.FilterRecyclerItem
+import com.buscatumoto.utils.global.EMPTY_SIZE
 import com.buscatumoto.utils.global.removeEmptyValues
 import com.buscatumoto.utils.ui.RetryErrorModel
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +24,6 @@ import javax.inject.Inject
 class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetFieldsUseCase,
                                           private val filterUseCase: FilterUseCase) : BaseViewModel() {
 
-    private lateinit var filterResponse: LiveData<Result<PagedListMotoEntity>>
 
     //Visibilities
     val loadingVisibility = MutableLiveData<Int> ()
@@ -82,7 +81,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
                 loadFilterData()
             }
             RetryErrorModel.FILTER_ERROR -> {
-                filter(brandSelectedMutable.value, bikeTypeSelectedMutable.value, minPriceSelectedMutable.value,
+                filterNoLiveData(brandSelectedMutable.value, bikeTypeSelectedMutable.value, minPriceSelectedMutable.value,
                     maxPriceSelectedMutable.value, minPowerSelectedMutable.value, maxPowerSelectedMutable.value,
                     minDisplacementSelectedMutable.value, maxDisplacementSelectedMutable.value, minWeightSelectedMutable.value,
                     maxWeightSelectedMutable.value, yearSelectedMutable.value, licenseSelectedMutable.value)
@@ -189,8 +188,6 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         maxDisplacementRecyclerAdapter.itemNameSelectedMutable.removeObserver(maxWeightObserver)
         yearRecyclerAdapter.itemNameSelectedMutable.removeObserver(yearObserver)
         licenseRecyclerAdapter.itemNameSelectedMutable.removeObserver(licenseObserver)
-
-        if(::filterResponse.isInitialized) filterResponse.removeObserver(filterObserver)
     }
 
     private fun observeSelectedValues() {
@@ -279,7 +276,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
     }
 
     private fun filterWithMutablesValue() {
-        filter(brandSelectedMutable.value, null, bikeTypeSelectedMutable.value, minPriceSelectedMutable.value,
+        filterNoLiveData(brandSelectedMutable.value, null, bikeTypeSelectedMutable.value, minPriceSelectedMutable.value,
             maxPriceSelectedMutable.value, minPowerSelectedMutable.value, maxPowerSelectedMutable.value,
             minDisplacementSelectedMutable.value, maxDisplacementSelectedMutable.value, minWeightSelectedMutable.value,
             maxWeightSelectedMutable.value, yearSelectedMutable.value, licenseSelectedMutable.value)
@@ -768,7 +765,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         }
     }
 
-    fun filter(brand: String? = null,
+    fun filterNoLiveData(brand: String? = null,
                model: String? = null,
                bikeType: String? = null,
                priceBottom: String? = null,
@@ -782,9 +779,10 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
                year: String? = null,
                license: String? = null
     ) {
+        loadingVisibility.value = View.VISIBLE
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                    filterResponse = filterUseCase.execute(brand, model,
+                val motoResponse = filterUseCase.executeNoLiveData(brand, model,
                     bikeType,
                     priceBottom,
                     priceTop,
@@ -798,14 +796,21 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
                     license,
                     0)
                 withContext(Dispatchers.Main) {
-                    filterResponse.observeForever(filterObserver)
+                    loadingVisibility.value = View.GONE
+                    motoResponse?.let {
+                        navigationButtonVisibility.value = View.VISIBLE
+                        navigationButtonTextMutable.value = it.totalElements.toString()
+                    }
                 }
             } catch (exception: Exception) {
                 Timber.e("Something went wrong building filter form")
+                loadingVisibility.value = View.GONE
+                navigationButtonVisibility.value = View.GONE
                 errorMutable.value = RetryErrorModel(R.string.build_fields_form_error, RetryErrorModel.FILTER_ERROR)
             }
         }
     }
+
 
 
 

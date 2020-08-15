@@ -32,4 +32,5 @@
     <string name="year">Año</string>
     <string name="license">Permiso</string>
     <string name="filter_btn_navigation">MUESTRA LOS %1$s RESULTADOS</string>
+    <string name="empty_result">NO HAY RESULTADOS</string>
 </resources>

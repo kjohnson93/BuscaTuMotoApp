@@ -9,6 +9,7 @@ import com.buscatumoto.data.local.entity.FieldsEntity
 import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.local.entity.SearchEntity
+import com.buscatumoto.data.remote.dto.response.MotoResponse
 import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
 import java.io.IOException
 import javax.inject.Inject
@@ -136,6 +137,30 @@ class BuscaTuMotoRepository @Inject constructor(
                 Result.error("Filter motos error", null)
             })
         }
+    }
+
+    suspend fun filterNoLiveData(
+        brand: String? = null,
+        model: String? = null,
+        bikeType: String? = null,
+        priceBottom: Int? = null,
+        priceTop: Int? = null,
+        powerBottom: Double? = null,
+        powerTop: Double? = null,
+        displacementBottom: Double? = null,
+        displacementTop: Double? = null,
+        weightBottom: Double? = null,
+        weightTop: Double? = null,
+        year: Int? = null,
+        license: String? = null,
+        pageIndex: Int? = null
+    ): MotoResponse? {
+
+        return buscaTuMotoDataSource.filterNoLiveData(
+            brand, model, bikeType,
+            priceBottom, priceTop, powerBottom, powerTop, displacementBottom, displacementTop,
+            weightBottom, weightTop, year, license, pageIndex
+        )
     }
 
     suspend fun search(search: String, pageIndex: Int?) = liveData<Result<PagedListMotoEntity>> {

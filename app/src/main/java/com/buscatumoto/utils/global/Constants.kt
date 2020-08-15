@@ -19,3 +19,5 @@ const val FADE_IN_ANIMATION_DURATION: Long = 1000
 const val FADE_OUT_ANIMATION_DURATION: Long = 1000
 const val ALPHA_OPACITY_OPAQUE: Float = 1f
 const val ALPHA_OPACITY_TRANSPARENT: Float = 0f
+
+const val EMPTY_SIZE = 0

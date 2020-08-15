@@ -14,6 +14,7 @@ import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentFilterBinding
 import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.viewmodels.FilterViewModel
+import com.buscatumoto.utils.global.EMPTY_SIZE
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
@@ -79,8 +80,14 @@ class FilterFragment: Fragment(), Injectable {
 
         viewModel.navigationButtonTextMutable.observe(viewLifecycleOwner, Observer {
             result ->
-            val showListText = requireContext().resources.getString(R.string.filter_btn_navigation).format(result)
-            binding.navigationResultBtn.text = showListText
+            if (result.toInt() == EMPTY_SIZE) {
+                 binding.navigationResultBtn.text =
+                     requireContext().resources.getString(R.string.empty_result)
+            } else {
+                val showListText = requireContext().resources.
+                getString(R.string.filter_btn_navigation).format(result)
+                binding.navigationResultBtn.text = showListText
+            }
         })
 
         /**
