@@ -319,7 +319,7 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         mutableList = removeEmptyValues(mutableList)
 
         val context = BuscaTuMotoApplication.getInstance().baseContext
-        val drawabletypedArray = context.resources.obtainTypedArray(R.array.brand_logos_array)
+        val drawabletypedArray = context.resources.obtainTypedArray(R.array.filter_brand_logos_array)
         val  filterItemList = ArrayList<FilterRecyclerItem>()
 
         /**
