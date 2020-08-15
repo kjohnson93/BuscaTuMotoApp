@@ -268,14 +268,14 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/minimum_price_label"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                        app:layout_constraintEnd_toStartOf="@+id/minPriceArrowImg"
                         app:layout_constraintStart_toEndOf="@+id/minimum_price_label"
                         app:layout_constraintTop_toTopOf="@+id/minimum_price_label"
                         tools:text="Triumph" />
 
 
                     <ImageView
-                        android:id="@+id/imageView3"
+                        android:id="@+id/minPriceArrowImg"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -359,14 +359,14 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/maxPriceLabel"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+                        app:layout_constraintEnd_toStartOf="@+id/maxPriceArrowImg"
                         app:layout_constraintStart_toEndOf="@+id/maxPriceLabel"
                         app:layout_constraintTop_toTopOf="@+id/maxPriceLabel"
                         tools:text="Triumph" />
 
 
                     <ImageView
-                        android:id="@+id/imageView4"
+                        android:id="@+id/maxPriceArrowImg"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -446,14 +446,14 @@
                         android:textStyle="bold"
                         app:mutableText="@{viewModel.minPowerSelectedMutable}"
                         app:layout_constraintBottom_toBottomOf="@+id/minPowerLabel"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                        app:layout_constraintEnd_toStartOf="@+id/minPowerArrowImg"
                         app:layout_constraintStart_toEndOf="@+id/minPowerLabel"
                         app:layout_constraintTop_toTopOf="@+id/minPowerLabel"
                         app:layout_constraintWidth_percent="0.5"
                         tools:text="Triumph" />
 
                     <ImageView
-                        android:id="@+id/imageView5"
+                        android:id="@+id/minPowerArrowImg"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -534,14 +534,14 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/maxPowerLabel"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView6"
+                        app:layout_constraintEnd_toStartOf="@+id/maxPowerArrowImg"
                         app:layout_constraintStart_toEndOf="@+id/maxPowerLabel"
                         app:layout_constraintTop_toTopOf="@+id/maxPowerLabel"
                         tools:text="Triumph" />
 
 
                     <ImageView
-                        android:id="@+id/imageView6"
+                        android:id="@+id/maxPowerArrowImg"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -621,14 +621,14 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
                         app:layout_constraintBottom_toBottomOf="@+id/minDisplacementLabel"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView7"
+                        app:layout_constraintEnd_toStartOf="@+id/minDisplacementArrowImg"
                         app:layout_constraintStart_toEndOf="@+id/minDisplacementLabel"
                         app:layout_constraintTop_toTopOf="@+id/minDisplacementLabel"
                         app:layout_constraintWidth_percent="0.5"
                         tools:text="500cc" />
 
                     <ImageView
-                        android:id="@+id/imageView7"
+                        android:id="@+id/minDisplacementArrowImg"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -709,13 +709,13 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
                         app:layout_constraintBottom_toBottomOf="@+id/maxDisplacementLabel"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView9"
+                        app:layout_constraintEnd_toStartOf="@+id/maxDisplacementArrowImg"
                         app:layout_constraintStart_toEndOf="@+id/maxDisplacementLabel"
                         app:layout_constraintTop_toTopOf="@+id/maxDisplacementLabel"
                         tools:text="Triumph" />
 
                     <ImageView
-                        android:id="@+id/imageView9"
+                        android:id="@+id/maxDisplacementArrowImg"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -768,7 +768,7 @@
                     app:layout_constraintTop_toBottomOf="@id/maxDisplacementSeparator">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/mimWeightLabel"
+                        android:id="@+id/minWeightLabel"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -796,22 +796,22 @@
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/mimWeightLabel"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView10"
-                        app:layout_constraintStart_toEndOf="@+id/mimWeightLabel"
-                        app:layout_constraintTop_toTopOf="@+id/mimWeightLabel"
+                        app:layout_constraintBottom_toBottomOf="@+id/minWeightLabel"
+                        app:layout_constraintEnd_toStartOf="@+id/minWeightArrowImg"
+                        app:layout_constraintStart_toEndOf="@+id/minWeightLabel"
+                        app:layout_constraintTop_toTopOf="@+id/minWeightLabel"
                         tools:text="Triumph" />
 
                     <ImageView
-                        android:id="@+id/imageView10"
+                        android:id="@+id/minWeightArrowImg"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
                         android:focusable="false"
                         android:src="@drawable/icon_arrow_down"
-                        app:layout_constraintBottom_toBottomOf="@+id/mimWeightLabel"
+                        app:layout_constraintBottom_toBottomOf="@+id/minWeightLabel"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/mimWeightLabel" />
+                        app:layout_constraintTop_toTopOf="@+id/minWeightLabel" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <FrameLayout
@@ -884,13 +884,13 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/maxWeightLabel"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView11"
+                        app:layout_constraintEnd_toStartOf="@+id/maxWeightArrowImg"
                         app:layout_constraintStart_toEndOf="@+id/maxWeightLabel"
                         app:layout_constraintTop_toTopOf="@+id/maxWeightLabel"
                         tools:text="Triumph" />
 
                     <ImageView
-                        android:id="@+id/imageView11"
+                        android:id="@+id/maxWeightArrowImg"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -971,13 +971,13 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/yearLabel"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView13"
+                        app:layout_constraintEnd_toStartOf="@+id/yearArrowImg"
                         app:layout_constraintStart_toEndOf="@+id/yearLabel"
                         app:layout_constraintTop_toTopOf="@+id/yearLabel"
                         tools:text="Triumph" />
 
                     <ImageView
-                        android:id="@+id/imageView13"
+                        android:id="@+id/yearArrowImg"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"
@@ -1058,13 +1058,13 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/licenseLabel"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView14"
+                        app:layout_constraintEnd_toStartOf="@+id/licenseArrowImg"
                         app:layout_constraintTop_toTopOf="@+id/licenseLabel"
                         app:layout_constraintStart_toEndOf="@+id/licenseLabel"
                         tools:text="Triumph" />
 
                     <ImageView
-                        android:id="@+id/imageView14"
+                        android:id="@+id/licenseArrowImg"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:clickable="false"

@@ -201,7 +201,6 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
         maxDisplacementRecyclerAdapter.itemNameSelectedMutable.observeForever(maxDisplacementObserver)
         minWeightRecyclerAdapter.itemNameSelectedMutable.observeForever(minWeightObserver)
         maxWeightRecyclerAdapter.itemNameSelectedMutable.observeForever(maxWeightObserver)
-        maxDisplacementRecyclerAdapter.itemNameSelectedMutable.observeForever(maxWeightObserver)
         yearRecyclerAdapter.itemNameSelectedMutable.observeForever(yearObserver)
         licenseRecyclerAdapter.itemNameSelectedMutable.observeForever(licenseObserver)
     }
@@ -736,33 +735,6 @@ class FilterViewModel @Inject constructor(private val getFieldsUseCase: GetField
     private fun onLoadFieldsError(message: String?) {
         loadingVisibility.value = View.GONE
         errorMutable.value = RetryErrorModel(R.string.load_fields_error, RetryErrorModel.FIELDS_ERROR)
-    }
-
-    private fun onFilterSuccess(data: PagedListMotoEntity?) {
-        loadingVisibility.value = View.GONE
-        navigationButtonVisibility.value = View.VISIBLE
-        navigationButtonTextMutable.value = data?.totalElements.toString()
-
-    }
-
-    private fun onFilterError(message: String?) {
-        loadingVisibility.value = View.GONE
-        navigationButtonVisibility.value = View.GONE
-    }
-
-    private val filterObserver = Observer<Result<PagedListMotoEntity>> {
-            result ->
-        when (result.status) {
-            Result.Status.SUCCESS -> {
-                onFilterSuccess(result.data)
-            }
-            Result.Status.LOADING -> {
-                onLoading()
-            }
-            Result.Status.ERROR -> {
-                onFilterError(result.message)
-            }
-        }
     }
 
     fun filterNoLiveData(brand: String? = null,

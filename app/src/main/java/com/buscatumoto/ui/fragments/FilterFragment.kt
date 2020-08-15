@@ -70,6 +70,106 @@ class FilterFragment: Fragment(), Injectable {
             }
         })
 
+        viewModel.minPriceExpanded.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
+                binding.minPriceArrowImg.setImageDrawable(arrowUpDrawable)
+            } else {
+                val arrowDownDrawable = requireContext().getDrawable(R.drawable.icon_arrow_down)
+                binding.minPriceArrowImg.setImageDrawable(arrowDownDrawable)
+            }
+        })
+
+        viewModel.maxPriceExpanded.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
+                binding.maxPriceArrowImg.setImageDrawable(arrowUpDrawable)
+            } else {
+                val arrowDownDrawable = requireContext().getDrawable(R.drawable.icon_arrow_down)
+                binding.maxPriceArrowImg.setImageDrawable(arrowDownDrawable)
+            }
+        })
+
+        viewModel.minPowerExpanded.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
+                binding.minPowerArrowImg.setImageDrawable(arrowUpDrawable)
+            } else {
+                val arrowDownDrawable = requireContext().getDrawable(R.drawable.icon_arrow_down)
+                binding.minPowerArrowImg.setImageDrawable(arrowDownDrawable)
+            }
+        })
+
+        viewModel.maxPowerExpanded.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
+                binding.maxPowerArrowImg.setImageDrawable(arrowUpDrawable)
+            } else {
+                val arrowDownDrawable = requireContext().getDrawable(R.drawable.icon_arrow_down)
+                binding.maxPowerArrowImg.setImageDrawable(arrowDownDrawable)
+            }
+        })
+
+        viewModel.minDisplacementExpanded.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
+                binding.minDisplacementArrowImg.setImageDrawable(arrowUpDrawable)
+            } else {
+                val arrowDownDrawable = requireContext().getDrawable(R.drawable.icon_arrow_down)
+                binding.minDisplacementArrowImg.setImageDrawable(arrowDownDrawable)
+            }
+        })
+
+        viewModel.maxDisplacementExpanded.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
+                binding.maxDisplacementArrowImg.setImageDrawable(arrowUpDrawable)
+            } else {
+                val arrowDownDrawable = requireContext().getDrawable(R.drawable.icon_arrow_down)
+                binding.maxDisplacementArrowImg.setImageDrawable(arrowDownDrawable)
+            }
+        })
+
+        viewModel.minWeightExpanded.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
+                binding.minWeightArrowImg.setImageDrawable(arrowUpDrawable)
+            } else {
+                val arrowDownDrawable = requireContext().getDrawable(R.drawable.icon_arrow_down)
+                binding.minWeightArrowImg.setImageDrawable(arrowDownDrawable)
+            }
+        })
+
+        viewModel.maxWeightExpanded.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
+                binding.maxWeightArrowImg.setImageDrawable(arrowUpDrawable)
+            } else {
+                val arrowDownDrawable = requireContext().getDrawable(R.drawable.icon_arrow_down)
+                binding.maxWeightArrowImg.setImageDrawable(arrowDownDrawable)
+            }
+        })
+
+        viewModel.yearExpanded.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
+                binding.yearArrowImg.setImageDrawable(arrowUpDrawable)
+            } else {
+                val arrowDownDrawable = requireContext().getDrawable(R.drawable.icon_arrow_down)
+                binding.yearArrowImg.setImageDrawable(arrowDownDrawable)
+            }
+        })
+
+        viewModel.licenseExpanded.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
+                binding.licenseArrowImg.setImageDrawable(arrowUpDrawable)
+            } else {
+                val arrowDownDrawable = requireContext().getDrawable(R.drawable.icon_arrow_down)
+                binding.licenseArrowImg.setImageDrawable(arrowDownDrawable)
+            }
+        })
+
         viewModel.errorMutable.observe(viewLifecycleOwner, Observer { result ->
             if (result.errorMessage != null) {
                 showError(result.errorMessage)
@@ -77,6 +177,8 @@ class FilterFragment: Fragment(), Injectable {
                 hideError()
             }
         })
+
+
 
         viewModel.navigationButtonTextMutable.observe(viewLifecycleOwner, Observer {
             result ->
