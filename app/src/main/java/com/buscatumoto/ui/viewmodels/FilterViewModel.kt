@@ -5,12 +5,10 @@ import androidx.lifecycle.*
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
 import com.buscatumoto.data.remote.api.Result
-import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
 import com.buscatumoto.domain.features.search.FilterUseCase
 import com.buscatumoto.domain.features.search.GetFieldsUseCase
 import com.buscatumoto.ui.adapters.FilterRecyclerAdapter
 import com.buscatumoto.ui.adapters.FilterRecyclerItem
-import com.buscatumoto.utils.global.EMPTY_SIZE
 import com.buscatumoto.utils.global.removeEmptyValues
 import com.buscatumoto.utils.ui.RetryErrorModel
 import kotlinx.coroutines.Dispatchers
@@ -386,7 +384,7 @@ class FilterViewModel @Inject constructor(
 
         val filterItemList = ArrayList<FilterRecyclerItem>()
         val context = BuscaTuMotoApplication.getInstance().baseContext
-        val drawabletypedArray = context.resources.obtainTypedArray(R.array.bike_types_array)
+        val drawabletypedArray = context.resources.obtainTypedArray(R.array.filter_bike_types_array)
 
         /**
          * Size workaround until images are hosted online and not locally.
