@@ -61,7 +61,7 @@ class BuscaTuMotoRepository @Inject constructor(
 
             if (response.status == Result.Status.SUCCESS) {
                 response.data?.let {
-                    var entity= fieldsDao.getFields()
+                    var entity = fieldsDao.getFields()
                     entity.models = response.data
                     fieldsDao.updateModels(entity)
                 }
@@ -119,10 +119,26 @@ class BuscaTuMotoRepository @Inject constructor(
 
                     motoDao.delete()
                     searchDao.delete()
-                        searchDao.insert(SearchEntity(1, null, brand, model, bikeType, priceBottom.toString(), priceTop.toString(),
-                            powerBottom.toString(), powerTop.toString(), displacementBottom.toString(), displacementTop.toString(),
-                            weightBottom.toString(), weightTop.toString(), year.toString(), license))
-                        motoDao.insert(motoResponse.motos)
+                    searchDao.insert(
+                        SearchEntity(
+                            1,
+                            null,
+                            brand,
+                            model,
+                            bikeType,
+                            priceBottom.toString(),
+                            priceTop.toString(),
+                            powerBottom.toString(),
+                            powerTop.toString(),
+                            displacementBottom.toString(),
+                            displacementTop.toString(),
+                            weightBottom.toString(),
+                            weightTop.toString(),
+                            year.toString(),
+                            license
+                        )
+                    )
+                    motoDao.insert(motoResponse.motos)
 
                     emitSource(motoDao.getMotoLiveData().map {
                         Result.success(PagedListMotoEntity(it, motoResponse.totalElements))
@@ -158,11 +174,38 @@ class BuscaTuMotoRepository @Inject constructor(
         pageIndex: Int? = null
     ): MotoResponse? {
 
-        return buscaTuMotoDataSource.filterNoLiveData(
+        val motoResponse = buscaTuMotoDataSource.filterNoLiveData(
             brand, model, bikeType,
             priceBottom, priceTop, powerBottom, powerTop, displacementBottom, displacementTop,
             weightBottom, weightTop, year, license, pageIndex
         )
+        motoDao.delete()
+        searchDao.delete()
+        searchDao.insert(
+            SearchEntity(
+                1,
+                null,
+                brand,
+                model,
+                bikeType,
+                priceBottom.toString(),
+                priceTop.toString(),
+                powerBottom.toString(),
+                powerTop.toString(),
+                displacementBottom.toString(),
+                displacementTop.toString(),
+                weightBottom.toString(),
+                weightTop.toString(),
+                year.toString(),
+                license
+            )
+        )
+
+        motoResponse?.let {
+            motoDao.insert(it.motos)
+        }
+
+        return motoResponse
     }
 
     suspend fun search(search: String, pageIndex: Int?) = liveData<Result<PagedListMotoEntity>> {
@@ -178,12 +221,16 @@ class BuscaTuMotoRepository @Inject constructor(
                 //save
                 response.data?.let { motoResponse ->
 
-                        motoDao.delete()
-                        searchDao.delete()
-                        searchDao.insert(SearchEntity(1, search, null, null, null, null, null,
+                    motoDao.delete()
+                    searchDao.delete()
+                    searchDao.insert(
+                        SearchEntity(
+                            1, search, null, null, null, null, null,
                             null, null, null, null,
-                            null, null, null, null))
-                        motoDao.insert(motoResponse.motos)
+                            null, null, null, null
+                        )
+                    )
+                    motoDao.insert(motoResponse.motos)
 
                     emitSource(motoDao.getMotoLiveData().map {
                         Result.success(PagedListMotoEntity(it, motoResponse.totalElements))

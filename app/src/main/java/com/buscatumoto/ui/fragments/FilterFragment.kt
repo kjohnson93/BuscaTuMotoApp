@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentFilterBinding
@@ -47,6 +48,10 @@ class FilterFragment: Fragment(), Injectable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.navigationResultBtn.setOnClickListener {
+            findNavController().navigate(R.id.catalogueFragment)
+        }
 
         /**
          * Observer section
