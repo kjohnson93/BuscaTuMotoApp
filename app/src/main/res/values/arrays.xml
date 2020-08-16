@@ -88,6 +88,63 @@
 
     </array>
 
+    <!-- Filter -->
+    <array name="filter_brand_names_array">
+        <item>Aprilia</item>
+        <item>Arc</item>
+        <item>Bmw</item>
+        <item>Benelli</item>
+        <item>Beta</item>
+        <item>Brixton</item>
+        <item>CF Moto</item>
+        <item>Daelim</item>
+        <item>Ducati</item>
+        <item>Ebr</item>
+        <item>Energica</item>
+        <item>FB Mondial</item>
+        <item>Fantic</item>
+        <item>Gasgas</item>
+        <item>Gilera</item>
+        <item>Goes</item>
+        <item>Hanway</item>
+        <item>Harley-Davidson</item>
+        <item>Honda</item>
+        <item>Husqvarna</item>
+        <item>Hyosung</item>
+        <item>Indian</item>
+        <item>Italjet</item>
+        <item>KTM</item>
+        <item>Kawasaki</item>
+        <item>Kymco</item>
+        <item>LML</item>
+        <item>Lambretta</item>
+        <item>MH Hispania</item>
+        <item>MV Agusta</item>
+        <item>Macbor</item>
+        <item>Malaguti</item>
+        <item>Mash</item>
+        <item>Mitt</item>
+        <item>Montesa</item>
+        <item>Moto Guzzi</item>
+        <item>Norton</item>
+        <item>Peugeot</item>
+        <item>Piaggio</item>
+        <item>Quadro</item>
+        <item>Rieju</item>
+        <item>Riya</item>
+        <item>Royal Enfield</item>
+        <item>Scomadi</item>
+        <item>Suzuki</item>
+        <item>SYM</item>
+        <item>TGB</item>
+        <item>Torrot</item>
+        <item>Triumph</item>
+        <item>Vespa</item>
+        <item>Victory</item>
+        <item>Yamaha</item>
+    </array>
+
+
     <array name="filter_brand_logos_array">
         <item>@drawable/aprilia150x150</item>
         <item>@drawable/arc150x150</item>
@@ -98,6 +155,7 @@
         <item>@drawable/cfmoto150x150</item>
         <item>@drawable/daelim150x150</item>
         <item>@drawable/ducati150x150</item>
+        <item>@drawable/ebr150x150</item>
         <item>@drawable/energica150x150</item>
         <item>@drawable/fbmondial150x150</item>
         <item>@drawable/fantic150x150</item>
@@ -129,18 +187,17 @@
         <item>@drawable/piaggio150x150</item>
         <item>@drawable/quadro150x150</item>
         <item>@drawable/rieju150x150</item>
-        <!--        <item>@drawable/riya150x150</item>-->
-<!--        <item>@drawable/royal150x150</item>-->
-<!--        <item>@drawable/scomadi150x150</item>-->
-<!--        <item>@drawable/suzuki150x150</item>-->
-<!--        <item>@drawable/sym150x150</item>-->
-<!--        <item>@drawable/tgb150x150</item>-->
-<!--        <item>@drawable/torrot150x150</item>-->
-<!--        <item>@drawable/triumph150x150</item>-->
-<!--        <item>@drawable/vespa150x150</item>-->
-<!--        <item>@drawable/victory150x150</item>-->
-<!--        <item>@drawable/yamaha150x150</item>-->
-
+        <item>@drawable/riya150x150</item>
+        <item>@drawable/royal150x150</item>
+        <item>@drawable/scomadi150x150</item>
+        <item>@drawable/suzuki150x150</item>
+        <item>@drawable/sym150x150</item>
+        <item>@drawable/tgb150x150</item>
+        <item>@drawable/torrot150x150</item>
+        <item>@drawable/triumph150x150</item>
+        <item>@drawable/vespa150x150</item>
+        <item>@drawable/victory150x150</item>
+        <item>@drawable/yamaha150x150</item>
     </array>
 
 
