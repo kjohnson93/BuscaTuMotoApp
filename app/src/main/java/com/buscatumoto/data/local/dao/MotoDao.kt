@@ -13,6 +13,10 @@ interface MotoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(motos: List<MotoEntity>)
 
+    @Query("DELETE FROM moto")
+//    @Delete
+    suspend fun delete()
+
     @Query("SELECT * FROM moto")
     fun getMotoLiveData(): LiveData<List<MotoEntity>>
 
