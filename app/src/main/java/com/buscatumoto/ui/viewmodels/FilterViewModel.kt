@@ -1,6 +1,7 @@
 package com.buscatumoto.ui.viewmodels
 
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
@@ -9,6 +10,7 @@ import com.buscatumoto.domain.features.search.FilterUseCase
 import com.buscatumoto.domain.features.search.GetFieldsUseCase
 import com.buscatumoto.ui.adapters.FilterRecyclerAdapter
 import com.buscatumoto.ui.adapters.FilterRecyclerItem
+import com.buscatumoto.ui.adapters.FilterRecyclerTextAdapter
 import com.buscatumoto.utils.global.removeEmptyValues
 import com.buscatumoto.utils.ui.RetryErrorModel
 import kotlinx.coroutines.Dispatchers
@@ -44,7 +46,7 @@ class FilterViewModel @Inject constructor(
     //Adapters
     var brandRecyclerAdapter = FilterRecyclerAdapter()
     var bikeTypeRecyclerAdapter = FilterRecyclerAdapter()
-    var minPriceRecyclerAdapter = FilterRecyclerAdapter()
+    var minPriceRecyclerAdapter = FilterRecyclerTextAdapter()
     var maxPriceRecyclerAdapter = FilterRecyclerAdapter()
     var minPowerRecyclerAdapter = FilterRecyclerAdapter()
     var maxPowerRecyclerAdapter = FilterRecyclerAdapter()
@@ -412,28 +414,14 @@ class FilterViewModel @Inject constructor(
 
     private fun loadMinPriceAdapter(listData: List<String>) {
         val context = BuscaTuMotoApplication.getInstance().baseContext
-        val drawabletypedArray =
-            context.resources.obtainTypedArray(R.array.brand_logos_array)
         val filterItemList = ArrayList<FilterRecyclerItem>()
-
-        /**
-         * Size workaround until images are hosted online and not locally.
-         */
-        var smallerSize = 0
-        smallerSize = if (listData.size <= drawabletypedArray.length()) {
-            listData.size
-        } else {
-            drawabletypedArray.length()
-        }
-        /**
-         * Size workaround until images are hosted online and not locally.
-         */
+        val whiteDrawable = ContextCompat.getDrawable(context, R.drawable.whitesquare250x250)
 
         var index = 0
-        while (index < smallerSize) {
+        while (index < listData.size) {
             val filterRecyclerItem = FilterRecyclerItem(
                 listData[index],
-                drawabletypedArray.getDrawable(index)
+                whiteDrawable
             )
             filterItemList.add(filterRecyclerItem)
             index++
@@ -447,7 +435,7 @@ class FilterViewModel @Inject constructor(
         mutableList = removeEmptyValues(mutableList)
 
         val context = BuscaTuMotoApplication.getInstance().baseContext
-        val drawabletypedArray = context.resources.obtainTypedArray(R.array.brand_logos_array)
+        val drawabletypedArray = context.resources.obtainTypedArray(R.array.filter_brand_logos_array)
         val filterItemList = ArrayList<FilterRecyclerItem>()
 
         /**
@@ -476,7 +464,7 @@ class FilterViewModel @Inject constructor(
     private fun loadMinPowerAdapter(listData: List<String>) {
         val context = BuscaTuMotoApplication.getInstance().baseContext
         val drawabletypedArray =
-            context.resources.obtainTypedArray(R.array.brand_logos_array)
+            context.resources.obtainTypedArray(R.array.filter_brand_logos_array)
         val filterList = ArrayList<FilterRecyclerItem>()
 
         /**
@@ -507,7 +495,7 @@ class FilterViewModel @Inject constructor(
     private fun loadMaxPowerAdapter(listData: List<String>) {
         val context = BuscaTuMotoApplication.getInstance().baseContext
         val drawabletypedArray =
-            context.resources.obtainTypedArray(R.array.brand_logos_array)
+            context.resources.obtainTypedArray(R.array.filter_brand_logos_array)
         val filterList = ArrayList<FilterRecyclerItem>()
 
         /**
@@ -541,7 +529,7 @@ class FilterViewModel @Inject constructor(
         mutableList = removeEmptyValues(mutableList)
 
         val context = BuscaTuMotoApplication.getInstance().baseContext
-        val drawabletypedArray = context.resources.obtainTypedArray(R.array.brand_logos_array)
+        val drawabletypedArray = context.resources.obtainTypedArray(R.array.filter_brand_logos_array)
         val filterItemList = ArrayList<FilterRecyclerItem>()
 
         /**
@@ -573,7 +561,7 @@ class FilterViewModel @Inject constructor(
         mutableList = removeEmptyValues(mutableList)
 
         val context = BuscaTuMotoApplication.getInstance().baseContext
-        val drawabletypedArray = context.resources.obtainTypedArray(R.array.brand_logos_array)
+        val drawabletypedArray = context.resources.obtainTypedArray(R.array.filter_brand_logos_array)
         val filterItemList = ArrayList<FilterRecyclerItem>()
 
         /**
@@ -605,7 +593,7 @@ class FilterViewModel @Inject constructor(
         mutableList = removeEmptyValues(mutableList)
 
         val context = BuscaTuMotoApplication.getInstance().baseContext
-        val drawabletypedArray = context.resources.obtainTypedArray(R.array.brand_logos_array)
+        val drawabletypedArray = context.resources.obtainTypedArray(R.array.filter_brand_logos_array)
         val filterItemList = ArrayList<FilterRecyclerItem>()
 
         /**
@@ -637,7 +625,7 @@ class FilterViewModel @Inject constructor(
         mutableList = removeEmptyValues(mutableList)
 
         val context = BuscaTuMotoApplication.getInstance().baseContext
-        val drawabletypedArray = context.resources.obtainTypedArray(R.array.brand_logos_array)
+        val drawabletypedArray = context.resources.obtainTypedArray(R.array.filter_brand_logos_array)
         val filterItemList = ArrayList<FilterRecyclerItem>()
 
         /**
@@ -669,7 +657,7 @@ class FilterViewModel @Inject constructor(
         mutableList = removeEmptyValues(mutableList)
 
         val context = BuscaTuMotoApplication.getInstance().baseContext
-        val drawabletypedArray = context.resources.obtainTypedArray(R.array.brand_logos_array)
+        val drawabletypedArray = context.resources.obtainTypedArray(R.array.filter_brand_logos_array)
         val filterItemList = ArrayList<FilterRecyclerItem>()
 
         /**
@@ -701,7 +689,7 @@ class FilterViewModel @Inject constructor(
         mutableList = removeEmptyValues(mutableList)
 
         val context = BuscaTuMotoApplication.getInstance().baseContext
-        val drawabletypedArray = context.resources.obtainTypedArray(R.array.brand_logos_array)
+        val drawabletypedArray = context.resources.obtainTypedArray(R.array.filter_brand_logos_array)
         val filterItemList = ArrayList<FilterRecyclerItem>()
 
         /**

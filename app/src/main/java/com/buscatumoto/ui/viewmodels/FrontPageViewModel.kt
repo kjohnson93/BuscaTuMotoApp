@@ -74,8 +74,8 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
     private fun loadBrands() {
         //Load brands locally (no remote request required) and change mutable to tell binded view to display it's data
         val context = BuscaTuMotoApplication.getInstance().baseContext
-        val drawabletypedArray = context.resources.obtainTypedArray(R.array.brand_logos_array)
-        val brandNamesTypedArray = context.resources.obtainTypedArray(R.array.brand_names_array)
+        val brandNamesTypedArray = context.resources.obtainTypedArray(R.array.filter_brand_names_array)
+        val drawabletypedArray = context.resources.obtainTypedArray(R.array.filter_brand_logos_array)
 
         val  brandRecyclerUiModelList = ArrayList<BrandRecyclerUiModel?>()
 

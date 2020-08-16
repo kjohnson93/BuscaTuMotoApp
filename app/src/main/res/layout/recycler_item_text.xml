@@ -27,8 +27,7 @@
             android:id="@+id/itemCircleTvw"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:text="500"
-            android:visibility="gone"
+            android:visibility="visible"
             android:textAlignment="center"
             android:gravity="center"
             android:textSize="20sp"
@@ -49,19 +48,6 @@
             app:layout_constraintEnd_toEndOf="@+id/itemCircleImg"
             app:layout_constraintStart_toStartOf="@+id/itemCircleImg"
             app:layout_constraintTop_toTopOf="@+id/itemCircleImg" />
-
-        <TextView
-            android:id="@+id/itemCircleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemCircleImg" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
