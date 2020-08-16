@@ -17,6 +17,7 @@ import com.buscatumoto.ui.viewmodels.FilterViewModel
 import com.buscatumoto.utils.global.EMPTY_SIZE
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_filter.*
 import javax.inject.Inject
 
 class FilterFragment: Fragment(), Injectable {
@@ -164,6 +165,9 @@ class FilterFragment: Fragment(), Injectable {
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.licenseArrowImg.setImageDrawable(arrowUpDrawable)
+                nestedScrollView.post {
+                    nestedScrollView.fullScroll(View.FOCUS_DOWN)
+                }
             } else {
                 val arrowDownDrawable = requireContext().getDrawable(R.drawable.icon_arrow_down)
                 binding.licenseArrowImg.setImageDrawable(arrowDownDrawable)
