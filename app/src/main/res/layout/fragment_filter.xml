@@ -29,7 +29,6 @@
             android:id="@+id/deleteFilterSeparator"
             android:layout_width="0dp"
             android:layout_height="0.5dp"
-            android:background="@color/grey_separator"
             app:layout_constraintStart_toStartOf="@+id/deleteFilterTvw"
             app:layout_constraintTop_toBottomOf="@+id/deleteFilterTvw" />
 
@@ -39,6 +38,10 @@
             android:layout_height="0dp"
             android:paddingBottom="0dp"
             android:fillViewport="true"
+            android:fadeScrollbars="false"
+            android:scrollbarSize="4dp"
+            android:scrollbars="vertical"
+            android:scrollbarThumbVertical="@color/colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/deleteFilterSeparator"
             app:layout_constraintBottom_toTopOf="@id/navigationResultBtn">
