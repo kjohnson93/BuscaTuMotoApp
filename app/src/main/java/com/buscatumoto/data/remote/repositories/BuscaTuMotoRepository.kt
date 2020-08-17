@@ -208,7 +208,18 @@ class BuscaTuMotoRepository @Inject constructor(
         return motoResponse
     }
 
-    suspend fun search(search: String, pageIndex: Int?) = liveData<Result<PagedListMotoEntity>> {
+    suspend fun insertSearch(search: String) {
+        searchDao.delete()
+        searchDao.insert(
+            SearchEntity(
+                1, search, null, null, null, null, null,
+                null, null, null, null,
+                null, null, null, null
+            )
+        )
+    }
+
+    suspend fun search(search: String, pageIndex : Int?) = liveData<Result<PagedListMotoEntity>> {
 
         //Not using emitSource because it's not getting observed by subscribers for some reason
         emit(Result.loading())
@@ -252,6 +263,28 @@ class BuscaTuMotoRepository @Inject constructor(
     }
 
     fun getSearchParams() = searchDao.getSearchParams()
+
+
+    fun getDaoCatalogue() = motoDao.getMotoLiveData()
+    suspend fun fetchCatalogueData(search: String?,
+                                   page: Int): Result<MotoResponse> {
+        motoDao.delete()
+
+        return if (search != null) {
+            buscaTuMotoDataSource.fetchCatalogueDataSearch(search, page)
+        } else {
+            buscaTuMotoDataSource.fetchCatalogueDataFilter()
+        }
+
+    }
+
+    suspend fun insertCatalogue(motos: List<MotoEntity>) {
+        motoDao.insert(motos)
+    }
+
+    suspend fun deleteMotos() {
+        motoDao.delete()
+    }
 
 
 }

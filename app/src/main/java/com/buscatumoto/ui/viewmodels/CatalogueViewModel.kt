@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.buscatumoto.BuscaTuMotoApplication
-import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
 import com.buscatumoto.domain.features.catalogue.LoadCatalogueUseCase
@@ -48,7 +47,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     fun getErrorMessage() = errorMessage
 
     var retryClickListener = View.OnClickListener {
-        loadCatalogue(lastPageRequested)
+//        loadCatalogue(lastPageRequested)
     }
 
     private var currentPage: Int = PAGE_START
@@ -66,7 +65,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
     init {
         //Always loads first page of moto search/filter
-        loadCatalogue(0)
+//        loadCatalogue(0)
     }
 
     private fun loadCatalogue(pageIndex: Int?) {
@@ -137,13 +136,18 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
         currentPage = PAGE_START;
         isLastPage = false;
         catalogueListAdapter.clear()
-        loadCatalogue(currentPage)
+//        loadCatalogue(currentPage)
+//        loadCatalogueUseCase.observeCatalogueData(currentPage)
     }
 
     fun loadMoreItems() {
         isLoading = true
         currentPage++
-        loadCatalogue(currentPage)
+//        loadCatalogue(currentPage)
+//        loadCatalogueUseCase.observeCatalogueData(currentPage)
+        viewModelScope.launch(Dispatchers.IO) {
+            loadCatalogueUseCase.requestCatalogueDatePage(currentPage)
+        }
     }
 
     fun isLastPage(): Boolean {
@@ -192,25 +196,19 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                     override fun loadMoreItems() {
                         this@CatalogueViewModel.loadMoreItems()
                     }
-
                     override fun isLastPage(): Boolean {
                         return this@CatalogueViewModel.isLastPage()
                     }
-
                     override fun isLoading(): Boolean {
                         return this@CatalogueViewModel.isLoading()
                     }
                 }
             }
         }
-
         return scrollListener
-
-
-
     }
 
+//    val catalogueData = loadCatalogueUseCase.catalogue
 
-
-
+    val catalogueDataIndex by lazy { loadCatalogueUseCase.observeCatalogueData(currentPage) }
 }

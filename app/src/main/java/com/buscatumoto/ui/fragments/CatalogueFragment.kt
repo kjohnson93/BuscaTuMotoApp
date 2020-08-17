@@ -21,7 +21,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
-class CatalogueFragment: Fragment(), Injectable, ScreenNavigator {
+class CatalogueFragment : Fragment(), Injectable, ScreenNavigator {
 
     companion object {
         fun newInstance(): CatalogueFragment {
@@ -56,14 +56,14 @@ class CatalogueFragment: Fragment(), Injectable, ScreenNavigator {
             R.layout.fragment_catalogue, container, false
         )
 
-        catalogueViewModel = ViewModelProviders.of(this, viewModelFactory).get(CatalogueViewModel::class.java)
+        catalogueViewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(CatalogueViewModel::class.java)
         catalogueViewModel.screenNavigator = this
         binding.viewModel = catalogueViewModel
         binding.lifecycleOwner = this
         catalogueViewModel.lifecycleOwner = this
 
-        catalogueViewModel.getErrorMessage().observe(viewLifecycleOwner, Observer {
-            errorMessage ->
+        catalogueViewModel.getErrorMessage().observe(viewLifecycleOwner, Observer { errorMessage ->
             if (errorMessage != null) {
                 showErrorMessage(errorMessage)
             } else {
@@ -72,7 +72,30 @@ class CatalogueFragment: Fragment(), Injectable, ScreenNavigator {
         })
 
         return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        catalogueViewModel.catalogueDataIndex.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                com.buscatumoto.data.remote.api.Result.Status.SUCCESS -> {
+//                    binding.progressBar.hide()
+//                    result.data?.let { bindView(binding, it) }
+                    //TO REMOVE by calling adapter directlye
+                    it.data?.let { data ->
+                        catalogueViewModel.catalogueListAdapter.addItems(data)
+                    }
+                }
+                com.buscatumoto.data.remote.api.Result.Status.LOADING -> {
+//                    binding.progressBar.show()
+                }
+                com.buscatumoto.data.remote.api.Result.Status.ERROR -> {
+//                    binding.progressBar.hide()
+//                    Snackbar.make(binding.coordinatorLayout, result.message!!, Snackbar.LENGTH_LONG).show()
+                }
+            }
+        })
     }
 
     override fun onDestroyView() {
@@ -84,7 +107,10 @@ class CatalogueFragment: Fragment(), Injectable, ScreenNavigator {
 
     override fun navigateToNext(event: Int, extras: Bundle?) {
         hideError()
-        findNavController().navigate(R.id.action_catalogueFragment_to_motoDetailHostFragment, extras)
+        findNavController().navigate(
+            R.id.action_catalogueFragment_to_motoDetailHostFragment,
+            extras
+        )
     }
 
     private fun hideError() {

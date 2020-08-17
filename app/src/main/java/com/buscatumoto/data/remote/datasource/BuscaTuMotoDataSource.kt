@@ -8,7 +8,6 @@ import javax.inject.Inject
 class BuscaTuMotoDataSource @Inject constructor(private val buscaTuMotoService: BuscaTuMotoService) :
     BaseDataSource() {
 
-
     suspend fun getFields() = getResult { buscaTuMotoService.getFields() }
 
     suspend fun getMotos(brand: String) = getResult { buscaTuMotoService.getBikesByBrand(brand) }
@@ -75,4 +74,10 @@ class BuscaTuMotoDataSource @Inject constructor(private val buscaTuMotoService: 
     suspend fun search(search: String, pageIndex: Int?) =
         getResult { buscaTuMotoService.search(search, pageIndex) }
 
+//    suspend fun fetchCatalogueData() = getResult { buscaTuMotoService.filter() }
+
+    suspend fun fetchCatalogueDataFilter() = getResult { buscaTuMotoService.filter() }
+    suspend fun fetchCatalogueDataSearch(search: String?,
+    page: Int) = getResult {
+        buscaTuMotoService.search(search, page) }
 }

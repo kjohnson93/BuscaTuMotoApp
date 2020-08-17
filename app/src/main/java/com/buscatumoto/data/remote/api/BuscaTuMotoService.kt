@@ -36,7 +36,7 @@ interface BuscaTuMotoService {
 
 
     @GET(APIConstants.MOTO_SEARCH_URL)
-    suspend fun search(@Path("search") search: String, @Query("page") page: Int?): Response<MotoResponse>
+    suspend fun search(@Path("search") search: String?, @Query("page") page: Int?): Response<MotoResponse>
 
 
 }

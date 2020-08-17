@@ -1,8 +1,10 @@
 package com.buscatumoto.domain.features.catalogue
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.distinctUntilChanged
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
+import com.buscatumoto.data.remote.api.resultLiveData
 import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
 import timber.log.Timber
@@ -55,6 +57,23 @@ class LoadCatalogueUseCase @Inject constructor(private val buscaTuMotoRepository
             return buscaTuMotoRepository.filter(lastParams.brand, lastParams.model, lastParams.bikeType,
                 priceBottomForm, priceTopForm, powerBottomForm, powerTopForm, displacementBottomForm,
                 displacementTopForm, weightBottomForm, weightTopForm, yearForm, licenseForm, pageIndex)
+        }
+    }
+
+    fun observeCatalogueData(index: Int) = resultLiveData(
+            databaseQuery = { buscaTuMotoRepository.getDaoCatalogue() },
+            networkCall = {
+                val lastParams = buscaTuMotoRepository.getSearchParams()
+                buscaTuMotoRepository.fetchCatalogueData(lastParams.search, index)
+            },
+            saveCallResult = { buscaTuMotoRepository.insertCatalogue(it.motos) }).distinctUntilChanged()
+
+    suspend fun requestCatalogueDatePage(pageIndex: Int) {
+        val lastParams = buscaTuMotoRepository.getSearchParams()
+
+        val response = buscaTuMotoRepository.fetchCatalogueData(lastParams.search, pageIndex)
+        response.data?.motos?.let {
+            buscaTuMotoRepository.insertCatalogue(it)
         }
     }
 
