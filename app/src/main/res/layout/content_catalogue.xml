@@ -11,11 +11,6 @@
             type="com.buscatumoto.ui.viewmodels.CatalogueViewModel" />
     </data>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -48,26 +43,33 @@
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-                <ProgressBar
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:mutableVisibility="@{viewModel.loadingVisibility}"
-                    android:indeterminate="false"
-                    android:indeterminateBehavior="cycle"
-                    android:layout_gravity="center"
-                    android:max="100"
-                    android:progress="0"
-                    android:progressDrawable="@drawable/circular_progress_bar"
-                    />
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="false"
+                android:indeterminateBehavior="cycle"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/circular_progress_bar"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/swipeRefresh"
+                app:mutableVisibility="@{viewModel.loadingVisibility}" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No se han encontrado resultados"
-            app:mutableVisibility="@{viewModel.noResultVisibility}"/>
-    </FrameLayout>
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No se han encontrado resultados"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:mutableVisibility="@{viewModel.noResultVisibility}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>
