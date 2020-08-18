@@ -43,6 +43,13 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
     private var lastPageRequested: Int? = null
 
+    //scroll listener
+    private val _loadMoreItemsEvent = MutableLiveData<Boolean> ()
+    var loadMoreItemsEvent: LiveData<Boolean> = _loadMoreItemsEvent
+    fun loadMoreItemsEvent() {
+        loadMoreItems()
+    }
+
     private var errorMessage = MutableLiveData<String>()
     fun getErrorMessage() = errorMessage
 
@@ -141,10 +148,8 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     }
 
     fun loadMoreItems() {
-        isLoading = true
+//        isLoading = true
         currentPage++
-//        loadCatalogue(currentPage)
-//        loadCatalogueUseCase.observeCatalogueData(currentPage)
         viewModelScope.launch(Dispatchers.IO) {
             loadCatalogueUseCase.requestCatalogueDatePage(currentPage)
         }

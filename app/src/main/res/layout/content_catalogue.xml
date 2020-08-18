@@ -36,9 +36,6 @@
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:recyclerAdapter="@{viewModel.catalogueListAdapter}"
-                    app:recyclerLinearLayoutManager="@{viewModel.linearLayoutManager}"
-                    app:scrollableListener="@{viewModel.scrollableListener}"
                     />
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
