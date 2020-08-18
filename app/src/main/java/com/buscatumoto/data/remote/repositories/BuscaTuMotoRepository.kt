@@ -179,7 +179,6 @@ class BuscaTuMotoRepository @Inject constructor(
             priceBottom, priceTop, powerBottom, powerTop, displacementBottom, displacementTop,
             weightBottom, weightTop, year, license, pageIndex
         )
-        motoDao.delete()
         searchDao.delete()
         searchDao.insert(
             SearchEntity(
@@ -200,10 +199,6 @@ class BuscaTuMotoRepository @Inject constructor(
                 license
             )
         )
-
-        motoResponse?.let {
-            motoDao.insert(it.motos)
-        }
 
         return motoResponse
     }
@@ -267,13 +262,31 @@ class BuscaTuMotoRepository @Inject constructor(
 
     fun getDaoCatalogue() = motoDao.getMotoLiveData()
     suspend fun fetchCatalogueData(search: String?,
-                                   page: Int): Result<MotoResponse> {
+                                   page: Int,
+                                   brand: String? = null,
+                                   model: String? = null,
+                                   bikeType: String? = null,
+                                   priceBottom: Int? = null,
+                                   priceTop: Int? = null,
+                                   powerBottom: Double? = null,
+                                   powerTop: Double? = null,
+                                   displacementBottom: Double? = null,
+                                   displacementTop: Double? = null,
+                                   weightBottom: Double? = null,
+                                   weightTop: Double? = null,
+                                   year: Int? = null,
+                                   license: String? = null): Result<MotoResponse> {
         motoDao.delete()
 
         return if (search != null) {
             buscaTuMotoDataSource.fetchCatalogueDataSearch(search, page)
         } else {
-            buscaTuMotoDataSource.fetchCatalogueDataFilter()
+            buscaTuMotoDataSource.fetchCatalogueDataFilter(
+                brand, model, bikeType,
+                priceBottom, priceTop, powerBottom, powerTop,
+                displacementBottom, displacementTop, weightBottom,
+                weightTop, year, license, page
+            )
         }
 
     }

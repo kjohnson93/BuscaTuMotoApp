@@ -76,8 +76,34 @@ class BuscaTuMotoDataSource @Inject constructor(private val buscaTuMotoService: 
 
 //    suspend fun fetchCatalogueData() = getResult { buscaTuMotoService.filter() }
 
-    suspend fun fetchCatalogueDataFilter() = getResult { buscaTuMotoService.filter() }
-    suspend fun fetchCatalogueDataSearch(search: String?,
-    page: Int) = getResult {
-        buscaTuMotoService.search(search, page) }
+    suspend fun fetchCatalogueDataFilter(
+        brand: String? = null,
+        model: String? = null,
+        bikeType: String? = null,
+        priceBottom: Int? = null,
+        priceTop: Int? = null,
+        powerBottom: Double? = null,
+        powerTop: Double? = null,
+        displacementBottom: Double? = null,
+        displacementTop: Double? = null,
+        weightBottom: Double? = null,
+        weightTop: Double? = null,
+        year: Int? = null,
+        license: String? = null,
+        pageIndex: Int? = null
+    ) = getResult {
+        buscaTuMotoService.filter(
+            brand, model, bikeType,
+            priceBottom, priceTop, powerBottom, powerTop,
+            displacementBottom, displacementTop, weightBottom,
+            weightTop, year, license, pageIndex
+        )
+    }
+
+    suspend fun fetchCatalogueDataSearch(
+        search: String?,
+        page: Int
+    ) = getResult {
+        buscaTuMotoService.search(search, page)
+    }
 }

@@ -11,7 +11,8 @@ import timber.log.Timber
 import java.lang.NumberFormatException
 import javax.inject.Inject
 
-class LoadCatalogueUseCase @Inject constructor(private val buscaTuMotoRepository: BuscaTuMotoRepository
+class LoadCatalogueUseCase @Inject constructor(
+    private val buscaTuMotoRepository: BuscaTuMotoRepository
 ) {
 
     /**
@@ -54,24 +55,70 @@ class LoadCatalogueUseCase @Inject constructor(private val buscaTuMotoRepository
             } catch (exception: NumberFormatException) {
 
             }
-            return buscaTuMotoRepository.filter(lastParams.brand, lastParams.model, lastParams.bikeType,
-                priceBottomForm, priceTopForm, powerBottomForm, powerTopForm, displacementBottomForm,
-                displacementTopForm, weightBottomForm, weightTopForm, yearForm, licenseForm, pageIndex)
+            return buscaTuMotoRepository.filter(
+                lastParams.brand,
+                lastParams.model,
+                lastParams.bikeType,
+                priceBottomForm,
+                priceTopForm,
+                powerBottomForm,
+                powerTopForm,
+                displacementBottomForm,
+                displacementTopForm,
+                weightBottomForm,
+                weightTopForm,
+                yearForm,
+                licenseForm,
+                pageIndex
+            )
         }
     }
 
-    fun observeCatalogueData(index: Int) = resultLiveData(
-            databaseQuery = { buscaTuMotoRepository.getDaoCatalogue() },
-            networkCall = {
-                val lastParams = buscaTuMotoRepository.getSearchParams()
-                buscaTuMotoRepository.fetchCatalogueData(lastParams.search, index)
-            },
-            saveCallResult = { buscaTuMotoRepository.insertCatalogue(it.motos) }).distinctUntilChanged()
+    fun observeCatalogueData(pageIndex: Int) = resultLiveData(
+        databaseQuery = { buscaTuMotoRepository.getDaoCatalogue() },
+        networkCall = {
+            val lastParams = buscaTuMotoRepository.getSearchParams()
+
+            buscaTuMotoRepository.fetchCatalogueData(
+                lastParams.search,
+                pageIndex,
+                lastParams.brand,
+                lastParams.model,
+                lastParams.bikeType,
+                lastParams.priceMin?.toIntOrNull(),
+                lastParams.priceMax?.toIntOrNull(),
+                lastParams.powerMin?.toDoubleOrNull(),
+                lastParams.powerMax?.toDoubleOrNull(),
+                lastParams.cilMin?.toDoubleOrNull(),
+                lastParams.cilMax?.toDoubleOrNull(),
+                lastParams.weightMin?.toDoubleOrNull(),
+                lastParams.weightMax?.toDoubleOrNull(),
+                lastParams.year?.toIntOrNull(),
+                lastParams.license
+            )
+        },
+        saveCallResult = { buscaTuMotoRepository.insertCatalogue(it.motos) }).distinctUntilChanged()
 
     suspend fun requestCatalogueDatePage(pageIndex: Int) {
         val lastParams = buscaTuMotoRepository.getSearchParams()
 
-        val response = buscaTuMotoRepository.fetchCatalogueData(lastParams.search, pageIndex)
+        val response = buscaTuMotoRepository.fetchCatalogueData(
+            lastParams.search,
+            pageIndex,
+            lastParams.brand,
+            lastParams.model,
+            lastParams.bikeType,
+            lastParams.priceMin?.toIntOrNull(),
+            lastParams.priceMax?.toIntOrNull(),
+            lastParams.powerMin?.toDoubleOrNull(),
+            lastParams.powerMax?.toDoubleOrNull(),
+            lastParams.cilMin?.toDoubleOrNull(),
+            lastParams.cilMax?.toDoubleOrNull(),
+            lastParams.weightMin?.toDoubleOrNull(),
+            lastParams.weightMax?.toDoubleOrNull(),
+            lastParams.year?.toIntOrNull(),
+            lastParams.license
+        )
         response.data?.motos?.let {
             buscaTuMotoRepository.insertCatalogue(it)
         }
