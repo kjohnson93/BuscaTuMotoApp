@@ -11,6 +11,7 @@ import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.local.entity.SearchEntity
 import com.buscatumoto.data.remote.dto.response.MotoResponse
 import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
+import com.buscatumoto.utils.data.TotalElementsObject
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -279,14 +280,24 @@ class BuscaTuMotoRepository @Inject constructor(
         motoDao.delete()
 
         return if (search != null) {
-            buscaTuMotoDataSource.fetchCatalogueDataSearch(search, page)
+            val response = buscaTuMotoDataSource.fetchCatalogueDataSearch(search, page)
+            response.data?.let {
+                TotalElementsObject.totalElements = it.totalElements
+                TotalElementsObject.totalPages = it.totalPages
+            }
+            response
         } else {
-            buscaTuMotoDataSource.fetchCatalogueDataFilter(
+            val response = buscaTuMotoDataSource.fetchCatalogueDataFilter(
                 brand, model, bikeType,
                 priceBottom, priceTop, powerBottom, powerTop,
                 displacementBottom, displacementTop, weightBottom,
                 weightTop, year, license, page
             )
+            response.data?.let {
+                TotalElementsObject.totalElements = it.totalElements
+                TotalElementsObject.totalPages = it.totalPages
+            }
+            response
         }
 
     }
@@ -298,6 +309,5 @@ class BuscaTuMotoRepository @Inject constructor(
     suspend fun deleteMotos() {
         motoDao.delete()
     }
-
 
 }

@@ -37,7 +37,4 @@ data class SearchEntity (
     val year: String?,
     @field:SerializedName("license")
     val license: String?
-//    @field:SerializedName("pageIndex")
-//    val pageIndex: Int?
-
 )

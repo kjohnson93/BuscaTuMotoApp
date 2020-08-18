@@ -5,6 +5,7 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,6 +19,7 @@ import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.adapters.CatalogueListAdapter
 import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
+import com.buscatumoto.utils.data.TotalElementsObject
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
 import com.buscatumoto.utils.ui.PaginationListener
@@ -105,8 +107,12 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
 //                    result.data?.let { bindView(binding, it) }
                     isLoading = false
                     //TO REMOVE by calling adapter directlye
-                    it.data?.let { data ->
-                        catalogueViewModel.catalogueListAdapter.addItems(data)
+//                    Toast.makeText(requireContext(), "TotalElements: " +
+//                            "${TotalElementsObject.totalElements}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Total pages: " +
+                            "${TotalElementsObject.totalPages}", Toast.LENGTH_LONG).show()
+                    it.data?.let { list ->
+                        catalogueViewModel.catalogueListAdapter.addItems(list)
                     }
                 }
                 com.buscatumoto.data.remote.api.Result.Status.LOADING -> {
@@ -114,9 +120,14 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
                 }
                 com.buscatumoto.data.remote.api.Result.Status.ERROR -> {
 //                    binding.progressBar.hide()
-//                    Snackbar.make(binding.coordinatorLayout, result.message!!, Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, it.message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
+        })
+
+        catalogueViewModel.isLastPageLiveData.observe(viewLifecycleOwner, Observer {
+            result ->
+            isLastPage = true
         })
     }
 

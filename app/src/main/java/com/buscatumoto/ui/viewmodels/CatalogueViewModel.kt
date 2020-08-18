@@ -14,6 +14,7 @@ import com.buscatumoto.domain.features.catalogue.LoadCatalogueUseCase
 import com.buscatumoto.ui.activities.CatalogueActivity
 import com.buscatumoto.ui.adapters.CatalogueListAdapter
 import com.buscatumoto.ui.navigation.ScreenNavigator
+import com.buscatumoto.utils.data.TotalElementsObject
 import com.buscatumoto.utils.global.MOTO_ID_KEY
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
 import com.buscatumoto.utils.ui.PaginationListener
@@ -49,6 +50,9 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     fun loadMoreItemsEvent() {
         loadMoreItems()
     }
+
+    val _isLastPageMutable = MutableLiveData<Boolean> ()
+    var isLastPageLiveData: LiveData<Boolean> = _isLastPageMutable
 
     private var errorMessage = MutableLiveData<String>()
     fun getErrorMessage() = errorMessage
@@ -149,10 +153,18 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
     fun loadMoreItems() {
 //        isLoading = true
-        currentPage++
-        viewModelScope.launch(Dispatchers.IO) {
-            loadCatalogueUseCase.requestCatalogueDatePage(currentPage)
+//        if (currentPage != 0 && currentPage >= TotalElementsObject.totalElements) {
+//            _isLastPageMutable.value = true
+//        }
+        if (currentPage >= TotalElementsObject.totalPages) {
+            _isLastPageMutable.value = true
+        } else {
+            currentPage++
+            viewModelScope.launch(Dispatchers.IO) {
+                loadCatalogueUseCase.requestCatalogueDatePage(currentPage)
+            }
         }
+
     }
 
     fun isLastPage(): Boolean {
