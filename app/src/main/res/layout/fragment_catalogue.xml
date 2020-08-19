@@ -43,9 +43,6 @@
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:recyclerAdapter="@{viewModel.catalogueListAdapter}"
-                app:recyclerLinearLayoutManager="@{viewModel.linearLayoutManager}"
-                app:scrollableListener="@{viewModel.scrollableListener}"
                 />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -67,7 +64,7 @@
             app:mutableVisibility="@{viewModel.loadingVisibility}" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/catalogueNoResults"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No se han encontrado resultados"

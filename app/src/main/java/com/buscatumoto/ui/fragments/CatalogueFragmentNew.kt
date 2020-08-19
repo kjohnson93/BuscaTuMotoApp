@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.buscatumoto.R
@@ -34,6 +35,8 @@ class CatalogueFragmentNew : Fragment(), Injectable, ScreenNavigator,
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var catalogueViewModel: CatalogueViewModel
     private lateinit var binding: FragmentCatalogueBinding
+    var catalogueListAdapter = CatalogueListAdapter(this)
+
 
     private var snackbarError: Snackbar? = null
 
@@ -76,24 +79,34 @@ class CatalogueFragmentNew : Fragment(), Injectable, ScreenNavigator,
             }
         })
 
+        //Scroll listener
+//        var catalogueListAdapter = CatalogueListAdapter(this)
+        var layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+
+        binding.catalagueContentRv.adapter = catalogueListAdapter
+        binding.catalagueContentRv.layoutManager = layoutManager
+        binding.catalagueContentRv.addOnScrollListener(getScrollableListener(layoutManager))
+        binding.catalogueNoResults.text = "TEST"
+
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //Scroll listener
-        var catalogueListAdapter = CatalogueListAdapter(this)
 
-        var layoutManager: LinearLayoutManager = LinearLayoutManager(
-            requireContext(),
-            RecyclerView.VERTICAL,
-            false
-        )
 
-        binding.catalagueContentRv.adapter = catalogueListAdapter
-        binding.catalagueContentRv.layoutManager = layoutManager
-        binding.catalagueContentRv.addOnScrollListener(getScrollableListener(layoutManager))
+//        var layoutManager: LinearLayoutManager = LinearLayoutManager(
+//            requireContext(),
+//            RecyclerView.VERTICAL,
+//            false
+//        )
+        var layoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+
+//        binding.catalagueContentRv.adapter = catalogueListAdapter
+//        binding.catalagueContentRv.layoutManager = layoutManager
+//        binding.catalagueContentRv.addOnScrollListener(getScrollableListener(layoutManager))
 
         catalogueViewModel.catalogueDataIndex.observe(viewLifecycleOwner, Observer {
             when (it.status) {
@@ -101,13 +114,13 @@ class CatalogueFragmentNew : Fragment(), Injectable, ScreenNavigator,
 //                    binding.progressBar.hide()
 //                    result.data?.let { bindView(binding, it) }
                     isLoading = false
-                    //TO REMOVE by calling adapter directlye
+                    //TO REMOVE by calling adapter directly
 //                    Toast.makeText(requireContext(), "TotalElements: " +
 //                            "${TotalElementsObject.totalElements}", Toast.LENGTH_LONG).show()
                     Toast.makeText(requireContext(), "Total pages: " +
                             "${TotalElementsObject.totalPages}", Toast.LENGTH_LONG).show()
                     it.data?.let { list ->
-                        catalogueViewModel.catalogueListAdapter.addItems(list)
+                        catalogueListAdapter.addItems(list)
                     }
                 }
                 Result.Status.LOADING -> {

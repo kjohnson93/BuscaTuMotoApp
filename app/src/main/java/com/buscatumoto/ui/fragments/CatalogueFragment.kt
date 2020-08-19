@@ -44,6 +44,8 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
 
     private var isLoading = false
     private var isLastPage = false
+    var catalogueListAdapter = CatalogueListAdapter(this)
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,8 +90,6 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
         super.onViewCreated(view, savedInstanceState)
 
         //Scroll listener
-        var catalogueListAdapter = CatalogueListAdapter(this)
-
         var layoutManager: LinearLayoutManager = LinearLayoutManager(
             requireContext(),
             RecyclerView.VERTICAL,
@@ -112,7 +112,7 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
                     Toast.makeText(requireContext(), "Total pages: " +
                             "${TotalElementsObject.totalPages}", Toast.LENGTH_LONG).show()
                     it.data?.let { list ->
-                        catalogueViewModel.catalogueListAdapter.addItems(list)
+                        catalogueListAdapter.addItems(list)
                     }
                 }
                 com.buscatumoto.data.remote.api.Result.Status.LOADING -> {

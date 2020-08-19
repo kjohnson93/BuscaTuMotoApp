@@ -40,7 +40,6 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     val noResultVisibility = MutableLiveData<Int>()
 
     //reference to adapter
-    var catalogueListAdapter = CatalogueListAdapter(this)
 
     private var lastPageRequested: Int? = null
 
@@ -98,17 +97,17 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
                                 noResultVisibility.value = View.GONE
 
-                                if (it.list.isEmpty() && catalogueListAdapter.itemCount == 0) {
-                                    noResultVisibility.value = View.VISIBLE
-                                }
+//                                if (it.list.isEmpty() && catalogueListAdapter.itemCount == 0) {
+//                                    noResultVisibility.value = View.VISIBLE
+//                                }
+//
+//                                loadingVisibility.value = View.GONE
+//
+//                                if (pageIndex != PAGE_START) {
+//                                    catalogueListAdapter.removeLoading()
+//                                }
 
-                                loadingVisibility.value = View.GONE
-
-                                if (pageIndex != PAGE_START) {
-                                    catalogueListAdapter.removeLoading()
-                                }
-
-                                catalogueListAdapter.addItems(result?.data.list)
+//                                catalogueListAdapter.addItems(result?.data.list)
                                 refreshingMutable.value = false
                                 isLoading = false
 
@@ -118,7 +117,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
                         }
                         Result.Status.LOADING -> {
                             if (pageIndex != PAGE_START) {
-                                catalogueListAdapter.addLoading()
+//                                catalogueListAdapter.addLoading()
                             } else {
                                 //show global loading
                                 loadingVisibility.value = View.VISIBLE
@@ -146,7 +145,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
         itemCount = 0;
         currentPage = PAGE_START;
         isLastPage = false;
-        catalogueListAdapter.clear()
+//        catalogueListAdapter.clear()
 //        loadCatalogue(currentPage)
 //        loadCatalogueUseCase.observeCatalogueData(currentPage)
     }

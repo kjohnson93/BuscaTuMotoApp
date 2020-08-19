@@ -9,50 +9,37 @@
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="300dp"
     android:onClick="@{() -> viewModel.clickListenerTap(viewModel.modelId)}">
-    <ImageView
-        android:id="@+id/catalogue_item_imgvw"
-        android:layout_width="245dp"
-        android:layout_height="165dp"
-        android:layout_marginTop="20dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/search_icon_128"
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/catalogueItemCardView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:mutableDrawable="@{viewModel.modelImageLiveData}"
-        app:srcCompat="@drawable/search_icon_128" />
+        app:layout_constraintVertical_bias="0.0">
 
-    <TextView
-        android:id="@+id/catalogue_item_model"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/catalogue_item_imgvw"
-        app:layout_constraintTop_toTopOf="@+id/catalogue_item_imgvw"
-        app:mutableText="@{viewModel.modelTitleLiveData}" />
+        <ImageView
+            android:id="@+id/catalogue_item_imgvw"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/search_icon_128"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:mutableDrawable="@{viewModel.modelImageLiveData}"
+            app:srcCompat="@drawable/search_icon_128" />
 
-    <TextView
-        android:id="@+id/catalogue_item_highlights"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/catalogue_item_model"
-        app:layout_constraintStart_toStartOf="@+id/catalogue_item_model"
-        app:layout_constraintTop_toBottomOf="@+id/catalogue_item_model"
-        app:mutableText="@{viewModel.modelHighlightsLiveData}" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/grey_separator"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/catalogue_item_imgvw" />
-
+    </androidx.cardview.widget.CardView>
 
 
 
