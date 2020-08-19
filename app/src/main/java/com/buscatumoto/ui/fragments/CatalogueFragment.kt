@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.buscatumoto.R
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.databinding.FragmentCatalogueBinding
@@ -22,6 +23,7 @@ import com.buscatumoto.ui.adapters.CatalogueListAdapter
 import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
 import com.buscatumoto.utils.data.TotalElementsObject
+import com.buscatumoto.utils.global.PAGE_START
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
 import com.buscatumoto.utils.ui.PaginationListener
@@ -29,7 +31,7 @@ import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
-    CatalogueItemClickListener {
+    CatalogueItemClickListener, SwipeRefreshLayout.OnRefreshListener  {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -42,6 +44,7 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
 
     private var isLoading = false
     private var isLastPage = false
+    private var currentPage = PAGE_START
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,15 +82,11 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
             }
         })
 
-        //Scroll listener
-//        var catalogueListAdapter = CatalogueListAdapter(this)
         var layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-
         binding.catalagueContentRv.adapter = catalogueListAdapter
         binding.catalagueContentRv.layoutManager = layoutManager
         binding.catalagueContentRv.addOnScrollListener(getScrollableListener(layoutManager))
-        binding.catalogueNoResults.text = "TEST"
-
+        binding.swipeRefresh.setOnRefreshListener(this)
 
         return binding.root
     }
@@ -95,40 +94,41 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-//        var layoutManager: LinearLayoutManager = LinearLayoutManager(
-//            requireContext(),
-//            RecyclerView.VERTICAL,
-//            false
-//        )
-        var layoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
-
-//        binding.catalagueContentRv.adapter = catalogueListAdapter
-//        binding.catalagueContentRv.layoutManager = layoutManager
-//        binding.catalagueContentRv.addOnScrollListener(getScrollableListener(layoutManager))
-
         catalogueViewModel.catalogueDataIndex.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Result.Status.SUCCESS -> {
-//                    binding.progressBar.hide()
-//                    result.data?.let { bindView(binding, it) }
+                    binding.catalogueFragmentPbar.visibility = View.GONE
+                    binding.catalogueNoResults.visibility = View.GONE
                     isLoading = false
-                    //TO REMOVE by calling adapter directly
-//                    Toast.makeText(requireContext(), "TotalElements: " +
-//                            "${TotalElementsObject.totalElements}", Toast.LENGTH_LONG).show()
-                    Toast.makeText(requireContext(), "Total pages: " +
-                            "${TotalElementsObject.totalPages}", Toast.LENGTH_LONG).show()
+
                     it.data?.let { list ->
-                        catalogueListAdapter.addItems(list)
+                        if (list.isEmpty() && catalogueListAdapter.itemCount == 0) {
+                            binding.catalogueNoResults.visibility = View.VISIBLE
+                        } else {
+
+                            if (currentPage != PAGE_START) {
+                                catalogueListAdapter.removeLoading()
+                            }
+
+                            binding.catalogueNoResults.visibility = View.GONE
+                            catalogueListAdapter.addItems(list)
+                            binding.swipeRefresh.isRefreshing = false
+                            //layoutManager = null
+                        }
                     }
                 }
                 Result.Status.LOADING -> {
-//                    binding.progressBar.show()
+                    if (currentPage != PAGE_START) {
+                        catalogueListAdapter.addLoading()
+                    } else {
+                        //Show global loading
+                        binding.catalogueFragmentPbar.visibility = View.VISIBLE
+                    }
                 }
                 Result.Status.ERROR -> {
-//                    binding.progressBar.hide()
-                    Snackbar.make(binding.root, it.message!!, Snackbar.LENGTH_LONG).show()
+                    binding.catalogueFragmentPbar.visibility = View.GONE
+                    showErrorMessage(it.message)
+                    //layoutManager = null
                 }
             }
         })
@@ -136,6 +136,23 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
         catalogueViewModel.isLastPageLiveData.observe(viewLifecycleOwner, Observer {
                 result ->
             isLastPage = true
+        })
+
+        catalogueViewModel.currentPageLiveData.observe(viewLifecycleOwner, Observer {
+            result ->
+            this.currentPage = result
+        })
+
+        catalogueViewModel.pageLoadingLiveData.observe(viewLifecycleOwner, Observer {
+            result ->
+            if (result) {
+                if (currentPage != PAGE_START) {
+                    catalogueListAdapter.addLoading()
+                } else {
+                    //Show global loading
+                    binding.catalogueFragmentPbar.visibility = View.VISIBLE
+                }
+            }
         })
     }
 
@@ -183,6 +200,11 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
 
     override fun onItemClick(id: String) {
         catalogueViewModel.onItemClick(id)
+    }
+
+    override fun onRefresh() {
+        currentPage = PaginationListener.PAGE_START;
+        isLastPage = false
     }
 
 

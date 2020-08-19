@@ -50,8 +50,14 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
         loadMoreItems()
     }
 
-    val _isLastPageMutable = MutableLiveData<Boolean> ()
+    private val _isLastPageMutable = MutableLiveData<Boolean>()
     var isLastPageLiveData: LiveData<Boolean> = _isLastPageMutable
+
+    private val _currentPageMutable = MutableLiveData<Int>()
+    val currentPageLiveData = _currentPageMutable
+
+    private val _pageLoadingMutable = MutableLiveData<Boolean>()
+    val pageLoadingLiveData = _pageLoadingMutable
 
     private var errorMessage = MutableLiveData<String>()
     fun getErrorMessage() = errorMessage
@@ -60,7 +66,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 //        loadCatalogue(lastPageRequested)
     }
 
-    private var currentPage: Int = PAGE_START
+    var currentPage: Int = PAGE_START
     private var isLastPage = false
     private var isLoading = false
     var itemCount = 0
@@ -106,7 +112,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 //                                if (pageIndex != PAGE_START) {
 //                                    catalogueListAdapter.removeLoading()
 //                                }
-
+//
 //                                catalogueListAdapter.addItems(result?.data.list)
                                 refreshingMutable.value = false
                                 isLoading = false
@@ -142,7 +148,6 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     }
 
     override fun onRefresh() {
-        itemCount = 0;
         currentPage = PAGE_START;
         isLastPage = false;
 //        catalogueListAdapter.clear()
@@ -159,7 +164,9 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
             _isLastPageMutable.value = true
         } else {
             currentPage++
+            _currentPageMutable.value = currentPage
             viewModelScope.launch(Dispatchers.IO) {
+                pageLoadingLiveData.postValue(true)
                 loadCatalogueUseCase.requestCatalogueDatePage(currentPage)
             }
         }

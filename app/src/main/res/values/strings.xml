@@ -44,4 +44,5 @@
     <string name="license">License</string>
     <string name="filter_btn_navigation">SHOW %1$s RESULTS</string>
     <string name="empty_result">NO RESULTS</string>
+    <string name="catalogue_no_results">No results found</string>
 </resources>

@@ -21,3 +21,4 @@ const val ALPHA_OPACITY_OPAQUE: Float = 1f
 const val ALPHA_OPACITY_TRANSPARENT: Float = 0f
 
 const val EMPTY_SIZE = 0
+const val PAGE_START = 0

@@ -33,7 +33,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:mutableRefreshing="@{viewModel.refreshingMutable}"
             app:refreshListener="@{viewModel}">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -48,6 +47,7 @@
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ProgressBar
+            android:id="@+id/catalogueFragmentPbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -67,7 +67,8 @@
             android:id="@+id/catalogueNoResults"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No se han encontrado resultados"
+            android:visibility="gone"
+            android:text="@string/catalogue_no_results"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

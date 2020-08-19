@@ -33,4 +33,5 @@
     <string name="license">Permís</string>
     <string name="filter_btn_navigation">MOSTRA ELS %1$s RESULTATS</string>
     <string name="empty_result">NO HI HA RESULTATS</string>
+    <string name="catalogue_no_results">No s\'han trobat resultats</string>
 </resources>
