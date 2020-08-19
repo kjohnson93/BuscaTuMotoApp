@@ -15,6 +15,9 @@ abstract class FragmentBuildersModule {
     abstract fun contributeCatalogueFragment(): CatalogueFragment
 
     @ContributesAndroidInjector
+    abstract fun contributeCatalogueFragmentNew(): CatalogueFragmentNew
+
+    @ContributesAndroidInjector
     abstract fun contributeMotoDetailFragment(): MotoDetailHostFragment
 
     @ContributesAndroidInjector

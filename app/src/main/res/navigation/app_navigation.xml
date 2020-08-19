@@ -39,11 +39,20 @@
         <action
             android:id="@+id/action_containerMainFragment_to_catalogueFragment"
             app:destination="@id/catalogueFragment" />
+        <action
+            android:id="@+id/action_containerMainFragment_to_catalogueFragmentNew"
+            app:destination="@id/catalogueFragmentNew" />
     </fragment>
     <fragment
         android:id="@+id/languagePickerFragment"
         tools:layout="@layout/fragment_language_picker"
         android:name="com.buscatumoto.ui.fragments.LanguagePickerFragment"
         android:label="LanguagePickerFragment" />
+    <fragment
+        android:id="@+id/catalogueFragmentNew"
+        tools:layout="@layout/fragment_catalogue"
+
+        android:name="com.buscatumoto.ui.fragments.CatalogueFragmentNew"
+        android:label="CatalogueFragmentNew" />
 
 </navigation>
