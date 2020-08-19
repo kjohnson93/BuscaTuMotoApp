@@ -11,9 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.buscatumoto.R
+import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.databinding.FragmentCatalogueBinding
 import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.adapters.CatalogueListAdapter
@@ -29,23 +31,17 @@ import javax.inject.Inject
 class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
     CatalogueItemClickListener {
 
-    companion object {
-        fun newInstance(): CatalogueFragment {
-            return CatalogueFragment()
-        }
-    }
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var catalogueViewModel: CatalogueViewModel
     private lateinit var binding: FragmentCatalogueBinding
+    var catalogueListAdapter = CatalogueListAdapter(this)
+
 
     private var snackbarError: Snackbar? = null
 
     private var isLoading = false
     private var isLastPage = false
-    var catalogueListAdapter = CatalogueListAdapter(this)
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,30 +79,42 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
             }
         })
 
+        //Scroll listener
+//        var catalogueListAdapter = CatalogueListAdapter(this)
+        var layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+
+        binding.catalagueContentRv.adapter = catalogueListAdapter
+        binding.catalagueContentRv.layoutManager = layoutManager
+        binding.catalagueContentRv.addOnScrollListener(getScrollableListener(layoutManager))
+        binding.catalogueNoResults.text = "TEST"
+
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //Scroll listener
-        var layoutManager: LinearLayoutManager = LinearLayoutManager(
-            requireContext(),
-            RecyclerView.VERTICAL,
-            false
-        )
 
-        binding.catalagueContentRv.adapter = catalogueListAdapter
-        binding.catalagueContentRv.layoutManager = layoutManager
-        binding.catalagueContentRv.addOnScrollListener(getScrollableListener(layoutManager))
+
+//        var layoutManager: LinearLayoutManager = LinearLayoutManager(
+//            requireContext(),
+//            RecyclerView.VERTICAL,
+//            false
+//        )
+        var layoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+
+//        binding.catalagueContentRv.adapter = catalogueListAdapter
+//        binding.catalagueContentRv.layoutManager = layoutManager
+//        binding.catalagueContentRv.addOnScrollListener(getScrollableListener(layoutManager))
 
         catalogueViewModel.catalogueDataIndex.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                com.buscatumoto.data.remote.api.Result.Status.SUCCESS -> {
+                Result.Status.SUCCESS -> {
 //                    binding.progressBar.hide()
 //                    result.data?.let { bindView(binding, it) }
                     isLoading = false
-                    //TO REMOVE by calling adapter directlye
+                    //TO REMOVE by calling adapter directly
 //                    Toast.makeText(requireContext(), "TotalElements: " +
 //                            "${TotalElementsObject.totalElements}", Toast.LENGTH_LONG).show()
                     Toast.makeText(requireContext(), "Total pages: " +
@@ -115,10 +123,10 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
                         catalogueListAdapter.addItems(list)
                     }
                 }
-                com.buscatumoto.data.remote.api.Result.Status.LOADING -> {
+                Result.Status.LOADING -> {
 //                    binding.progressBar.show()
                 }
-                com.buscatumoto.data.remote.api.Result.Status.ERROR -> {
+                Result.Status.ERROR -> {
 //                    binding.progressBar.hide()
                     Snackbar.make(binding.root, it.message!!, Snackbar.LENGTH_LONG).show()
                 }
@@ -126,7 +134,7 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
         })
 
         catalogueViewModel.isLastPageLiveData.observe(viewLifecycleOwner, Observer {
-            result ->
+                result ->
             isLastPage = true
         })
     }
@@ -160,17 +168,17 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
     private fun getScrollableListener(layoutManager: LinearLayoutManager): RecyclerView.OnScrollListener {
 
         return object: PaginationListener(layoutManager) {
-                override fun loadMoreItems() {
-                    isLoading = true
-                    catalogueViewModel.loadMoreItemsEvent()
-                }
-                override fun isLastPage(): Boolean {
-                    return isLastPage
-                }
-                override fun isLoading(): Boolean {
-                    return isLoading
-                }
+            override fun loadMoreItems() {
+                isLoading = true
+                catalogueViewModel.loadMoreItemsEvent()
             }
+            override fun isLastPage(): Boolean {
+                return isLastPage
+            }
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+        }
     }
 
     override fun onItemClick(id: String) {

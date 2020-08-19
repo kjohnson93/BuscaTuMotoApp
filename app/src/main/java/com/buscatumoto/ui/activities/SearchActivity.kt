@@ -93,7 +93,7 @@ class SearchActivity : LocalizationActivity(),
         navigationView = findViewById<NavigationView>(R.id.nav_view)
 
         val appBarConfiguration =
-            AppBarConfiguration(setOf(R.id.splashFragment, R.id.containerMainFragment, R.id.catalogueFragmentNew,
+            AppBarConfiguration(setOf(R.id.splashFragment, R.id.containerMainFragment, R.id.catalogueFragment,
                 R.id.motoDetailHostFragment), drawerLayout)
         navigationView.setupWithNavController(navController)
         mainToolbar.setupWithNavController(navController, appBarConfiguration)
@@ -198,7 +198,7 @@ class SearchActivity : LocalizationActivity(),
 
     override fun navigateToNext(event: Int, extras: Bundle?) {
         hideError()
-        navController.navigate(R.id.catalogueFragmentNew)
+        navController.navigate(R.id.catalogueFragment)
     }
 
     private fun showError(@StringRes errorMessage: Int) {
@@ -214,11 +214,11 @@ class SearchActivity : LocalizationActivity(),
 
     override fun onBackPressed() {
         when (navController.currentBackStackEntry?.destination?.id) {
-            R.id.catalogueFragmentNew -> {
+            R.id.catalogueFragment -> {
                 navController.popBackStack(R.id.containerMainFragment, false)
             }
             R.id.motoDetailHostFragment -> {
-                navController.popBackStack(R.id.catalogueFragmentNew, false)
+                navController.popBackStack(R.id.catalogueFragment, false)
             }
             else -> {
                 super.onBackPressed()

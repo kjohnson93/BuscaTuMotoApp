@@ -50,7 +50,7 @@ class FilterFragment: Fragment(), Injectable {
         super.onViewCreated(view, savedInstanceState)
 
         binding.navigationResultBtn.setOnClickListener {
-            findNavController().navigate(R.id.catalogueFragmentNew)
+            findNavController().navigate(R.id.catalogueFragment)
         }
 
         /**
