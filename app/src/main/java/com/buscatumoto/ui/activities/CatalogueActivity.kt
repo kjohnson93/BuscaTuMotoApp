@@ -48,7 +48,6 @@ class CatalogueActivity : AppCompatActivity(), HasAndroidInjector, ScreenNavigat
         catalogueViewModel.screenNavigator = this
         binding.viewModel = catalogueViewModel
         binding.lifecycleOwner = this
-        catalogueViewModel.lifecycleOwner = this
 
         //Subscribe for error observable
         catalogueViewModel.getErrorMessage().observe(this, Observer { errorMessage ->

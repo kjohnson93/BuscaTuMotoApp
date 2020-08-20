@@ -29,3 +29,14 @@ fun <T, A> resultLiveData(databaseQuery: () -> LiveData<T>,
             emitSource(source)
         }
     }
+
+fun <A> resultLiveDataNetwork(networkCall: suspend () -> Result<A>): LiveData<Result<A>> =
+    liveData(Dispatchers.IO) {
+        emit(Result.loading<A>())
+        val responseStatus = networkCall.invoke()
+        if (responseStatus.status == Result.Status.SUCCESS) {
+            emit(Result.success(responseStatus.data!!))
+        } else if (responseStatus.status == Result.Status.ERROR) {
+            emit(Result.error<A>(responseStatus.message!!))
+        }
+    }

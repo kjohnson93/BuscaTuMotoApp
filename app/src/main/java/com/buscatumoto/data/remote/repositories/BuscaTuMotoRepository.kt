@@ -277,27 +277,15 @@ class BuscaTuMotoRepository @Inject constructor(
                                    weightTop: Double? = null,
                                    year: Int? = null,
                                    license: String? = null): Result<MotoResponse> {
-        motoDao.delete()
-
         return if (search != null) {
-            val response = buscaTuMotoDataSource.fetchCatalogueDataSearch(search, page)
-            response.data?.let {
-                TotalElementsObject.totalElements = it.totalElements
-                TotalElementsObject.totalPages = it.totalPages
-            }
-            response
+            buscaTuMotoDataSource.fetchCatalogueDataSearch(search, page)
         } else {
-            val response = buscaTuMotoDataSource.fetchCatalogueDataFilter(
+            buscaTuMotoDataSource.fetchCatalogueDataFilter(
                 brand, model, bikeType,
                 priceBottom, priceTop, powerBottom, powerTop,
                 displacementBottom, displacementTop, weightBottom,
                 weightTop, year, license, page
             )
-            response.data?.let {
-                TotalElementsObject.totalElements = it.totalElements
-                TotalElementsObject.totalPages = it.totalPages
-            }
-            response
         }
 
     }

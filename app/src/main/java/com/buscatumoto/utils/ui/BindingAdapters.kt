@@ -194,16 +194,6 @@ fun setBackground(view: ImageView, drawableObservable: MutableLiveData<Drawable>
     }
 }
 
-@BindingAdapter("refreshListener")
-fun setRefreshListener(view: SwipeRefreshLayout, viewModel: CatalogueViewModel) {
-
-    view.setOnRefreshListener(object: SwipeRefreshLayout.OnRefreshListener {
-        override fun onRefresh() {
-            Timber.d("Called on refresh")
-            viewModel.onRefresh()
-        }
-    })}
-
 /**
  * This methods set adapter and layout manager to RecyclerView.
  */

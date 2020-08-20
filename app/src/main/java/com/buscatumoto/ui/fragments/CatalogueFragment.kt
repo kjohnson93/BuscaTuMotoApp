@@ -5,7 +5,6 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -72,7 +71,6 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
         catalogueViewModel.screenNavigator = this
         binding.viewModel = catalogueViewModel
         binding.lifecycleOwner = this
-        catalogueViewModel.lifecycleOwner = this
 
         catalogueViewModel.getErrorMessage().observe(viewLifecycleOwner, Observer { errorMessage ->
             if (errorMessage != null) {
@@ -94,7 +92,9 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        catalogueViewModel.catalogueDataIndex.observe(viewLifecycleOwner, Observer {
+        binding.catalogueFragmentPbar.visibility = View.VISIBLE
+
+        catalogueViewModel.catalogueData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Result.Status.SUCCESS -> {
                     binding.catalogueFragmentPbar.visibility = View.GONE
@@ -102,23 +102,24 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
                     isLoading = false
 
                     it.data?.let { list ->
-                        if (list.isEmpty()) {
+                        if (it.data.motos.isEmpty()) {
+                            binding.catalogueNoResults.visibility = View.VISIBLE
                         } else {
 
-                            if (currentPage != PAGE_START) {
-                                catalogueListAdapter.removeLoading()
-                            }
+//                            if (currentPage != PAGE_START) {
+//                                catalogueListAdapter.removeLoading()
+//                            }
 
                             binding.catalogueNoResults.visibility = View.GONE
-                            catalogueListAdapter.addItems(list)
+                            catalogueListAdapter.addItems(it.data.motos)
                             binding.swipeRefresh.isRefreshing = false
+
                             //layoutManager = null
                         }
                     }
                 }
                 Result.Status.LOADING -> {
                     if (currentPage != PAGE_START) {
-                        catalogueListAdapter.addLoading()
                     } else {
                         //Show global loading
                         binding.catalogueFragmentPbar.visibility = View.VISIBLE
@@ -132,6 +133,51 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
             }
         })
 
+        //                motos.observe(lifecycleOwner, Observer { result ->
+//                    when(result.status) {
+//                        Result.Status.SUCCESS -> {
+//                            noResultVisibility.value = View.GONE
+//                            Timber.d("Data: ${result.data}")
+//                            motosLiveData.value = result.data
+//                            result.data?.let {
+//
+//                                noResultVisibility.value = View.GONE
+//
+////                                if (it.list.isEmpty() && catalogueListAdapter.itemCount == 0) {
+////                                    noResultVisibility.value = View.VISIBLE
+////                                }
+////
+////                                loadingVisibility.value = View.GONE
+////
+////                                if (pageIndex != PAGE_START) {
+////                                    catalogueListAdapter.removeLoading()
+////                                }
+////
+////                                catalogueListAdapter.addItems(result?.data.list)
+//                                refreshingMutable.value = false
+//                                isLoading = false
+//
+//                                layoutManager = null
+//                            }
+//                            motos.removeObservers(lifecycleOwner)
+//                        }
+//                        Result.Status.LOADING -> {
+//                            if (pageIndex != PAGE_START) {
+////                                catalogueListAdapter.addLoading()
+//                            } else {
+//                                //show global loading
+//                                loadingVisibility.value = View.VISIBLE
+//                            }
+//                        }
+//                        Result.Status.ERROR -> {
+//                            loadingVisibility.value = View.GONE
+//                            errorMessage.value = result.message
+//                            motos.removeObservers(lifecycleOwner)
+//                            layoutManager = null
+//                        }
+//                    }
+//                })
+
         catalogueViewModel.isLastPageLiveData.observe(viewLifecycleOwner, Observer {
                 result ->
             isLastPage = true
@@ -140,27 +186,6 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
         catalogueViewModel.currentPageLiveData.observe(viewLifecycleOwner, Observer {
             result ->
             this.currentPage = result
-        })
-
-        catalogueViewModel.pageLoadingLiveData.observe(viewLifecycleOwner, Observer {
-            result ->
-            if (result) {
-                if (currentPage != PAGE_START) {
-                    catalogueListAdapter.addLoading()
-                } else {
-                    //Show global loading
-                    binding.catalogueFragmentPbar.visibility = View.VISIBLE
-                }
-            }
-        })
-
-        TotalElementsObject.mutableTest.observe(viewLifecycleOwner, Observer {
-            result ->
-            if (result == 0 && !isLastPage) {
-                binding.catalogueNoResults.visibility = View.VISIBLE
-            } else {
-                binding.catalogueNoResults.visibility = View.GONE
-            }
         })
     }
 
@@ -195,7 +220,7 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
         return object: PaginationListener(layoutManager) {
             override fun loadMoreItems() {
                 isLoading = true
-                catalogueViewModel.loadMoreItemsEvent()
+                catalogueViewModel.loadMoreItems()
             }
             override fun isLastPage(): Boolean {
                 return isLastPage

@@ -35,12 +35,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include
-        android:id="@+id/catalogue_content"
-        layout="@layout/content_catalogue"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        bind:viewModel="@{viewModel}"/>
-
 </LinearLayout>
 
 </layout>

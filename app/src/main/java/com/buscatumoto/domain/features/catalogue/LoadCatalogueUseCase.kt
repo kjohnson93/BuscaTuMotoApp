@@ -2,13 +2,11 @@ package com.buscatumoto.domain.features.catalogue
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.distinctUntilChanged
-import androidx.lifecycle.map
-import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.remote.api.resultLiveData
+import com.buscatumoto.data.remote.dto.response.MotoResponse
 import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
-import com.buscatumoto.utils.data.TotalElementsObject
 import timber.log.Timber
 import java.lang.NumberFormatException
 import javax.inject.Inject
@@ -101,10 +99,10 @@ class LoadCatalogueUseCase @Inject constructor(
         },
         saveCallResult = { buscaTuMotoRepository.insertCatalogue(it.motos) }).distinctUntilChanged()
 
-    suspend fun requestCatalogueDatePage(pageIndex: Int) {
+    suspend fun requestCatalogueDatePage(pageIndex: Int): Result<MotoResponse> {
         val lastParams = buscaTuMotoRepository.getSearchParams()
 
-        val response = buscaTuMotoRepository.fetchCatalogueData(
+        return buscaTuMotoRepository.fetchCatalogueData(
             lastParams.search,
             pageIndex,
             lastParams.brand,
@@ -121,14 +119,29 @@ class LoadCatalogueUseCase @Inject constructor(
             lastParams.year?.toIntOrNull(),
             lastParams.license
         )
+    }
 
-        response.data?.let {
-            TotalElementsObject.totalElements = it.totalElements
-            TotalElementsObject.totalPages = it.totalPages
-        }
-        response.data?.motos?.let {
-            buscaTuMotoRepository.insertCatalogue(it)
-        }
+    suspend fun loadCatalogue(pageIndex: Int): Result<MotoResponse> {
+
+        val lastParams = buscaTuMotoRepository.getSearchParams()
+
+        return buscaTuMotoRepository.fetchCatalogueData(
+            lastParams.search,
+            pageIndex,
+            lastParams.brand,
+            lastParams.model,
+            lastParams.bikeType,
+            lastParams.priceMin?.toIntOrNull(),
+            lastParams.priceMax?.toIntOrNull(),
+            lastParams.powerMin?.toDoubleOrNull(),
+            lastParams.powerMax?.toDoubleOrNull(),
+            lastParams.cilMin?.toDoubleOrNull(),
+            lastParams.cilMax?.toDoubleOrNull(),
+            lastParams.weightMin?.toDoubleOrNull(),
+            lastParams.weightMax?.toDoubleOrNull(),
+            lastParams.year?.toIntOrNull(),
+            lastParams.license
+        )
     }
 
 }
