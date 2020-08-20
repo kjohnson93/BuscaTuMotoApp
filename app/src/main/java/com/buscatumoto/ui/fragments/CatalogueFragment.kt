@@ -102,8 +102,9 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
                     isLoading = false
 
                     it.data?.let { list ->
-                        if (list.isEmpty() && catalogueListAdapter.itemCount == 0) {
-                            binding.catalogueNoResults.visibility = View.VISIBLE
+                        if (list.isEmpty() && TotalElementsObject.resultNumber == 0) {
+//                            TotalElementsObject.resultNumber = -1
+//                            binding.catalogueNoResults.visibility = View.VISIBLE
                         } else {
 
                             if (currentPage != PAGE_START) {
@@ -152,6 +153,15 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
                     //Show global loading
                     binding.catalogueFragmentPbar.visibility = View.VISIBLE
                 }
+            }
+        })
+
+        TotalElementsObject.mutableTest.observe(viewLifecycleOwner, Observer {
+            result ->
+            if (result == 0) {
+                binding.catalogueNoResults.visibility = View.VISIBLE
+            } else {
+                binding.catalogueNoResults.visibility = View.GONE
             }
         })
     }

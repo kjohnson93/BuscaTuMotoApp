@@ -11,7 +11,7 @@ import com.buscatumoto.data.local.entity.MotoEntity
 interface MotoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(motos: List<MotoEntity>)
+    suspend fun insert(motos: List<MotoEntity>): List<Long>
 
     @Query("DELETE FROM moto")
 //    @Delete

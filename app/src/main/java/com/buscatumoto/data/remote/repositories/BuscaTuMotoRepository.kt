@@ -303,7 +303,8 @@ class BuscaTuMotoRepository @Inject constructor(
     }
 
     suspend fun insertCatalogue(motos: List<MotoEntity>) {
-        motoDao.insert(motos)
+        val result = motoDao.insert(motos)
+        TotalElementsObject.mutableTest.postValue(result.size)
     }
 
     suspend fun deleteMotos() {
