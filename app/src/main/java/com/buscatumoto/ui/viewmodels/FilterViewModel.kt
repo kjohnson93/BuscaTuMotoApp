@@ -72,6 +72,8 @@ class FilterViewModel @Inject constructor(
     val licenseSelectedMutable = MutableLiveData<String>()
     val navigationButtonTextMutable = MutableLiveData<String>()
 
+    val mutableNavigate = MutableLiveData<Boolean>()
+
     //Utils
     private lateinit var lastBrandSelected: String
 
@@ -686,6 +688,16 @@ class FilterViewModel @Inject constructor(
                 navigationButtonVisibility.value = View.GONE
                 errorMutable.value =
                     RetryErrorModel(R.string.build_fields_form_error, RetryErrorModel.FILTER_ERROR)
+            }
+        }
+    }
+
+    fun deleteMotoDao() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val motosGet = filterUseCase.deleteMotoDao()
+            withContext(Dispatchers.Main) {
+                val result = motosGet
+                mutableNavigate.value = true
             }
         }
     }

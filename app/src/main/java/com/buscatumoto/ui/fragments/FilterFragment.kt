@@ -50,7 +50,7 @@ class FilterFragment: Fragment(), Injectable {
         super.onViewCreated(view, savedInstanceState)
 
         binding.navigationResultBtn.setOnClickListener {
-            findNavController().navigate(R.id.catalogueFragment)
+            viewModel.deleteMotoDao()
         }
 
         /**
@@ -198,6 +198,13 @@ class FilterFragment: Fragment(), Injectable {
                 val showListText = requireContext().resources.
                 getString(R.string.filter_btn_navigation).format(result)
                 binding.navigationResultBtn.text = showListText
+            }
+        })
+
+        viewModel.mutableNavigate.observe(viewLifecycleOwner, Observer {
+            result ->
+            if (result) {
+                findNavController().navigate(R.id.catalogueFragment)
             }
         })
 

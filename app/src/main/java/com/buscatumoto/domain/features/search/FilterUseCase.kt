@@ -3,6 +3,7 @@ package com.buscatumoto.domain.features.search
 import androidx.lifecycle.LiveData
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
+import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.remote.dto.response.MotoResponse
 import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
@@ -130,6 +131,10 @@ class FilterUseCase @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRe
         return buscaTuMotoRepository.filterNoLiveData(brandForm, modelForm, bikeTypeForm, priceBottomForm, priceTopForm,
             powerBottomForm, powerTopForm, displacementBottomForm, displacementTopForm, weightBottomForm,
             weightTopForm, yearForm, license, pageIndex)
+    }
+
+    suspend fun deleteMotoDao(): List<MotoEntity> {
+        return buscaTuMotoRepository.deleteMotoDao()
     }
 
 }

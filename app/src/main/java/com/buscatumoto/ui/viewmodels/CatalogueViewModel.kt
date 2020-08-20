@@ -36,7 +36,6 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
 
     private val appContext: Context = BuscaTuMotoApplication.getInstance().applicationContext
 
-    val loadingVisibility = MutableLiveData<Int>()
     val noResultVisibility = MutableLiveData<Int>()
 
     //reference to adapter
@@ -82,63 +81,6 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     init {
         //Always loads first page of moto search/filter
 //        loadCatalogue(0)
-    }
-
-    private fun loadCatalogue(pageIndex: Int?) {
-        Timber.d("pageIndex: $pageIndex")
-        viewModelScope.launch(Dispatchers.IO) {
-            val motos = loadCatalogueUseCase.execute(pageIndex)
-
-            //Initial no resu'lt visibility.
-            noResultVisibility.postValue(View.GONE)
-
-            withContext(Dispatchers.Main) {
-                motos.observe(lifecycleOwner, Observer { result ->
-                    when(result.status) {
-                        Result.Status.SUCCESS -> {
-                            noResultVisibility.value = View.GONE
-                            Timber.d("Data: ${result.data}")
-                            motosLiveData.value = result.data
-                            result.data?.let {
-
-                                noResultVisibility.value = View.GONE
-
-//                                if (it.list.isEmpty() && catalogueListAdapter.itemCount == 0) {
-//                                    noResultVisibility.value = View.VISIBLE
-//                                }
-//
-//                                loadingVisibility.value = View.GONE
-//
-//                                if (pageIndex != PAGE_START) {
-//                                    catalogueListAdapter.removeLoading()
-//                                }
-//
-//                                catalogueListAdapter.addItems(result?.data.list)
-                                refreshingMutable.value = false
-                                isLoading = false
-
-                                layoutManager = null
-                            }
-                            motos.removeObservers(lifecycleOwner)
-                        }
-                        Result.Status.LOADING -> {
-                            if (pageIndex != PAGE_START) {
-//                                catalogueListAdapter.addLoading()
-                            } else {
-                                //show global loading
-                                loadingVisibility.value = View.VISIBLE
-                            }
-                        }
-                        Result.Status.ERROR -> {
-                            loadingVisibility.value = View.GONE
-                            errorMessage.value = result.message
-                            motos.removeObservers(lifecycleOwner)
-                            layoutManager = null
-                        }
-                    }
-                })
-            }
-        }
     }
 
     override fun onItemClick(id: String) {

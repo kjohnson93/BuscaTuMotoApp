@@ -102,9 +102,7 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
                     isLoading = false
 
                     it.data?.let { list ->
-                        if (list.isEmpty() && TotalElementsObject.resultNumber == 0) {
-//                            TotalElementsObject.resultNumber = -1
-//                            binding.catalogueNoResults.visibility = View.VISIBLE
+                        if (list.isEmpty()) {
                         } else {
 
                             if (currentPage != PAGE_START) {
@@ -158,7 +156,7 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
 
         TotalElementsObject.mutableTest.observe(viewLifecycleOwner, Observer {
             result ->
-            if (result == 0) {
+            if (result == 0 && !isLastPage) {
                 binding.catalogueNoResults.visibility = View.VISIBLE
             } else {
                 binding.catalogueNoResults.visibility = View.GONE

@@ -307,8 +307,9 @@ class BuscaTuMotoRepository @Inject constructor(
         TotalElementsObject.mutableTest.postValue(result.size)
     }
 
-    suspend fun deleteMotos() {
+    suspend fun deleteMotoDao(): List<MotoEntity> {
         motoDao.delete()
+        return motoDao.getMotos()
     }
 
 }
