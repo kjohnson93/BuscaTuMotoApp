@@ -106,9 +106,9 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
                             binding.catalogueNoResults.visibility = View.VISIBLE
                         } else {
 
-//                            if (currentPage != PAGE_START) {
-//                                catalogueListAdapter.removeLoading()
-//                            }
+                            if (currentPage != PAGE_START) {
+                                catalogueListAdapter.removeLoading()
+                            }
 
                             binding.catalogueNoResults.visibility = View.GONE
                             catalogueListAdapter.addItems(it.data.motos)
@@ -120,6 +120,7 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
                 }
                 Result.Status.LOADING -> {
                     if (currentPage != PAGE_START) {
+                        catalogueListAdapter.addLoading()
                     } else {
                         //Show global loading
                         binding.catalogueFragmentPbar.visibility = View.VISIBLE

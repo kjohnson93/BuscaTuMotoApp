@@ -67,10 +67,10 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
      * Loads next page including next 20 items
      */
     fun loadMoreItems() {
-        catalogueData.value = Result.loading(null)
             currentPage++
             _currentPageMutable.value = currentPage
-            viewModelScope.launch(Dispatchers.IO) {
+        catalogueData.value = Result.loading(null)
+        viewModelScope.launch(Dispatchers.IO) {
                 val motoResponse = loadCatalogueUseCase.requestCatalogueDatePage(currentPage)
                 withContext(Dispatchers.Main) {
                     motoResponse.data?.totalPages?.let {
