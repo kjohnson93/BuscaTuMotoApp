@@ -17,11 +17,6 @@
         android:hardwareAccelerated="true"
         android:largeHeap="true"
         android:supportsRtl="true">
-        <activity android:name=".ui.activities.MotoDetailActivity"
-            android:label="MotoDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNoActionBar"
-            ></activity>
         <activity
             android:name=".ui.activities.CatalogueActivity"
             android:label="@string/title_activity_catalogue"

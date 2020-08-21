@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentHostMotoDetailBinding
@@ -21,17 +22,15 @@ import javax.inject.Inject
 
 class MotoDetailHostFragment: Fragment(), Injectable {
 
-    companion object {
-        fun newInstance(): MotoDetailHostFragment {
-            return MotoDetailHostFragment()
-        }
-    }
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private lateinit var motoDetailViewModel: MotoDetailViewModel
+    private lateinit var viewModel: MotoDetailViewModel
     private lateinit var binding: FragmentHostMotoDetailBinding
+    private lateinit var detailPagerAdapter: DetailViewPagerAdapter
+
+    private var id: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,34 +47,43 @@ class MotoDetailHostFragment: Fragment(), Injectable {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_host_moto_detail, container, false)
 
-        motoDetailViewModel =  ViewModelProviders.of(this, viewModelFactory).get(MotoDetailViewModel::class.java)
-        motoDetailViewModel.lifeCycleOwner = this
-        motoDetailViewModel.tempLifeCyclerOwner = this
-        binding.viewModel = motoDetailViewModel
+        viewModel =  ViewModelProviders.of(this, viewModelFactory).get(MotoDetailViewModel::class.java)
+        binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
         //Assign id from UI -> not good but necessary to avoid creating an additional Dao.
        arguments?.getString(MOTO_ID_KEY)?.let {
+            id = it
             executeUiOp(CatalogueUiOp.LoadDetailActivity(it))
         }
-
-//        disableHeaderScroll()
-//        binding.detailContentToolbar.setCollapsible(false)
 
         return binding.root
     }
 
-    fun bindAdapter(detailViewPagerAdapter: DetailViewPagerAdapter) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.motoDetailUiLiveData.observe(viewLifecycleOwner, Observer {
+            result ->
+
+            detailPagerAdapter = DetailViewPagerAdapter(result, id, childFragmentManager)
+            detailPagerAdapter.addFragment(DetailContentFragment(), "Contenido")
+            detailPagerAdapter.addFragment(DetailRelatedFragment(), "Relacionados")
+            this.bindAdapter(detailPagerAdapter)
+        })
+    }
+
+    private fun executeUiOp(uiOp: CatalogueUiOp) {
+        when (uiOp) {
+            is CatalogueUiOp.LoadDetailActivity -> {
+                viewModel.loadMotoDetail(uiOp.id, requireActivity().supportFragmentManager)
+            }
+        }
+    }
+
+    private fun bindAdapter(detailViewPagerAdapter: DetailViewPagerAdapter) {
         binding.detailViewPager.adapter = detailViewPagerAdapter
         val dotsIndicator = binding.wormDotsIndicator
         dotsIndicator.setViewPager(binding.detailViewPager)
-    }
-
-    fun executeUiOp(uiOp: CatalogueUiOp) {
-        when (uiOp) {
-            is CatalogueUiOp.LoadDetailActivity -> {
-                motoDetailViewModel.loadMotoDetail(uiOp.id, requireActivity().supportFragmentManager)
-            }
-        }
     }
 }
