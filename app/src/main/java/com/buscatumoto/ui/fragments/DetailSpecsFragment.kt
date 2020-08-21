@@ -15,7 +15,6 @@ import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.adapters.DetailSpecsRecyclerAdapter
 import com.buscatumoto.ui.models.MotoDetailUi
 import com.buscatumoto.ui.viewmodels.DetailSpecsViewModel
-import com.buscatumoto.utils.global.MOTO_DETAIL_UI_KEY
 import com.buscatumoto.utils.global.MOTO_ID_KEY
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueUiOp
@@ -43,9 +42,6 @@ class DetailSpecsFragment: Fragment(), Injectable {
 
         arguments?.getString(MOTO_ID_KEY)?.let { id ->
             //get parcelable motodetail and pass it to viewModel
-            arguments?.getParcelable<MotoDetailUi>(MOTO_DETAIL_UI_KEY)?.let { motoDetailUid ->
-                executeUiOp(CatalogueUiOp.LoadFragmentPageContent(id, motoDetailUid))
-            }
         }
         binding.viewModel = viewModel
         binding.lifecycleOwner = this

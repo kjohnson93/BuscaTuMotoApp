@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.buscatumoto.ui.models.MotoDetailUi
-import com.buscatumoto.utils.global.MOTO_DETAIL_UI_KEY
 import com.buscatumoto.utils.global.MOTO_ID_KEY
 
 
@@ -17,14 +16,12 @@ class DetailViewPagerAdapter(private val detailUi: MotoDetailUi?, private val id
     private var fragmentTitleList : MutableList<String> = ArrayList()
 
     override fun getPageTitle(position: Int): CharSequence? {
-
         return fragmentTitleList[position]
     }
 
     override fun getItem(position: Int): Fragment {
         val bundle = Bundle()
         bundle.putString(MOTO_ID_KEY, idMoto)
-        bundle.putParcelable(MOTO_DETAIL_UI_KEY, detailUi)
 
         val fragment = fragmentList[position]
         fragment.arguments = bundle
