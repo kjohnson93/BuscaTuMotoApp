@@ -8,6 +8,7 @@ import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
+import com.buscatumoto.domain.features.search.FilterUseCase
 import com.buscatumoto.ui.adapters.SearchBrandsRecyclerAdapter
 import com.buscatumoto.ui.fragments.SearchFragment
 import com.buscatumoto.ui.models.BrandRecyclerUiModel
@@ -20,7 +21,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 
-class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRepository): BaseViewModel(), SearchBrandsRecyclerAdapter.BrandItemClickListener {
+class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRepository,
+    val filterUseCase: FilterUseCase): BaseViewModel(), SearchBrandsRecyclerAdapter.BrandItemClickListener {
 
     companion object {
         const val PAGE_START_INDEX = 0
@@ -92,12 +94,22 @@ class FrontPageViewModel @Inject constructor(val buscaTuMotoRepository: BuscaTuM
         searchBrandsAdapter.updateBrandHighLights(modifiedList as List<BrandRecyclerUiModel>)
     }
 
+    /**
+     * Gets motorcycles based on filter values and obtains them from Dao.
+     * Dao source means that response is always ruled by DAO Single Source Of Truth (SSOT)
+     * Api network call just updates a DAO but response is only retrieved from DAO.
+     */
     fun navigateByFilter(brand: String) {
 
         viewModelScope.launch(Dispatchers.IO) {
 
             //filter response
-            val liveData = buscaTuMotoRepository.filter(brand,
+//            val liveData = buscaTuMotoRepository.getMotosFilter(brand,
+//                null, null, null,
+//                null, null, null,
+//                null, null,
+//                null, null, null, null, PAGE_START_INDEX)
+            val liveData = filterUseCase.getMotosFilterSource(brand,
                 null, null, null,
                 null, null, null,
                 null, null,

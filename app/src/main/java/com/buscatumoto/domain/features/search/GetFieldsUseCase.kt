@@ -13,8 +13,15 @@ import javax.inject.Inject
 class GetFieldsUseCase @Inject constructor(private val searchRepository: BuscaTuMotoRepository) {
 
 
-    suspend fun execute(): LiveData<Result<FieldsEntity>> {
-        return searchRepository.getFieldsEmit()
+    /**
+     * Gets the field values from a DAO data source.
+     * A livedata is returned because response is ruled by DAO Single Source Of Truth (SSOT)
+     * Source is encapsulated in [Result] decorator
+     * In the process. An Api network call is made to just update its DAO
+     * but response is only retrieved from DAO source.
+     */
+    suspend fun getFieldsSource(): LiveData<Result<FieldsEntity>> {
+        return searchRepository.getFields()
     }
 
     //This method modifies data coming from API because we need to make adjustments to list data.

@@ -16,10 +16,13 @@ class LoadCatalogueUseCase @Inject constructor(
 ) {
 
     /**
-     * This methods ask a Dao for the last search command executed on the app. So it can
-     * request more pages using the same command and the same parameters.
+     * Gets the motorcycles values based on filter values and obtains them from a DAO data source.
+     * A LiveData is returned because response is ruled by DAO Single Source Of Truth (SSOT)
+     * Source is encapsulated in [Result] decorator
+     * In the process. An Api network call is made to just update its DAO
+     * but response is only retrieved from DAO source.
      */
-    suspend fun execute(pageIndex: Int?): LiveData<Result<PagedListMotoEntity>> {
+    suspend fun getMotosFilterSource(pageIndex: Int?): LiveData<Result<PagedListMotoEntity>> {
 
         val lastParams = buscaTuMotoRepository.getSearchParams()
 
@@ -38,7 +41,7 @@ class LoadCatalogueUseCase @Inject constructor(
         var pageIndexForm: Int? = null
 
         if (lastParams.search != null) {
-            return buscaTuMotoRepository.search(lastParams.search, pageIndex)
+            return buscaTuMotoRepository.getMotosSearch(lastParams.search, pageIndex)
         } else {
             try {
                 priceBottomForm = lastParams.priceMin?.toInt()
@@ -55,7 +58,7 @@ class LoadCatalogueUseCase @Inject constructor(
             } catch (exception: NumberFormatException) {
 
             }
-            return buscaTuMotoRepository.filter(
+            return buscaTuMotoRepository.getMotosFilter(
                 lastParams.brand,
                 lastParams.model,
                 lastParams.bikeType,
@@ -73,31 +76,6 @@ class LoadCatalogueUseCase @Inject constructor(
             )
         }
     }
-
-    fun observeCatalogueData(pageIndex: Int) = resultLiveData(
-        databaseQuery = { buscaTuMotoRepository.getDaoCatalogue() },
-        networkCall = {
-            val lastParams = buscaTuMotoRepository.getSearchParams()
-
-            buscaTuMotoRepository.fetchCatalogueData(
-                lastParams.search,
-                pageIndex,
-                lastParams.brand,
-                lastParams.model,
-                lastParams.bikeType,
-                lastParams.priceMin?.toIntOrNull(),
-                lastParams.priceMax?.toIntOrNull(),
-                lastParams.powerMin?.toDoubleOrNull(),
-                lastParams.powerMax?.toDoubleOrNull(),
-                lastParams.cilMin?.toDoubleOrNull(),
-                lastParams.cilMax?.toDoubleOrNull(),
-                lastParams.weightMin?.toDoubleOrNull(),
-                lastParams.weightMax?.toDoubleOrNull(),
-                lastParams.year?.toIntOrNull(),
-                lastParams.license
-            )
-        },
-        saveCallResult = { buscaTuMotoRepository.insertCatalogue(it.motos) }).distinctUntilChanged()
 
     suspend fun requestCatalogueDatePage(pageIndex: Int): Result<MotoResponse> {
         val lastParams = buscaTuMotoRepository.getSearchParams()

@@ -12,7 +12,7 @@ import com.buscatumoto.data.local.entity.SearchEntity
 interface SearchDao {
 
     @Query("SELECT * FROM search ORDER BY id DESC")
-    fun getSearchParams(): SearchEntity
+    fun getSearchParamsDao(): SearchEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(searchParams: SearchEntity)

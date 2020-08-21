@@ -13,7 +13,14 @@ import javax.inject.Inject
 
 class FilterUseCase @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRepository) {
 
-    suspend fun execute(brand: String? = null,
+    /**
+     * Gets the motorcycles values based on filter values and obtains them from a DAO data source.
+     * A LiveData is returned because response is ruled by DAO Single Source Of Truth (SSOT)
+     * Source is encapsulated in [Result] decorator
+     * In the process. An Api network call is made to just update its DAO
+     * but response is only retrieved from DAO source.
+     */
+    suspend fun getMotosFilterSource(brand: String? = null,
                         model: String? = null,
                         bikeType: String? = null,
                         priceBottom: String? = null,
@@ -68,25 +75,32 @@ class FilterUseCase @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRe
         } catch (exception: NumberFormatException) {
         }
 
-        return buscaTuMotoRepository.filter(brandForm, modelForm, bikeTypeForm, priceBottomForm, priceTopForm,
+        return buscaTuMotoRepository.getMotosFilter(brandForm, modelForm, bikeTypeForm, priceBottomForm, priceTopForm,
             powerBottomForm, powerTopForm, displacementBottomForm, displacementTopForm, weightBottomForm,
             weightTopForm, yearForm, license, pageIndex)
     }
 
-    suspend fun executeNoLiveData(brand: String? = null,
-                        model: String? = null,
-                        bikeType: String? = null,
-                        priceBottom: String? = null,
-                        priceTop: String? = null,
-                        powerBottom: String? = null,
-                        powerTop: String? = null,
-                        displacementBottom: String? = null,
-                        displacementTop: String? = null,
-                        weightBottom: String? = null,
-                        weightTop: String? = null,
-                        year: String? = null,
-                        license: String? = null,
-                        pageIndex: Int? = null): MotoResponse? {
+    /**
+     * Asks repository for motorcycles based on filter values.
+     * Response means that values are being collected directly by an
+     * Api network call which is a API Source.
+     * @return [MotoResponse]: Data holder for handling response from server.
+     * It contains pagination data
+     */
+    suspend fun getMotosFilterResponse(brand: String? = null,
+                                       model: String? = null,
+                                       bikeType: String? = null,
+                                       priceBottom: String? = null,
+                                       priceTop: String? = null,
+                                       powerBottom: String? = null,
+                                       powerTop: String? = null,
+                                       displacementBottom: String? = null,
+                                       displacementTop: String? = null,
+                                       weightBottom: String? = null,
+                                       weightTop: String? = null,
+                                       year: String? = null,
+                                       license: String? = null,
+                                       pageIndex: Int? = null): MotoResponse? {
 
         var brandForm: String? = null
         var modelForm: String? = null
@@ -128,7 +142,7 @@ class FilterUseCase @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRe
         } catch (exception: NumberFormatException) {
         }
 
-        return buscaTuMotoRepository.filterNoLiveData(brandForm, modelForm, bikeTypeForm, priceBottomForm, priceTopForm,
+        return buscaTuMotoRepository.getMotosFilterResponse(brandForm, modelForm, bikeTypeForm, priceBottomForm, priceTopForm,
             powerBottomForm, powerTopForm, displacementBottomForm, displacementTopForm, weightBottomForm,
             weightTopForm, yearForm, license, pageIndex)
     }

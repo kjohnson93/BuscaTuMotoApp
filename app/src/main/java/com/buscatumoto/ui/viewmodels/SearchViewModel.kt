@@ -13,6 +13,7 @@ import com.buscatumoto.R
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
+import com.buscatumoto.domain.features.search.SearchUseCase
 import com.buscatumoto.ui.activities.SearchActivity
 import com.buscatumoto.ui.fragments.SearchFragment
 import com.buscatumoto.ui.navigation.ScreenNavigator
@@ -25,7 +26,8 @@ import java.lang.StringBuilder
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor
-    (private val buscaTuMotoRepository: BuscaTuMotoRepository) : BaseViewModel() {
+    (private val buscaTuMotoRepository: BuscaTuMotoRepository,
+    private val searchUseCase: SearchUseCase) : BaseViewModel() {
 
     //FIXME this line should be deleted and search a way that this vm does not know a view
     //Should communicate using only observables
@@ -62,7 +64,7 @@ class SearchViewModel @Inject constructor
 
 
         viewModelScope.launch(Dispatchers.IO) {
-            buscaTuMotoRepository.insertSearch(search)
+            searchUseCase.insertSearch(search)
             withContext(Dispatchers.Main) {
                 screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE, null)
             }

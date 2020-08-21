@@ -85,7 +85,7 @@ class FilterViewModel @Inject constructor(
                 loadFilterData()
             }
             RetryErrorModel.FILTER_ERROR -> {
-                filterNoLiveData(
+                filter(
                     brandSelectedMutable.value,
                     bikeTypeSelectedMutable.value,
                     minPriceSelectedMutable.value,
@@ -229,7 +229,7 @@ class FilterViewModel @Inject constructor(
 
     private fun loadFilterData() {
         viewModelScope.launch(Dispatchers.IO) {
-            val fieldLiveData = getFieldsUseCase.execute()
+            val fieldLiveData = getFieldsUseCase.getFieldsSource()
 
             withContext(Dispatchers.Main) {
                 fieldLiveData.observeForever(Observer { result ->
@@ -297,7 +297,7 @@ class FilterViewModel @Inject constructor(
     }
 
     private fun filterWithMutablesValue() {
-        filterNoLiveData(
+        filter(
             brandSelectedMutable.value,
             null,
             bikeTypeSelectedMutable.value,
@@ -642,7 +642,7 @@ class FilterViewModel @Inject constructor(
             RetryErrorModel(R.string.load_fields_error, RetryErrorModel.FIELDS_ERROR)
     }
 
-    fun filterNoLiveData(
+    fun filter(
         brand: String? = null,
         model: String? = null,
         bikeType: String? = null,
@@ -660,7 +660,7 @@ class FilterViewModel @Inject constructor(
         loadingVisibility.value = View.VISIBLE
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val motoResponse = filterUseCase.executeNoLiveData(
+                val motoResponse = filterUseCase.getMotosFilterResponse(
                     brand, model,
                     bikeType,
                     priceBottom,

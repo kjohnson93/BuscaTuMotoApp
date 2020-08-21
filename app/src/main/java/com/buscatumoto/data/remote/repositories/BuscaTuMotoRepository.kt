@@ -23,7 +23,12 @@ class BuscaTuMotoRepository @Inject constructor(
     private val searchDao: SearchDao
 ) {
 
-    suspend fun getFieldsEmit() = liveData<Result<FieldsEntity>> {
+    /**
+     * Gets the fields values from a Dao Source
+     * Dao source means that response is always ruled by DAO Single Source Of Truth (SSOT)
+     * Api network call just updates a DAO but response is only retrieved from DAO.
+     */
+    suspend fun getFields() = liveData<Result<FieldsEntity>> {
 
         //Not using emitSource because it's not getting observed by subscribers for some reason
         emit(Result.loading())
@@ -52,6 +57,11 @@ class BuscaTuMotoRepository @Inject constructor(
         }
     }
 
+    /**
+     * Gets models of a specific brand and obtains them from Dao Source.
+     * Dao source means that response is always ruled by DAO Single Source Of Truth (SSOT)
+     * Api network call just updates a DAO but response is only retrieved from DAO.
+     */
     suspend fun getModelsByBrand(brand: String) = liveData<Result<FieldsEntity>> {
 
         //Not using emitSource because it's not getting observed by subscribers for some reason
@@ -83,13 +93,12 @@ class BuscaTuMotoRepository @Inject constructor(
         }
     }
 
-    suspend fun getMotos() = liveData<Result<List<MotoEntity>>> {
-        val disposable = emitSource(motoDao.getMotoLiveData().map {
-            Result.success(it)
-        })
-    }
-
-    suspend fun filter(
+    /**
+     * Gets motorcycles based on filter values and obtains them from Dao Source.
+     * Dao source means that response is always ruled by DAO Single Source Of Truth (SSOT)
+     * Api network call just updates a DAO but response is only retrieved from DAO.
+     */
+    suspend fun getMotosFilter(
         brand: String? = null,
         model: String? = null,
         bikeType: String? = null,
@@ -158,7 +167,12 @@ class BuscaTuMotoRepository @Inject constructor(
         }
     }
 
-    suspend fun filterNoLiveData(
+    /**
+     * Gets motorcycles based on filter values from API.
+     * Response means that values are being collected directly by an
+     * Api network call which is a API Source.
+     */
+    suspend fun getMotosFilterResponse(
         brand: String? = null,
         model: String? = null,
         bikeType: String? = null,
@@ -204,6 +218,9 @@ class BuscaTuMotoRepository @Inject constructor(
         return motoResponse
     }
 
+    /**
+     * Inserts last search made in a DAO so it can be stored locally and used later.
+     */
     suspend fun insertSearch(search: String) {
         searchDao.delete()
         searchDao.insert(
@@ -215,7 +232,13 @@ class BuscaTuMotoRepository @Inject constructor(
         )
     }
 
-    suspend fun search(search: String, pageIndex : Int?) = liveData<Result<PagedListMotoEntity>> {
+    /**
+     * Gets motorcycles based on search query and obtains them from Dao.
+     * Dao source means that response is always ruled by DAO Single Source Of Truth (SSOT)
+     * Api network call just updates a DAO but response is only retrieved from DAO.
+     */
+    suspend fun getMotosSearch(search: String, pageIndex : Int?)
+            = liveData<Result<PagedListMotoEntity>> {
 
         //Not using emitSource because it's not getting observed by subscribers for some reason
         emit(Result.loading())
@@ -253,15 +276,13 @@ class BuscaTuMotoRepository @Inject constructor(
                 Result.error("An IO error has ocurred on search data fetch", null)
             })
         }
-
-
-        //save and return
     }
 
-    fun getSearchParams() = searchDao.getSearchParams()
+    /**
+     * Gets last search query from Dao
+     */
+    fun getSearchParams() = searchDao.getSearchParamsDao()
 
-
-    fun getDaoCatalogue() = motoDao.getMotoLiveData()
     suspend fun fetchCatalogueData(search: String?,
                                    page: Int,
                                    brand: String? = null,
@@ -288,11 +309,6 @@ class BuscaTuMotoRepository @Inject constructor(
             )
         }
 
-    }
-
-    suspend fun insertCatalogue(motos: List<MotoEntity>) {
-        val result = motoDao.insert(motos)
-        TotalElementsObject.mutableTest.postValue(result.size)
     }
 
     suspend fun deleteMotoDao(): List<MotoEntity> {
