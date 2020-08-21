@@ -146,9 +146,4 @@ class FilterUseCase @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRe
             powerBottomForm, powerTopForm, displacementBottomForm, displacementTopForm, weightBottomForm,
             weightTopForm, yearForm, license, pageIndex)
     }
-
-    suspend fun deleteMotoDao(): List<MotoEntity> {
-        return buscaTuMotoRepository.deleteMotoDao()
-    }
-
 }

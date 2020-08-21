@@ -300,10 +300,4 @@ class BuscaTuMotoRepository @Inject constructor(
             )
         )
     }
-
-    suspend fun deleteMotoDao(): List<MotoEntity> {
-        motoDao.delete()
-        return motoDao.getMotos()
-    }
-
 }

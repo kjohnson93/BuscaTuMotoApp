@@ -691,16 +691,4 @@ class FilterViewModel @Inject constructor(
             }
         }
     }
-
-    fun deleteMotoDao() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val motosGet = filterUseCase.deleteMotoDao()
-            withContext(Dispatchers.Main) {
-                val result = motosGet
-                mutableNavigate.value = true
-            }
-        }
-    }
-
-
 }
