@@ -11,7 +11,6 @@ import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.local.entity.SearchEntity
 import com.buscatumoto.data.remote.dto.response.MotoResponse
 import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
-import com.buscatumoto.utils.data.TotalElementsObject
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -68,7 +67,7 @@ class BuscaTuMotoRepository @Inject constructor(
         emit(Result.loading())
 
         try {
-            val response = buscaTuMotoDataSource.getMotos(brand)
+            val response = buscaTuMotoDataSource.getMotosByBrand(brand)
 
             if (response.status == Result.Status.SUCCESS) {
                 response.data?.let {
@@ -187,9 +186,9 @@ class BuscaTuMotoRepository @Inject constructor(
         year: Int? = null,
         license: String? = null,
         pageIndex: Int? = null
-    ): MotoResponse? {
+    ): Result<MotoResponse> {
 
-        val motoResponse = buscaTuMotoDataSource.filterNoLiveData(
+        val motoResponse = buscaTuMotoDataSource.filter(
             brand, model, bikeType,
             priceBottom, priceTop, powerBottom, powerTop, displacementBottom, displacementTop,
             weightBottom, weightTop, year, license, pageIndex
@@ -216,20 +215,6 @@ class BuscaTuMotoRepository @Inject constructor(
         )
 
         return motoResponse
-    }
-
-    /**
-     * Inserts last search made in a DAO so it can be stored locally and used later.
-     */
-    suspend fun insertSearch(search: String) {
-        searchDao.delete()
-        searchDao.insert(
-            SearchEntity(
-                1, search, null, null, null, null, null,
-                null, null, null, null,
-                null, null, null, null
-            )
-        )
     }
 
     /**
@@ -278,37 +263,42 @@ class BuscaTuMotoRepository @Inject constructor(
         }
     }
 
+    suspend fun getMotosSearchResponse(
+        search: String,
+        pageIndex: Int? = null
+    ): Result<MotoResponse> {
+
+        val motoResponse = buscaTuMotoDataSource.search(search, pageIndex)
+
+        searchDao.delete()
+        searchDao.insert(
+            SearchEntity(
+                1, search, null, null, null, null, null,
+                null, null, null, null,
+                null, null, null, null
+            )
+        )
+
+        return motoResponse
+    }
+
     /**
      * Gets last search query from Dao
      */
     fun getSearchParams() = searchDao.getSearchParamsDao()
 
-    suspend fun fetchCatalogueData(search: String?,
-                                   page: Int,
-                                   brand: String? = null,
-                                   model: String? = null,
-                                   bikeType: String? = null,
-                                   priceBottom: Int? = null,
-                                   priceTop: Int? = null,
-                                   powerBottom: Double? = null,
-                                   powerTop: Double? = null,
-                                   displacementBottom: Double? = null,
-                                   displacementTop: Double? = null,
-                                   weightBottom: Double? = null,
-                                   weightTop: Double? = null,
-                                   year: Int? = null,
-                                   license: String? = null): Result<MotoResponse> {
-        return if (search != null) {
-            buscaTuMotoDataSource.fetchCatalogueDataSearch(search, page)
-        } else {
-            buscaTuMotoDataSource.fetchCatalogueDataFilter(
-                brand, model, bikeType,
-                priceBottom, priceTop, powerBottom, powerTop,
-                displacementBottom, displacementTop, weightBottom,
-                weightTop, year, license, page
+    /**
+     * Inserts last search made in a DAO so it can be stored locally and used later.
+     */
+    suspend fun insertSearch(search: String) {
+        searchDao.delete()
+        searchDao.insert(
+            SearchEntity(
+                1, search, null, null, null, null, null,
+                null, null, null, null,
+                null, null, null, null
             )
-        }
-
+        )
     }
 
     suspend fun deleteMotoDao(): List<MotoEntity> {

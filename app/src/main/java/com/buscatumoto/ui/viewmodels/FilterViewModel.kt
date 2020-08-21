@@ -679,7 +679,7 @@ class FilterViewModel @Inject constructor(
                     loadingVisibility.value = View.GONE
                     motoResponse?.let {
                         navigationButtonVisibility.value = View.VISIBLE
-                        navigationButtonTextMutable.value = it.totalElements.toString()
+                        navigationButtonTextMutable.value = it.data?.totalElements.toString()
                     }
                 }
             } catch (exception: Exception) {

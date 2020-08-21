@@ -4,21 +4,14 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.*
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.remote.dto.response.MotoResponse
-import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
 import com.buscatumoto.domain.features.catalogue.LoadCatalogueUseCase
 import com.buscatumoto.ui.activities.CatalogueActivity
-import com.buscatumoto.ui.adapters.CatalogueListAdapter
 import com.buscatumoto.ui.navigation.ScreenNavigator
-import com.buscatumoto.utils.data.TotalElementsObject
 import com.buscatumoto.utils.global.MOTO_ID_KEY
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
-import com.buscatumoto.utils.ui.PaginationListener
 import com.buscatumoto.utils.ui.PaginationListener.Companion.PAGE_START
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -71,7 +64,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
             _currentPageMutable.value = currentPage
         catalogueData.value = Result.loading(null)
         viewModelScope.launch(Dispatchers.IO) {
-                val motoResponse = loadCatalogueUseCase.requestCatalogueDatePage(currentPage)
+                val motoResponse = loadCatalogueUseCase.getMotosCatalogue(currentPage)
                 withContext(Dispatchers.Main) {
                     motoResponse.data?.totalPages?.let {
                         if (motoResponse.data.number >= it - 1) {
@@ -93,7 +86,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
         catalogueData.value = Result.loading(null)
         Timber.d("pageIndex: $pageIndex")
         viewModelScope.launch(Dispatchers.IO) {
-            val motoResponse = loadCatalogueUseCase.loadCatalogue(pageIndex)
+            val motoResponse = loadCatalogueUseCase.getMotosCatalogue(pageIndex)
             withContext(Dispatchers.Main) {
                 catalogueData.value = motoResponse
             }

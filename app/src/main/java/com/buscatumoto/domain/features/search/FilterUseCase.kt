@@ -100,7 +100,7 @@ class FilterUseCase @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRe
                                        weightTop: String? = null,
                                        year: String? = null,
                                        license: String? = null,
-                                       pageIndex: Int? = null): MotoResponse? {
+                                       pageIndex: Int? = null): Result<MotoResponse> {
 
         var brandForm: String? = null
         var modelForm: String? = null
