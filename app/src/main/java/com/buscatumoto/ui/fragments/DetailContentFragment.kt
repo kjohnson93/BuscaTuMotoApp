@@ -36,7 +36,6 @@ class DetailContentFragment: Fragment(), Injectable {
         binding = DataBindingUtil.inflate(inflater, R.layout.detail_content_fragment, container, false)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailContentViewModel::class.java)
-        viewModel.lifeCycleOwner = this
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 

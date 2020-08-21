@@ -5,5 +5,4 @@ import com.buscatumoto.ui.fragments.DetailRelatedFragment
 import javax.inject.Inject
 
 class DetailRelatedViewModel @Inject constructor() : ViewModel() {
-    lateinit var lifeCycleOwner: DetailRelatedFragment
 }

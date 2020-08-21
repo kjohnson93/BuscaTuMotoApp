@@ -11,9 +11,6 @@ import javax.inject.Inject
 class DetailContentViewModel @Inject constructor(private val loadMotoDetailUseCase: LoadMotoDetailUseCase) :
     ViewModel() {
 
-
-    lateinit var lifeCycleOwner: DetailContentFragment
-
     var id: String = ""
 
     val modelTitleLiveData = MutableLiveData<String>()

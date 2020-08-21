@@ -30,7 +30,6 @@ class DetailRelatedFragment: Fragment(), Injectable {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.detail_related_fragment, container, false)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailRelatedViewModel::class.java)
-        viewModel.lifeCycleOwner = this
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
