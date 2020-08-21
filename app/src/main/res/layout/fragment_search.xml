@@ -31,7 +31,7 @@
 
 
                     <com.buscatumoto.ui.fragments.InfiniteRotationView
-                        android:id="@+id/FragmentSearchBrandsRV"
+                        android:id="@+id/brandsRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:visibility="gone"
@@ -40,8 +40,7 @@
                         app:layout_constraintHeight_percent="0.3"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.65"
-                        app:mutableInfiniteViewAdapter="@{viewModel.searchBrandsAdapter}" />
+                        app:layout_constraintVertical_bias="0.65" />
 
                     <ProgressBar
                         android:id="@+id/searchProgressBar"

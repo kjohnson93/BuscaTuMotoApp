@@ -146,4 +146,12 @@ class FilterUseCase @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRe
             powerBottomForm, powerTopForm, displacementBottomForm, displacementTopForm, weightBottomForm,
             weightTopForm, yearForm, license, pageIndex)
     }
+
+    /**
+     * When navigates to catalogue, Use Case stores filter value so
+     * a same search can be queried later on.
+     */
+    suspend fun navigateByBrandFilter(brand: String) {
+        buscaTuMotoRepository.insertFilter(brand)
+    }
 }

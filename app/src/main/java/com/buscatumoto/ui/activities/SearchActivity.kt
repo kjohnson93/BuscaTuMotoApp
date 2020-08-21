@@ -46,7 +46,7 @@ import kotlinx.android.synthetic.main.activity_search.*
 import javax.inject.Inject
 
 class SearchActivity : LocalizationActivity(),
-    SearchFragment.ReadyListener, HasAndroidInjector, ScreenNavigator {
+    HasAndroidInjector, ScreenNavigator {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
@@ -127,6 +127,12 @@ class SearchActivity : LocalizationActivity(),
                 setLanguage(it)
         })
 
+        searchViewModel.navigateMutable.observe(this, Observer {
+            if (it) {
+                navController.navigate(R.id.catalogueFragment)
+            }
+        })
+
         /**
          * This breaks VMMV rules because view should not command what view model should do.
          * To review and find if there's a better way to update a mutable that depends
@@ -165,27 +171,6 @@ class SearchActivity : LocalizationActivity(),
 //                }
 //
 //            })
-    }
-
-    override fun onReady() {
-//        val autoScrollDelay = 2
-//        Handler().postDelayed(Runnable {
-//            searchBarLayout!!.setExpanded(false, true)
-//
-//            val hideHeaderDelay = 0.2
-//
-//            Handler().postDelayed({
-////                searchBarLayout!!.visibility = View.GONE
-//            }, (hideHeaderDelay * 1000).toLong())
-//        }, (autoScrollDelay * 1000).toLong())
-    }
-
-    /**
-     * To be reviewed: Method to show error response from server. Handled by container. Could be handled by subview as well.
-     */
-    override fun showError(error: String?) {
-        var toast: Toast = Toast.makeText(applicationContext, error, Toast.LENGTH_LONG)
-        toast.show()
     }
 
     override fun androidInjector(): AndroidInjector<Any> {

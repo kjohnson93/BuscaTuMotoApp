@@ -300,4 +300,40 @@ class BuscaTuMotoRepository @Inject constructor(
             )
         )
     }
+
+    suspend fun insertFilter(
+        brand: String? = null,
+        model: String? = null,
+        bikeType: String? = null,
+        priceBottom: Int? = null,
+        priceTop: Int? = null,
+        powerBottom: Double? = null,
+        powerTop: Double? = null,
+        displacementBottom: Double? = null,
+        displacementTop: Double? = null,
+        weightBottom: Double? = null,
+        weightTop: Double? = null,
+        year: Int? = null,
+        license: String? = null) {
+        searchDao.insert(
+            SearchEntity(
+                1,
+                null,
+                brand,
+                model,
+                bikeType,
+                priceBottom.toString(),
+                priceTop.toString(),
+                powerBottom.toString(),
+                powerTop.toString(),
+                displacementBottom.toString(),
+                displacementTop.toString(),
+                weightBottom.toString(),
+                weightTop.toString(),
+                year.toString(),
+                license
+            )
+        )
+
+    }
 }

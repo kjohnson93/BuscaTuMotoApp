@@ -39,6 +39,7 @@ class SearchViewModel @Inject constructor
     private lateinit var lastSearch: String
     val searchTextMutable = MutableLiveData<String> ()
     val versionNameMutable = MutableLiveData<String>()
+    val navigateMutable = MutableLiveData<Boolean>()
 
     fun getErrorClickListener() : View.OnClickListener = retryErrorClickListener
     private val retryErrorClickListener = View.OnClickListener {
@@ -61,41 +62,10 @@ class SearchViewModel @Inject constructor
     }
 
     fun navigateBySearch(search: String) {
-
-
         viewModelScope.launch(Dispatchers.IO) {
             searchUseCase.insertSearch(search)
-            withContext(Dispatchers.Main) {
-                screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE, null)
-            }
+            navigateMutable.postValue(true)
         }
-//        viewModelScope.launch(Dispatchers.IO) {
-            //search response
-//            val liveData = buscaTuMotoRepository.search(search, FrontPageViewModel.PAGE_START_INDEX)
-//
-//            withContext(Dispatchers.Main) {
-//                liveData.observe(lifeCycleOwner, Observer {
-//                    result ->
-//                    when (result.status) {
-//                        Result.Status.SUCCESS -> {
-//                            loadingVisibility.value = View.GONE
-//                            screenNavigator.navigateToNext(SearchFragment.NAVIGATE_TO_CATALOGUE, null)
-//                            liveData.removeObservers(lifeCycleOwner)
-//                        }
-//                        Result.Status.LOADING -> {
-//                            Timber.d("Search V LOADING")
-//                            loadingVisibility.value = View.VISIBLE
-//                        }
-//                        Result.Status.ERROR -> {
-//                            Timber.d("Search VM Error")
-//                            loadingVisibility.value = View.GONE
-//                            retryErrorModel = RetryErrorModel(R.string.load_search_error, RetryErrorModel.SEARCH_ERROR)
-//                            errorModel.value = retryErrorModel
-//                            liveData.removeObservers(lifeCycleOwner)
-//                        }
-//                    }
-//                })
-//            }
     }
 
     fun onSearchRequested(search: String) {
