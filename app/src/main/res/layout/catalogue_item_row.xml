@@ -9,7 +9,7 @@
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="270dp"
     android:onClick="@{() -> viewModel.clickListenerTap(viewModel.modelId)}">
 
 
@@ -64,83 +64,62 @@
                 app:mutableText="@{viewModel.modelTitleLiveData}"
                 />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/catalogueItemHighlight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:lines="2"
+                android:textSize="14sp"
+                android:ellipsize="end"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/catalogueItemModel"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:orientation="horizontal"
-                android:weightSum="100"
-                android:layout_height="wrap_content">
+                android:layout_marginTop="10dp"
+                app:layout_constraintWidth_percent="0.45"
+                app:mutableText="@{viewModel.modelDisplacementMutable}" />
 
-                <TextView
-                    android:id="@+id/catalogueItemHighlight"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:lines="2"
-                    android:layout_weight="20"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/catalogueItemModel"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:mutableText="@{viewModel.modelHighlightsLiveData}"
-                    />
+            <TextView
+                android:id="@+id/catalogueItemHighlight2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:lines="2"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                app:layout_constraintStart_toEndOf="@+id/catalogueItemHighlight"
+                app:layout_constraintTop_toTopOf="@+id/catalogueItemHighlight"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="0.45"
+                app:mutableText="@{viewModel.modelWeightMutable}" />
 
-                <TextView
-                    android:id="@+id/catalogueItemHighlight2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:lines="2"
-                    android:layout_weight="20"
-                    app:layout_constraintStart_toStartOf="@id/catalogueItemHighlight"
-                    app:layout_constraintTop_toBottomOf="@id/catalogueItemHighlight"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:mutableText="@{viewModel.modelHighlightsLiveData}"
-                    />
+            <TextView
+                android:id="@+id/catalogueItemHighlight3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:lines="2"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@+id/catalogueItemHighlight"
+                app:layout_constraintTop_toBottomOf="@id/catalogueItemHighlight"
+                app:layout_constraintWidth_percent="0.45"
+                app:mutableText="@{viewModel.modelPowerMutable}" />
 
-                <TextView
-                    android:id="@+id/catalogueItemHighlight3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:lines="2"
-                    android:layout_weight="20"
-                    app:layout_constraintStart_toStartOf="@id/catalogueItemHighlight2"
-                    app:layout_constraintTop_toBottomOf="@id/catalogueItemHighlight2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:mutableText="@{viewModel.modelHighlightsLiveData}"
-                    />
-
-                <TextView
-                    android:id="@+id/catalogueItemHighlight4"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:lines="2"
-                    android:layout_weight="20"
-                    app:layout_constraintStart_toStartOf="@id/catalogueItemHighlight3"
-                    app:layout_constraintTop_toBottomOf="@id/catalogueItemHighlight3"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:mutableText="@{viewModel.modelHighlightsLiveData}"
-                    />
-
-            </LinearLayout>
-
-
-
+            <TextView
+                android:id="@+id/catalogueItemHighlight4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:lines="2"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                app:layout_constraintStart_toEndOf="@+id/catalogueItemHighlight3"
+                app:layout_constraintTop_toTopOf="@+id/catalogueItemHighlight3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="0.45"
+                app:mutableText="@{viewModel.modelPriceMutable}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

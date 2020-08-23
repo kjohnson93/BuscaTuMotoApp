@@ -34,4 +34,9 @@
     <string name="filter_btn_navigation">MUESTRA LOS %1$s RESULTADOS</string>
     <string name="empty_result">NO HAY RESULTADOS</string>
     <string name="catalogue_no_results">No se han encontrado resultados</string>
+    <string name="highlight_displacement">%1$s cc</string>
+    <string name="highlight_weight">%1$s kg</string>
+    <string name="highlight_power">%1$s cv</string>
+    <string name="highlight_price">%1$s €</string>
+    <string name="price_unknown">Precio no disponible</string>
 </resources>

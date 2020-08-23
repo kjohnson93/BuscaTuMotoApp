@@ -45,4 +45,9 @@
     <string name="filter_btn_navigation">SHOW %1$s RESULTS</string>
     <string name="empty_result">NO RESULTS</string>
     <string name="catalogue_no_results">No results found</string>
+    <string name="highlight_displacement">%1$s cc</string>
+    <string name="highlight_weight">%1$s kg</string>
+    <string name="highlight_power">%1$s hp</string>
+    <string name="highlight_price">%1$s €</string>
+    <string name="price_unknown">Price not available</string>
 </resources>
