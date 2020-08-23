@@ -10,7 +10,6 @@ import com.buscatumoto.data.remote.datasource.BuscaTuMotoDataSource
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.local.entity.SearchEntity
 import com.buscatumoto.data.remote.dto.response.MotoResponse
-import com.buscatumoto.data.remote.dto.response.PagedListMotoEntity
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -93,80 +92,6 @@ class BuscaTuMotoRepository @Inject constructor(
     }
 
     /**
-     * Gets motorcycles based on filter values and obtains them from Dao Source.
-     * Dao source means that response is always ruled by DAO Single Source Of Truth (SSOT)
-     * Api network call just updates a DAO but response is only retrieved from DAO.
-     */
-    suspend fun getMotosFilter(
-        brand: String? = null,
-        model: String? = null,
-        bikeType: String? = null,
-        priceBottom: Int? = null,
-        priceTop: Int? = null,
-        powerBottom: Double? = null,
-        powerTop: Double? = null,
-        displacementBottom: Double? = null,
-        displacementTop: Double? = null,
-        weightBottom: Double? = null,
-        weightTop: Double? = null,
-        year: Int? = null,
-        license: String? = null,
-        pageIndex: Int? = null
-    ) = liveData<Result<PagedListMotoEntity>> {
-        //Not using emitSource because it's not getting observed by subscribers for some reason
-        emit(Result.loading())
-
-        try {
-            val response = buscaTuMotoDataSource.filter(
-                brand, model, bikeType,
-                priceBottom, priceTop, powerBottom, powerTop, displacementBottom, displacementTop,
-                weightBottom, weightTop, year, license, pageIndex
-            )
-
-            if (response.status == Result.Status.SUCCESS) {
-                response.data?.let { motoResponse ->
-
-                    motoDao.delete()
-                    searchDao.delete()
-                    searchDao.insert(
-                        SearchEntity(
-                            1,
-                            null,
-                            brand,
-                            model,
-                            bikeType,
-                            priceBottom.toString(),
-                            priceTop.toString(),
-                            powerBottom.toString(),
-                            powerTop.toString(),
-                            displacementBottom.toString(),
-                            displacementTop.toString(),
-                            weightBottom.toString(),
-                            weightTop.toString(),
-                            year.toString(),
-                            license
-                        )
-                    )
-                    motoDao.insert(motoResponse.motos)
-
-                    emitSource(motoDao.getMotoLiveData().map {
-                        Result.success(PagedListMotoEntity(it, motoResponse.totalElements))
-                    })
-                }
-
-            } else if (response.status == Result.Status.ERROR) {
-                emitSource(motoDao.getMotoLiveData().map {
-                    Result.error(response.message, null)
-                })
-            }
-        } catch (exception: IOException) {
-            emitSource(motoDao.getMotoLiveData().map {
-                Result.error("Filter motos error", null)
-            })
-        }
-    }
-
-    /**
      * Gets motorcycles based on filter values from API.
      * Response means that values are being collected directly by an
      * Api network call which is a API Source.
@@ -215,52 +140,6 @@ class BuscaTuMotoRepository @Inject constructor(
         )
 
         return motoResponse
-    }
-
-    /**
-     * Gets motorcycles based on search query and obtains them from Dao.
-     * Dao source means that response is always ruled by DAO Single Source Of Truth (SSOT)
-     * Api network call just updates a DAO but response is only retrieved from DAO.
-     */
-    suspend fun getMotosSearch(search: String, pageIndex : Int?)
-            = liveData<Result<PagedListMotoEntity>> {
-
-        //Not using emitSource because it's not getting observed by subscribers for some reason
-        emit(Result.loading())
-
-        //try network request and dispose local process
-        try {
-            val response = buscaTuMotoDataSource.search(search, pageIndex)
-
-            if (response.status == Result.Status.SUCCESS) {
-                //save
-                response.data?.let { motoResponse ->
-
-                    motoDao.delete()
-                    searchDao.delete()
-                    searchDao.insert(
-                        SearchEntity(
-                            1, search, null, null, null, null, null,
-                            null, null, null, null,
-                            null, null, null, null
-                        )
-                    )
-                    motoDao.insert(motoResponse.motos)
-
-                    emitSource(motoDao.getMotoLiveData().map {
-                        Result.success(PagedListMotoEntity(it, motoResponse.totalElements))
-                    })
-                }
-            } else if (response.status == Result.Status.ERROR) {
-                emitSource(motoDao.getMotoLiveData().map {
-                    Result.error("An IO error has ocurred on search data fetch", null)
-                })
-            }
-        } catch (exception: IOException) {
-            emitSource(motoDao.getMotoLiveData().map {
-                Result.error("An IO error has ocurred on search data fetch", null)
-            })
-        }
     }
 
     suspend fun getMotosSearchResponse(
@@ -335,5 +214,9 @@ class BuscaTuMotoRepository @Inject constructor(
             )
         )
 
+    }
+
+    suspend fun saveMoto(motoEntity: MotoEntity) {
+        motoDao.insert(motoEntity)
     }
 }

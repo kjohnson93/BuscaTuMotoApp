@@ -21,7 +21,6 @@ import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.adapters.CatalogueListAdapter
 import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
-import com.buscatumoto.utils.data.TotalElementsObject
 import com.buscatumoto.utils.global.PAGE_START
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
@@ -34,7 +33,7 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    lateinit var catalogueViewModel: CatalogueViewModel
+    lateinit var viewModel: CatalogueViewModel
     private lateinit var binding: FragmentCatalogueBinding
     var catalogueListAdapter = CatalogueListAdapter(this)
 
@@ -66,13 +65,12 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
             R.layout.fragment_catalogue, container, false
         )
 
-        catalogueViewModel =
+        viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(CatalogueViewModel::class.java)
-        catalogueViewModel.screenNavigator = this
-        binding.viewModel = catalogueViewModel
+        binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        catalogueViewModel.getErrorMessage().observe(viewLifecycleOwner, Observer { errorMessage ->
+        viewModel.getErrorMessage().observe(viewLifecycleOwner, Observer { errorMessage ->
             if (errorMessage != null) {
                 showErrorMessage(errorMessage)
             } else {
@@ -94,7 +92,11 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
 
         binding.catalogueFragmentPbar.visibility = View.VISIBLE
 
-        catalogueViewModel.catalogueData.observe(viewLifecycleOwner, Observer {
+        /**
+         * Observer section
+         */
+
+        viewModel.catalogueData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Result.Status.SUCCESS -> {
                     binding.catalogueFragmentPbar.visibility = View.GONE
@@ -134,60 +136,27 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
             }
         })
 
-        //                motos.observe(lifecycleOwner, Observer { result ->
-//                    when(result.status) {
-//                        Result.Status.SUCCESS -> {
-//                            noResultVisibility.value = View.GONE
-//                            Timber.d("Data: ${result.data}")
-//                            motosLiveData.value = result.data
-//                            result.data?.let {
-//
-//                                noResultVisibility.value = View.GONE
-//
-////                                if (it.list.isEmpty() && catalogueListAdapter.itemCount == 0) {
-////                                    noResultVisibility.value = View.VISIBLE
-////                                }
-////
-////                                loadingVisibility.value = View.GONE
-////
-////                                if (pageIndex != PAGE_START) {
-////                                    catalogueListAdapter.removeLoading()
-////                                }
-////
-////                                catalogueListAdapter.addItems(result?.data.list)
-//                                refreshingMutable.value = false
-//                                isLoading = false
-//
-//                                layoutManager = null
-//                            }
-//                            motos.removeObservers(lifecycleOwner)
-//                        }
-//                        Result.Status.LOADING -> {
-//                            if (pageIndex != PAGE_START) {
-////                                catalogueListAdapter.addLoading()
-//                            } else {
-//                                //show global loading
-//                                loadingVisibility.value = View.VISIBLE
-//                            }
-//                        }
-//                        Result.Status.ERROR -> {
-//                            loadingVisibility.value = View.GONE
-//                            errorMessage.value = result.message
-//                            motos.removeObservers(lifecycleOwner)
-//                            layoutManager = null
-//                        }
-//                    }
-//                })
 
-        catalogueViewModel.isLastPageLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.isLastPageLiveData.observe(viewLifecycleOwner, Observer {
                 result ->
             isLastPage = true
         })
 
-        catalogueViewModel.currentPageLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.currentPageLiveData.observe(viewLifecycleOwner, Observer {
             result ->
             this.currentPage = result
         })
+
+        viewModel.navigateLiveData.observe(viewLifecycleOwner, Observer {
+            result ->
+            if (result) {
+                findNavController().navigate(R.id.motoDetailHostFragment)
+            }
+        })
+
+        /**
+         * Observer section
+         */
     }
 
     override fun onDestroyView() {
@@ -212,7 +181,7 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
     private fun showErrorMessage(errorMessage: String?) {
         snackbarError =
             Snackbar.make(binding.root, errorMessage.toString(), Snackbar.LENGTH_INDEFINITE)
-        snackbarError?.setAction(R.string.retry, catalogueViewModel.retryClickListener)
+        snackbarError?.setAction(R.string.retry, viewModel.retryClickListener)
         snackbarError?.show()
     }
 
@@ -221,7 +190,7 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
         return object: PaginationListener(layoutManager) {
             override fun loadMoreItems() {
                 isLoading = true
-                catalogueViewModel.loadMoreItems()
+                viewModel.loadMoreItems()
             }
             override fun isLastPage(): Boolean {
                 return isLastPage
@@ -233,7 +202,7 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
     }
 
     override fun onItemClick(id: String) {
-        catalogueViewModel.onItemClick(id)
+        viewModel.onItemClick(id)
     }
 
     override fun onRefresh() {

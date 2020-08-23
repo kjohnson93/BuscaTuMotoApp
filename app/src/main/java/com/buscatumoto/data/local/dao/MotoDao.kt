@@ -11,23 +11,11 @@ import com.buscatumoto.data.local.entity.MotoEntity
 interface MotoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(motos: List<MotoEntity>): List<Long>
-
-    @Query("DELETE FROM moto")
-//    @Delete
-    suspend fun delete()
-
-    @Query("SELECT * FROM moto")
-    fun getMotoLiveData(): LiveData<List<MotoEntity>>
+    suspend fun insert(motos: MotoEntity)
 
     @Query("SELECT * FROM moto")
     fun getMotos(): List<MotoEntity>
 
-    //Tryng to get motyEntity
-    //on get objects from DB suspend fun is not required!
     @Query("SELECT * FROM moto WHERE id=:id ")
-    fun getMotoById(id: String): LiveData<MotoEntity>
-
-    @Query("SELECT * FROM moto WHERE id=:id ")
-    fun getMotoByIdNoLiveData(id: String): MotoEntity
+    fun getMotoById(id: String): MotoEntity
 }

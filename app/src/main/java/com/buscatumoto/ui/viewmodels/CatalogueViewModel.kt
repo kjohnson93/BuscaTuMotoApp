@@ -1,16 +1,10 @@
 package com.buscatumoto.ui.viewmodels
 
-import android.content.Context
-import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.*
-import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.remote.dto.response.MotoResponse
 import com.buscatumoto.domain.features.catalogue.LoadCatalogueUseCase
-import com.buscatumoto.ui.activities.CatalogueActivity
-import com.buscatumoto.ui.navigation.ScreenNavigator
-import com.buscatumoto.utils.global.MOTO_ID_KEY
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
 import com.buscatumoto.utils.ui.PaginationListener.Companion.PAGE_START
 import kotlinx.coroutines.Dispatchers
@@ -37,6 +31,8 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     val pageLoadingLiveData = _pageLoadingMutable
     val catalogueData = MutableLiveData<Result<MotoResponse>>()
     var refreshingMutable = MutableLiveData<Boolean>()
+    private val _navigateMutable = MutableLiveData<Boolean>()
+    val navigateLiveData: LiveData<Boolean> = _navigateMutable
 
     //Error management
     private var errorMessage = MutableLiveData<String>()
@@ -49,8 +45,6 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     var currentPage: Int = PAGE_START
 
     //To Remove
-    lateinit var screenNavigator: ScreenNavigator
-    private val appContext: Context = BuscaTuMotoApplication.getInstance().applicationContext
 
     init {
         loadCatalogue(PAGE_START)
@@ -76,10 +70,22 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
             }
     }
 
+    /**
+     * On item click we find and save that motoEntity to DAO.
+     * So it can be recovered by MotoDetail Screen later on.
+     */
     override fun onItemClick(id: String) {
-        val extras = Bundle()
-        extras.putString(MOTO_ID_KEY, id)
-        screenNavigator.navigateToNext(CatalogueActivity.NAVIGATE_TO_DETAIL, extras)
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val motosList = catalogueData.value?.data?.motos
+            val moto = motosList?.find { it.id == id }
+            loadCatalogueUseCase.saveMoto(moto)
+
+            withContext(Dispatchers.Main) {
+                _navigateMutable.value = true
+            }
+        }
+
     }
 
     private fun loadCatalogue(pageIndex: Int) {
