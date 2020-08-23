@@ -10,6 +10,10 @@ class LoadCatalogueUseCase @Inject constructor(
     private val buscaTuMotoRepository: BuscaTuMotoRepository
 ) {
 
+    /**
+     * Retrieves a list of motos based on the last query operation (search or filter) and
+     * retrieves it as a response from API [MotoResponse] encapsulated in [Result] data wrapper.
+     */
     suspend fun getMotosCatalogue(pageIndex: Int): Result<MotoResponse> {
         val lastParams = buscaTuMotoRepository.getSearchParams()
 
@@ -35,8 +39,10 @@ class LoadCatalogueUseCase @Inject constructor(
         }
     }
 
+    /**
+     * Saves or replaces current motoEntity record on MotoDAO.
+     */
     suspend fun saveMoto(moto: MotoEntity?) {
-
         moto?.let {
             buscaTuMotoRepository.saveMoto(it)
         }

@@ -13,7 +13,6 @@ import javax.inject.Singleton
 class GetModelImageUseCase @Inject constructor() {
 
     suspend fun execute(imageUrl: String): Drawable {
-
         return Coil.get(imageUrl)
     }
 }

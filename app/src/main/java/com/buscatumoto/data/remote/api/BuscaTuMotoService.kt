@@ -9,6 +9,9 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+/**
+ * Interface that exposes API service operations to the app.
+ */
 interface BuscaTuMotoService {
 
     @GET(APIConstants.GET_FIELDS_URL)

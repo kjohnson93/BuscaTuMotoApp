@@ -8,14 +8,15 @@ import javax.inject.Inject
 
 class LoadMotoDetailUseCase @Inject constructor(private val motoDao: MotoDao) {
 
-//    fun execute(id: String) : LiveData<MotoEntity> =
-//        motoDao.getMotoById(id)
-
-    fun executeNoLiveData(id: String): MotoEntity = motoDao.getMotoById(id)
-
+    /**
+     * Parses moto data stored locally object to a object that ui can handle and interpret.
+     */
     suspend fun parseMotoEntity(motoEntity: MotoEntity): MotoDetailUi? =
         MotoEntityToMotoDetailUiMapper.suspenMap(motoEntity)
 
+    /**
+     * Retrieves the current motoEntity record.
+     */
     fun getMoto(): MotoEntity {
         return motoDao.getMoto()
     }

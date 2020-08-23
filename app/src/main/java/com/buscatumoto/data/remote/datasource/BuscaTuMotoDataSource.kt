@@ -5,6 +5,9 @@ import com.buscatumoto.data.remote.api.BuscaTuMotoService
 import com.buscatumoto.data.remote.dto.response.MotoResponse
 import javax.inject.Inject
 
+/**
+ * Class responsible for interacting with Network API Service.
+ */
 class BuscaTuMotoDataSource @Inject constructor(private val buscaTuMotoService: BuscaTuMotoService) :
     BaseDataSource() {
 

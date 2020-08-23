@@ -8,6 +8,9 @@ class SearchUseCase @Inject constructor(
     private val buscaTuMotoRepository: BuscaTuMotoRepository
 ) {
 
+    /**
+     * Persists search query value locally.
+     */
     suspend fun insertSearch(search: String) {
         buscaTuMotoRepository.insertSearch(search)
     }
