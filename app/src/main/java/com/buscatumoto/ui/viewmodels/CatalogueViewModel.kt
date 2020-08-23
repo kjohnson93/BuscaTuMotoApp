@@ -44,10 +44,9 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     //Utils
     var currentPage: Int = PAGE_START
 
-    //To Remove
-
     init {
-        loadCatalogue(PAGE_START)
+        //Only load when entering from first time.
+            loadCatalogue(PAGE_START)
     }
 
     /**

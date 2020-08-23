@@ -197,13 +197,24 @@ class SearchActivity : LocalizationActivity(),
         errorSnackbar?.dismiss()
     }
 
+    /**
+     * Back navigation is managed through container's view.
+     * Basically gets previous Id destination from navController and navigates to it.
+     */
     override fun onBackPressed() {
         when (navController.currentBackStackEntry?.destination?.id) {
             R.id.catalogueFragment -> {
-                navController.popBackStack(R.id.containerMainFragment, false)
-            }
+                navController.previousBackStackEntry?.destination?.id?.let {
+                    navController.navigate(
+                        it
+                    )
+                }            }
             R.id.motoDetailHostFragment -> {
-                navController.popBackStack(R.id.catalogueFragment, false)
+                navController.previousBackStackEntry?.destination?.id?.let {
+                    navController.navigate(
+                        it
+                    )
+                }
             }
             else -> {
                 super.onBackPressed()
