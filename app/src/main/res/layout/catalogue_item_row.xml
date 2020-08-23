@@ -9,7 +9,7 @@
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="200dp"
     android:onClick="@{() -> viewModel.clickListenerTap(viewModel.modelId)}">
 
 
@@ -17,9 +17,10 @@
         android:id="@+id/catalogueItemCardView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
         android:paddingBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,17 +29,120 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <ImageView
-            android:id="@+id/catalogue_item_imgvw"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/catalogueItemContentCslayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/search_icon_128"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:mutableDrawable="@{viewModel.modelImageLiveData}"
-            app:srcCompat="@drawable/search_icon_128" />
+            android:paddingTop="0dp"
+            android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/catalogue_item_imgvw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/search_icon_128"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:mutableDrawable="@{viewModel.modelImageLiveData}"
+                app:srcCompat="@drawable/search_icon_128" />
+
+            <TextView
+                android:id="@+id/catalogueItemModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
+                android:lines="2"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:ellipsize="end"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/catalogue_item_imgvw"
+                app:mutableText="@{viewModel.modelTitleLiveData}"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/catalogueItemModel"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="horizontal"
+                android:weightSum="100"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/catalogueItemHighlight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:lines="2"
+                    android:layout_weight="20"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/catalogueItemModel"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:mutableText="@{viewModel.modelHighlightsLiveData}"
+                    />
+
+                <TextView
+                    android:id="@+id/catalogueItemHighlight2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:lines="2"
+                    android:layout_weight="20"
+                    app:layout_constraintStart_toStartOf="@id/catalogueItemHighlight"
+                    app:layout_constraintTop_toBottomOf="@id/catalogueItemHighlight"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:mutableText="@{viewModel.modelHighlightsLiveData}"
+                    />
+
+                <TextView
+                    android:id="@+id/catalogueItemHighlight3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:lines="2"
+                    android:layout_weight="20"
+                    app:layout_constraintStart_toStartOf="@id/catalogueItemHighlight2"
+                    app:layout_constraintTop_toBottomOf="@id/catalogueItemHighlight2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:mutableText="@{viewModel.modelHighlightsLiveData}"
+                    />
+
+                <TextView
+                    android:id="@+id/catalogueItemHighlight4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:lines="2"
+                    android:layout_weight="20"
+                    app:layout_constraintStart_toStartOf="@id/catalogueItemHighlight3"
+                    app:layout_constraintTop_toBottomOf="@id/catalogueItemHighlight3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:mutableText="@{viewModel.modelHighlightsLiveData}"
+                    />
+
+            </LinearLayout>
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
 

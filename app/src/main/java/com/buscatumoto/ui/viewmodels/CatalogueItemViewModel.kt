@@ -32,6 +32,8 @@ class CatalogueItemViewModel @Inject constructor(private val getModelImageUseCas
 
             withContext(Dispatchers.Main) {
                 modelImageLiveData.value = imageDrawable
+                modelTitleLiveData.value = motoEntity.model
+                modelHighlightsLiveData.value = motoEntity.price.toString()
             }
         }
     }
