@@ -16,6 +16,10 @@ interface MotoDao {
     @Query("SELECT * FROM moto")
     fun getMotos(): List<MotoEntity>
 
+    @Query("SELECT * FROM moto WHERE internalId=1 ")
+    fun getMoto(): MotoEntity
+
+    //Unused query
     @Query("SELECT * FROM moto WHERE id=:id ")
     fun getMotoById(id: String): MotoEntity
 }

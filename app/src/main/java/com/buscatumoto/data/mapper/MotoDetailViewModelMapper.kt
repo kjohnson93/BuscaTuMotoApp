@@ -9,6 +9,10 @@ import java.lang.StringBuilder
 
 object MotoEntityToMotoDetailUiMapper: BaseSuspendMapper<MotoEntity, MotoDetailUi?> {
 
+    /**
+     * Transform a MotoEntity to a MotoUi Object.
+     * Performs some IO Operations like getting drawables images from URL.
+     */
     override suspend fun suspenMap(type: MotoEntity?): MotoDetailUi? {
 
         var bannerDrawable: Drawable? = null

@@ -79,6 +79,8 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
         viewModelScope.launch(Dispatchers.IO) {
             val motosList = catalogueData.value?.data?.motos
             val moto = motosList?.find { it.id == id }
+            //Assigning 1 because dao is intended to only have a single record.
+            moto?.internalId = 1
             loadCatalogueUseCase.saveMoto(moto)
 
             withContext(Dispatchers.Main) {

@@ -17,15 +17,15 @@ class MotoDetailViewModel @Inject constructor(private val loadMotoDetailUseCase:
     ViewModel() {
 
     val bannerLiveData = MutableLiveData<Drawable>()
-    private val _motoDetailUiMutable = MutableLiveData<MotoDetailUi> ()
-    val motoDetailUiLiveData: LiveData<MotoDetailUi> = _motoDetailUiMutable
 
-    fun loadMotoDetail(id: String, fragmentManager: FragmentManager) {
-        Timber.d("Id on VM: $id")
+    init {
+        loadMotoDetail()
+    }
+
+    fun loadMotoDetail() {
         viewModelScope.launch(Dispatchers.IO) {
-            val motoEntityVal = loadMotoDetailUseCase.executeNoLiveData(id)
+            val motoEntityVal = loadMotoDetailUseCase.getMoto()
             val motoDetailUi: MotoDetailUi? = loadMotoDetailUseCase.parseMotoEntity(motoEntityVal)
-            _motoDetailUiMutable.postValue(motoDetailUi)
             withContext(Dispatchers.Main) {
                 bannerLiveData.value = motoDetailUi?.bannerImg
             }

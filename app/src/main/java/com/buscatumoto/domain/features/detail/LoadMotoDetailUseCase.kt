@@ -16,4 +16,8 @@ class LoadMotoDetailUseCase @Inject constructor(private val motoDao: MotoDao) {
     suspend fun parseMotoEntity(motoEntity: MotoEntity): MotoDetailUi? =
         MotoEntityToMotoDetailUiMapper.suspenMap(motoEntity)
 
+    fun getMoto(): MotoEntity {
+        return motoDao.getMoto()
+    }
+
 }

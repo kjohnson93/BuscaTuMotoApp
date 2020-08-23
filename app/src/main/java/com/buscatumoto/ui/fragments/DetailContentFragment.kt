@@ -33,20 +33,28 @@ class DetailContentFragment: Fragment(), Injectable {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.detail_content_fragment, container, false)
-
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailContentViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        //Assign id from UI -> not good but necessary to avoid creating an additional Dao.
-        arguments?.getString(MOTO_ID_KEY)?.let { id ->
-            //get parcelable motodetail and pass it to viewModel
-        }
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        /**
+         * Observer section
+         */
+
+
+        /**
+         * Observer section
+         */
+
 
         binding.detailPriceDescTvw.movementMethod = ScrollingMovementMethod()
         binding.detailMainDesc.movementMethod = ScrollingMovementMethod()
-
-        return binding.root
     }
 
     override fun onDestroyView() {
@@ -54,14 +62,6 @@ class DetailContentFragment: Fragment(), Injectable {
         /**This line does what doc says. It tells viewmodels attached to this view that they are no longer used.
         This way we avoid any variable state undesirable.*/
         viewModelStore.clear()
-    }
-
-    fun executeUiOp(uiOp: CatalogueUiOp) {
-        when (uiOp) {
-            is CatalogueUiOp.LoadFragmentPageContent -> {
-                viewModel.bind(uiOp.motoDetailUi)
-            }
-        }
     }
 
 

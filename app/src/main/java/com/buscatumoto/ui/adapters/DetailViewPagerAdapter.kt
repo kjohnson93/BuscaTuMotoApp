@@ -8,11 +8,10 @@ import com.buscatumoto.ui.models.MotoDetailUi
 import com.buscatumoto.utils.global.MOTO_ID_KEY
 
 
-class DetailViewPagerAdapter(private val detailUi: MotoDetailUi?, private val idMoto: String?,
-                             fragmentManager: FragmentManager):
+class DetailViewPagerAdapter(fragmentManager: FragmentManager):
     FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private var fragmentList: MutableList<Fragment> = ArrayList()
+    private val fragmentList:MutableList<Fragment> = ArrayList()
     private var fragmentTitleList : MutableList<String> = ArrayList()
 
     override fun getPageTitle(position: Int): CharSequence? {
@@ -20,13 +19,7 @@ class DetailViewPagerAdapter(private val detailUi: MotoDetailUi?, private val id
     }
 
     override fun getItem(position: Int): Fragment {
-        val bundle = Bundle()
-        bundle.putString(MOTO_ID_KEY, idMoto)
-
-        val fragment = fragmentList[position]
-        fragment.arguments = bundle
-
-        return fragment
+        return fragmentList[position]
     }
 
     override fun getCount(): Int {

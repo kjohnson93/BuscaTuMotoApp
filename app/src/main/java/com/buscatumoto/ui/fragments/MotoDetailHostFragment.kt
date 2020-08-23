@@ -24,13 +24,9 @@ class MotoDetailHostFragment: Fragment(), Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-
     private lateinit var viewModel: MotoDetailViewModel
     private lateinit var binding: FragmentHostMotoDetailBinding
     private lateinit var detailPagerAdapter: DetailViewPagerAdapter
-
-    private var id: String? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,34 +47,16 @@ class MotoDetailHostFragment: Fragment(), Injectable {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        //Assign id from UI -> not good but necessary to avoid creating an additional Dao.
-       arguments?.getString(MOTO_ID_KEY)?.let {
-            id = it
-            executeUiOp(CatalogueUiOp.LoadDetailActivity(it))
-        }
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.motoDetailUiLiveData.observe(viewLifecycleOwner, Observer {
-            result ->
-
-            detailPagerAdapter = DetailViewPagerAdapter(result, id, childFragmentManager)
+            detailPagerAdapter = DetailViewPagerAdapter(childFragmentManager)
             detailPagerAdapter.addFragment(DetailContentFragment(), "Contenido")
             detailPagerAdapter.addFragment(DetailRelatedFragment(), "Relacionados")
             this.bindAdapter(detailPagerAdapter)
-        })
-    }
-
-    private fun executeUiOp(uiOp: CatalogueUiOp) {
-        when (uiOp) {
-            is CatalogueUiOp.LoadDetailActivity -> {
-                viewModel.loadMotoDetail(uiOp.id, requireActivity().supportFragmentManager)
-            }
-        }
     }
 
     private fun bindAdapter(detailViewPagerAdapter: DetailViewPagerAdapter) {
