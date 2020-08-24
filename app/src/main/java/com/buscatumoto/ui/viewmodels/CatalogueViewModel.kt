@@ -21,16 +21,11 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     val noResultVisibility = MutableLiveData<Int>()
 
     //Mutables
-    private val _loadMoreItemsEvent = MutableLiveData<Boolean> ()
-    var loadMoreItemsEvent: LiveData<Boolean> = _loadMoreItemsEvent
     private val _isLastPageMutable = MutableLiveData<Boolean>()
     var isLastPageLiveData: LiveData<Boolean> = _isLastPageMutable
     private val _currentPageMutable = MutableLiveData<Int>()
     val currentPageLiveData = _currentPageMutable
-    private val _pageLoadingMutable = MutableLiveData<Boolean>()
-    val pageLoadingLiveData = _pageLoadingMutable
     val catalogueData = MutableLiveData<Result<MotoResponse>>()
-    var refreshingMutable = MutableLiveData<Boolean>()
     private val _navigateMutable = MutableLiveData<Boolean>()
     val navigateLiveData: LiveData<Boolean> = _navigateMutable
 
@@ -38,11 +33,12 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     private var errorMessage = MutableLiveData<String>()
     fun getErrorMessage() = errorMessage
     var retryClickListener = View.OnClickListener {
-//        loadCatalogue(lastPageRequested)
+        loadCatalogue(lastPageRequested)
     }
 
     //Utils
     var currentPage: Int = PAGE_START
+    var lastPageRequested = currentPage
 
     init {
         //Only load when entering from first time.
@@ -54,6 +50,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
      */
     fun loadMoreItems() {
             currentPage++
+        lastPageRequested = currentPage
             _currentPageMutable.value = currentPage
         catalogueData.value = Result.loading(null)
         viewModelScope.launch(Dispatchers.IO) {
@@ -90,8 +87,8 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     }
 
     private fun loadCatalogue(pageIndex: Int) {
+        lastPageRequested = pageIndex
         catalogueData.value = Result.loading(null)
-        Timber.d("pageIndex: $pageIndex")
         viewModelScope.launch(Dispatchers.IO) {
             val motoResponse = loadCatalogueUseCase.getMotosCatalogue(pageIndex)
             withContext(Dispatchers.Main) {
