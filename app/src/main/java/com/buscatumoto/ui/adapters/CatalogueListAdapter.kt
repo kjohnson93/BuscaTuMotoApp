@@ -47,7 +47,7 @@ class CatalogueListAdapter(
     override fun getItemViewType(position: Int): Int {
         return when (isLoaderVisible) {
             true -> {
-                if (position == listMoto.size - 1) {
+                if (position == listMoto.size - 1 || position == listMoto.size - 2) {
                     VIEW_TYPE_LOADING
                 } else {
                     VIEW_TYPE_NORMAL
@@ -119,7 +119,9 @@ class CatalogueListAdapter(
     fun addLoading() {
         isLoaderVisible = true
         listMoto.add(listMoto[0])
+        listMoto.add(listMoto[0])
         notifyItemInserted(listMoto.size - 1)
+        notifyItemInserted(listMoto.size - 2)
     }
 
     fun removeLoading() {
@@ -136,7 +138,9 @@ class CatalogueListAdapter(
 
         if (motoEntity != null) {
             listMoto.removeAt(pos)
+            listMoto.removeAt(pos - 1)
             notifyItemRemoved(pos)
+            notifyItemRemoved(pos - 1)
         }
     }
 
