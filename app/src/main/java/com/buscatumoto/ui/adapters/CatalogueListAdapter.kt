@@ -18,7 +18,10 @@ import com.buscatumoto.databinding.CatalogueItemLoadingBinding
 import com.buscatumoto.databinding.CatalogueItemRowBinding
 import com.buscatumoto.domain.features.catalogue.GetModelImageUseCase
 import com.buscatumoto.ui.viewmodels.CatalogueItemViewModel
+import com.buscatumoto.utils.global.DISPLACEMENT_UNKNOWN
+import com.buscatumoto.utils.global.POWER_UNKNOWN
 import com.buscatumoto.utils.global.PRICE_UNKNOWN
+import com.buscatumoto.utils.global.WEIGHT_UNKNOWN
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
@@ -187,37 +190,38 @@ class CatalogueListAdapter(
              */
         }
 
-
-
         private fun parseDisplacement(value: Double): String? {
-            val string = context.resources.getString(R.string.highlight_displacement)
-            return string.format(value.toString())
+            return if (value == DISPLACEMENT_UNKNOWN) {
+                context.resources.getString(R.string.displacement_unknown)
+            } else {
+                context.resources.getString(R.string.highlight_displacement).format(value.toString())
+            }
         }
 
         private fun parseWeight(value: Double): String? {
-            val string = context.resources.getString(R.string.highlight_weight)
-            return string.format(value.toString())
+            return if (value == WEIGHT_UNKNOWN) {
+                context.resources.getString(R.string.weight_unknown)
+            } else {
+                context.resources.getString(R.string.highlight_weight).format(value.toString())
+            }
         }
 
         private fun parsePower(value: Int): String? {
-            val string = BuscaTuMotoApplication.getInstance().resources.getString(R.string.highlight_power)
-            return string.format(value.toString())
+            return if (value == POWER_UNKNOWN) {
+                context.resources.getString(R.string.power_unknown)
+            } else {
+                context.resources.getString(R.string.highlight_weight).format(value.toString())
+            }
         }
 
         private fun parsePrice(value: Int): String? {
             return if (value == PRICE_UNKNOWN) {
-                BuscaTuMotoApplication.getInstance().resources.getString(R.string.price_unknown)
+                context.resources.getString(R.string.price_unknown)
             } else {
-                val string = BuscaTuMotoApplication.getInstance().resources.getString(R.string.highlight_price)
+                val string = context.resources.getString(R.string.highlight_price)
                 string.format(value.toString())
             }
         }
-
-        suspend fun getImageFromUrl(imageUrl: String): Drawable {
-            return Coil.get(imageUrl)
-        }
-
-
     }
 
     inner class ProgressViewHolder(private val itemRowBinding: CatalogueItemLoadingBinding) :

@@ -39,4 +39,7 @@
     <string name="highlight_power">%1$s hp</string>
     <string name="highlight_price">%1$s €</string>
     <string name="price_unknown">Price not available</string>
+    <string name="displacement_unknown">CC not available</string>
+    <string name="weight_unknown">Weight not available</string>
+    <string name="power_unknown">Power not available</string>
 </resources>

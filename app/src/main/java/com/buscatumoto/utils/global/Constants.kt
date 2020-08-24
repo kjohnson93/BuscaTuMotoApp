@@ -22,4 +22,7 @@ const val ALPHA_OPACITY_TRANSPARENT: Float = 0f
 const val EMPTY_SIZE = 0
 const val PAGE_START = 0
 
+const val DISPLACEMENT_UNKNOWN = -1.0
+const val WEIGHT_UNKNOWN = -1.0
+const val POWER_UNKNOWN = -1
 const val PRICE_UNKNOWN = -1
