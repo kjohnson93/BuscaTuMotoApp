@@ -204,17 +204,10 @@ class SearchActivity : LocalizationActivity(),
     override fun onBackPressed() {
         when (navController.currentBackStackEntry?.destination?.id) {
             R.id.catalogueFragment -> {
-                navController.previousBackStackEntry?.destination?.id?.let {
-                    navController.navigate(
-                        it
-                    )
-                }            }
+                navController.navigate(R.id.containerMainFragment)
+            }
             R.id.motoDetailHostFragment -> {
-                navController.previousBackStackEntry?.destination?.id?.let {
-                    navController.navigate(
-                        it
-                    )
-                }
+                navController.navigate(R.id.catalogueFragment)
             }
             else -> {
                 super.onBackPressed()

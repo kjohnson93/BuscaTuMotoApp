@@ -60,7 +60,6 @@
 
             <TextView
                 android:id="@+id/detailPriceDescTvw"
-                mutableText="@{viewModel.priceDescLiveData}"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -69,7 +68,6 @@
 
             <TextView
                 android:id="@+id/detailMainDesc"
-                mutableText="@{viewModel.mainDescLiveData}"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

@@ -42,16 +42,15 @@ class DetailContentViewModel @Inject constructor(private val loadMotoDetailUseCa
                 }
             }
         }
-
     }
 
     fun bind(motoDetailUi: MotoDetailUi) {
-        modelTitleLiveData.value = motoDetailUi?.modelTitle
-        highLightsLiveData.value = motoDetailUi?.modelDetailHighlights
-        priceTitleLiveData.value = motoDetailUi?.priceTitle
-        priceDescLiveData.value = motoDetailUi?.priceDesc
-        mainDescLiveData.value = motoDetailUi?.mainDesc
-        licensesTitleLiveData.value = motoDetailUi?.licensesTitle
-        licensesLiveData.value = motoDetailUi?.licenses
+        modelTitleLiveData.value = motoDetailUi.modelTitle
+        highLightsLiveData.value = motoDetailUi.modelDetailHighlights
+        priceTitleLiveData.value = motoDetailUi.priceTitle
+        priceDescLiveData.value = motoDetailUi.priceDesc
+        mainDescLiveData.value = motoDetailUi.mainDesc
+        licensesTitleLiveData.value = motoDetailUi.licensesTitle
+        licensesLiveData.value = motoDetailUi.licenses
     }
 }

@@ -1,12 +1,15 @@
 package com.buscatumoto.ui.fragments
 
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.buscatumoto.R
 import com.buscatumoto.databinding.DetailContentFragmentBinding
@@ -46,6 +49,12 @@ class DetailContentFragment: Fragment(), Injectable {
         /**
          * Observer section
          */
+        viewModel.priceDescLiveData.observe(viewLifecycleOwner, Observer {
+            binding.detailPriceDescTvw.text = parseFromHtml(it)
+        })
+        viewModel.mainDescLiveData.observe(viewLifecycleOwner, Observer {
+            binding.detailMainDesc.text = parseFromHtml(it)
+        })
 
 
         /**
@@ -62,6 +71,14 @@ class DetailContentFragment: Fragment(), Injectable {
         /**This line does what doc says. It tells viewmodels attached to this view that they are no longer used.
         This way we avoid any variable state undesirable.*/
         viewModelStore.clear()
+    }
+
+    fun parseFromHtml(text: String): String {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT).toString()
+        } else {
+            Html.fromHtml(text).toString()
+        }
     }
 
 
