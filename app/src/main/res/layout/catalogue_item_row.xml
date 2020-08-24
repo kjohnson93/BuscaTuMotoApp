@@ -11,7 +11,6 @@
     android:layout_width="match_parent"
     android:layout_height="270dp">
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/catalogueItemCardView"
         android:layout_width="match_parent"
@@ -119,8 +118,15 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-
-
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginStart="6dp"
+        android:background="@drawable/bar_shadow_catalogue_item"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/catalogueItemCardView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
