@@ -204,6 +204,8 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
     override fun onRefresh() {
         currentPage = PaginationListener.PAGE_START;
         isLastPage = false
+        catalogueListAdapter.clear()
+        viewModel.onRefresh()
     }
 
 

@@ -99,4 +99,8 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
             }
         }
     }
+
+    fun onRefresh() {
+        loadCatalogue(PAGE_START)
+    }
 }
