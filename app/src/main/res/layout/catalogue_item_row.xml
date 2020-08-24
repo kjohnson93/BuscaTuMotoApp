@@ -9,8 +9,7 @@
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="270dp"
-    android:onClick="@{() -> viewModel.clickListenerTap(viewModel.modelId)}">
+    android:layout_height="270dp">
 
 
     <androidx.cardview.widget.CardView
@@ -65,7 +64,7 @@
                 />
 
             <TextView
-                android:id="@+id/catalogueItemHighlight"
+                android:id="@+id/highlightDisplacement"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -75,11 +74,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/catalogueItemModel"
                 android:layout_marginTop="10dp"
-                app:layout_constraintWidth_percent="0.45"
-                app:mutableText="@{viewModel.modelDisplacementMutable}" />
+                app:layout_constraintWidth_percent="0.45" />
 
             <TextView
-                android:id="@+id/catalogueItemHighlight2"
+                android:id="@+id/highlightWeight"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -87,27 +85,25 @@
                 android:lines="2"
                 android:textSize="14sp"
                 android:ellipsize="end"
-                app:layout_constraintStart_toEndOf="@+id/catalogueItemHighlight"
-                app:layout_constraintTop_toTopOf="@+id/catalogueItemHighlight"
+                app:layout_constraintStart_toEndOf="@+id/highlightDisplacement"
+                app:layout_constraintTop_toTopOf="@+id/highlightDisplacement"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.45"
-                app:mutableText="@{viewModel.modelWeightMutable}" />
+                app:layout_constraintWidth_percent="0.45"/>
 
             <TextView
-                android:id="@+id/catalogueItemHighlight3"
+                android:id="@+id/highlightPower"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:lines="2"
                 android:textSize="14sp"
                 android:ellipsize="end"
                 android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="@+id/catalogueItemHighlight"
-                app:layout_constraintTop_toBottomOf="@id/catalogueItemHighlight"
-                app:layout_constraintWidth_percent="0.45"
-                app:mutableText="@{viewModel.modelPowerMutable}" />
+                app:layout_constraintStart_toStartOf="@+id/highlightDisplacement"
+                app:layout_constraintTop_toBottomOf="@id/highlightDisplacement"
+                app:layout_constraintWidth_percent="0.45" />
 
             <TextView
-                android:id="@+id/catalogueItemHighlight4"
+                android:id="@+id/highlightPrice"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -115,11 +111,10 @@
                 android:lines="2"
                 android:textSize="14sp"
                 android:ellipsize="end"
-                app:layout_constraintStart_toEndOf="@+id/catalogueItemHighlight3"
-                app:layout_constraintTop_toTopOf="@+id/catalogueItemHighlight3"
+                app:layout_constraintStart_toEndOf="@+id/highlightPower"
+                app:layout_constraintTop_toTopOf="@+id/highlightPower"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.45"
-                app:mutableText="@{viewModel.modelPriceMutable}" />
+                app:layout_constraintWidth_percent="0.45" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

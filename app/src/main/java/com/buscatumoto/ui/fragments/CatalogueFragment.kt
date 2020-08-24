@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.databinding.FragmentCatalogueBinding
@@ -35,7 +36,7 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: CatalogueViewModel
     private lateinit var binding: FragmentCatalogueBinding
-    var catalogueListAdapter = CatalogueListAdapter(this)
+    private lateinit var catalogueListAdapter : CatalogueListAdapter
 
 
     private var snackbarError: Snackbar? = null
@@ -79,6 +80,8 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
         })
 
         var layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+        catalogueListAdapter = CatalogueListAdapter(this, viewLifecycleOwner,
+            BuscaTuMotoApplication.getInstance().applicationContext)
         binding.catalagueContentRv.adapter = catalogueListAdapter
         binding.catalagueContentRv.layoutManager = layoutManager
         binding.catalagueContentRv.addOnScrollListener(getScrollableListener(layoutManager))

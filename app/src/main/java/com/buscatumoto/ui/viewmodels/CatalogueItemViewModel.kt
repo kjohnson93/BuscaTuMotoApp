@@ -3,8 +3,6 @@ package com.buscatumoto.ui.viewmodels
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.buscatumoto.BuscaTuMotoApplication
-import com.buscatumoto.R
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.domain.features.catalogue.GetModelImageUseCase
 import com.buscatumoto.utils.global.PRICE_UNKNOWN
@@ -16,14 +14,12 @@ import javax.inject.Inject
 
 class CatalogueItemViewModel @Inject constructor(private val getModelImageUseCase: GetModelImageUseCase): BaseViewModel() {
 
-    lateinit var catalogueItemClickListener: CatalogueItemClickListener
-
     val modelTitleLiveData = MutableLiveData<String>()
     val modelImageLiveData = MutableLiveData<Drawable>()
-    val modelDisplacementMutable = MutableLiveData<String>()
-    val modelWeightMutable = MutableLiveData<String>()
-    val modelPowerMutable = MutableLiveData<String>()
-    val modelPriceMutable = MutableLiveData<String>()
+    val modelDisplacementMutable = MutableLiveData<Double>()
+    val modelWeightMutable = MutableLiveData<Double>()
+    val modelPowerMutable = MutableLiveData<Int>()
+    val modelPriceMutable = MutableLiveData<Int>()
 
     lateinit var modelId: String
 
@@ -31,11 +27,10 @@ class CatalogueItemViewModel @Inject constructor(private val getModelImageUseCas
     fun bind(motoEntity: MotoEntity) {
         modelTitleLiveData.value = motoEntity.model
         modelId = motoEntity.id
-        modelDisplacementMutable.value = parseDisplacement(motoEntity.displacement)
-        modelWeightMutable.value = parseWeight(motoEntity.weight)
-        modelPowerMutable.value = parsePower(motoEntity.power)
-        modelPriceMutable.value = parsePrice(motoEntity.price)
-
+        modelDisplacementMutable.value = motoEntity.displacement
+        modelWeightMutable.value = motoEntity.weight
+        modelPowerMutable.value = motoEntity.power
+        modelPriceMutable.value = motoEntity.price
 
         viewModelScope.launch(Dispatchers.IO) {
 
@@ -46,37 +41,4 @@ class CatalogueItemViewModel @Inject constructor(private val getModelImageUseCas
             }
         }
     }
-
-    private fun parseDisplacement(value: Double): String? {
-        val string = BuscaTuMotoApplication.getInstance().resources.getString(R.string.highlight_displacement)
-        return string.format(value.toString())
-    }
-
-    private fun parseWeight(value: Double): String? {
-        val string = BuscaTuMotoApplication.getInstance().resources.getString(R.string.highlight_weight)
-        return string.format(value.toString())
-    }
-
-    private fun parsePower(value: Int): String? {
-        val string = BuscaTuMotoApplication.getInstance().resources.getString(R.string.highlight_power)
-        return string.format(value.toString())
-    }
-
-    private fun parsePrice(value: Int): String? {
-        return if (value == PRICE_UNKNOWN) {
-            BuscaTuMotoApplication.getInstance().resources.getString(R.string.price_unknown)
-        } else {
-            val string = BuscaTuMotoApplication.getInstance().resources.getString(R.string.highlight_price)
-            string.format(value.toString())
-        }
-    }
-
-    /**
-     * This should be called from databinding
-     */
-    fun clickListenerTap(id: String) {
-        catalogueItemClickListener.onItemClick(id)
-    }
-
-
 }

@@ -1,21 +1,36 @@
 package com.buscatumoto.ui.adapters
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import coil.Coil
+import coil.api.get
+import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.databinding.CatalogueItemLoadingBinding
 import com.buscatumoto.databinding.CatalogueItemRowBinding
 import com.buscatumoto.domain.features.catalogue.GetModelImageUseCase
 import com.buscatumoto.ui.viewmodels.CatalogueItemViewModel
+import com.buscatumoto.utils.global.PRICE_UNKNOWN
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.runBlocking
 
 
-class CatalogueListAdapter(val catalogueItemClickListener: CatalogueItemClickListener) :
-    RecyclerView.Adapter<CatalogueListAdapter.BaseCatalogueViewHolder>() {
+class CatalogueListAdapter(
+    val catalogueItemClickListener: CatalogueItemClickListener,
+    val viewLifecycleOwner: LifecycleOwner,
+    val context: Context
+) :
+    RecyclerView.Adapter<CatalogueListAdapter.BaseCatalogueViewHolder>(){
 
     companion object {
         private const val VIEW_TYPE_LOADING = 0
@@ -133,15 +148,76 @@ class CatalogueListAdapter(val catalogueItemClickListener: CatalogueItemClickLis
     }
 
     inner class CatalogueViewHolder(private val itemRowBinding: CatalogueItemRowBinding) :
-        BaseCatalogueViewHolder(itemRowBinding) {
+        BaseCatalogueViewHolder(itemRowBinding), CoroutineScope by MainScope() {
 
         private val catalogueItemViewModel = CatalogueItemViewModel(GetModelImageUseCase())
 
         fun bind(motoEntity: MotoEntity) {
             catalogueItemViewModel.bind(motoEntity)
-            catalogueItemViewModel.catalogueItemClickListener = catalogueItemClickListener
+            itemRowBinding.root.setOnClickListener { catalogueItemClickListener.onItemClick(
+                motoEntity.id
+            ) }
             itemRowBinding.viewModel = catalogueItemViewModel
+
+            /**
+             * Observer section
+             */
+            catalogueItemViewModel.modelDisplacementMutable.observe(
+                viewLifecycleOwner, Observer {
+                    itemRowBinding.highlightDisplacement.text = parseDisplacement(it)
+                }
+            )
+            catalogueItemViewModel.modelWeightMutable.observe(
+                viewLifecycleOwner, Observer {
+                    itemRowBinding.highlightWeight.text = parseWeight(it)
+                }
+            )
+            catalogueItemViewModel.modelPowerMutable.observe(
+                viewLifecycleOwner, Observer {
+                    itemRowBinding.highlightPower.text = parsePower(it)
+                }
+            )
+            catalogueItemViewModel.modelPriceMutable.observe(
+                viewLifecycleOwner, Observer {
+                    itemRowBinding.highlightPrice.text = parsePrice(it)
+                }
+            )
+            /**
+             * Observer section
+             */
         }
+
+
+
+        private fun parseDisplacement(value: Double): String? {
+            val string = context.resources.getString(R.string.highlight_displacement)
+            return string.format(value.toString())
+        }
+
+        private fun parseWeight(value: Double): String? {
+            val string = context.resources.getString(R.string.highlight_weight)
+            return string.format(value.toString())
+        }
+
+        private fun parsePower(value: Int): String? {
+            val string = BuscaTuMotoApplication.getInstance().resources.getString(R.string.highlight_power)
+            return string.format(value.toString())
+        }
+
+        private fun parsePrice(value: Int): String? {
+            return if (value == PRICE_UNKNOWN) {
+                BuscaTuMotoApplication.getInstance().resources.getString(R.string.price_unknown)
+            } else {
+                val string = BuscaTuMotoApplication.getInstance().resources.getString(R.string.highlight_price)
+                string.format(value.toString())
+            }
+        }
+
+        suspend fun getImageFromUrl(imageUrl: String): Drawable {
+            return Coil.get(imageUrl)
+        }
+
+
     }
 
     inner class ProgressViewHolder(private val itemRowBinding: CatalogueItemLoadingBinding) :
