@@ -26,3 +26,5 @@ const val DISPLACEMENT_UNKNOWN = -1.0
 const val WEIGHT_UNKNOWN = -1.0
 const val POWER_UNKNOWN = -1
 const val PRICE_UNKNOWN = -1
+
+const val NOT_DETERMINED_VALUE = "N.D"

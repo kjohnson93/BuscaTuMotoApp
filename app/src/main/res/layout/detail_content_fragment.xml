@@ -132,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="331"
+                    mutableText="@{viewModel.displacementMutable}"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="@+id/highlightDisplacementTitle"
                     app:layout_constraintTop_toBottomOf="@+id/highlightDisplacementTitle" />
@@ -172,7 +172,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="200 cv"
+                    app:mutableText="@{viewModel.powerMutable}"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="@+id/highlightPowerTitle"
                     app:layout_constraintTop_toBottomOf="@+id/highlightDisplacementTitle" />
@@ -211,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="3554 €"
+                    app:mutableText="@{viewModel.priceMutable}"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="@+id/highlightPowerTitle"
                     app:layout_constraintTop_toBottomOf="@+id/highlightDisplacementTitle" />
@@ -250,7 +250,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="221 kg"
+                    mutableText="@{viewModel.weightMutable}"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="@+id/highlightPowerTitle"
                     app:layout_constraintTop_toBottomOf="@+id/highlightDisplacementTitle" />

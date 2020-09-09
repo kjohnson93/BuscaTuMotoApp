@@ -1,5 +1,6 @@
 package com.buscatumoto.ui.viewmodels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,6 +8,7 @@ import com.buscatumoto.data.mapper.MotoEntityToMotoDetailUiMapper
 import com.buscatumoto.domain.features.detail.LoadMotoDetailUseCase
 import com.buscatumoto.ui.fragments.DetailContentFragment
 import com.buscatumoto.ui.models.MotoDetailUi
+import com.buscatumoto.utils.global.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,6 +28,11 @@ class DetailContentViewModel @Inject constructor(private val loadMotoDetailUseCa
     val licensesTitleLiveData = MutableLiveData<String>()
     val licensesLiveData = MutableLiveData<String>()
 
+    val displacementMutable = MutableLiveData<String>()
+    val powerMutable = MutableLiveData<String> ()
+    val priceMutable = MutableLiveData<String>()
+    val weightMutable = MutableLiveData<String>()
+
     init {
         loadMotoEntity()
     }
@@ -35,6 +42,35 @@ class DetailContentViewModel @Inject constructor(private val loadMotoDetailUseCa
         viewModelScope.launch(Dispatchers.IO) {
             val moto = loadMotoDetailUseCase.getMoto()
             val motoUi = MotoEntityToMotoDetailUiMapper.suspenMap(moto)
+
+            val displacement = moto.displacement
+            val power = moto.power
+            val price = moto.price
+            val weight = moto.weight
+
+            if (displacement == DISPLACEMENT_UNKNOWN) {
+                displacementMutable.postValue(NOT_DETERMINED_VALUE)
+            } else {
+                displacementMutable.postValue(moto.displacement.toString())
+            }
+
+            if (power == POWER_UNKNOWN) {
+                powerMutable.postValue(NOT_DETERMINED_VALUE)
+            } else {
+                powerMutable.postValue(moto.power.toString())
+            }
+
+            if (price == PRICE_UNKNOWN) {
+                priceMutable.postValue(NOT_DETERMINED_VALUE)
+            } else {
+                priceMutable.postValue(moto.price.toString())
+            }
+
+            if (weight == WEIGHT_UNKNOWN) {
+                weightMutable.postValue(NOT_DETERMINED_VALUE)
+            } else {
+                weightMutable.postValue(moto.weight.toString())
+            }
 
             withContext(Dispatchers.Main) {
                 motoUi?.let {
