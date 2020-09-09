@@ -20,7 +20,7 @@ data class MotoEntity(
     @field:SerializedName("imgThumbUrl") val imgThumbUrl: String,
     @field:SerializedName("modelHighlights") val modelHighlights: String,
     @field:SerializedName("imgBannerUrl") val imgBannerUrl: String,
-    @field:SerializedName("modelDetailHighlights") val modelDetailHighlights: List<String>,
+    @field:SerializedName("modelDetailHighlights") val modelDetailHighlights: String,
     @field:SerializedName("priceTitle") val priceTitle: String,
     @field:SerializedName("priceDesc") val priceDesc: String,
     @field:SerializedName("mainDesc") val mainDesc: String,
