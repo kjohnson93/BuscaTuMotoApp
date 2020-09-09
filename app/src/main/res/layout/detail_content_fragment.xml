@@ -172,7 +172,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    app:mutableText="@{viewModel.powerMutable}"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="@+id/highlightPowerTitle"
                     app:layout_constraintTop_toBottomOf="@+id/highlightDisplacementTitle" />
@@ -211,7 +210,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    app:mutableText="@{viewModel.priceMutable}"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="@+id/highlightPowerTitle"
                     app:layout_constraintTop_toBottomOf="@+id/highlightDisplacementTitle" />

@@ -29,8 +29,8 @@ class DetailContentViewModel @Inject constructor(private val loadMotoDetailUseCa
     val licensesLiveData = MutableLiveData<String>()
 
     val displacementMutable = MutableLiveData<String>()
-    val powerMutable = MutableLiveData<String> ()
-    val priceMutable = MutableLiveData<String>()
+    val powerMutable = MutableLiveData<Int> ()
+    val priceMutable = MutableLiveData<Int>()
     val weightMutable = MutableLiveData<String>()
 
     init {
@@ -51,25 +51,17 @@ class DetailContentViewModel @Inject constructor(private val loadMotoDetailUseCa
             if (displacement == DISPLACEMENT_UNKNOWN) {
                 displacementMutable.postValue(NOT_DETERMINED_VALUE)
             } else {
-                displacementMutable.postValue(moto.displacement.toString())
+                displacementMutable.postValue(moto.displacement.toString().plus(" $DISPLACEMENT_MAGNITUDE"))
             }
 
-            if (power == POWER_UNKNOWN) {
-                powerMutable.postValue(NOT_DETERMINED_VALUE)
-            } else {
-                powerMutable.postValue(moto.power.toString())
-            }
-
-            if (price == PRICE_UNKNOWN) {
-                priceMutable.postValue(NOT_DETERMINED_VALUE)
-            } else {
-                priceMutable.postValue(moto.price.toString())
-            }
+            //Power and price neeed to get its magnitude translated
+            powerMutable.postValue(moto.power)
+            priceMutable.postValue(moto.price)
 
             if (weight == WEIGHT_UNKNOWN) {
                 weightMutable.postValue(NOT_DETERMINED_VALUE)
             } else {
-                weightMutable.postValue(moto.weight.toString())
+                weightMutable.postValue(moto.weight.toString().plus(" $WEIGHT_MAGNITUDE"))
             }
 
             withContext(Dispatchers.Main) {

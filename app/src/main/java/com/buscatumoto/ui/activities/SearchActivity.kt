@@ -123,9 +123,10 @@ class SearchActivity : LocalizationActivity(),
             navController.navigate(R.id.languagePickerFragment)
         }
 
-        searchViewModel.searchTextMutable.observe(this, Observer {
-                setLanguage(it)
-        })
+        //FIXME Review this commented lines
+//        searchViewModel.searchTextMutable.observe(this, Observer {
+//                setLanguage(it)
+//        })
 
         searchViewModel.navigateMutable.observe(this, Observer {
             if (it) {

@@ -28,3 +28,10 @@ const val POWER_UNKNOWN = -1
 const val PRICE_UNKNOWN = -1
 
 const val NOT_DETERMINED_VALUE = "N.D"
+const val POWER_ENGLISH = "hp"
+const val POWER_ES_CA = "cv"
+const val PRICE_ENGLISH = "$"
+const val PRICE_ES_CA = "€"
+
+const val DISPLACEMENT_MAGNITUDE = "cc"
+const val WEIGHT_MAGNITUDE = "kg"

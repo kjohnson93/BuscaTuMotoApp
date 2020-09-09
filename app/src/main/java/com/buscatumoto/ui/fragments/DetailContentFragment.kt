@@ -11,12 +11,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
 import com.buscatumoto.databinding.DetailContentFragmentBinding
 import com.buscatumoto.injection.Injectable
+import com.buscatumoto.ui.activities.SearchActivity
 import com.buscatumoto.ui.models.MotoDetailUi
 import com.buscatumoto.ui.viewmodels.DetailContentViewModel
-import com.buscatumoto.utils.global.MOTO_ID_KEY
+import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueUiOp
 import javax.inject.Inject
@@ -53,10 +55,70 @@ class DetailContentFragment: Fragment(), Injectable {
             binding.detailPriceDescTvw.text = parseFromHtml(it)
         })
 
+        viewModel.powerMutable.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                POWER_UNKNOWN -> {
+                    binding.highlightPowerValue.text = NOT_DETERMINED_VALUE
+                }
+                else -> {
+                    binding.highlightPowerValue.text = addMagnitudePower(it.toString())
+                }
+            }
+        })
+
+        viewModel.priceMutable.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                PRICE_UNKNOWN -> {
+                    binding.highlightPriceValue.text = NOT_DETERMINED_VALUE
+                }
+                else -> {
+                    binding.highlightPriceValue.text = addMagnitudePrice(it.toString())
+                }
+            }
+        })
+
         /**
          * Observer section
          */
         binding.detailPriceDescTvw.movementMethod = ScrollingMovementMethod()
+    }
+
+    private fun addMagnitudePrice(sequence: String): String {
+        var result = sequence
+        var lang = BuscaTuMotoApplication.getInstance().getDefaultLanguage()
+
+        when (lang.language) {
+            LANGUAGE_ENG -> {
+                result = sequence.plus(" $PRICE_ENGLISH")
+            }
+            LANGUAGE_ES -> {
+                result = sequence.plus(" $PRICE_ES_CA")
+            }
+            LANGUAGE_CA -> {
+                result = sequence.plus(" $PRICE_ES_CA")
+            }
+        }
+
+        return result
+    }
+
+    private fun addMagnitudePower(sequence: String): String {
+        var result = sequence
+        var lang = BuscaTuMotoApplication.getInstance().getDefaultLanguage()
+
+        when (lang.language) {
+            LANGUAGE_ENG -> {
+                result = sequence.plus(" $POWER_ENGLISH")
+            }
+            LANGUAGE_ES -> {
+                result = sequence.plus(" $POWER_ES_CA")
+            }
+            LANGUAGE_CA -> {
+                result = sequence.plus(" $POWER_ES_CA")
+            }
+        }
+
+        return result
     }
 
     override fun onDestroyView() {
