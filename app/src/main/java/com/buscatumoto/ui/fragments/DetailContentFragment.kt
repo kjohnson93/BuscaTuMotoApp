@@ -52,18 +52,11 @@ class DetailContentFragment: Fragment(), Injectable {
         viewModel.priceDescLiveData.observe(viewLifecycleOwner, Observer {
             binding.detailPriceDescTvw.text = parseFromHtml(it)
         })
-        viewModel.mainDescLiveData.observe(viewLifecycleOwner, Observer {
-            binding.detailMainDesc.text = parseFromHtml(it)
-        })
-
 
         /**
          * Observer section
          */
-
-
         binding.detailPriceDescTvw.movementMethod = ScrollingMovementMethod()
-        binding.detailMainDesc.movementMethod = ScrollingMovementMethod()
     }
 
     override fun onDestroyView() {
@@ -80,6 +73,5 @@ class DetailContentFragment: Fragment(), Injectable {
             Html.fromHtml(text).toString()
         }
     }
-
 
 }

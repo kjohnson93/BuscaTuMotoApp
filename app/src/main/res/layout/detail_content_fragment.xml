@@ -4,96 +4,271 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.buscatumoto.ui.viewmodels.DetailContentViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        tools:context=".ui.activities.MotoDetailActivity">
+
+        <View
+            android:id="@+id/deatilScreenShadowView"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@drawable/bar_shadow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/detailTitleCslayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            tools:context=".ui.activities.MotoDetailActivity">
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:background="@drawable/bar_shadow"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+            android:layout_height="0dp"
+            android:padding="10dp"
+            app:layout_constraintHeight_percent="0.65"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/detailTitleTvw"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                android:textAlignment="center"
+                android:fontFamily="@font/arialbd"
+                android:textColor="@color/black"
+                android:textSize="22sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:mutableText="@{viewModel.modelTitleLiveData}" />
-
-            <TextView
-                android:id="@+id/detailHighlightsTvw"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="@+id/detailTitleTvw"
-                app:layout_constraintStart_toStartOf="@+id/detailTitleTvw"
-                app:layout_constraintTop_toBottomOf="@+id/detailTitleTvw"
-                app:mutableText="@{viewModel.highLightsLiveData}" />
+                app:mutableText="@{viewModel.modelTitleLiveData}"
+                tools:text="Fantastic Black Bean Chili" />
 
             <TextView
                 android:id="@+id/detailPriceTitleTvw"
                 mutableText="@{viewModel.priceTitleLiveData}"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="@+id/detailHighlightsTvw"
-                app:layout_constraintTop_toBottomOf="@+id/detailHighlightsTvw" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detailTitleTvw" />
 
             <TextView
                 android:id="@+id/detailPriceDescTvw"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_marginTop="10dp"
+                android:scrollbars="vertical"
+                android:scrollbarThumbVertical="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/detailPriceTitleTvw"
                 app:layout_constraintTop_toBottomOf="@+id/detailPriceTitleTvw" />
 
-            <TextView
-                android:id="@+id/detailMainDesc"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="@+id/detailPriceDescTvw"
-                app:layout_constraintTop_toBottomOf="@+id/detailPriceDescTvw" />
-
-            <TextView
-                android:id="@+id/detailLicensesTitleTvw"
-                mutableText="@{viewModel.licensesTitleLiveData}"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="@+id/detailMainDesc"
-                app:layout_constraintTop_toBottomOf="@+id/detailMainDesc" />
-
-            <TextView
-                android:id="@+id/detailLicensesTvw"
-                mutableText="@{viewModel.licensesLiveData}"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="@+id/detailLicensesTitleTvw"
-                app:layout_constraintTop_toBottomOf="@+id/detailLicensesTitleTvw" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.core.widget.NestedScrollView>
+        <View
+            android:id="@+id/priceSeparator"
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/grey_separator"
+            app:layout_constraintStart_toStartOf="@+id/detailTitleCslayout"
+            app:layout_constraintTop_toBottomOf="@+id/detailTitleCslayout" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/detailHighlightsCslayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.35"
+            app:layout_constraintStart_toStartOf="@+id/priceSeparator"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/priceSeparator" />
+
+        <TextView
+            android:id="@+id/highlightsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:fontFamily="@font/arialbd"
+            android:text="@string/highlights"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="@+id/priceSeparator"
+            app:layout_constraintTop_toBottomOf="@+id/priceSeparator" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/highlightsTitle">
+
+            <LinearLayout
+                android:id="@+id/highlightDispLinearL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/highlightDisplacementTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Displacement"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/highlightDisplacementValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="331"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="@+id/highlightDisplacementTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/highlightDisplacementTitle" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/displacementSeparator"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="5dp"
+                android:background="@color/grey_separator"
+                app:layout_constraintBottom_toBottomOf="@+id/highlightDispLinearL"
+                app:layout_constraintStart_toEndOf="@id/highlightDispLinearL"
+                app:layout_constraintTop_toTopOf="@id/highlightDispLinearL" />
+
+
+            <LinearLayout
+                android:id="@+id/highlightPowerLinearL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@+id/displacementSeparator"
+                app:layout_constraintTop_toTopOf="@+id/highlightDispLinearL">
+
+                <TextView
+                    android:id="@+id/highlightPowerTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Power"
+                    app:layout_constraintStart_toEndOf="@+id/displacementSeparator"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/highlightPowerValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="200 cv"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="@+id/highlightPowerTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/highlightDisplacementTitle" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/highlightPowerSeparator"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="5dp"
+                android:background="@color/grey_separator"
+                app:layout_constraintBottom_toBottomOf="@+id/highlightPowerLinearL"
+                app:layout_constraintStart_toEndOf="@id/highlightPowerLinearL"
+                app:layout_constraintTop_toTopOf="@id/highlightPowerLinearL" />
+
+            <LinearLayout
+                android:id="@+id/highlightPriceLinearL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@+id/highlightPowerSeparator"
+                app:layout_constraintTop_toTopOf="@+id/highlightPowerLinearL">
+
+                <TextView
+                    android:id="@+id/highlightPriceTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Price"
+                    app:layout_constraintStart_toEndOf="@+id/displacementSeparator"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/highlightPriceValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="3554 €"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="@+id/highlightPowerTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/highlightDisplacementTitle" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/highlightPriceSeparator"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="5dp"
+                android:background="@color/grey_separator"
+                app:layout_constraintBottom_toBottomOf="@+id/highlightPriceLinearL"
+                app:layout_constraintStart_toEndOf="@id/highlightPriceLinearL"
+                app:layout_constraintTop_toTopOf="@id/highlightPriceLinearL" />
+
+            <LinearLayout
+                android:id="@+id/highlightWeightLinearL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@+id/highlightPriceSeparator"
+                app:layout_constraintTop_toTopOf="@+id/highlightPriceLinearL">
+
+                <TextView
+                    android:id="@+id/highlightWeightTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Price"
+                    app:layout_constraintStart_toEndOf="@+id/displacementSeparator"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/highlightWeightValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="3554 €"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="@+id/highlightPowerTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/highlightDisplacementTitle" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/highlightWeightSeparator"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="5dp"
+                android:background="@color/grey_separator"
+                app:layout_constraintBottom_toBottomOf="@+id/highlightWeightLinearL"
+                app:layout_constraintStart_toEndOf="@id/highlightWeightLinearL"
+                app:layout_constraintTop_toTopOf="@id/highlightWeightLinearL" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

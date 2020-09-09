@@ -42,4 +42,5 @@
     <string name="displacement_unknown">CC no disponible</string>
     <string name="weight_unknown">Pes no disponible</string>
     <string name="power_unknown">Potència no disponible</string>
+    <string name="highlights">Característiques</string>
 </resources>
