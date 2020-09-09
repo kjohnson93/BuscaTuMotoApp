@@ -43,4 +43,8 @@
     <string name="weight_unknown">Peso no disponible</string>
     <string name="power_unknown">Potencia no disponible</string>
     <string name="highlights">Caracteristicas</string>
+    <string name="displacement">Cilindrada</string>
+    <string name="power">Potencia</string>
+    <string name="price">Precio</string>
+    <string name="Weight">Peso</string>
 </resources>

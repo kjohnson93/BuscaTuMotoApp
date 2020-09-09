@@ -43,4 +43,8 @@
     <string name="weight_unknown">Weight not available</string>
     <string name="power_unknown">Power not available</string>
     <string name="highlights">Highlights</string>
+    <string name="displacement">Displacement</string>
+    <string name="power">Power</string>
+    <string name="price">Price</string>
+    <string name="Weight">Weight</string>
 </resources>
