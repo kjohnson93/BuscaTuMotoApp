@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
@@ -123,7 +121,14 @@ dependencies {
     //circle image view
     implementation "de.hdodenhof:circleimageview:$circleimageview_version"
 
+    //Firebase
+    implementation "com.google.firebase:firebase-core:$firebase_core_version"
 
+    //Google Analytics
+    implementation "com.google.firebase:firebase-analytics:$google_analytics_version"
 
 
 }
+
+apply plugin: 'com.google.gms.google-services'
+

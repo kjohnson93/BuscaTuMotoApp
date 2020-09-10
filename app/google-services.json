@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "856676993798",
+    "firebase_url": "https://buscatumoto-6d199.firebaseio.com",
+    "project_id": "buscatumoto-6d199",
+    "storage_bucket": "buscatumoto-6d199.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856676993798:android:7c1f18edd491220809ec87",
+        "android_client_info": {
+          "package_name": "com.buscatumoto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856676993798-dbpfusmqjtrrets9qqd031rloc0ehgkb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU1YlEMInD00beV-5jdf_-6wjNpv7Yvsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856676993798-dbpfusmqjtrrets9qqd031rloc0ehgkb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
