@@ -27,9 +27,10 @@ import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
 import com.buscatumoto.utils.ui.PaginationListener
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import javax.inject.Inject
 
-class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
+class CatalogueFragment : BaseFragment(), Injectable, ScreenNavigator,
     CatalogueItemClickListener, SwipeRefreshLayout.OnRefreshListener  {
 
     @Inject
@@ -37,7 +38,6 @@ class CatalogueFragment : Fragment(), Injectable, ScreenNavigator,
     lateinit var viewModel: CatalogueViewModel
     private lateinit var binding: FragmentCatalogueBinding
     private lateinit var catalogueListAdapter : CatalogueListAdapter
-
 
     private var snackbarError: Snackbar? = null
 

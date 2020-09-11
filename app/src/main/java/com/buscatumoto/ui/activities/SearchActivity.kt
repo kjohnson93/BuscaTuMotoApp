@@ -39,6 +39,7 @@ import com.buscatumoto.utils.ui.BasicNavigator
 import com.buscatumoto.utils.ui.CustomScrollView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -60,7 +61,7 @@ class SearchActivity : LocalizationActivity(),
 
     private var errorSnackbar: Snackbar? = null
 
-
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     private lateinit var navController: NavController
     private lateinit var mainToolbar: Toolbar
@@ -72,6 +73,8 @@ class SearchActivity : LocalizationActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search)
         searchViewModel = ViewModelProviders.of(this,
@@ -85,6 +88,12 @@ class SearchActivity : LocalizationActivity(),
             searchViewModel.onSearchRequested(binding.searchEditText?.text.toString())
             hideKeyboardFrom(this@SearchActivity, binding.root)
             searchEditText.setText("")
+
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "searchEdtxtId")
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "searchEdtxt")
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "edit")
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
         }
 
         navController = findNavController(R.id.nav_host_fragment_search)
@@ -155,6 +164,7 @@ class SearchActivity : LocalizationActivity(),
             }
 
         })
+
     }
 
     private fun configureToolbar() {

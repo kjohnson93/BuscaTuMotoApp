@@ -23,7 +23,7 @@ import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueUiOp
 import javax.inject.Inject
 
-class DetailContentFragment: Fragment(), Injectable {
+class DetailContentFragment: BaseFragment(), Injectable {
 
 
     @Inject

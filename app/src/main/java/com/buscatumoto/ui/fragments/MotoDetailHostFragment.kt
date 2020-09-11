@@ -20,7 +20,9 @@ import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueUiOp
 import javax.inject.Inject
 
-class MotoDetailHostFragment: Fragment(), Injectable {
+class MotoDetailHostFragment: BaseFragment(), Injectable {
+
+    override val trackScreenView = false
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory

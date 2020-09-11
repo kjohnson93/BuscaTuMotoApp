@@ -21,7 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_filter.*
 import javax.inject.Inject
 
-class FilterFragment: Fragment(), Injectable {
+class FilterFragment: BaseFragment(), Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory

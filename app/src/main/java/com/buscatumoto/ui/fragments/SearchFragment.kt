@@ -28,7 +28,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 
-class SearchFragment : androidx.fragment.app.Fragment(), Injectable,
+class SearchFragment : BaseFragment(), Injectable,
     ScreenNavigator, SearchBrandsRecyclerAdapter.BrandItemClickListener {
 
     //Adapters

@@ -14,7 +14,7 @@ import com.buscatumoto.ui.viewmodels.DetailRelatedViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
 import javax.inject.Inject
 
-class DetailRelatedFragment: Fragment(), Injectable {
+class DetailRelatedFragment: BaseFragment(), Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory

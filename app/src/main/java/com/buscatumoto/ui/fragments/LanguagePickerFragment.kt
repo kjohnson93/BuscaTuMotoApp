@@ -21,7 +21,7 @@ import com.buscatumoto.utils.injection.ViewModelFactory
 import java.util.*
 import javax.inject.Inject
 
-class LanguagePickerFragment: Fragment(), Injectable {
+class LanguagePickerFragment: BaseFragment(), Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory

@@ -12,7 +12,9 @@ import com.buscatumoto.ui.adapters.TabViewPageAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class ContainerMainFragment: Fragment() {
+class ContainerMainFragment: BaseFragment() {
+
+    override val trackScreenView = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
