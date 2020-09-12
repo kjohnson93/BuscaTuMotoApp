@@ -1,42 +1,26 @@
 package com.buscatumoto.ui.activities
 
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Bundle
-import android.os.Handler
 import android.view.KeyEvent
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.CollapsingToolbarLayout
-import androidx.appcompat.app.AppCompatActivity
-import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.akexorcist.localizationactivity.ui.LocalizationActivity
 import com.buscatumoto.R
 import com.buscatumoto.databinding.ActivitySearchBinding
-import com.buscatumoto.ui.fragments.SearchFragment
 import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.SearchViewModel
-import com.buscatumoto.utils.global.hideKeyboardFrom
+import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.BasicNavigator
-import com.buscatumoto.utils.ui.CustomScrollView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -88,12 +72,7 @@ class SearchActivity : LocalizationActivity(),
             searchViewModel.onSearchRequested(binding.searchEditText?.text.toString())
             hideKeyboardFrom(this@SearchActivity, binding.root)
             searchEditText.setText("")
-
-            val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "searchEdtxtId")
-            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "searchEdtxt")
-            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "edit")
-            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+            sendSearchBtnAnalytics()
         }
 
         navController = findNavController(R.id.nav_host_fragment_search)
@@ -112,7 +91,9 @@ class SearchActivity : LocalizationActivity(),
                 return when (keyCode) {
                     KeyEvent.KEYCODE_ENTER -> {
                         if (event?.getAction() == KeyEvent.ACTION_DOWN) {
-                            searchViewModel.onSearchRequested(binding.searchEditText?.text.toString())
+                            val query = binding.searchEditText?.text.toString()
+                            sendSearchTextAnalytics(query)
+                            searchViewModel.onSearchRequested(query)
                             hideKeyboardFrom(this@SearchActivity, binding.root)
                             searchEditText.setText("")
                             true
@@ -128,14 +109,10 @@ class SearchActivity : LocalizationActivity(),
         })
 
         binding.linearlayouts.languageLinearLayout.setOnClickListener {
+            sendDrawerLanguageOptionAnalytics()
             binding.searchDrawerLayout.closeDrawers()
             navController.navigate(R.id.languagePickerFragment)
         }
-
-        //FIXME Review this commented lines
-//        searchViewModel.searchTextMutable.observe(this, Observer {
-//                setLanguage(it)
-//        })
 
         searchViewModel.navigateMutable.observe(this, Observer {
             if (it) {
@@ -157,31 +134,16 @@ class SearchActivity : LocalizationActivity(),
             }
 
             override fun onDrawerClosed(drawerView: View) {
+                sendDrawerCloseAnalytics()
             }
 
             override fun onDrawerOpened(drawerView: View) {
+                sendDrawerOpenAnalytics()
                 searchViewModel.loadVersionOnDrawerLayout()
             }
 
         })
 
-    }
-
-    private fun configureToolbar() {
-        setSupportActionBar(mainToolbar)
-        val actionBar: ActionBar? = supportActionBar
-        actionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_128)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    private fun configureNavigationDrawer() {
-//        navigationView.setNavigationItemSelectedListener(
-//            object: NavigationView.OnNavigationItemSelectedListener {
-//                override fun onNavigationItemSelected(item: MenuItem): Boolean {
-//
-//                }
-//
-//            })
     }
 
     override fun androidInjector(): AndroidInjector<Any> {
@@ -225,6 +187,54 @@ class SearchActivity : LocalizationActivity(),
             }
         }
     }
+
+    /**
+     * Google Analytics
+     */
+
+    private fun sendSearchBtnAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, ACTIVITY_SEARCH_BTN_SEARCH_ID)
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, ACTIVITY_SEARCH_SEARCH_BTN_NAME)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, SEARCH_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendDrawerOpenAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, ACTIVITY_SEARCH_DRAWER_OPEN_ID)
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, ACTIVITY_SEARCH_DRAWER_OPEN_NAME)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, DRAWER_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendDrawerCloseAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, ACTIVITY_SEARCH_DRAWER_CLOSE_ID)
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, ACTIVITY_SEARCH_DRAWER_CLOSE_NAME)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, DRAWER_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendSearchTextAnalytics(query: String) = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, ACTIVITY_SEARCH_EDIT_TEXT_SEARCH_ID)
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, ACTIVITY_SEARCH_EDIT_TEXT_SEARCH_NAME)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, SEARCH_CONTENT_TYPE)
+        bundle.putString(FirebaseAnalytics.Param.SEARCH_TERM, query)
+        this.logEvent(FirebaseAnalytics.Event.SEARCH, bundle)
+    }
+
+    private fun sendDrawerLanguageOptionAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, DRAWER_OPTION_LANGUAGE_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, DRAWER_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    /**
+     * Google Analytics
+     */
 
 
 }
