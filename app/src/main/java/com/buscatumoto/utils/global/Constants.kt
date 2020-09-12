@@ -36,7 +36,6 @@ const val PRICE_ES_CA = "€"
 const val DISPLACEMENT_MAGNITUDE = "cc"
 const val WEIGHT_MAGNITUDE = "kg"
 
-
 /**
  * Google Analytics
  */
@@ -47,10 +46,13 @@ const val ACTIVITY_SEARCH_EDIT_TEXT_SEARCH_ID = "ACTIVITY_SEARCH_EDIT_TEXT_SEARC
 const val ACTIVITY_SEARCH_DRAWER_OPEN_ID = "ACTIVITY_SEARCH_DRAWER_OPEN"
 const val ACTIVITY_SEARCH_DRAWER_CLOSE_ID = "ACTIVITY_DRAWER_CLOSE"
 const val DRAWER_OPTION_LANGUAGE_ID = "DRAWER_OPTION_LANGUAGE"
+const val SEARCH_TAB_ID = "SEARCH_TAB_ID"
+const val FILTER_TAB_ID = "FILTER_TAB_ID"
 
 //Content types
 const val DRAWER_CONTENT_TYPE = "MENU"
 const val SEARCH_CONTENT_TYPE = "SEARCH"
+const val TAB_CONTENT_TYPE = "TABS"
 
 //Layout item names
 const val ACTIVITY_SEARCH_SEARCH_BTN_NAME = "ACTIVITY_SEARCH_BTN_SEARCH"
@@ -60,4 +62,19 @@ const val ACTIVITY_SEARCH_DRAWER_CLOSE_NAME = "ACTIVITY_DRAWER_CLOSE"
 
 /**
  * Google Analytics
+ */
+
+
+
+/**
+ * Main Container Fragment
+ */
+
+const val SEARCH_FRAGMENT_TAB_POSITION = 0
+const val FILTER_FRAGMENT_TAB_POSITION = 1
+
+
+
+/**
+ * Main Container Fragment
  */

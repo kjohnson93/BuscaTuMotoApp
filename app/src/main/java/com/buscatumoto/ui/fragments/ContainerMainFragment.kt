@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.buscatumoto.R
 import com.buscatumoto.ui.adapters.TabViewPageAdapter
+import com.buscatumoto.utils.global.*
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.analytics.FirebaseAnalytics
 
 class ContainerMainFragment: BaseFragment() {
 
@@ -50,6 +52,40 @@ class ContainerMainFragment: BaseFragment() {
             tab, position ->
             tab.icon = iconList[position]
         }.attach()
+
+        tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    SEARCH_FRAGMENT_TAB_POSITION -> {
+                        sendSearchTabSelectedAnalytics()
+                    }
+                    FILTER_FRAGMENT_TAB_POSITION -> {
+                        sendFilterTabSelectedAnalytics()
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+        })
+    }
+
+    private fun sendFilterTabSelectedAnalytics() {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_TAB_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, TAB_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendSearchTabSelectedAnalytics() {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, SEARCH_TAB_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, TAB_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
     }
 
 }
