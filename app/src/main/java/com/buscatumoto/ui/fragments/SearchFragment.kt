@@ -18,12 +18,11 @@ import com.buscatumoto.ui.adapters.SearchBrandsRecyclerAdapter
 import com.buscatumoto.ui.models.BrandRecyclerUiModel
 import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
-import com.buscatumoto.utils.global.AUTO_SCROLL_TIME_ELLAPSE_MILLIS
-import com.buscatumoto.utils.global.hideKeyboardFrom
-import com.buscatumoto.utils.global.slideUpAnimation
+import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.RetryErrorModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -162,6 +161,14 @@ class SearchFragment : BaseFragment(), Injectable,
     }
 
     override fun onBrandItemClick(brand: String) {
+        sendBrandItemSelectedAnalytics()
         viewModel.onBrandItemClick(brand)
+    }
+
+    private fun sendBrandItemSelectedAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, SEARCH_BRAND_ITEM_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, SEARCH_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
     }
 }
