@@ -55,7 +55,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:onClick="@{() -> viewModel.onBrandLayoutClick()}"
                     android:orientation="vertical"
                     android:padding="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -142,7 +141,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:onClick="@{() -> viewModel.onBikeTypeLayoutClick()}"
                     android:orientation="vertical"
                     android:padding="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -235,7 +233,6 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:padding="20dp"
-                    android:onClick="@{() -> viewModel.onMinPriceLayoutClick()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/typeFilterSeparator"
                     app:layout_constraintTop_toBottomOf="@id/typeFilterSeparator">
@@ -327,7 +324,6 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:padding="20dp"
-                    android:onClick="@{() -> viewModel.onMaxPriceLayoutClick()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/minimumPriceSeparator"
                     app:layout_constraintTop_toBottomOf="@id/minimumPriceSeparator">
@@ -415,7 +411,6 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:padding="20dp"
-                    android:onClick="@{() -> viewModel.onMinPowerLayoutClick()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/maximumPriceSeparator"
                     app:layout_constraintTop_toBottomOf="@id/maximumPriceSeparator">
@@ -502,7 +497,6 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:padding="20dp"
-                    android:onClick="@{() -> viewModel.onMaxPowerLayoutClick()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/minPowerSeparator"
                     app:layout_constraintTop_toBottomOf="@id/minPowerSeparator">
@@ -590,7 +584,6 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:padding="20dp"
-                    android:onClick="@{() -> viewModel.onMinDisplacementLayoutClick()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/maxPowerSeparator"
                     app:layout_constraintTop_toBottomOf="@id/maxPowerSeparator">
@@ -677,7 +670,6 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:padding="20dp"
-                    android:onClick="@{() -> viewModel.onMaxDisplacementLayoutClick()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/mimDisplacementSeparator"
                     app:layout_constraintTop_toBottomOf="@id/mimDisplacementSeparator">
@@ -765,7 +757,6 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:padding="20dp"
-                    android:onClick="@{() -> viewModel.onMinWeightLayoutClick()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/maxDisplacementSeparator"
                     app:layout_constraintTop_toBottomOf="@id/maxDisplacementSeparator">
@@ -852,7 +843,6 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:padding="20dp"
-                    android:onClick="@{() -> viewModel.onMaxWeightLayoutClick()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/minWeightSeparator"
                     app:layout_constraintTop_toBottomOf="@id/minWeightSeparator">
@@ -939,7 +929,6 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:padding="20dp"
-                    android:onClick="@{() -> viewModel.onYearLayoutClick()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/maxWeightSeparator"
                     app:layout_constraintTop_toBottomOf="@id/maxWeightSeparator">
@@ -1026,7 +1015,6 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:padding="20dp"
-                    android:onClick="@{() -> viewModel.onLicenseLayoutClick()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/yearSeparator"
                     app:layout_constraintTop_toBottomOf="@id/yearSeparator">

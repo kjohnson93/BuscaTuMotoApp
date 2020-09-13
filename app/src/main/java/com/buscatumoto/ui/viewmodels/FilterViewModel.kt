@@ -1,5 +1,6 @@
 package com.buscatumoto.ui.viewmodels
 
+import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
@@ -11,8 +12,10 @@ import com.buscatumoto.domain.features.search.GetFieldsUseCase
 import com.buscatumoto.ui.adapters.FilterRecyclerAdapter
 import com.buscatumoto.ui.adapters.FilterRecyclerItem
 import com.buscatumoto.ui.adapters.FilterRecyclerTextAdapter
+import com.buscatumoto.utils.global.FILTER_CONTENT_TYPE
 import com.buscatumoto.utils.global.removeEmptyValues
 import com.buscatumoto.utils.ui.RetryErrorModel
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -297,6 +300,16 @@ class FilterViewModel @Inject constructor(
     }
 
     private fun filterWithMutablesValue() {
+
+//        brandSelectedMutable.value?.let {
+//                val bundle = Bundle()
+//                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "ITEM_VALUE_SELECTED")
+//                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+//                bundle.putString(FirebaseAnalytics.Param.VALUE, it)
+//                this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+//        }
+//
+
         filter(
             brandSelectedMutable.value,
             null,

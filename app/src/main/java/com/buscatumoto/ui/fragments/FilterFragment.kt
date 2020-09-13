@@ -20,9 +20,10 @@ import com.buscatumoto.utils.injection.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.fragment_filter.*
+import timber.log.Timber
 import javax.inject.Inject
 
-class FilterFragment: BaseFragment(), Injectable {
+class FilterFragment : BaseFragment(), Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -35,10 +36,13 @@ class FilterFragment: BaseFragment(), Injectable {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_filter, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_filter, container, false
+        )
         viewModel = ViewModelProviders.of(
-            this, viewModelFactory).get(FilterViewModel::class.java)
+            this, viewModelFactory
+        ).get(FilterViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -54,11 +58,70 @@ class FilterFragment: BaseFragment(), Injectable {
             findNavController().navigate(R.id.catalogueFragment)
         }
 
+        binding.brandCsLayout.setOnClickListener {
+            viewModel.onBrandLayoutClick()
+            viewModel.brandExpanded.value?.let { value -> sendBrandExpandedFilterAnalytics(value) }
+        }
+
+        binding.typeCsLayout.setOnClickListener {
+            viewModel.onBikeTypeLayoutClick()
+            viewModel.bikeTypeExpanded.value?.let { value -> sendTypeExpandedFilterAnalytics(value) }
+        }
+
+        binding.minPriceCsLayout.setOnClickListener {
+            viewModel.onMinPriceLayoutClick()
+            viewModel.minPriceExpanded.value?.let { value -> sendPriceMinExpandedFilterAnalytics(value) }
+        }
+
+        binding.maxPriceCsLayout.setOnClickListener {
+            viewModel.onMaxPriceLayoutClick()
+            viewModel.maxPriceExpanded.value?.let { value -> sendPriceMaxExpandedFilterAnalytics(value) }
+        }
+
+        binding.minPowerCsLayout.setOnClickListener {
+            viewModel.onMinPowerLayoutClick()
+            viewModel.minPowerExpanded.value?.let { value -> sendPowerMinExpandedFilterAnalytics(value) }
+        }
+
+        binding.maxPowerCsLayout.setOnClickListener {
+            viewModel.onMaxPowerLayoutClick()
+            viewModel.maxPowerExpanded.value?.let { value -> sendPowerMaxExpandedFilterAnalytics(value) }
+        }
+
+        binding.minDisplacementCsLayout.setOnClickListener {
+            viewModel.onMinDisplacementLayoutClick()
+            viewModel.minDisplacementExpanded.value?.let { value -> sendDisplacementMinExpandedFilterAnalytics(value) }
+        }
+
+        binding.maxDisplacementCsLayout.setOnClickListener {
+            viewModel.onMaxDisplacementLayoutClick()
+            viewModel.maxDisplacementExpanded.value?.let { value -> sendDisplacementMaxExpandedFilterAnalytics(value) }
+        }
+
+        binding.minWeightCsLayout.setOnClickListener {
+            viewModel.onMinWeightLayoutClick()
+            viewModel.minWeightExpanded.value?.let { value -> sendWeightMinExpandedFilterAnalytics(value) }
+        }
+
+        binding.maxWeightCsLayout.setOnClickListener {
+            viewModel.onMaxWeightLayoutClick()
+            viewModel.maxWeightExpanded.value?.let { value -> sendWeightMaxExpandedFilterAnalytics(value) }
+        }
+
+        binding.yearCsLayout.setOnClickListener {
+            viewModel.onYearLayoutClick()
+            viewModel.yearExpanded.value?.let { value -> sendYearExpandedFilterAnalytics(value) }
+        }
+
+        binding.licenseCsLayout.setOnClickListener {
+            viewModel.onLicenseLayoutClick()
+            viewModel.licenseExpanded.value?.let { value -> sendLicenseExpandedFilterAnalytics(value) }
+        }
+
         /**
          * Observer section
          */
         viewModel.brandExpanded.observe(viewLifecycleOwner, Observer {
-            sendBrandExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.brandArrowImg.setImageDrawable(arrowUpDrawable)
@@ -69,7 +132,6 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.bikeTypeExpanded.observe(viewLifecycleOwner, Observer {
-            sendTypeExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.typeArrowImg.setImageDrawable(arrowUpDrawable)
@@ -80,7 +142,6 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.minPriceExpanded.observe(viewLifecycleOwner, Observer {
-            sendPriceMinExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.minPriceArrowImg.setImageDrawable(arrowUpDrawable)
@@ -91,7 +152,6 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.maxPriceExpanded.observe(viewLifecycleOwner, Observer {
-            sendPriceMaxExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.maxPriceArrowImg.setImageDrawable(arrowUpDrawable)
@@ -102,7 +162,6 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.minPowerExpanded.observe(viewLifecycleOwner, Observer {
-            sendPowerMinExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.minPowerArrowImg.setImageDrawable(arrowUpDrawable)
@@ -113,7 +172,6 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.maxPowerExpanded.observe(viewLifecycleOwner, Observer {
-            sendPowerMaxExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.maxPowerArrowImg.setImageDrawable(arrowUpDrawable)
@@ -124,7 +182,6 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.minDisplacementExpanded.observe(viewLifecycleOwner, Observer {
-            sendDisplacementMinExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.minDisplacementArrowImg.setImageDrawable(arrowUpDrawable)
@@ -135,7 +192,6 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.maxDisplacementExpanded.observe(viewLifecycleOwner, Observer {
-            sendDisplacementMaxExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.maxDisplacementArrowImg.setImageDrawable(arrowUpDrawable)
@@ -146,7 +202,6 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.minWeightExpanded.observe(viewLifecycleOwner, Observer {
-            sendWeightMinExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.minWeightArrowImg.setImageDrawable(arrowUpDrawable)
@@ -157,7 +212,6 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.maxWeightExpanded.observe(viewLifecycleOwner, Observer {
-            sendWeightMaxExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.maxWeightArrowImg.setImageDrawable(arrowUpDrawable)
@@ -168,7 +222,6 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.yearExpanded.observe(viewLifecycleOwner, Observer {
-            sendYearExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.yearArrowImg.setImageDrawable(arrowUpDrawable)
@@ -179,7 +232,6 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.licenseExpanded.observe(viewLifecycleOwner, Observer {
-            sendLicenseExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.licenseArrowImg.setImageDrawable(arrowUpDrawable)
@@ -202,27 +254,25 @@ class FilterFragment: BaseFragment(), Injectable {
 
 
 
-        viewModel.navigationButtonTextMutable.observe(viewLifecycleOwner, Observer {
-            result ->
+        viewModel.navigationButtonTextMutable.observe(viewLifecycleOwner, Observer { result ->
             if (result.toInt() == EMPTY_SIZE) {
-                 binding.navigationResultBtn.text =
-                     requireContext().resources.getString(R.string.empty_result)
+                binding.navigationResultBtn.text =
+                    requireContext().resources.getString(R.string.empty_result)
             } else {
-                val showListText = requireContext().resources.
-                getString(R.string.filter_btn_navigation).format(result)
+                val showListText =
+                    requireContext().resources.getString(R.string.filter_btn_navigation)
+                        .format(result)
                 binding.navigationResultBtn.text = showListText
             }
         })
 
-        viewModel.mutableNavigate.observe(viewLifecycleOwner, Observer {
-            result ->
+        viewModel.mutableNavigate.observe(viewLifecycleOwner, Observer { result ->
             if (result) {
                 findNavController().navigate(R.id.catalogueFragment)
             }
         })
 
-        viewModel.deletedMutable.observe(viewLifecycleOwner, Observer {
-            result ->
+        viewModel.deletedMutable.observe(viewLifecycleOwner, Observer { result ->
             if (result) {
                 sendDeletedFilterAnalytics()
             }
@@ -246,18 +296,30 @@ class FilterFragment: BaseFragment(), Injectable {
     }
 
     private fun setupGridLayoutManagers() {
-        val brandGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
-        val bikeTypeGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
-        val minPriceGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
-        val maxPriceGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
-        val minPowerGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
-        val maxPowerGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
-        val minDisplacementGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
-        val maxDisplacementLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
-        val minWeightGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
-        val maxWeightLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
-        val yearGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
-        val licenseGridLayoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val brandGridLayoutManager =
+            GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val bikeTypeGridLayoutManager =
+            GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val minPriceGridLayoutManager =
+            GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val maxPriceGridLayoutManager =
+            GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val minPowerGridLayoutManager =
+            GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val maxPowerGridLayoutManager =
+            GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val minDisplacementGridLayoutManager =
+            GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val maxDisplacementLayoutManager =
+            GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val minWeightGridLayoutManager =
+            GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val maxWeightLayoutManager =
+            GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val yearGridLayoutManager =
+            GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        val licenseGridLayoutManager =
+            GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
 
 
         binding.fragmentFiltBrandList.layoutManager = brandGridLayoutManager
@@ -363,31 +425,45 @@ class FilterFragment: BaseFragment(), Injectable {
         this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
     }
 
-    private fun sendDisplacementMinExpandedFilterAnalytics(isExpanded: Boolean) = firebaseAnalytics.run {
-        val bundle = Bundle()
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+    private fun sendDisplacementMinExpandedFilterAnalytics(isExpanded: Boolean) =
+        firebaseAnalytics.run {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
 
-        if (isExpanded) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_DISPLACEMENT_MIN_LIST_EXPAND)
-        } else {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_DISPLACEMENT_MIN_LIST_COLLAPSE)
+            if (isExpanded) {
+                bundle.putString(
+                    FirebaseAnalytics.Param.ITEM_ID,
+                    FILTER_DISPLACEMENT_MIN_LIST_EXPAND
+                )
+            } else {
+                bundle.putString(
+                    FirebaseAnalytics.Param.ITEM_ID,
+                    FILTER_DISPLACEMENT_MIN_LIST_COLLAPSE
+                )
+            }
+
+            this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
         }
 
-        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
-    }
+    private fun sendDisplacementMaxExpandedFilterAnalytics(isExpanded: Boolean) =
+        firebaseAnalytics.run {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
 
-    private fun sendDisplacementMaxExpandedFilterAnalytics(isExpanded: Boolean) = firebaseAnalytics.run {
-        val bundle = Bundle()
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+            if (isExpanded) {
+                bundle.putString(
+                    FirebaseAnalytics.Param.ITEM_ID,
+                    FILTER_DISPLACEMENT_MAX_LIST_EXPAND
+                )
+            } else {
+                bundle.putString(
+                    FirebaseAnalytics.Param.ITEM_ID,
+                    FILTER_DISPLACEMENT_MAX_LIST_COLLAPSE
+                )
+            }
 
-        if (isExpanded) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_DISPLACEMENT_MAX_LIST_EXPAND)
-        } else {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_DISPLACEMENT_MAX_LIST_COLLAPSE)
+            this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
         }
-
-        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
-    }
 
     private fun sendWeightMinExpandedFilterAnalytics(isExpanded: Boolean) = firebaseAnalytics.run {
         val bundle = Bundle()

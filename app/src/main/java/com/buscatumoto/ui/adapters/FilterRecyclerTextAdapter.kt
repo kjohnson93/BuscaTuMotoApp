@@ -1,6 +1,7 @@
 package com.buscatumoto.ui.adapters
 
 import android.graphics.PorterDuff
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
 import com.buscatumoto.databinding.RecyclerItemTextBinding
+import com.buscatumoto.utils.global.FILTER_CONTENT_TYPE
+import com.google.firebase.analytics.FirebaseAnalytics
 
 class FilterRecyclerTextAdapter(): RecyclerView.Adapter<FilterRecyclerTextAdapter.FilterRecyclerTextViewHolder>() {
 
@@ -75,6 +78,14 @@ class FilterRecyclerTextAdapter(): RecyclerView.Adapter<FilterRecyclerTextAdapte
             binding.itemCircleImg.setImageDrawable(filterItem.drawable)
             binding.itemCircleTvw.text = filterItem.title
             if (filterItem.isSelected) {
+                val firebaseAnalytics = FirebaseAnalytics.getInstance(BuscaTuMotoApplication.getInstance().applicationContext)
+                firebaseAnalytics.run {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "ITEM_VALUE_SELECTED")
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+                    bundle.putString(FirebaseAnalytics.Param.VALUE, filterItem.title)
+                    this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+                }
                 binding.itemCheckImg.visibility = View.VISIBLE
                 binding.itemCircleImg.setColorFilter(
                     ContextCompat.getColor(
