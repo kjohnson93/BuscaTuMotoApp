@@ -71,8 +71,8 @@ class FilterViewModel @Inject constructor(
     val yearSelectedMutable = MutableLiveData<String>()
     val licenseSelectedMutable = MutableLiveData<String>()
     val navigationButtonTextMutable = MutableLiveData<String>()
-
     val mutableNavigate = MutableLiveData<Boolean>()
+    val deletedMutable = MutableLiveData<Boolean>()
 
     //Utils
     private lateinit var lastBrandSelected: String
@@ -340,6 +340,8 @@ class FilterViewModel @Inject constructor(
         maxWeightRecyclerAdapter.clearSelectedValue()
         yearRecyclerAdapter.clearSelectedValue()
         licenseRecyclerAdapter.clearSelectedValue()
+
+        deletedMutable.value = true
     }
 
     private fun formatIntListToStringList(it: List<Int>) = it.map { it.toString() }

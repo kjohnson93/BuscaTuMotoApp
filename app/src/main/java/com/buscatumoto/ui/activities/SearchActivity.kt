@@ -229,7 +229,7 @@ class SearchActivity : LocalizationActivity(),
         val bundle = Bundle()
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, DRAWER_OPTION_LANGUAGE_ID)
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, DRAWER_CONTENT_TYPE)
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
     }
 
     /**

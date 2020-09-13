@@ -15,9 +15,10 @@ import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentFilterBinding
 import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.viewmodels.FilterViewModel
-import com.buscatumoto.utils.global.EMPTY_SIZE
+import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.fragment_filter.*
 import javax.inject.Inject
 
@@ -57,6 +58,7 @@ class FilterFragment: BaseFragment(), Injectable {
          * Observer section
          */
         viewModel.brandExpanded.observe(viewLifecycleOwner, Observer {
+            sendBrandExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.brandArrowImg.setImageDrawable(arrowUpDrawable)
@@ -67,6 +69,7 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.bikeTypeExpanded.observe(viewLifecycleOwner, Observer {
+            sendTypeExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.typeArrowImg.setImageDrawable(arrowUpDrawable)
@@ -77,6 +80,7 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.minPriceExpanded.observe(viewLifecycleOwner, Observer {
+            sendPriceMinExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.minPriceArrowImg.setImageDrawable(arrowUpDrawable)
@@ -87,6 +91,7 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.maxPriceExpanded.observe(viewLifecycleOwner, Observer {
+            sendPriceMaxExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.maxPriceArrowImg.setImageDrawable(arrowUpDrawable)
@@ -97,6 +102,7 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.minPowerExpanded.observe(viewLifecycleOwner, Observer {
+            sendPowerMinExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.minPowerArrowImg.setImageDrawable(arrowUpDrawable)
@@ -107,6 +113,7 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.maxPowerExpanded.observe(viewLifecycleOwner, Observer {
+            sendPowerMaxExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.maxPowerArrowImg.setImageDrawable(arrowUpDrawable)
@@ -117,6 +124,7 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.minDisplacementExpanded.observe(viewLifecycleOwner, Observer {
+            sendDisplacementMinExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.minDisplacementArrowImg.setImageDrawable(arrowUpDrawable)
@@ -127,6 +135,7 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.maxDisplacementExpanded.observe(viewLifecycleOwner, Observer {
+            sendDisplacementMaxExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.maxDisplacementArrowImg.setImageDrawable(arrowUpDrawable)
@@ -137,6 +146,7 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.minWeightExpanded.observe(viewLifecycleOwner, Observer {
+            sendWeightMinExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.minWeightArrowImg.setImageDrawable(arrowUpDrawable)
@@ -147,6 +157,7 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.maxWeightExpanded.observe(viewLifecycleOwner, Observer {
+            sendWeightMaxExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.maxWeightArrowImg.setImageDrawable(arrowUpDrawable)
@@ -157,6 +168,7 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.yearExpanded.observe(viewLifecycleOwner, Observer {
+            sendYearExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.yearArrowImg.setImageDrawable(arrowUpDrawable)
@@ -167,6 +179,7 @@ class FilterFragment: BaseFragment(), Injectable {
         })
 
         viewModel.licenseExpanded.observe(viewLifecycleOwner, Observer {
+            sendLicenseExpandedFilterAnalytics(it)
             if (it) {
                 val arrowUpDrawable = requireContext().getDrawable(R.drawable.icon_arrow_up)
                 binding.licenseArrowImg.setImageDrawable(arrowUpDrawable)
@@ -208,10 +221,18 @@ class FilterFragment: BaseFragment(), Injectable {
             }
         })
 
+        viewModel.deletedMutable.observe(viewLifecycleOwner, Observer {
+            result ->
+            if (result) {
+                sendDeletedFilterAnalytics()
+            }
+        })
+
         /**
          * Observer section
          */
     }
+
 
     private fun showError(@StringRes errorMessage: Int) {
         errorSnackbar = Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_INDEFINITE)
@@ -252,4 +273,177 @@ class FilterFragment: BaseFragment(), Injectable {
         binding.fragmentFiltYearList.layoutManager = yearGridLayoutManager
         binding.fragmentFiltLicenseList.layoutManager = licenseGridLayoutManager
     }
+
+    /**
+     * Google Analytics
+     */
+
+    private fun sendDeletedFilterAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_DELETE_BTN_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendBrandExpandedFilterAnalytics(isExpanded: Boolean) = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+
+        if (isExpanded) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_BRAND_LIST_EXPAND_ID)
+        } else {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_BRAND_LIST_COLLAPSE_ID)
+        }
+
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendTypeExpandedFilterAnalytics(isExpanded: Boolean) = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+
+        if (isExpanded) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_TYPE_LIST_EXPAND)
+        } else {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_TYPE_LIST_COLLAPSE)
+        }
+
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendPriceMinExpandedFilterAnalytics(isExpanded: Boolean) = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+
+        if (isExpanded) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_PRICE_MIN_LIST_EXPAND)
+        } else {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_PRICE_MIN_LIST_COLLAPSE)
+        }
+
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendPriceMaxExpandedFilterAnalytics(isExpanded: Boolean) = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+
+        if (isExpanded) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_PRICE_MAX_LIST_EXPAND)
+        } else {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_PRICE_MAX_LIST_COLLAPSE)
+        }
+
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendPowerMinExpandedFilterAnalytics(isExpanded: Boolean) = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+
+        if (isExpanded) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_POWER_MIN_LIST_EXPAND)
+        } else {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_POWER_MIN_LIST_COLLAPSE)
+        }
+
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendPowerMaxExpandedFilterAnalytics(isExpanded: Boolean) = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+
+        if (isExpanded) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_POWER_MAX_LIST_EXPAND)
+        } else {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_POWER_MAX_LIST_COLLAPSE)
+        }
+
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendDisplacementMinExpandedFilterAnalytics(isExpanded: Boolean) = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+
+        if (isExpanded) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_DISPLACEMENT_MIN_LIST_EXPAND)
+        } else {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_DISPLACEMENT_MIN_LIST_COLLAPSE)
+        }
+
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendDisplacementMaxExpandedFilterAnalytics(isExpanded: Boolean) = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+
+        if (isExpanded) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_DISPLACEMENT_MAX_LIST_EXPAND)
+        } else {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_DISPLACEMENT_MAX_LIST_COLLAPSE)
+        }
+
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendWeightMinExpandedFilterAnalytics(isExpanded: Boolean) = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+
+        if (isExpanded) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_WEIGHT_MIN_LIST_EXPAND)
+        } else {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_WEIGHT_MIN_LIST_COLLAPSE)
+        }
+
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendWeightMaxExpandedFilterAnalytics(isExpanded: Boolean) = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+
+        if (isExpanded) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_WEIGHT_MAX_LIST_EXPAND)
+        } else {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_WEIGHT_MAX_LIST_COLLAPSE)
+        }
+
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendYearExpandedFilterAnalytics(isExpanded: Boolean) = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+
+        if (isExpanded) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_YEAR_LIST_EXPAND)
+        } else {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_YEAR_LIST_COLLAPSE)
+        }
+
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendLicenseExpandedFilterAnalytics(isExpanded: Boolean) = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+
+        if (isExpanded) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_LICENSE_LIST_EXPAND)
+        } else {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_LICENSE_LIST_COLLAPSE)
+        }
+
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+
+    /**
+     * Google Analytics
+     */
+
 }
