@@ -55,6 +55,7 @@ class FilterFragment : BaseFragment(), Injectable {
         super.onViewCreated(view, savedInstanceState)
 
         binding.navigationResultBtn.setOnClickListener {
+            sendBtnSelectedAnalytics()
             findNavController().navigate(R.id.catalogueFragment)
         }
 
@@ -517,6 +518,12 @@ class FilterFragment : BaseFragment(), Injectable {
         this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
     }
 
+    private fun sendBtnSelectedAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FILTER_NAVIGATE_BTN_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, FILTER_CONTENT_TYPE)
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
 
     /**
      * Google Analytics
