@@ -214,7 +214,7 @@ class CatalogueListAdapter(
             return if (value == POWER_UNKNOWN) {
                 context.resources.getString(R.string.power_unknown)
             } else {
-                context.resources.getString(R.string.highlight_weight).format(value.toString())
+                context.resources.getString(R.string.highlight_power).format(value.toString())
             }
         }
 

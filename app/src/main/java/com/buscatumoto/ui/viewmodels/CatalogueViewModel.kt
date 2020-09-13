@@ -2,6 +2,7 @@ package com.buscatumoto.ui.viewmodels
 
 import android.view.View
 import androidx.lifecycle.*
+import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.remote.dto.response.MotoResponse
 import com.buscatumoto.domain.features.catalogue.LoadCatalogueUseCase
@@ -28,6 +29,8 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     val catalogueData = MutableLiveData<Result<MotoResponse>>()
     private val _navigateMutable = MutableLiveData<Boolean>()
     val navigateLiveData: LiveData<Boolean> = _navigateMutable
+    val _motoSelectedMutable = MutableLiveData<MotoEntity>()
+    val motoSelectedLiveData = _motoSelectedMutable
 
     //Error management
     private var errorMessage = MutableLiveData<String>()
@@ -80,6 +83,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
             loadCatalogueUseCase.saveMoto(moto)
 
             withContext(Dispatchers.Main) {
+                motoSelectedLiveData.value = moto
                 _navigateMutable.value = true
             }
         }

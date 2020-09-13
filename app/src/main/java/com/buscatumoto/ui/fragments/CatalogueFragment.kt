@@ -16,18 +16,20 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
+import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.databinding.FragmentCatalogueBinding
 import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.adapters.CatalogueListAdapter
 import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.CatalogueViewModel
-import com.buscatumoto.utils.global.PAGE_START
+import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
 import com.buscatumoto.utils.ui.PaginationListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.gson.annotations.SerializedName
 import javax.inject.Inject
 
 class CatalogueFragment : BaseFragment(), Injectable, ScreenNavigator,
@@ -157,6 +159,11 @@ class CatalogueFragment : BaseFragment(), Injectable, ScreenNavigator,
             }
         })
 
+        viewModel.motoSelectedLiveData.observe(viewLifecycleOwner, Observer {
+            result ->
+            sendMotoSelectedAnalytics(result)
+        })
+
         /**
          * Observer section
          */
@@ -208,5 +215,61 @@ class CatalogueFragment : BaseFragment(), Injectable, ScreenNavigator,
         viewModel.onRefresh()
     }
 
+    /**
+     * Google Analytics
+     */
 
+    private fun sendMotoSelectedAnalytics(result: MotoEntity?)  = firebaseAnalytics.run {
+        val brandBundle = Bundle()
+        brandBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_BRAND_SELECTED_ID)
+        brandBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        brandBundle.putString(FirebaseAnalytics.Param.VALUE, result?.brand)
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, brandBundle)
+
+        val modelBundle = Bundle()
+        modelBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_MODEL_SELECTED_ID)
+        modelBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        modelBundle.putString(FirebaseAnalytics.Param.VALUE, result?.model)
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, modelBundle)
+
+        val displacementBundle = Bundle()
+        displacementBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_DISPLACEMENT_SELECTED_ID)
+        displacementBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        displacementBundle.putString(FirebaseAnalytics.Param.VALUE, result?.displacement.toString())
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, displacementBundle)
+
+        val weightBundle = Bundle()
+        weightBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_WEIGHT_SELECTED_ID)
+        weightBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        weightBundle.putString(FirebaseAnalytics.Param.VALUE, result?.weight.toString())
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, weightBundle)
+
+        val powerBundle = Bundle()
+        powerBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_POWER_SELECTED_ID)
+        powerBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        powerBundle.putString(FirebaseAnalytics.Param.VALUE, result?.power.toString())
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, powerBundle)
+
+        val priceBundle = Bundle()
+        priceBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_PRICE_SELECTED_ID)
+        priceBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        priceBundle.putString(FirebaseAnalytics.Param.VALUE, result?.price.toString())
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, priceBundle)
+
+        val yearBundle = Bundle()
+        yearBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_YEAR_SELECTED_ID)
+        yearBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        yearBundle.putString(FirebaseAnalytics.Param.VALUE, result?.year.toString())
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, yearBundle)
+
+        val licenseBundle = Bundle()
+        licenseBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_LICENSES_SELECTED_ID)
+        licenseBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        licenseBundle.putString(FirebaseAnalytics.Param.VALUE, result?.licenses?.size.toString())
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, licenseBundle)
+    }
+
+    /**
+     * Google Analytics
+     */
 }
