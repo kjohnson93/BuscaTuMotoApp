@@ -10,14 +10,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.viewpager.widget.ViewPager
 import com.buscatumoto.R
 import com.buscatumoto.databinding.FragmentHostMotoDetailBinding
 import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.adapters.DetailViewPagerAdapter
 import com.buscatumoto.ui.viewmodels.MotoDetailViewModel
-import com.buscatumoto.utils.global.MOTO_ID_KEY
+import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueUiOp
+import com.google.firebase.analytics.FirebaseAnalytics
+import timber.log.Timber
 import javax.inject.Inject
 
 class MotoDetailHostFragment: BaseFragment(), Injectable {
@@ -59,6 +62,32 @@ class MotoDetailHostFragment: BaseFragment(), Injectable {
             detailPagerAdapter.addFragment(DetailContentFragment(), "Contenido")
             detailPagerAdapter.addFragment(DetailRelatedFragment(), "Relacionados")
             this.bindAdapter(detailPagerAdapter)
+
+        binding.detailViewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                //Empty method
+            }
+
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    DETAIL_CONTENT_TAB_POSITION -> {
+                        sendContentTabSelectedAnalytics()
+                    }
+                    DETAIL_RELATED_TAB_POSITION -> {
+                        sendRelatedTabSelectedAnalytics()
+                    }
+                }
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                //Empty method
+            }
+
+        })
     }
 
     private fun bindAdapter(detailViewPagerAdapter: DetailViewPagerAdapter) {
@@ -66,4 +95,26 @@ class MotoDetailHostFragment: BaseFragment(), Injectable {
         val dotsIndicator = binding.wormDotsIndicator
         dotsIndicator.setViewPager(binding.detailViewPager)
     }
+
+    /**
+     * Google Analytics
+     */
+
+    private fun sendContentTabSelectedAnalytics() {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, DETAIL_CONTENT_TAB_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, DETAIL_CONTENT_TAB_ID)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendRelatedTabSelectedAnalytics() {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, DETAILT_RELATED_TAB_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, DETAILT_RELATED_TAB_ID)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    /**
+     * Google Analytics
+     */
 }
