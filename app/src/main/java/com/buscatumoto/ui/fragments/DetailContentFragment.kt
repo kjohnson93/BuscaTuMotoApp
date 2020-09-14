@@ -21,8 +21,11 @@ import com.buscatumoto.ui.viewmodels.DetailContentViewModel
 import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueUiOp
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
+import com.google.firebase.analytics.FirebaseAnalytics
 import javax.inject.Inject
 
 class DetailContentFragment: BaseFragment(), Injectable {
@@ -94,6 +97,33 @@ class DetailContentFragment: BaseFragment(), Injectable {
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 
+        mAdView.adListener = object: AdListener() {
+            override fun onAdFailedToLoad(p0: LoadAdError?) {
+                super.onAdFailedToLoad(p0)
+                sendOnAdLeftApplicationAnalytics()
+            }
+
+            override fun onAdOpened() {
+                super.onAdOpened()
+                sendOnAdOpenedAnalytics()
+            }
+
+            override fun onAdClicked() {
+                super.onAdClicked()
+                sendOnAdClickedAnalytics()
+            }
+
+            override fun onAdLeftApplication() {
+                super.onAdLeftApplication()
+                sendOnAdFailedToLoadAnalytics()
+            }
+
+            override fun onAdClosed() {
+                super.onAdClosed()
+                sendOnAdClosedAnalytics()
+            }
+        }
+
         /**
          * Google ads
          */
@@ -151,5 +181,48 @@ class DetailContentFragment: BaseFragment(), Injectable {
             Html.fromHtml(text).toString()
         }
     }
+
+    /**
+     * Google Analytics
+     */
+
+    private fun sendOnAdFailedToLoadAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, DETAIL_CONTENT_AD_FAILED_TO_LOAD_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, ADS_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendOnAdOpenedAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, DETAIL_CONTENT_AD_OPENED_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, ADS_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendOnAdClickedAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, DETAIL_CONTENT_AD_CLICKED_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, ADS_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendOnAdLeftApplicationAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, DETAIL_CONTENT_AD_LEFT_APP_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, ADS_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendOnAdClosedAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, DETAIL_CONTENT_AD_CLOSED_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, ADS_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    /**
+     * Google Analytics
+     */
 
 }

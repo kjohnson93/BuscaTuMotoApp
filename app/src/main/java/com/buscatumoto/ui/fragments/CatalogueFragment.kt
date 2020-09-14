@@ -27,8 +27,10 @@ import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
 import com.buscatumoto.utils.ui.PaginationListener
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.annotations.SerializedName
@@ -180,6 +182,34 @@ class CatalogueFragment : BaseFragment(), Injectable, ScreenNavigator,
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 
+        mAdView.adListener = object: AdListener() {
+            override fun onAdFailedToLoad(p0: LoadAdError?) {
+                super.onAdFailedToLoad(p0)
+                sendOnAdLeftApplicationAnalytics()
+            }
+
+            override fun onAdOpened() {
+                super.onAdOpened()
+                sendOnAdOpenedAnalytics()
+            }
+
+            override fun onAdClicked() {
+                super.onAdClicked()
+                sendOnAdClickedAnalytics()
+            }
+
+            override fun onAdLeftApplication() {
+                super.onAdLeftApplication()
+                sendOnAdFailedToLoadAnalytics()
+            }
+
+            override fun onAdClosed() {
+                super.onAdClosed()
+                sendOnAdClosedAnalytics()
+            }
+        }
+
+
         /**
          * Google ads
          */
@@ -283,6 +313,41 @@ class CatalogueFragment : BaseFragment(), Injectable, ScreenNavigator,
         licenseBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
         licenseBundle.putString(FirebaseAnalytics.Param.VALUE, result?.licenses?.size.toString())
         this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, licenseBundle)
+    }
+
+    private fun sendOnAdFailedToLoadAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_AD_FAILED_TO_LOAD_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, ADS_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendOnAdOpenedAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_AD_OPENED_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, ADS_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendOnAdClickedAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_AD_CLICKED_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, ADS_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendOnAdLeftApplicationAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_AD_LEFT_APP_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, ADS_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    private fun sendOnAdClosedAnalytics() = firebaseAnalytics.run {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_AD_CLOSED_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, ADS_CONTENT_TYPE)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
     }
 
     /**
