@@ -17,6 +17,8 @@ import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.viewmodels.FilterViewModel
 import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.fragment_filter.*
@@ -30,6 +32,7 @@ class FilterFragment : BaseFragment(), Injectable {
     private lateinit var viewModel: FilterViewModel
     private lateinit var binding: FragmentFilterBinding
     private var errorSnackbar: Snackbar? = null
+    private lateinit var mAdView: AdView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -281,6 +284,18 @@ class FilterFragment : BaseFragment(), Injectable {
 
         /**
          * Observer section
+         */
+
+        /**
+         * Google ads
+         */
+
+        mAdView = binding.adView
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+        /**
+         * Google ads
          */
     }
 
