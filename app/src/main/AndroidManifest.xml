@@ -30,8 +30,8 @@
         </activity>
 
         <meta-data
-            android:name="google_analytics_automatic_screen_reporting_enabled"
-            android:value="false" />
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7065484694519019/9192029007"/>
     </application>
 
 </manifest>

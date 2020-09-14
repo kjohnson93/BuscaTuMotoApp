@@ -127,6 +127,9 @@ dependencies {
     //Google Analytics
     implementation "com.google.firebase:firebase-analytics:$google_analytics_version"
 
+    //Google Ads
+    implementation "com.google.firebase:firebase-ads:$firebase_ads_version"
+
 
 }
 

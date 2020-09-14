@@ -9,6 +9,7 @@ import com.buscatumoto.utils.data.Environment
 import com.buscatumoto.utils.global.DEBUG
 import com.buscatumoto.utils.global.RELEASE
 import com.buscatumoto.utils.global.ReleaseTree
+import com.google.android.gms.ads.MobileAds
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -68,6 +69,9 @@ class BuscaTuMotoApplication: LocalizationApplication(), HasAndroidInjector {
         }
 
         AppInjector.init(this)
+
+        //Google Ads initialization
+        MobileAds.initialize(this)
     }
 
     fun getEnvironmentBaseUrl(): String {
