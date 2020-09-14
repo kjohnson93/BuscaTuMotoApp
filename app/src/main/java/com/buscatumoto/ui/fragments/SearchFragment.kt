@@ -21,6 +21,8 @@ import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.RetryErrorModel
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import timber.log.Timber
@@ -39,6 +41,7 @@ class SearchFragment : BaseFragment(), Injectable,
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: FrontPageViewModel
     private lateinit var binding: FragmentSearchBinding
+    private lateinit var mAdView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,6 +111,18 @@ class SearchFragment : BaseFragment(), Injectable,
 
         /**
          * Observer section
+         */
+
+        /**
+         * Google ads
+         */
+
+        mAdView = binding.adView
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+        /**
+         * Google ads
          */
     }
 
