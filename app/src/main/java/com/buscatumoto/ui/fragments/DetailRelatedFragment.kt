@@ -12,6 +12,8 @@ import com.buscatumoto.databinding.DetailRelatedFragmentBinding
 import com.buscatumoto.injection.Injectable
 import com.buscatumoto.ui.viewmodels.DetailRelatedViewModel
 import com.buscatumoto.utils.injection.ViewModelFactory
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import javax.inject.Inject
 
 class DetailRelatedFragment: BaseFragment(), Injectable {
@@ -22,6 +24,8 @@ class DetailRelatedFragment: BaseFragment(), Injectable {
     private lateinit var binding: DetailRelatedFragmentBinding
 
     private lateinit var viewModel: DetailRelatedViewModel
+
+    private lateinit var mAdView: AdView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +39,22 @@ class DetailRelatedFragment: BaseFragment(), Injectable {
         binding.lifecycleOwner = this
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        /**
+         * Google ads
+         */
+
+        mAdView = binding.adView
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+        /**
+         * Google ads
+         */
     }
 
     override fun onDestroyView() {

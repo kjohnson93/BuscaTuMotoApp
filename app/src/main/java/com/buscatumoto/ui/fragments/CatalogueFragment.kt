@@ -27,6 +27,8 @@ import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueItemClickListener
 import com.buscatumoto.utils.ui.PaginationListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.annotations.SerializedName
@@ -46,6 +48,8 @@ class CatalogueFragment : BaseFragment(), Injectable, ScreenNavigator,
     private var isLoading = false
     private var isLastPage = false
     private var currentPage = PAGE_START
+
+    private lateinit var mAdView: AdView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -166,6 +170,18 @@ class CatalogueFragment : BaseFragment(), Injectable, ScreenNavigator,
 
         /**
          * Observer section
+         */
+
+        /**
+         * Google ads
+         */
+
+        mAdView = binding.adView
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+        /**
+         * Google ads
          */
     }
 

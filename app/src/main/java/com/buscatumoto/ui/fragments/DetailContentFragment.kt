@@ -21,6 +21,8 @@ import com.buscatumoto.ui.viewmodels.DetailContentViewModel
 import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
 import com.buscatumoto.utils.ui.CatalogueUiOp
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import javax.inject.Inject
 
 class DetailContentFragment: BaseFragment(), Injectable {
@@ -31,6 +33,8 @@ class DetailContentFragment: BaseFragment(), Injectable {
     private lateinit var viewModel: DetailContentViewModel
 
     private lateinit var binding: DetailContentFragmentBinding
+
+    private lateinit var mAdView: AdView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,6 +85,18 @@ class DetailContentFragment: BaseFragment(), Injectable {
          * Observer section
          */
         binding.detailPriceDescTvw.movementMethod = ScrollingMovementMethod()
+
+        /**
+         * Google ads
+         */
+
+        mAdView = binding.adView
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+        /**
+         * Google ads
+         */
     }
 
     private fun addMagnitudePrice(sequence: String): String {
