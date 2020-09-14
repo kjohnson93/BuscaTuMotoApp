@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.buscatumoto.R
@@ -18,9 +16,7 @@ import com.buscatumoto.ui.adapters.DetailViewPagerAdapter
 import com.buscatumoto.ui.viewmodels.MotoDetailViewModel
 import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
-import com.buscatumoto.utils.ui.CatalogueUiOp
 import com.google.firebase.analytics.FirebaseAnalytics
-import timber.log.Timber
 import javax.inject.Inject
 
 class MotoDetailHostFragment: BaseFragment(), Injectable {
@@ -109,8 +105,8 @@ class MotoDetailHostFragment: BaseFragment(), Injectable {
 
     private fun sendRelatedTabSelectedAnalytics() {
         val bundle = Bundle()
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, DETAILT_RELATED_TAB_ID)
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, DETAILT_RELATED_TAB_ID)
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, DETAIL_RELATED_TAB_ID)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, DETAIL_RELATED_TAB_ID)
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
     }
 
