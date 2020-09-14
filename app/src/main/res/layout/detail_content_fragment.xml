@@ -12,7 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:nestedScrollingEnabled="false"
         tools:context=".ui.activities.MotoDetailActivity">
 
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:padding="10dp"
-            app:layout_constraintHeight_percent="0.65"
+            app:layout_constraintBottom_toTopOf="@+id/highlightsTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -37,7 +37,7 @@
                 android:id="@+id/detailTitleTvw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/arialbd"
                 android:textColor="@color/black"
                 android:textSize="22sp"
@@ -61,9 +61,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="10dp"
-                android:scrollbars="vertical"
-                android:scrollbarThumbVertical="@color/colorPrimary"
                 android:scrollbarSize="4dp"
+                android:scrollbarThumbVertical="@color/colorPrimary"
+                android:scrollbars="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/detailPriceTitleTvw"
@@ -77,44 +77,34 @@
             android:layout_width="match_parent"
             android:layout_height="0.2dp"
             android:background="@color/grey_separator"
-            app:layout_constraintStart_toStartOf="@+id/detailTitleCslayout"
-            app:layout_constraintTop_toBottomOf="@+id/detailTitleCslayout" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/detailHighlightsCslayout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.35"
-            app:layout_constraintStart_toStartOf="@+id/priceSeparator"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/priceSeparator" />
+            app:layout_constraintBottom_toTopOf="@+id/highlightsTitle"
+            app:layout_constraintStart_toStartOf="@+id/detailTitleCslayout" />
 
         <TextView
             android:id="@+id/highlightsTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
             android:fontFamily="@font/arialbd"
+            android:padding="5dp"
             android:text="@string/highlights"
             android:textColor="@color/black"
             android:textSize="22sp"
-            app:layout_constraintStart_toStartOf="@+id/priceSeparator"
-            app:layout_constraintTop_toBottomOf="@+id/priceSeparator" />
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintStart_toStartOf="@+id/priceSeparator" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/highlightsTitle">
+            app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
-                android:layout_marginStart="10dp"
                 android:id="@+id/highlightDispLinearL"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -129,10 +119,10 @@
 
                 <TextView
                     android:id="@+id/highlightDisplacementValue"
+                    mutableText="@{viewModel.displacementMutable}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    mutableText="@{viewModel.displacementMutable}"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="@+id/highlightDisplacementTitle"
                     app:layout_constraintTop_toBottomOf="@+id/highlightDisplacementTitle" />
@@ -245,10 +235,10 @@
 
                 <TextView
                     android:id="@+id/highlightWeightValue"
+                    mutableText="@{viewModel.weightMutable}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    mutableText="@{viewModel.weightMutable}"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="@+id/highlightPowerTitle"
                     app:layout_constraintTop_toBottomOf="@+id/highlightDisplacementTitle" />
@@ -263,7 +253,7 @@
                 app:adSize="BANNER"
                 app:adUnitId="ca-app-pub-3940256099942544/6300978111"
                 app:layout_constraintStart_toStartOf="@+id/highlightWeightLinearL"
-                app:layout_constraintTop_toBottomOf="@+id/highlightWeightLinearL"/>
+                app:layout_constraintTop_toBottomOf="@+id/highlightWeightLinearL" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
