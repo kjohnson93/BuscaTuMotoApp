@@ -34,7 +34,6 @@ class FilterFragment : BaseFragment(), Injectable {
     private lateinit var viewModel: FilterViewModel
     private lateinit var binding: FragmentFilterBinding
     private var errorSnackbar: Snackbar? = null
-    private lateinit var mAdView: AdView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -292,11 +291,21 @@ class FilterFragment : BaseFragment(), Injectable {
          * Google ads
          */
 
-        mAdView = binding.adView
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+        // Step 1 - Create an AdView and set the ad unit ID on it.
+        val adView = AdView(requireContext())
+        adView.adUnitId = GOOGLE_AD_TEST_UNIT_ID
+        binding.adContainer.addView(adView)
 
-        mAdView.adListener = object: AdListener() {
+        val adSize = getAdSize(requireActivity())
+
+        // Step 4 - Set the adaptive ad size on the ad view.
+        adView.adSize = adSize
+
+        // Step 5 - Start loading the ad in the background.
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
+
+        adView.adListener = object: AdListener() {
             override fun onAdFailedToLoad(p0: LoadAdError?) {
                 super.onAdFailedToLoad(p0)
                 sendOnAdLeftApplicationAnalytics()

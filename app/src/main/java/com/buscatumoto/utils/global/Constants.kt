@@ -151,3 +151,5 @@ const val DETAIL_RELATED_TAB_POSITION = 1
 /**
  * Main Container Fragment
  */
+
+const val GOOGLE_AD_TEST_UNIT_ID = "ca-app-pub-3940256099942544/6300978111"

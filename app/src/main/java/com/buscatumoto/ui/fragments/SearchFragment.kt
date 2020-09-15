@@ -3,6 +3,7 @@ package com.buscatumoto.ui.fragments
 import android.os.Bundle
 import android.os.Handler
 import android.transition.TransitionInflater
+import android.util.DisplayMetrics
 import android.view.*
 import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
@@ -19,10 +20,7 @@ import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import javax.inject.Inject
@@ -40,7 +38,6 @@ class SearchFragment : BaseFragment(), Injectable,
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: FrontPageViewModel
     private lateinit var binding: FragmentSearchBinding
-    private lateinit var mAdView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,7 +96,7 @@ class SearchFragment : BaseFragment(), Injectable,
         })
 
         val slideUp = slideUpAnimation(requireContext())
-        Handler().postDelayed( {
+        Handler().postDelayed({
             binding.brandsRecyclerView.visibility = View.VISIBLE
             binding.brandsRecyclerView.startAnimation(slideUp)
         }, 1500)
@@ -116,11 +113,21 @@ class SearchFragment : BaseFragment(), Injectable,
          * Google ads
          */
 
-        mAdView = binding.adView
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+        // Step 1 - Create an AdView and set the ad unit ID on it.
+        val adView = AdView(requireContext())
+        adView.adUnitId = GOOGLE_AD_TEST_UNIT_ID
+        binding.adContainer.addView(adView)
 
-        mAdView.adListener = object: AdListener() {
+        val adSize = getAdSize(requireActivity())
+
+        // Step 4 - Set the adaptive ad size on the ad view.
+        adView.adSize = adSize
+
+        // Step 5 - Start loading the ad in the background.
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
+
+        adView.adListener = object: AdListener() {
             override fun onAdFailedToLoad(p0: LoadAdError?) {
                 super.onAdFailedToLoad(p0)
                 sendOnAdLeftApplicationAnalytics()
@@ -191,12 +198,18 @@ class SearchFragment : BaseFragment(), Injectable,
         var index = 0
 
         while (index < drawabletypedArray.length()) {
-            val brandRecyclerUiModel = BrandRecyclerUiModel(brandNamesTypedArray.getString(index), drawabletypedArray.getDrawable(index))
+            val brandRecyclerUiModel = BrandRecyclerUiModel(
+                brandNamesTypedArray.getString(index), drawabletypedArray.getDrawable(
+                    index
+                )
+            )
             brandRecyclerUiModelList.add(brandRecyclerUiModel)
             index ++
         }
 
-        val modifiedList: List<BrandRecyclerUiModel?> = listOf(brandRecyclerUiModelList.last()) + brandRecyclerUiModelList + listOf(brandRecyclerUiModelList.first())
+        val modifiedList: List<BrandRecyclerUiModel?> = listOf(brandRecyclerUiModelList.last()) + brandRecyclerUiModelList + listOf(
+            brandRecyclerUiModelList.first()
+        )
 
         searchBrandsAdapter.updateBrandHighLights(modifiedList as List<BrandRecyclerUiModel>)
     }

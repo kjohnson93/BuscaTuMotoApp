@@ -2,11 +2,14 @@ package com.buscatumoto.utils.global
 
 import android.app.Activity
 import android.content.Context
+import android.util.DisplayMetrics
+import android.view.Display
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import com.buscatumoto.R
+import com.google.android.gms.ads.AdSize
 import java.lang.Double
 import java.text.SimpleDateFormat
 import java.util.*
@@ -123,6 +126,19 @@ fun fadeInAnimation(context: Context): Animation {
 
 fun fadeOutAnimation(context: Context): Animation {
     return AnimationUtils.loadAnimation(context, R.anim.fade_out)
+}
+
+fun getAdSize(activity: Activity): AdSize? {
+    // Step 2 - Determine the screen width (less decorations) to use for the ad width.
+    val display: Display = activity.windowManager.defaultDisplay
+    val outMetrics = DisplayMetrics()
+    display.getMetrics(outMetrics)
+    val widthPixels = outMetrics.widthPixels.toFloat()
+    val density = outMetrics.density
+    val adWidth = (widthPixels / density).toInt()
+
+    // Step 3 - Get adaptive ad size and return for setting on the ad view.
+    return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(activity, adWidth)
 }
 
 /**

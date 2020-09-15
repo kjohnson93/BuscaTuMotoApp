@@ -29,7 +29,6 @@ class DetailRelatedFragment: BaseFragment(), Injectable {
 
     private lateinit var viewModel: DetailRelatedViewModel
 
-    private lateinit var mAdView: AdView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,12 +50,21 @@ class DetailRelatedFragment: BaseFragment(), Injectable {
         /**
          * Google ads
          */
+        // Step 1 - Create an AdView and set the ad unit ID on it.
+        val adView = AdView(requireContext())
+        adView.adUnitId = GOOGLE_AD_TEST_UNIT_ID
+        binding.adContainer.addView(adView)
 
-        mAdView = binding.adView
+        val adSize = getAdSize(requireActivity())
+
+        // Step 4 - Set the adaptive ad size on the ad view.
+        adView.adSize = adSize
+
+        // Step 5 - Start loading the ad in the background.
         val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+        adView.loadAd(adRequest)
 
-        mAdView.adListener = object: AdListener() {
+        adView.adListener = object: AdListener() {
             override fun onAdFailedToLoad(p0: LoadAdError?) {
                 super.onAdFailedToLoad(p0)
                 sendOnAdLeftApplicationAnalytics()
