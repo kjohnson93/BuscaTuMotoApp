@@ -100,6 +100,20 @@ class DetailRelatedViewModel @Inject constructor(val loadRelatedMotosUseCase:
     }
 
     override fun onItemClick(id: String) {
-        _navigateMutable.value = true
+        
+        //Save last moto selected
+        viewModelScope.launch(Dispatchers.IO) {
+            val motosList = relatedMotosData.value?.data?.motos
+            val moto = motosList?.find { it.id == id }
+            //Assigning 1 because dao is intended to only have a single record.
+            moto?.internalId = 1
+            loadRelatedMotosUseCase.saveMoto(moto)
+
+            withContext(Dispatchers.Main) {
+                motoSelectedMutable.value = moto
+                _navigateMutable.value = true
+            }
+        }
+
     }
 }

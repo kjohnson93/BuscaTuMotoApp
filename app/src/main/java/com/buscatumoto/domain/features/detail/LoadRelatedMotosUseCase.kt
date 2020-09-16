@@ -1,5 +1,6 @@
 package com.buscatumoto.domain.features.detail
 
+import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.remote.dto.response.MotoResponse
 import com.buscatumoto.data.remote.repositories.BuscaTuMotoRepository
@@ -11,5 +12,14 @@ class LoadRelatedMotosUseCase @Inject constructor(val buscaTuMotoRepository: Bus
                         pageIndex: Int? = null
     ): Result<MotoResponse> {
         return buscaTuMotoRepository.getMotosSearchRelatedResponse(id, pageIndex)
+    }
+
+    /**
+     * Saves or replaces current motoEntity record on MotoDAO.
+     */
+    suspend fun saveMoto(moto: MotoEntity?) {
+        moto?.let {
+            buscaTuMotoRepository.saveMoto(it)
+        }
     }
 }
