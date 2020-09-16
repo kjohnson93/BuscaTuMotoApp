@@ -29,8 +29,9 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
     val catalogueData = MutableLiveData<Result<MotoResponse>>()
     private val _navigateMutable = MutableLiveData<Boolean>()
     val navigateLiveData: LiveData<Boolean> = _navigateMutable
-    val _motoSelectedMutable = MutableLiveData<MotoEntity>()
-    val motoSelectedLiveData = _motoSelectedMutable
+    private val motoSelectedMutable = MutableLiveData<MotoEntity>()
+    val motoSelectedLiveData: LiveData<MotoEntity> = motoSelectedMutable
+
 
     //Error management
     private var errorMessage = MutableLiveData<String>()
@@ -83,7 +84,7 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
             loadCatalogueUseCase.saveMoto(moto)
 
             withContext(Dispatchers.Main) {
-                motoSelectedLiveData.value = moto
+                motoSelectedMutable.value = moto
                 _navigateMutable.value = true
             }
         }

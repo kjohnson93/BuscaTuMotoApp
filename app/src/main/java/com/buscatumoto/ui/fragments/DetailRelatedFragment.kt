@@ -6,28 +6,46 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.R
+import com.buscatumoto.data.local.entity.MotoEntity
+import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.databinding.DetailRelatedFragmentBinding
 import com.buscatumoto.injection.Injectable
+import com.buscatumoto.ui.adapters.CatalogueListAdapter
 import com.buscatumoto.ui.viewmodels.DetailRelatedViewModel
 import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
+import com.buscatumoto.utils.ui.CatalogueItemClickListener
+import com.buscatumoto.utils.ui.PaginationListener
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import javax.inject.Inject
 
-class DetailRelatedFragment: BaseFragment(), Injectable {
+class DetailRelatedFragment: BaseFragment(), Injectable,
+    CatalogueItemClickListener, SwipeRefreshLayout.OnRefreshListener{
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-
     private lateinit var binding: DetailRelatedFragmentBinding
-
     private lateinit var viewModel: DetailRelatedViewModel
+    private lateinit var catalogueListAdapter : CatalogueListAdapter
+
+    private var snackbarError: Snackbar? = null
+    private var isLoading = false
+    private var isLastPage = false
+    private var currentPage = PAGE_START
 
 
     override fun onCreateView(
@@ -41,11 +59,118 @@ class DetailRelatedFragment: BaseFragment(), Injectable {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+
+        viewModel.getErrorMessage().observe(viewLifecycleOwner, Observer { errorMessage ->
+            if (errorMessage != null) {
+                showErrorMessage(errorMessage)
+            } else {
+                hideError()
+            }
+        })
+
+
+        var layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+        catalogueListAdapter = CatalogueListAdapter(this, viewLifecycleOwner,
+            BuscaTuMotoApplication.getInstance().applicationContext)
+        binding.catalagueContentRv.adapter = catalogueListAdapter
+        binding.catalagueContentRv.layoutManager = layoutManager
+        binding.catalagueContentRv.addOnScrollListener(getScrollableListener(layoutManager))
+        binding.swipeRefresh.setOnRefreshListener(this)
+
         return binding.root
+    }
+
+    private fun getScrollableListener(layoutManager: LinearLayoutManager): RecyclerView.OnScrollListener {
+
+        return object: PaginationListener(layoutManager) {
+            override fun loadMoreItems() {
+                isLoading = true
+                viewModel.loadMoreItems()
+            }
+            override fun isLastPage(): Boolean {
+                return isLastPage
+            }
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.catalogueFragmentPbar.visibility = View.VISIBLE
+
+        /**
+         * Observer section
+         */
+
+        viewModel.relatedMotosData.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Result.Status.SUCCESS -> {
+                    binding.catalogueFragmentPbar.visibility = View.GONE
+                    binding.catalogueNoResults.visibility = View.GONE
+                    isLoading = false
+
+                    it.data?.let { list ->
+                        if (it.data.motos.isEmpty()) {
+                            binding.catalogueNoResults.visibility = View.VISIBLE
+                        } else {
+
+                            if (currentPage != PAGE_START) {
+                                catalogueListAdapter.removeLoading()
+                            }
+
+                            binding.catalogueNoResults.visibility = View.GONE
+                            catalogueListAdapter.addItems(it.data.motos)
+                            binding.swipeRefresh.isRefreshing = false
+
+                            //layoutManager = null
+                        }
+                    }
+                }
+                Result.Status.LOADING -> {
+                    if (currentPage != PAGE_START) {
+                        catalogueListAdapter.addLoading()
+                    } else {
+                        //Show global loading
+                        binding.catalogueFragmentPbar.visibility = View.VISIBLE
+                    }
+                }
+                Result.Status.ERROR -> {
+                    binding.catalogueFragmentPbar.visibility = View.GONE
+                    showErrorMessage(it.message)
+                    //layoutManager = null
+                }
+            }
+        })
+
+
+        viewModel.isLastPageLiveData.observe(viewLifecycleOwner, Observer {
+                result ->
+            isLastPage = true
+        })
+
+        viewModel.currentPageLiveData.observe(viewLifecycleOwner, Observer {
+                result ->
+            this.currentPage = result
+        })
+
+        viewModel.navigateLiveData.observe(viewLifecycleOwner, Observer {
+                result ->
+            if (result) {
+                findNavController().navigate(R.id.motoDetailHostFragment)
+            }
+        })
+
+        viewModel.motoSelectedLiveData.observe(viewLifecycleOwner, Observer {
+                result ->
+            sendMotoSelectedAnalytics(result)
+        })
+
+        /**
+         * Observer section
+         */
 
         /**
          * Google ads
@@ -103,6 +228,17 @@ class DetailRelatedFragment: BaseFragment(), Injectable {
         viewModelStore.clear()
     }
 
+    private fun hideError() {
+        snackbarError?.dismiss()
+    }
+
+    private fun showErrorMessage(errorMessage: String?) {
+        snackbarError =
+            Snackbar.make(binding.root, errorMessage.toString(), Snackbar.LENGTH_INDEFINITE)
+        snackbarError?.setAction(R.string.retry, viewModel.retryClickListener)
+        snackbarError?.show()
+    }
+
     /**
      * Google Analytics
      */
@@ -142,7 +278,68 @@ class DetailRelatedFragment: BaseFragment(), Injectable {
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
     }
 
+    private fun sendMotoSelectedAnalytics(result: MotoEntity?)  = firebaseAnalytics.run {
+        val brandBundle = Bundle()
+        brandBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_BRAND_SELECTED_ID)
+        brandBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        brandBundle.putString(FirebaseAnalytics.Param.VALUE, result?.brand)
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, brandBundle)
+
+        val modelBundle = Bundle()
+        modelBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_MODEL_SELECTED_ID)
+        modelBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        modelBundle.putString(FirebaseAnalytics.Param.VALUE, result?.model)
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, modelBundle)
+
+        val displacementBundle = Bundle()
+        displacementBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_DISPLACEMENT_SELECTED_ID)
+        displacementBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        displacementBundle.putString(FirebaseAnalytics.Param.VALUE, result?.displacement.toString())
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, displacementBundle)
+
+        val weightBundle = Bundle()
+        weightBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_WEIGHT_SELECTED_ID)
+        weightBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        weightBundle.putString(FirebaseAnalytics.Param.VALUE, result?.weight.toString())
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, weightBundle)
+
+        val powerBundle = Bundle()
+        powerBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_POWER_SELECTED_ID)
+        powerBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        powerBundle.putString(FirebaseAnalytics.Param.VALUE, result?.power.toString())
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, powerBundle)
+
+        val priceBundle = Bundle()
+        priceBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_PRICE_SELECTED_ID)
+        priceBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        priceBundle.putString(FirebaseAnalytics.Param.VALUE, result?.price.toString())
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, priceBundle)
+
+        val yearBundle = Bundle()
+        yearBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_YEAR_SELECTED_ID)
+        yearBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        yearBundle.putString(FirebaseAnalytics.Param.VALUE, result?.year.toString())
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, yearBundle)
+
+        val licenseBundle = Bundle()
+        licenseBundle.putString(FirebaseAnalytics.Param.ITEM_ID, CATALOGUE_ITEM_LICENSES_SELECTED_ID)
+        licenseBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CATALOGUE_CONTENT_TYPE)
+        licenseBundle.putString(FirebaseAnalytics.Param.VALUE, result?.licenses?.size.toString())
+        this.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, licenseBundle)
+    }
+
     /**
      * Google Analytics
      */
+
+    override fun onRefresh() {
+        currentPage = PaginationListener.PAGE_START;
+        isLastPage = false
+        catalogueListAdapter.clear()
+        viewModel.onRefresh()
+    }
+
+    override fun onItemClick(id: String) {
+        viewModel.onItemClick(id)
+    }
 }

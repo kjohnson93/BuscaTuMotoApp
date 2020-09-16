@@ -20,5 +20,7 @@ class APIConstants {
         const val MOTO_FILTER_URL = "api/moto/filter"
 
         const val MOTO_SEARCH_URL = "api/moto/search/{search}"
+
+        const val MOTO_SEARCH_RELATED_URL ="api/moto/searchRelated"
     }
 }

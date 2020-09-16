@@ -41,5 +41,8 @@ interface BuscaTuMotoService {
     @GET(APIConstants.MOTO_SEARCH_URL)
     suspend fun search(@Path("search") search: String?, @Query("page") page: Int?): Response<MotoResponse>
 
+    @GET(APIConstants.MOTO_SEARCH_RELATED_URL)
+    suspend fun searchRelated(@Query("id") id: String? = null,
+                              @Query("page") page: Int?): Response<MotoResponse>
 
 }

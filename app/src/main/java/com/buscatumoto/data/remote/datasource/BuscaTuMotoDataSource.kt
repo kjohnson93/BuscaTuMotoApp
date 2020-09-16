@@ -50,4 +50,7 @@ class BuscaTuMotoDataSource @Inject constructor(private val buscaTuMotoService: 
     }
     suspend fun search(search: String, pageIndex: Int?) =
         getResult { buscaTuMotoService.search(search, pageIndex) }
+
+    suspend fun searchRelated(id: String, pageIndex: Int?) =
+        getResult { buscaTuMotoService.searchRelated(id, pageIndex) }
 }

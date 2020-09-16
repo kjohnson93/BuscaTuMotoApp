@@ -11,25 +11,68 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:nestedScrollingEnabled="false"
-        tools:context=".ui.activities.MotoDetailActivity">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:background="@drawable/bar_shadow"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@drawable/bar_shadow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="Related" />
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/adContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/catalague_content_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:paddingStart="5dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="10dp"
+                android:scrollbarSize="4dp"
+                android:scrollbarThumbVertical="@color/colorPrimary"
+                android:scrollbars="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <ProgressBar
+            android:id="@+id/catalogueFragmentPbar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:indeterminate="false"
+            android:indeterminateBehavior="cycle"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/adContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/catalogueNoResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="@string/catalogue_no_results"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:mutableVisibility="@{viewModel.noResultVisibility}" />
 
         <FrameLayout
             android:id="@+id/adContainer"
@@ -37,7 +80,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -161,6 +161,11 @@ class BuscaTuMotoRepository @Inject constructor(
         return motoResponse
     }
 
+    suspend fun getMotosSearchRelatedResponse(id: String, pageIndex: Int? = null): Result<MotoResponse> {
+
+        return buscaTuMotoDataSource.searchRelated(id, pageIndex)
+    }
+
     /**
      * Gets last search query from Dao
      */
