@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#CA2A1D</color>
+    <color name="colorPrimaryDark">#8D1A10</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="grey_separator">#BBBBBB</color>
+    <color name="grey_dot_indicator_border">#CCCCCC</color>
+    <color name="grey_dot_indicator_fill_color">#B82323</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="colorPrimary_transparent">#40CA2A1D</color>
+    <color name="color_background_recyclerlist">#FAFAFA</color>
+    <color name="grey_tint">#7A7A7A</color>
 </resources>
