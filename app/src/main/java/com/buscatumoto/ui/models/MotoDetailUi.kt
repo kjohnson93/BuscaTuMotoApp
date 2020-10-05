@@ -13,9 +13,7 @@ data class MotoDetailUi (
      var priceDesc : String,
      var mainDesc : String,
      var licensesTitle : String,
-     var licenses : String,
-     var specsTitle : String,
-     var specsTable: ArrayList<ArrayList<String>>
+     var licenses : String
      //list of
     //                       @field:SerializedName("specsTable") val specsTable : List<List<String>>
 //     val relatedItems : List<String>,
@@ -28,9 +26,7 @@ data class MotoDetailUi (
           parcel.readString(),
           parcel.readString(),
           parcel.readString(),
-          parcel.readString(),
-          parcel.readString(),
-          TODO("specsTable")
+          parcel.readString()
      ) {
      }
 
@@ -42,7 +38,6 @@ data class MotoDetailUi (
           parcel.writeString(mainDesc)
           parcel.writeString(licensesTitle)
           parcel.writeString(licenses)
-          parcel.writeString(specsTitle)
      }
 
      override fun describeContents(): Int {

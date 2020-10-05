@@ -22,7 +22,7 @@ import com.buscatumoto.utils.data.Converters
  * The Room database for this app
  */
 @Database(entities = [SearchEntity::class, FieldsEntity::class, MotoEntity::class],
-    version = 2, exportSchema = false)
+    version = 3, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 

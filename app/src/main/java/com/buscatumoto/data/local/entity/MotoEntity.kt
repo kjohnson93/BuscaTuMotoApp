@@ -26,8 +26,6 @@ data class MotoEntity(
     @field:SerializedName("mainDesc") val mainDesc: String,
     @field:SerializedName("licenses") val licenses: List<String>,
     @field:SerializedName("licensesTitle") val licensesTitle: String,
-    @field:SerializedName("specsTitle") val specsTitle: String,
-    @field:SerializedName("specsTable") val specsTable: List<List<String>>,
     @field:SerializedName("relatedItems") val relatedItems: List<String>,
     @field:SerializedName("relatedItemsUrl") val relatedItemsUrl: List<String>
 )

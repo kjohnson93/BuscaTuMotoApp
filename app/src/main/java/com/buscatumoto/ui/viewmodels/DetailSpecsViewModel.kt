@@ -23,8 +23,6 @@ class DetailSpecsViewModel @Inject constructor(): ViewModel() {
     )
 
     fun bind(motoDetailUi: MotoDetailUi) {
-        detailSpecsRecyclerAdapter.updateData(motoDetailUi.specsTable)
 
-        //TODO If specstable is empty use databind to show textview instead of recyclerlayout inside a framelayout
     }
 }
