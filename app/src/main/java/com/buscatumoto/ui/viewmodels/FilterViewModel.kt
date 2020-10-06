@@ -672,6 +672,7 @@ class FilterViewModel @Inject constructor(
         year: String? = null,
         license: String? = null
     ) {
+        val locale = BuscaTuMotoApplication.getInstance().getDefaultLanguage()
         loadingVisibility.value = View.VISIBLE
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -688,6 +689,7 @@ class FilterViewModel @Inject constructor(
                     weightTop,
                     year,
                     license,
+                    locale.language,
                     0
                 )
                 withContext(Dispatchers.Main) {

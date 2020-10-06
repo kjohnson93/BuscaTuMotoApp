@@ -29,6 +29,7 @@ class BuscaTuMotoDataSource @Inject constructor(private val buscaTuMotoService: 
         weightTop: Double? = null,
         year: Int? = null,
         license: String? = null,
+        language: String? = null,
         pageIndex: Int? = null
     ) = getResult {
         buscaTuMotoService.filter(
@@ -45,12 +46,14 @@ class BuscaTuMotoDataSource @Inject constructor(private val buscaTuMotoService: 
             weightTop,
             year,
             license,
+            language,
             pageIndex
         )
     }
-    suspend fun search(search: String, pageIndex: Int?) =
-        getResult { buscaTuMotoService.search(search, pageIndex) }
+    suspend fun search(search: String, language: String? = null,
+                       pageIndex: Int?) =
+        getResult { buscaTuMotoService.search(search, language, pageIndex) }
 
-    suspend fun searchRelated(id: String, pageIndex: Int?) =
-        getResult { buscaTuMotoService.searchRelated(id, pageIndex) }
+    suspend fun searchRelated(id: String, language: String? = null, pageIndex: Int?) =
+        getResult { buscaTuMotoService.searchRelated(id, language, pageIndex) }
 }

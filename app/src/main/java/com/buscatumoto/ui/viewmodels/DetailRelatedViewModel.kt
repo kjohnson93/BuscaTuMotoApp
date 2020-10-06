@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.remote.dto.response.MotoResponse
@@ -63,9 +64,10 @@ class DetailRelatedViewModel @Inject constructor(val loadRelatedMotosUseCase:
             //Get id
             val moto = loadMotoDetailUseCase.getMoto()
             val id = moto.id
+            val locale = BuscaTuMotoApplication.getInstance().getDefaultLanguage()
 
             val result = loadRelatedMotosUseCase.
-            getMotosRelated(id, pageIndex)
+            getMotosRelated(id, locale.language, pageIndex)
 
             withContext(Dispatchers.Main) {
                 relatedMotosData.value = result
@@ -86,8 +88,9 @@ class DetailRelatedViewModel @Inject constructor(val loadRelatedMotosUseCase:
         _currentPageMutable.value = currentPage
         relatedMotosData.value = Result.loading(null)
         viewModelScope.launch(Dispatchers.IO) {
+            val locale = BuscaTuMotoApplication.getInstance().getDefaultLanguage()
             val motoResponse = loadRelatedMotosUseCase.getMotosRelated(
-                lastMotoId, currentPage)
+                lastMotoId, locale.language, currentPage)
             withContext(Dispatchers.Main) {
                 motoResponse.data?.totalPages?.let {
                     if (motoResponse.data.number >= it - 1) {

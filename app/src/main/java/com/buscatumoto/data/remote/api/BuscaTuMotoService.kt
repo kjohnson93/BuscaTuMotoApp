@@ -34,15 +34,18 @@ interface BuscaTuMotoService {
                        @Query("weight_u") weightTop: Double? = null,
                        @Query("year") year: Int? = null,
                        @Query("licenses") license: String? = null,
+                       @Query("language") language: String? = null,
                        @Query("page") page: Int? = null): Response<MotoResponse>
 
 
 
     @GET(APIConstants.MOTO_SEARCH_URL)
-    suspend fun search(@Path("search") search: String?, @Query("page") page: Int?): Response<MotoResponse>
+    suspend fun search(@Path("search") search: String?, @Query("language") language: String? = null,
+                       @Query("page") page: Int?): Response<MotoResponse>
 
     @GET(APIConstants.MOTO_SEARCH_RELATED_URL)
     suspend fun searchRelated(@Query("id") id: String? = null,
+                              @Query("language") language: String? = null,
                               @Query("page") page: Int?): Response<MotoResponse>
 
 }

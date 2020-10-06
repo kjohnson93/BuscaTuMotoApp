@@ -110,13 +110,14 @@ class BuscaTuMotoRepository @Inject constructor(
         weightTop: Double? = null,
         year: Int? = null,
         license: String? = null,
+        language: String? = null,
         pageIndex: Int? = null
     ): Result<MotoResponse> {
 
         val motoResponse = buscaTuMotoDataSource.filter(
             brand, model, bikeType,
             priceBottom, priceTop, powerBottom, powerTop, displacementBottom, displacementTop,
-            weightBottom, weightTop, year, license, pageIndex
+            weightBottom, weightTop, year, license, language, pageIndex
         )
         searchDao.delete()
         searchDao.insert(
@@ -144,10 +145,11 @@ class BuscaTuMotoRepository @Inject constructor(
 
     suspend fun getMotosSearchResponse(
         search: String,
+        language: String? = null,
         pageIndex: Int? = null
     ): Result<MotoResponse> {
 
-        val motoResponse = buscaTuMotoDataSource.search(search, pageIndex)
+        val motoResponse = buscaTuMotoDataSource.search(search, language, pageIndex)
 
         searchDao.delete()
         searchDao.insert(
@@ -161,9 +163,11 @@ class BuscaTuMotoRepository @Inject constructor(
         return motoResponse
     }
 
-    suspend fun getMotosSearchRelatedResponse(id: String, pageIndex: Int? = null): Result<MotoResponse> {
+    suspend fun getMotosSearchRelatedResponse(id: String,
+                                              language: String? = null,
+                                              pageIndex: Int? = null): Result<MotoResponse> {
 
-        return buscaTuMotoDataSource.searchRelated(id, pageIndex)
+        return buscaTuMotoDataSource.searchRelated(id, language, pageIndex)
     }
 
     /**

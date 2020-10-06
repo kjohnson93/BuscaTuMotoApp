@@ -9,9 +9,10 @@ import javax.inject.Inject
 class LoadRelatedMotosUseCase @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRepository) {
 
     suspend fun getMotosRelated(id: String,
+                                language: String? = null,
                         pageIndex: Int? = null
     ): Result<MotoResponse> {
-        return buscaTuMotoRepository.getMotosSearchRelatedResponse(id, pageIndex)
+        return buscaTuMotoRepository.getMotosSearchRelatedResponse(id, language, pageIndex)
     }
 
     /**

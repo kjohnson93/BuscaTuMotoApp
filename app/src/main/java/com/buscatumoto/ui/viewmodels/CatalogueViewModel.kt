@@ -2,6 +2,7 @@ package com.buscatumoto.ui.viewmodels
 
 import android.view.View
 import androidx.lifecycle.*
+import com.buscatumoto.BuscaTuMotoApplication
 import com.buscatumoto.data.local.entity.MotoEntity
 import com.buscatumoto.data.remote.api.Result
 import com.buscatumoto.data.remote.dto.response.MotoResponse
@@ -58,7 +59,9 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
             _currentPageMutable.value = currentPage
         catalogueData.value = Result.loading(null)
         viewModelScope.launch(Dispatchers.IO) {
-                val motoResponse = loadCatalogueUseCase.getMotosCatalogue(currentPage)
+                val locale = BuscaTuMotoApplication.getInstance().getDefaultLanguage()
+                val motoResponse = loadCatalogueUseCase.
+                getMotosCatalogue(locale.language, currentPage)
                 withContext(Dispatchers.Main) {
                     motoResponse.data?.totalPages?.let {
                         if (motoResponse.data.number >= it - 1) {
@@ -95,7 +98,9 @@ class CatalogueViewModel @Inject constructor(private val loadCatalogueUseCase: L
         lastPageRequested = pageIndex
         catalogueData.value = Result.loading(null)
         viewModelScope.launch(Dispatchers.IO) {
-            val motoResponse = loadCatalogueUseCase.getMotosCatalogue(pageIndex)
+            val locale = BuscaTuMotoApplication.getInstance().getDefaultLanguage()
+            val motoResponse = loadCatalogueUseCase
+                .getMotosCatalogue(locale.language, pageIndex)
             withContext(Dispatchers.Main) {
                 catalogueData.value = motoResponse
             }

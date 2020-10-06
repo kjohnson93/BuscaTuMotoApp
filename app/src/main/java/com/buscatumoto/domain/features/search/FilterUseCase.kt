@@ -34,6 +34,7 @@ class FilterUseCase @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRe
                                        weightTop: String? = null,
                                        year: String? = null,
                                        license: String? = null,
+                                       language: String? = null,
                                        pageIndex: Int? = null): Result<MotoResponse> {
 
         var brandForm: String? = null
@@ -78,7 +79,7 @@ class FilterUseCase @Inject constructor(val buscaTuMotoRepository: BuscaTuMotoRe
 
         return buscaTuMotoRepository.getMotosFilterResponse(brandForm, modelForm, bikeTypeForm, priceBottomForm, priceTopForm,
             powerBottomForm, powerTopForm, displacementBottomForm, displacementTopForm, weightBottomForm,
-            weightTopForm, yearForm, license, pageIndex)
+            weightTopForm, yearForm, license, language, pageIndex)
     }
 
     /**
