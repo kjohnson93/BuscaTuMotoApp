@@ -47,4 +47,5 @@
     <string name="power">Power</string>
     <string name="price">Price</string>
     <string name="Weight">Weight</string>
+    <string name="motos_similares">Related bikes</string>
 </resources>

@@ -21,6 +21,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/relatedTitleTvw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/arialbd"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/motos_similares" />
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
@@ -28,7 +41,7 @@
             app:layout_constraintBottom_toTopOf="@id/adContainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/relatedTitleTvw">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/catalague_content_rv"

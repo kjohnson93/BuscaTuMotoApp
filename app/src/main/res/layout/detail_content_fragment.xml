@@ -85,6 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/arialbd"
+            android:paddingStart="10dp"
             android:padding="5dp"
             android:text="@string/highlights"
             android:textColor="@color/black"
