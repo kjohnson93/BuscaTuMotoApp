@@ -34,7 +34,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import javax.inject.Inject
 
 class DetailRelatedFragment: BaseFragment(), Injectable,
-    CatalogueItemClickListener, SwipeRefreshLayout.OnRefreshListener{
+    CatalogueItemClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -75,7 +75,15 @@ class DetailRelatedFragment: BaseFragment(), Injectable,
         binding.catalagueContentRv.adapter = catalogueListAdapter
         binding.catalagueContentRv.layoutManager = layoutManager
         binding.catalagueContentRv.addOnScrollListener(getScrollableListener(layoutManager))
-        binding.swipeRefresh.setOnRefreshListener(this)
+
+        /**
+         * To hide swipe refresh animation
+         */
+        binding.swipeRefresh.isRefreshing = false
+        binding.swipeRefresh.isEnabled = false
+        /**
+         * To hide swipe refresh animation
+         */
 
         return binding.root
     }
@@ -332,12 +340,6 @@ class DetailRelatedFragment: BaseFragment(), Injectable,
      * Google Analytics
      */
 
-    override fun onRefresh() {
-        currentPage = PaginationListener.PAGE_START;
-        isLastPage = false
-        catalogueListAdapter.clear()
-        viewModel.onRefresh()
-    }
 
     override fun onItemClick(id: String) {
         viewModel.onItemClick(id)
