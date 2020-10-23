@@ -64,6 +64,8 @@ class DetailRelatedViewModel @Inject constructor(val loadRelatedMotosUseCase:
             //Get id
             val moto = loadMotoDetailUseCase.getMoto()
             val id = moto.id
+            lastMotoId = id
+
             val locale = BuscaTuMotoApplication.getInstance().getDefaultLanguage()
 
             val result = loadRelatedMotosUseCase.
@@ -83,23 +85,27 @@ class DetailRelatedViewModel @Inject constructor(val loadRelatedMotosUseCase:
      * Loads next page including next 20 items
      */
     fun loadMoreItems() {
-        currentPage++
-        lastPageRequested = currentPage
-        _currentPageMutable.value = currentPage
-        relatedMotosData.value = Result.loading(null)
-        viewModelScope.launch(Dispatchers.IO) {
-            val locale = BuscaTuMotoApplication.getInstance().getDefaultLanguage()
-            val motoResponse = loadRelatedMotosUseCase.getMotosRelated(
-                lastMotoId, locale.language, currentPage)
-            withContext(Dispatchers.Main) {
-                motoResponse.data?.totalPages?.let {
-                    if (motoResponse.data.number >= it - 1) {
-                        _isLastPageMutable.value = true
-                    }
-                }
-                relatedMotosData.value = motoResponse
-            }
-        }
+
+        /**
+         * Commented block because we don't want to load more items in related fragment
+         */
+//        currentPage++
+//        lastPageRequested = currentPage
+//        _currentPageMutable.value = currentPage
+//        relatedMotosData.value = Result.loading(null)
+//        viewModelScope.launch(Dispatchers.IO) {
+//            val locale = BuscaTuMotoApplication.getInstance().getDefaultLanguage()
+//            val motoResponse = loadRelatedMotosUseCase.getMotosRelated(
+//                lastMotoId, locale.language, currentPage)
+//            withContext(Dispatchers.Main) {
+//                motoResponse.data?.totalPages?.let {
+//                    if (motoResponse.data.number >= it - 1) {
+//                        _isLastPageMutable.value = true
+//                    }
+//                }
+//                relatedMotosData.value = motoResponse
+//            }
+//        }
     }
 
     override fun onItemClick(id: String) {
