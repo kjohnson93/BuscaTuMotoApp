@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">BuscaTuMoto</string>
     <string-array name="planets_array">
         <item>-</item>
         <item>Husqvarna</item>
@@ -59,4 +58,5 @@
     <string name="price">Price</string>
     <string name="Weight">Weight</string>
     <string name="motos_similares">Related bikes</string>
+    <string name="app_name">MotoDB</string>
 </resources>

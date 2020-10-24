@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">BuscaTuMoto</string>
+    <string name="app_name">MotoDB</string>
     <string name="retry">Reintentar</string>
     <string name="build_fields_form_error">Quelcom ha fallat formant filtre</string>
     <string name="load_fields_error">S\'ha produït un error a l\'carregar les dades dels camps</string>
