@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.8"
-        app:srcCompat="@drawable/banner_logo" />
+        app:srcCompat="@drawable/new_banner_round" />
 
 
 
