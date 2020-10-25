@@ -48,4 +48,5 @@
     <string name="price">Preu</string>
     <string name="Weight">Pes</string>
     <string name="motos_similares">Motos semblants</string>
+    <string name="server_error">Hi ha hagut un error al servidor. Intenteu-ho més tard</string>
 </resources>

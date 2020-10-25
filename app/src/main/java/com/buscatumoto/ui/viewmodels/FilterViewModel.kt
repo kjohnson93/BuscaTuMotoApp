@@ -701,10 +701,9 @@ class FilterViewModel @Inject constructor(
                 }
             } catch (exception: Exception) {
                 Timber.e("Something went wrong building filter form")
-                loadingVisibility.value = View.GONE
-                navigationButtonVisibility.value = View.GONE
-                errorMutable.value =
-                    RetryErrorModel(R.string.build_fields_form_error, RetryErrorModel.FILTER_ERROR)
+                loadingVisibility.postValue(View.GONE)
+                navigationButtonVisibility.postValue(View.GONE)
+                errorMutable.postValue(RetryErrorModel(R.string.server_error, RetryErrorModel.FILTER_ERROR))
             }
         }
     }

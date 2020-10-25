@@ -59,4 +59,5 @@
     <string name="Weight">Weight</string>
     <string name="motos_similares">Related bikes</string>
     <string name="app_name">MotoDB</string>
+    <string name="server_error">A server error has ocurred. Try again later.</string>
 </resources>
