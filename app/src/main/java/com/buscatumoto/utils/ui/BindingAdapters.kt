@@ -96,39 +96,6 @@ fun setMutableExpand(view: View, visibility: MutableLiveData<Boolean>) {
     }
 }
 
-
-    @BindingAdapter("mutableSpinner")
-    fun setSpinner(view: Spinner, spinnerDataObservable: MutableLiveData<List<String>>) {
-
-        val parentActivity: AppCompatActivity? = view.getParentActivity()
-
-        if (parentActivity != null) {
-            spinnerDataObservable.value?.let {
-                spinnerDataObservable.observe(parentActivity, Observer {
-                        spinnerDataObservable : List<String>? ->
-                    val brandTypeSpinnerAdapter = ArrayAdapter<String>(parentActivity, R.layout.simple_spinner_item, spinnerDataObservable)
-                    view?.adapter = brandTypeSpinnerAdapter
-                })
-            }
-        }
-    }
-
-    @BindingAdapter("spinnerData", "firstRow")
-    fun setSpinner(view: Spinner, list: List<String>, firstRow: String) {
-
-        val parentActivity: AppCompatActivity? = view.getParentActivity()
-
-
-        (list as ArrayList<String>).apply {
-            this.remove("")
-            this.add(0, firstRow) }
-
-        val brandTypeSpinnerAdapter = ArrayAdapter<String>(parentActivity, R.layout.simple_spinner_item, list)
-        view?.adapter = brandTypeSpinnerAdapter
-
-
-    }
-
     @BindingAdapter("mutableDrawable")
     fun setDrawable(view: ImageView, drawableObservable: MutableLiveData<Drawable>) {
 

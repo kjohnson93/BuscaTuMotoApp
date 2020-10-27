@@ -198,11 +198,15 @@ class SearchFragment : BaseFragment(), Injectable,
         var index = 0
 
         while (index < drawabletypedArray.length()) {
-            val brandRecyclerUiModel = BrandRecyclerUiModel(
-                brandNamesTypedArray.getString(index), drawabletypedArray.getDrawable(
-                    index
-                )
-            )
+            val brandRecyclerUiModel = drawabletypedArray.getDrawable(
+                index
+            )?.let {
+                brandNamesTypedArray.getString(index)?.let { it1 ->
+                    BrandRecyclerUiModel(
+                        it1, it
+                    )
+                }
+            }
             brandRecyclerUiModelList.add(brandRecyclerUiModel)
             index ++
         }
