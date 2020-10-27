@@ -29,7 +29,7 @@
                 android:id="@+id/detail_content_collapse_toolbar"
                 android:paddingTop="24dp"
                 android:layout_width="match_parent"
-                android:layout_height="186dp"
+                android:layout_height="300dp"
                 android:fitsSystemWindows="true"
                 app:contentScrim="@color/colorPrimary"
                 app:layout_scrollFlags="snap"
