@@ -9,6 +9,9 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/mainTabLayout"
         android:layout_width="match_parent"
+        app:tabMaxWidth="0dp"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
         android:background="@color/colorPrimary"
         app:tabIndicatorColor="@color/white"
         android:layout_height="wrap_content" />

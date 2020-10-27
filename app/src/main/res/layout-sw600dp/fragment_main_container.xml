@@ -10,6 +10,9 @@
         android:id="@+id/mainTabLayout"
         android:layout_width="match_parent"
         android:background="@color/colorPrimary"
+        app:tabMaxWidth="0dp"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
         app:tabIndicatorColor="@color/white"
         android:layout_height="wrap_content" />
 
