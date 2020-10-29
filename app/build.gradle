@@ -26,9 +26,10 @@ android {
 
     buildTypes {
         release {
+            debuggable true
             signingConfig signingConfigs.release
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            proguardFiles 'proguard.txt'
             // These values are defined only for the release build, which
             // is typically used for full builds and continuous builds.
         }
@@ -39,7 +40,7 @@ android {
             // If they were dynamic, they would prevent certain benefits of
             // Instant Run as well as Gradle UP-TO-DATE checks.
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles 'proguard.txt'
         }
     }
 
