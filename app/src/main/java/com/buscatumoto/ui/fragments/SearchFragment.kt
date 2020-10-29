@@ -3,8 +3,11 @@ package com.buscatumoto.ui.fragments
 import android.os.Bundle
 import android.os.Handler
 import android.transition.TransitionInflater
-import android.util.DisplayMetrics
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -20,7 +23,10 @@ import com.buscatumoto.ui.navigation.ScreenNavigator
 import com.buscatumoto.ui.viewmodels.FrontPageViewModel
 import com.buscatumoto.utils.global.*
 import com.buscatumoto.utils.injection.ViewModelFactory
-import com.google.android.gms.ads.*
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import javax.inject.Inject
@@ -46,6 +52,17 @@ class SearchFragment : BaseFragment(), Injectable,
         allowReturnTransitionOverlap = false
         exitTransition = inflater.inflateTransition(R.transition.slide_left)
         enterTransition = inflater.inflateTransition(R.transition.slide_right_long)
+
+        // This callback will only be called when MyFragment is at least Started.
+        // This callback will only be called when MyFragment is at least Started.
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finish()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+
     }
 
     override fun onCreateView(
