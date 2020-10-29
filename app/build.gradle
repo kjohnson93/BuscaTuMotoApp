@@ -14,9 +14,20 @@ android {
         versionName "1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        release {
+            storeFile file('/Users/KEVIN.JOHNSON/Releases/BTM/enriquekvk-keystore.jks')
+            keyAlias 'enriquekvk'
+            storePassword 'deepmau555'
+            keyPassword 'deepmau5'
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled true
+            signingConfig signingConfigs.release
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             // These values are defined only for the release build, which
             // is typically used for full builds and continuous builds.
