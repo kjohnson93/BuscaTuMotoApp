@@ -178,7 +178,7 @@ class CatalogueFragment : BaseFragment(), Injectable, ScreenNavigator,
 
         // Step 1 - Create an AdView and set the ad unit ID on it.
         val adView = AdView(requireContext())
-        adView.adUnitId = GOOGLE_AD_TEST_UNIT_ID
+        adView.adUnitId = GOOGLE_AD_BANNER_UNIT_ID
         binding.adContainer.addView(adView)
 
         val adSize = getAdSize(requireActivity())
